@@ -1,4 +1,4 @@
-"""v19 篡改主脚本：全空间注册表 + 多说话人 + opportunistic 目标。
+"""篡改（framing）主脚本：全空间注册表 + 多说话人 + opportunistic 目标。
 
 口径（用户确认）：
 - 篡改 = payload-aware（知道 target payload）

@@ -1,6 +1,6 @@
-"""v19 攻击主脚本：全空间注册表 + 多说话人（39人）+ 300 trial 均匀分配。
+"""攻击主脚本：全空间注册表 + 多说话人（38人）+ 150 trial 均匀分配。
 
-方法：mean / blind_gram_cb / extreme_pair（核心三方法，全部盲，跑全部 300 trial）
+方法：mean / blind_gram_cb / extreme_pair（核心三方法，全部盲）
 指标：
   - ASR：top-1 逃逸率（P[top1 not in coalition]）
   - R@3 / R@5：top-K 候选名单逃逸率（P[topK ∩ coalition = empty]），取证兜底能力
@@ -90,7 +90,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--K", type=int, required=True)
-    ap.add_argument("--n_trials", type=int, default=300)
+    ap.add_argument("--n_trials", type=int, default=150)
     args = ap.parse_args()
 
     model = args.model
@@ -143,7 +143,7 @@ def main():
         w.writeheader()
         w.writerows(rows)
 
-    print(f"\n=== {model} K={K} 汇总（全空间注册表, 39说话人, n={len(trial_idx)}）===")
+    print(f"\n=== {model} K={K} 汇总（全空间注册表, 38说话人, n={len(trial_idx)}）===")
     for m in ["mean", "blind_gram_cb", "extreme_pair"]:
         asrs = [r["ASR"] for r in rows if r["method"] == m]
         r5s = [r["R5_escape"] for r in rows if r["method"] == m]

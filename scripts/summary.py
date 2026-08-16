@@ -1,4 +1,4 @@
-"""v19 数据汇总：生成论文主表（攻击 + 篡改）。
+"""数据汇总：生成论文主表（攻击 + 篡改）。
 
 从 evaluation/*.csv 聚合：
 - 攻击主表：ASR / R3 / R5 / ACC_near / PESQ，按 (model, K, method)
@@ -13,34 +13,42 @@ from pathlib import Path
 
 import numpy as np
 
-RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
+DATA = Path(__file__).resolve().parent.parent / "data"
 MODELS = ["audioseal", "timbrewm", "wavmark", "voicemark", "wmcodec"]
 KS = [2, 3, 5, 8]
 
 
+def _attack_metrics(v):
+    """从同一方法的一组 row 计算聚合指标。"""
+    asr = np.mean([int(r["ASR"]) for r in v])
+    r3 = np.mean([int(r["R3_escape"]) for r in v])
+    r5 = np.mean([int(r["R5_escape"]) for r in v])
+    accs = [float(r["ACC_near_norm"]) for r in v if r["ACC_near_norm"] != ""]
+    acc = np.mean(accs) if accs else float("nan")
+    pesqs = [float(r["PESQ"]) for r in v]
+    return {"ASR": asr, "R3": r3, "R5": r5, "ACC_near": acc, "PESQ": np.mean(pesqs)}
+
+
 def agg_attack(model, k):
-    f = RESULTS / f"attack_{model}_K{k}.csv"
-    if not f.exists():
-        return None
-    rows = list(csv.DictReader(open(f)))
     out = {}
-    for m in ["mean", "blind_gram_cb", "extreme_pair"]:
-        v = [r for r in rows if r["method"] == m]
-        if not v:
-            continue
-        asr = np.mean([int(r["ASR"]) for r in v])
-        r3 = np.mean([int(r["R3_escape"]) for r in v])
-        r5 = np.mean([int(r["R5_escape"]) for r in v])
-        accs = [float(r["ACC_near_norm"]) for r in v if r["ACC_near_norm"] != ""]
-        acc = np.mean(accs) if accs else float("nan")
-        pesqs = [float(r["PESQ"]) for r in v]
-        out[m] = {"ASR": asr, "R3": r3, "R5": r5, "ACC_near": acc,
-                  "PESQ": np.mean(pesqs)}
-    return out
+    f = DATA / "attack" / f"attack_{model}_K{k}.csv"
+    if f.exists():
+        rows = list(csv.DictReader(open(f)))
+        for m in ["mean", "blind_gram_cb", "extreme_pair"]:
+            v = [r for r in rows if r["method"] == m]
+            if v:
+                out[m] = _attack_metrics(v)
+    # 盲方法各自独立 CSV（单方法）
+    for prefix in ["blind_dist_cb", "blind_minimax_cb"]:
+        f2 = DATA / prefix / f"{prefix}_{model}_K{k}.csv"
+        if f2.exists():
+            rows = list(csv.DictReader(open(f2)))
+            out[prefix] = _attack_metrics(rows)
+    return out if out else None
 
 
 def agg_baseline(model, k):
-    f = RESULTS / f"baselines_{model}_K{k}.csv"
+    f = DATA / "baselines" / f"baselines_{model}_K{k}.csv"
     if not f.exists():
         return None
     rows = list(csv.DictReader(open(f)))
@@ -58,7 +66,7 @@ def agg_baseline(model, k):
 
 
 def agg_tamper(model, k):
-    f = RESULTS / f"tamper_{model}_K{k}.csv"
+    f = DATA / "tamper" / f"tamper_{model}_K{k}.csv"
     if not f.exists():
         return None
     rows = list(csv.DictReader(open(f)))
@@ -81,7 +89,8 @@ def main():
     print("=" * 110)
     print("攻击主表（ASR / R3 / R5 / ACC_near / PESQ）")
     print("=" * 110)
-    print(f"{'模型':<10} {'K':>2} | {'mean':>30} {'blind_gram_cb':>30} {'extreme_pair':>30}")
+    attack_methods = ["mean", "blind_gram_cb", "extreme_pair", "blind_dist_cb", "blind_minimax_cb"]
+    print(f"{'模型':<10} {'K':>2} | " + " | ".join(f"{m:>28}" for m in attack_methods))
     for m in MODELS:
         for k in KS:
             a = agg_attack(m, k)
@@ -92,7 +101,8 @@ def main():
                 if not d:
                     return "-"
                 return f"A{float(d['ASR']):.2f} R5{float(d['R5']):.2f} Ac{float(d['ACC_near']):.2f} P{float(d['PESQ']):.1f}"
-            print(f"{m:<10} {k:>2} | {fmt(a.get('mean')):>30} {fmt(a.get('blind_gram_cb')):>30} {fmt(a.get('extreme_pair')):>30}")
+            cells = " | ".join(f"{fmt(a.get(mm)):>28}" for mm in attack_methods)
+            print(f"{m:<10} {k:>2} | {cells}")
 
     print()
     print("=" * 110)

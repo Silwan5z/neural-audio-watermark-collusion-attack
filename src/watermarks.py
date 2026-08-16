@@ -1,12 +1,11 @@
 """多模型统一合谋攻击 — 共享基础设施（自包含）。
 
-统一 6 个已有水印模型的接口（XAttnMark 因无官方实现标记 blocked，见 xattnmark_availability.md）：
+统一 5 个已有水印模型的接口：
   - AudioSeal (16k, 16bit, soft bit posterior + presence)
   - VoiceMark  (16k, 16bit = 4 chunk × 4bit, chunk logits + presence)
   - WavMark    (16k, 16bit + 16 pattern, raw soft, 无 presence)
   - WMCodec    (24k, 16bit = 4 digit × 4bit, digit logits, 无 presence)
   - TimbreWM   (22050, 10bit, 连续值, 无 presence)
-  - SilentCipher (44.1k, 40bit = 5×8bit, 硬 message + confidence)
 
 统一抽象：
   - payload: 原生 bit 数 d_m 的 0/1 向量
@@ -51,17 +50,6 @@ def resample_to(w, sr_from, sr_to):
     return librosa.resample(w, orig_sr=sr_from, target_sr=sr_to).astype(np.float32)
 
 
-def load_codebook(n_payload=64):
-    """返回 (n_payload, 16) {0,1} 码本。AudioSeal 用现有 64 码本；其他模型复用其前 K 行。"""
-    cb = json.load(open(AUDIO_DIR / "codebook_k64.json"))
-    arr = np.array([[int(c) for c in p] for p in cb], dtype=np.int8)
-    return arr[:n_payload]
-
-
-def pm(codebook_bits):
-    return codebook_bits.astype(float) * 2 - 1
-
-
 def pesq_wb(ref, deg):
     from pesq import pesq as pesq_fn
     n = min(len(ref), len(deg))
@@ -88,60 +76,6 @@ def si_sdr(ref, deg):
     s = np.dot(deg, ref) / (np.dot(ref, ref) + 1e-12) * ref
     e = deg - s
     return float(10 * np.log10(np.dot(s, s) / (np.dot(e, e) + 1e-12)))
-
-
-def k64_path(pi, spk):
-    """AudioSeal k64 波形路径（用于反查 clean 文件名）。"""
-    import csv
-    for row in csv.DictReader(open(AUDIO_DIR / "as_pool_k64_manifest.csv")):
-        if row["spk"] == spk and int(row["pi"]) == pi:
-            return AUDIO_DIR / "as_pool_k64" / row["file"]
-    raise KeyError((spk, pi))
-
-
-def clean_path(spk):
-    """给定 spk，返回 libritts16k 的 clean 波形路径（复用 AudioSeal k64 命名）。"""
-    p = k64_path(0, spk)
-    stem = p.stem  # {spk}_{spk}_{book}_{spk}_{book}_{utt}_k64_0
-    body = stem.split("_k64_")[0]
-    return AUDIO_DIR / "libritts16k" / f"{body[len(spk) + 1:]}.wav"
-
-
-def load_split(split):
-    """返回 split16.json 里指定 split 的 speaker 列表。"""
-    d = json.load(open(AUDIO_DIR / "split16.json"))
-    return d[split]
-
-
-def make_codebook(n_payload, n_bits, seed=0):
-    """按模型原生 bit 长度生成随机码本（固定 seed，攻击前冻结）。
-    16-bit 模型复用 AudioSeal 的 codebook_k64.json（已有 min_d=5）。
-    40-bit（SilentCipher）：随机生成（空间 2^40 巨大，随机 64 个 min_d 自然足够）。
-    其他长度：从 2^n_bits 个整数中选 n_payload 个互异（保证无重复码字）。"""
-    if n_bits == 16:
-        return load_codebook(n_payload)
-    if n_bits == 40:
-        rng = np.random.default_rng(seed)
-        return rng.integers(0, 2, size=(n_payload, n_bits)).astype(np.int8)
-    rng = np.random.default_rng(seed)
-    assert n_payload <= 2 ** n_bits, f"n_payload={n_payload} > 2^{n_bits}"
-    vals = rng.choice(2 ** n_bits, size=n_payload, replace=False)
-    cb = np.zeros((n_payload, n_bits), dtype=np.int8)
-    for i, v in enumerate(vals):
-        for b in range(n_bits):
-            cb[i, b] = (v >> b) & 1  # LSB-first（与各模型内部编码无关，仅作身份码）
-    return cb
-
-
-def hamming_stats(codebook_bits):
-    """返回码本的 min/mean Hamming distance（任务书 §4.1 要求报告）。"""
-    from itertools import combinations
-    n = len(codebook_bits)
-    ds = []
-    for i in range(n):
-        for j in range(i + 1, n):
-            ds.append(int((codebook_bits[i] != codebook_bits[j]).sum()))
-    return min(ds), float(np.mean(ds))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -261,17 +195,6 @@ def get_timbrewm(dev=DEVICE):
     return _models["timbrewm"]
 
 
-def get_silentcipher(dev=DEVICE):
-    if "silentcipher" not in _models:
-        import silentcipher
-        model_dir = ROOT / "third_party/silentcipher/44_1_khz/73999_iteration"
-        model = silentcipher.server.get_model(
-            model_type="44.1k", ckpt_path=str(model_dir),
-            config_path=str(model_dir / "hparams.yaml"), device=dev)
-        _models["silentcipher"] = {"model": model, "dev": dev, "nbits": 40, "sr": 44100}
-    return _models["silentcipher"]
-
-
 # ─────────────────────────────────────────────────────────────────────────────
 # 统一检测：detect(wm16k) -> (soft_scores [n_codebook], presence, native)
 # soft_scores 是码本每个身份的 log-lik（越大越像）
@@ -382,72 +305,6 @@ def detect_timbrewm(m, wm16k, codebook_bits):
     return _loglik_bits(prob, codebook_bits), presence, hard
 
 
-# ── SilentCipher (44.1k, 40bit = 5×8bit 字符) ──
-def _sc_bits_to_msg(bits40):
-    """40 bit {0,1} -> 5 个 8-bit 数字（MSB-first 每 8 bit 一组）。"""
-    b = [int(x) for x in bits40]
-    return [int("".join(map(str, b[i * 8:(i + 1) * 8])), 2) for i in range(5)]
-
-
-def _sc_msg_to_char_idx(msg, message_len):
-    """5 个 8-bit 数字 -> message_len 个字符 index（20 个 2-bit 值 +1，+ 结束符 0）。"""
-    bm = "".join(["{0:08b}".format(mi) for mi in msg])  # 40 bit MSB
-    idx = [int(bm[j * 2:j * 2 + 2], 2) + 1 for j in range(len(bm) // 2)]  # 20 个 1..4
-    idx = idx + [0]  # 结束符
-    while len(idx) < message_len:
-        idx.append(0)
-    return idx[:message_len]
-
-
-def _sc_logits(m, wm44k):
-    """返回逐字符 log-softmax [message_dim, n_rep, message_len]。"""
-    import torch
-    model = m["model"]
-    message_len = model.config.message_len
-    message_dim = model.config.message_dim
-    y = wm44k.astype(np.float32)
-    y = y * np.sqrt(model.average_energy_VCTK / np.mean(y ** 2))
-    t = torch.FloatTensor(y).unsqueeze(0).unsqueeze(0).to(m["dev"])
-    carrier, _ = model.stft.transform(t.squeeze(1))
-    carrier = carrier[:, None]
-    mr = model.dec_m[0](carrier)  # [1,1,md,time]
-    logits = mr[0, 0]  # [md, time]
-    n_rep = logits.shape[1] // message_len
-    logits = logits[:, :n_rep * message_len].reshape(message_dim, n_rep, message_len)
-    return torch.log_softmax(logits, dim=0)  # [md, n_rep, message_len]
-
-
-def detect_silentcipher(m, wm44k, codebook_bits):
-    """SilentCipher 软排名：逐字符 log-lik 对 64 个 payload 打分。"""
-    import torch
-    import scipy.stats as st
-    model = m["model"]
-    message_len = model.config.message_len
-    logp = _sc_logits(m, wm44k)  # [md, n_rep, message_len]
-    K = codebook_bits.shape[0]
-    scores = np.zeros(K, dtype=np.float32)
-    for pi in range(K):
-        msg = _sc_bits_to_msg(codebook_bits[pi])
-        idx = _sc_msg_to_char_idx(msg, message_len)
-        ll = 0.0
-        for k in range(message_len):
-            ll += float(logp[idx[k], :, k].sum())
-        scores[pi] = ll
-    # hard：mode 投票解码出 40 bit
-    pred = torch.argmax(logp, dim=0)  # [n_rep, message_len]
-    ord_vals = st.mode(pred.cpu().numpy(), keepdims=False, axis=0).mode  # [message_len]
-    hard_bits = []
-    for v in ord_vals:
-        v = int(v)
-        if v == 0:
-            break
-        hard_bits.extend([(v - 1) >> 1 & 1, (v - 1) & 1])  # 2-bit 值
-    hard = np.zeros(40, dtype=np.int8)
-    hard[:min(40, len(hard_bits))] = hard_bits[:40]
-    presence = float(np.max(scores) > -1e6)
-    return scores, presence, hard
-
-
 # 模型注册表
 DETECT_FN = {
     "audioseal": detect_audioseal,
@@ -455,7 +312,6 @@ DETECT_FN = {
     "wavmark": detect_wavmark,
     "wmcodec": detect_wmcodec,
     "timbrewm": detect_timbrewm,
-    "silentcipher": detect_silentcipher,
 }
 
 
@@ -548,10 +404,9 @@ GET_MODEL = {
     "wavmark": get_wavmark,
     "wmcodec": get_wmcodec,
     "timbrewm": get_timbrewm,
-    "silentcipher": get_silentcipher,
 }
 NATIVE_SR = {"audioseal": 16000, "voicemark": 16000, "wavmark": 16000,
-             "wmcodec": 24000, "timbrewm": 22050, "silentcipher": 44100}
+             "wmcodec": 24000, "timbrewm": 22050}
 
 
 def detect(model_name, wm16k, codebook_bits):
@@ -619,21 +474,12 @@ def embed_timbrewm(m, clean16k, bits):
     return resample_to(out, 22050, SR16).astype(np.float32)
 
 
-def embed_silentcipher(m, clean16k, bits):
-    """SilentCipher 嵌入：clean16k -> 44.1k -> wm44k（返回 44.1k，水印在高频）。"""
-    w44 = resample_to(clean16k, SR16, 44100)
-    msg = _sc_bits_to_msg(bits)
-    enc, _ = m["model"].encode_wav(w44, 44100, msg, calc_sdr=False)
-    return enc.astype(np.float32)
-
-
 EMBED_FN = {
     "audioseal": embed_audioseal,
     "voicemark": embed_voicemark,
     "wavmark": embed_wavmark,
     "wmcodec": embed_wmcodec,
     "timbrewm": embed_timbrewm,
-    "silentcipher": embed_silentcipher,
 }
 
 

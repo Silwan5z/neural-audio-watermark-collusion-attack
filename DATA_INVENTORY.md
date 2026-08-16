@@ -29,6 +29,60 @@
 | `data/attack/attack_wmcodec_K5.csv` | wmcodec 在 K=5 coalition 下的全盲攻击 | 2026-08-16 03:00:44 |
 | `data/attack/attack_wmcodec_K8.csv` | wmcodec 在 K=8 coalition 下的全盲攻击 | 2026-08-16 03:03:20 |
 
+## 盲方法 blind_dist_cb（全盲，5 模型 × K=2/3/5/8）
+
+每个文件为 150 trial × 单方法（blind_dist_cb，盲距离变换（两两波形距离矩阵的精确变换））的全盲攻击结果，指标含 ASR、R3_escape、R5_escape、ACC_near、ACC_near_norm 与音质 PESQ/STOI/SI-SDR。
+
+| 相对路径 | 介绍 | 更改时间 |
+|---|---|---|
+| `data/blind_dist_cb/blind_dist_cb_audioseal_K2.csv` | audioseal 在 K=2 coalition 下的盲距离变换攻击 | 2026-08-16 18:12:16 |
+| `data/blind_dist_cb/blind_dist_cb_audioseal_K3.csv` | audioseal 在 K=3 coalition 下的盲距离变换攻击 | 2026-08-16 18:13:11 |
+| `data/blind_dist_cb/blind_dist_cb_audioseal_K5.csv` | audioseal 在 K=5 coalition 下的盲距离变换攻击 | 2026-08-16 18:14:10 |
+| `data/blind_dist_cb/blind_dist_cb_audioseal_K8.csv` | audioseal 在 K=8 coalition 下的盲距离变换攻击 | 2026-08-16 18:15:20 |
+| `data/blind_dist_cb/blind_dist_cb_timbrewm_K2.csv` | timbrewm 在 K=2 coalition 下的盲距离变换攻击 | 2026-08-16 18:08:18 |
+| `data/blind_dist_cb/blind_dist_cb_timbrewm_K3.csv` | timbrewm 在 K=3 coalition 下的盲距离变换攻击 | 2026-08-16 18:09:14 |
+| `data/blind_dist_cb/blind_dist_cb_timbrewm_K5.csv` | timbrewm 在 K=5 coalition 下的盲距离变换攻击 | 2026-08-16 18:10:15 |
+| `data/blind_dist_cb/blind_dist_cb_timbrewm_K8.csv` | timbrewm 在 K=8 coalition 下的盲距离变换攻击 | 2026-08-16 18:11:27 |
+| `data/blind_dist_cb/blind_dist_cb_wavmark_K2.csv` | wavmark 在 K=2 coalition 下的盲距离变换攻击 | 2026-08-16 18:21:08 |
+| `data/blind_dist_cb/blind_dist_cb_wavmark_K3.csv` | wavmark 在 K=3 coalition 下的盲距离变换攻击 | 2026-08-16 18:27:01 |
+| `data/blind_dist_cb/blind_dist_cb_wavmark_K5.csv` | wavmark 在 K=5 coalition 下的盲距离变换攻击 | 2026-08-16 18:32:57 |
+| `data/blind_dist_cb/blind_dist_cb_wavmark_K8.csv` | wavmark 在 K=8 coalition 下的盲距离变换攻击 | 2026-08-16 18:38:56 |
+| `data/blind_dist_cb/blind_dist_cb_voicemark_K2.csv` | voicemark 在 K=2 coalition 下的盲距离变换攻击 | 2026-08-16 17:59:38 |
+| `data/blind_dist_cb/blind_dist_cb_voicemark_K3.csv` | voicemark 在 K=3 coalition 下的盲距离变换攻击 | 2026-08-16 18:00:39 |
+| `data/blind_dist_cb/blind_dist_cb_voicemark_K5.csv` | voicemark 在 K=5 coalition 下的盲距离变换攻击 | 2026-08-16 18:01:50 |
+| `data/blind_dist_cb/blind_dist_cb_voicemark_K8.csv` | voicemark 在 K=8 coalition 下的盲距离变换攻击 | 2026-08-16 18:03:11 |
+| `data/blind_dist_cb/blind_dist_cb_wmcodec_K2.csv` | wmcodec 在 K=2 coalition 下的盲距离变换攻击 | 2026-08-16 18:04:08 |
+| `data/blind_dist_cb/blind_dist_cb_wmcodec_K3.csv` | wmcodec 在 K=3 coalition 下的盲距离变换攻击 | 2026-08-16 18:05:08 |
+| `data/blind_dist_cb/blind_dist_cb_wmcodec_K5.csv` | wmcodec 在 K=5 coalition 下的盲距离变换攻击 | 2026-08-16 18:06:14 |
+| `data/blind_dist_cb/blind_dist_cb_wmcodec_K8.csv` | wmcodec 在 K=8 coalition 下的盲距离变换攻击 | 2026-08-16 18:07:27 |
+
+## 盲方法 blind_minimax_cb（全盲，5 模型 × K=2/3/5/8）
+
+每个文件为 150 trial × 单方法（blind_minimax_cb，盲 minimax 距离）的全盲攻击结果，指标含 ASR、R3_escape、R5_escape、ACC_near、ACC_near_norm 与音质 PESQ/STOI/SI-SDR。
+
+| 相对路径 | 介绍 | 更改时间 |
+|---|---|---|
+| `data/blind_minimax_cb/blind_minimax_cb_audioseal_K2.csv` | audioseal 在 K=2 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:52:21 |
+| `data/blind_minimax_cb/blind_minimax_cb_audioseal_K3.csv` | audioseal 在 K=3 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:53:12 |
+| `data/blind_minimax_cb/blind_minimax_cb_audioseal_K5.csv` | audioseal 在 K=5 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:54:11 |
+| `data/blind_minimax_cb/blind_minimax_cb_audioseal_K8.csv` | audioseal 在 K=8 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:55:34 |
+| `data/blind_minimax_cb/blind_minimax_cb_timbrewm_K2.csv` | timbrewm 在 K=2 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:48:17 |
+| `data/blind_minimax_cb/blind_minimax_cb_timbrewm_K3.csv` | timbrewm 在 K=3 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:49:10 |
+| `data/blind_minimax_cb/blind_minimax_cb_timbrewm_K5.csv` | timbrewm 在 K=5 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:50:11 |
+| `data/blind_minimax_cb/blind_minimax_cb_timbrewm_K8.csv` | timbrewm 在 K=8 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:51:32 |
+| `data/blind_minimax_cb/blind_minimax_cb_wavmark_K2.csv` | wavmark 在 K=2 coalition 下的盲 minimax 距离攻击 | 2026-08-16 19:01:22 |
+| `data/blind_minimax_cb/blind_minimax_cb_wavmark_K3.csv` | wavmark 在 K=3 coalition 下的盲 minimax 距离攻击 | 2026-08-16 19:07:11 |
+| `data/blind_minimax_cb/blind_minimax_cb_wavmark_K5.csv` | wavmark 在 K=5 coalition 下的盲 minimax 距离攻击 | 2026-08-16 19:13:01 |
+| `data/blind_minimax_cb/blind_minimax_cb_wavmark_K8.csv` | wavmark 在 K=8 coalition 下的盲 minimax 距离攻击 | 2026-08-16 19:18:56 |
+| `data/blind_minimax_cb/blind_minimax_cb_voicemark_K2.csv` | voicemark 在 K=2 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:39:53 |
+| `data/blind_minimax_cb/blind_minimax_cb_voicemark_K3.csv` | voicemark 在 K=3 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:40:53 |
+| `data/blind_minimax_cb/blind_minimax_cb_voicemark_K5.csv` | voicemark 在 K=5 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:42:02 |
+| `data/blind_minimax_cb/blind_minimax_cb_voicemark_K8.csv` | voicemark 在 K=8 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:43:14 |
+| `data/blind_minimax_cb/blind_minimax_cb_wmcodec_K2.csv` | wmcodec 在 K=2 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:44:10 |
+| `data/blind_minimax_cb/blind_minimax_cb_wmcodec_K3.csv` | wmcodec 在 K=3 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:45:09 |
+| `data/blind_minimax_cb/blind_minimax_cb_wmcodec_K5.csv` | wmcodec 在 K=5 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:46:15 |
+| `data/blind_minimax_cb/blind_minimax_cb_wmcodec_K8.csv` | wmcodec 在 K=8 coalition 下的盲 minimax 距离攻击 | 2026-08-16 18:47:27 |
+
 ## 经典 baseline（全盲，5 模型 × K=2/3/5/8）
 
 每个文件为 150 trial × 5 方法（median / minimum / maximum / rand_minmax / copy_paste）的经典 baseline 结果，指标含 ASR、R3_escape、R5_escape、ACC_near、ACC_near_norm 与音质 PESQ/STOI/SI-SDR。

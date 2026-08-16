@@ -1,4 +1,4 @@
-"""v19 盲方法补充：blind_dist_cb（用两两波形距离矩阵代替 median 残差 Gram）。
+"""盲方法：blind_dist_cb（用两两波形距离矩阵代替 median 残差 Gram）。
 
 不重跑/不覆盖已有的 attack_*.csv（mean/blind_gram_cb/extreme_pair），只单独产出
 blind_dist_cb_{model}_K{K}.csv，供后续与已有数据对齐比较（同一套 coalition_seed）。

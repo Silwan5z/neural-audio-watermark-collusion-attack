@@ -1,4 +1,4 @@
-"""v19 统计检验：按说话人分层的 McNemar + paired bootstrap。
+"""统计检验：按说话人分层的 McNemar + paired bootstrap。
 
 关键（STATUS 步骤3）：先重采样说话人集合，再在被抽中的说话人内部重采样 trial。
 这样把"说话人"当作第一层随机效应，避免把同一说话人的多个 trial 当独立样本。
@@ -14,13 +14,13 @@ from pathlib import Path
 
 import numpy as np
 
-RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
+DATA = Path(__file__).resolve().parent.parent / "data"
 N_BOOT = 2000
 SEED = 0
 
 
 def load_csv(model, k, prefix):
-    f = RESULTS / f"{prefix}_{model}_K{k}.csv"
+    f = DATA / prefix / f"{prefix}_{model}_K{k}.csv"
     if not f.exists():
         return None
     rows = list(csv.DictReader(open(f)))
@@ -75,10 +75,15 @@ def main():
     args = ap.parse_args()
 
     atk = load_csv(args.model, args.K, "attack")
-    base = load_csv(args.model, args.K, "baselines")
     if atk is None:
         print(f"attack_{args.model}_K{args.K}.csv 缺失")
         return
+    # 合并所有数据源：attack(3方法) + blind_dist_cb + blind_minimax_cb + baselines(5方法)
+    sources = dict(atk)
+    for prefix in ["blind_dist_cb", "blind_minimax_cb", "baselines"]:
+        m = load_csv(args.model, args.K, prefix)
+        if m:
+            sources.update(m)
 
     def metric(r):
         v = r.get(args.agg, "")
@@ -99,9 +104,11 @@ def main():
     # 对比：mean vs 各方法
     print(f"=== {args.model} K={args.K} ({args.agg}) 按说话人分层统计 ===")
     print(f"{'对比':<28} {'diff(b-a)':>10} {'95%CI':>18} {'McNemar_p':>10}")
-    mean_m = method_metric(atk, "mean")
-    for method in ["blind_gram_cb", "extreme_pair"] + (list(base.keys()) if base else []):
-        other_m = method_metric(atk if method in atk else base, method)
+    mean_m = method_metric(sources, "mean")
+    methods = ["blind_gram_cb", "extreme_pair", "blind_dist_cb", "blind_minimax_cb",
+               "median", "minimum", "maximum", "rand_minmax", "copy_paste"]
+    for method in methods:
+        other_m = method_metric(sources, method)
         if not other_m:
             continue
         # 对齐到共同 trial

@@ -2,7 +2,7 @@
 
 设计要点见 ../README.md。核心区别于早期版本的固定容量码本：
 - 排序注册表 = 每个模型原生全 bit 空间（不是人为选的固定容量），虚拟码字只用于打分，不需要真实音频。
-- 39 个说话人（libritts16k 现有全部），300 trial 均匀分配。
+- 38 个说话人（libritts16k 现有全部 39 人，排除音频过短的说话人 61），trial 均匀分配。
 - 按 (speaker, model, codeword_int) 缓存实际嵌入的音频，避免重复嵌入。
 """
 from __future__ import annotations
@@ -57,7 +57,7 @@ def coalition_seed(spk, K, local_t):
 
 
 def clean_path_v19(spk):
-    """v19 的 clean 路径：libritts16k 目录里该说话人时长最长的文件（不是排序后第一个）。
+    """clean 路径：libritts16k 目录里该说话人时长最长的文件（不是排序后第一个）。
     发现说话人 61 唯一的候选文件只有 0.81s，短于 wavmark 嵌入所需的最小 chunk 长度（约2s），
     必须选最长文件而不是任意/首个文件，否则 wavmark embed 会断言失败。"""
     import soundfile as _sf

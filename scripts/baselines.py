@@ -1,4 +1,4 @@
-"""v19 经典合谋 baseline：median / copy_paste / rand_minmax / minimum / maximum。
+"""经典合谋 baseline：median / copy_paste / rand_minmax / minimum / maximum。
 
 来源核实（见调研报告，只用 attack_v3/paper/paper_text/notes/ 那份文档列出的文献）：
 - Zhao et al. 2005 (IEEE TIP) 定义了 average/minimum/maximum/median/minmax/modified-negative/
