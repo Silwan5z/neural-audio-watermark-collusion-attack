@@ -27,3 +27,7 @@ tqdm>=4.65.0
 julius>=0.2.8
 audiomentations>=0.28.0
 kornia>=0.8.3
+
+# 第三方模型封装代码的传递依赖（voicemark/wmcodec 必需）
+einops>=0.7.0
+matplotlib>=3.7.0

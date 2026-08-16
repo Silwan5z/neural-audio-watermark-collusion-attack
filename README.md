@@ -55,22 +55,54 @@ pip install -r requirements.txt
 
 ## 数据集
 
-实验使用 libritts16k（LibriTTS 16kHz）。将原始 wav 放到 `dataset/libritts16k/`，命名约定为 `{spk}_{file}.wav`（见 `src/registry.py` 的 `clean_path_v19`）。
+实验使用 libritts16k —— 从 LibriTTS（[OpenSLR 60](https://www.openslr.org/60)）中选取的 38 个说话人、每说话人 3 个片段、16kHz 单声道 wav。将音频放到 `dataset/libritts16k/`，文件名以 `{spk}_` 开头（LibriTTS 原生命名，形如 `{spk}_{book}_{spk}_{book}_{utt}_{seg}.wav`）。
+
+38 个说话人 ID（`src/registry.py` 的 `SPEAKERS_38`）：
+
+```
+121 237 260 672 908 1089 1188 1221 1284 1320 1580 1995 2300 2830 2961
+3570 3575 3729 4077 4446 4507 4970 4992 5105 5142 5639 5683 6829 6930
+7021 7127 7176 7729 8224 8230 8455 8463 8555
+```
+
+要求：
+- 每个说话人至少 1 个 `{spk}_*.wav` 文件；加载时取该说话人时长最长的文件（`src/registry.py` 的 `clean_path_v19`）。
+- wavmark 嵌入要求音频 ≥ 约 2s（原实现的最小 chunk 长度），短片段会断言失败。
+- 16kHz 单声道。LibriTTS 原生为 24kHz，需先降采样到 16kHz。
+
+> 注：此切片是本研究手动准备的（38 说话人 × 3 片段），原始文件未随仓库分发。复现需自行从 LibriTTS 选取相同说话人并降采样；或联系作者获取该切片的下载方式。
 
 ## 复现
 
+每个脚本单独产出对应 CSV，结果写入 `results/evaluation/`（首次运行自动创建）。计算设备默认 `cuda:0`，可用环境变量 `WATERMARK_DEVICE` 覆盖（如 `WATERMARK_DEVICE=cpu`）。
+
 ```bash
-# 攻击主表（150 trial × 3 方法）
+# 攻击主表（mean / blind_gram_cb / extreme_pair，150 trial）
 python scripts/attack.py --model audioseal --K 5 --n_trials 150
 
-# 篡改主表
+# 经典 baseline（median/min/max/rand_minmax/copy_paste，150 trial）
+python scripts/baselines.py --model audioseal --K 5 --n_trials 150
+
+# 盲方法：两两波形距离矩阵（精确变换）
+python scripts/blind_distance.py --model audioseal --K 5 --n_trials 150
+
+# 盲方法：minimax 距离
+python scripts/blind_minimax.py --model audioseal --K 5 --n_trials 150
+
+# 篡改（payload-aware，mean / framing_cb）
 python scripts/framing.py --model audioseal --K 5 --n_trials 150
 
-# 统计检验（读 data/ 下已有 CSV）
-python scripts/stats.py
+# 脉冲噪声对照（Kiyavash & Moulin）
+python scripts/pulse_noise.py --model audioseal --K 5 --n_trials 50
+
+# 汇总主表（读 data/ 下已产出的 CSV）
+python scripts/summary.py
+
+# 统计检验（按说话人分层的 McNemar + bootstrap，读 data/ 下已有 CSV）
+python scripts/stats.py --model audioseal --K 5
 ```
 
-每个脚本头部注释有完整参数说明。结果输出到 `results/evaluation/`（首次运行自动创建）。计算设备默认 `cuda:0`，可用环境变量 `WATERMARK_DEVICE` 覆盖（如 `WATERMARK_DEVICE=cpu python scripts/attack.py ...`）。
+完整复现 = 5 个模型（`audioseal timbrewm wavmark voicemark wmcodec`）× 4 个 K（`2 3 5 8`）× 上述每个脚本。论文定稿的完整 CSV 快照已在 `data/` 下（见 `DATA_INVENTORY.md`），无需重跑即可复现表格与显著性检验（`summary.py` / `stats.py`）。
 
 ## 数据说明
 
