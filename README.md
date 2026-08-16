@@ -49,11 +49,11 @@ pip install -r requirements.txt
 
 | 模型 | 权重文件 → 放置位置 | 来源 |
 |---|---|---|
-| AudioSeal | 无需手动（`pip install audioseal` 后首次调用自动从 HuggingFace 下载）| [facebookresearch/audioseal](https://github.com/facebookresearch/audioseal)（MIT）|
-| WavMark | 无需手动（`pip install wavmark` 权重内置）| [wavmark/wavmark](https://github.com/wavmark/wavmark)（MIT）|
-| VoiceMark | `voicemark.pth` → `third_party/voicemark/`；`SpeechTokenizer.pt` → `third_party/voicemark/speechtokenizer/pretrained_model/` | VoiceMark 原仓库 + [SpeechTokenizer](https://github.com/ZhangXInFD/SpeechTokenizer)（Apache 2.0）|
-| WMCodec | `g_00150000` → `third_party/wmcodec/save_model/` | WMCodec 原仓库 |
-| TimbreWM | `compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar` → `third_party/timbrewm/results/ckpt/pth/` | [TimbreWatermarking](https://github.com/TimbreWatermarking/TimbreWatermarking) |
+| AudioSeal | 无需手动（`pip install audioseal` 后首次调用自动从 HuggingFace 下载）| [AudioSeal](https://arxiv.org/abs/2401.17264)（MIT）|
+| WavMark | 无需手动（`pip install wavmark` 权重内置）| [WavMark](https://arxiv.org/abs/2308.12770)（MIT）|
+| VoiceMark | `voicemark.pth` → `third_party/voicemark/`；`SpeechTokenizer.pt` → `third_party/voicemark/speechtokenizer/pretrained_model/` | [VoiceMark: Zero-Shot Voice Cloning-Resistant Watermarking Approach Leveraging Speaker-Specific Latents](https://arxiv.org/abs/2505.21568)（Interspeech 2025）|
+| WMCodec | `g_00150000` → `third_party/wmcodec/save_model/` | [WMCodec: End-to-End Neural Speech Codec with Deep Watermarking for Authenticity Verification](https://arxiv.org/abs/2409.12121) |
+| TimbreWM | `compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar` → `third_party/timbrewm/results/ckpt/pth/` | [TimbreWM](https://arxiv.org/abs/2312.03410) |
 
 ## 数据集
 
