@@ -27,7 +27,9 @@
 │   ├── wmcodec/              # WMCodec
 │   └── timbrewm/             # TimbreWM（含 HiFi-GAN）
 ├── data/                     # 论文定稿数值快照（103 个 CSV + stats_all.txt）
-├── tools/eval/               # 可选：独立音频质量评估工具（AudioEval，PESQ/STOI/SI-SDR/ViSQOL）
+├── tools/                    # 辅助工具
+│   ├── eval/                 # 可选：独立音频质量评估（AudioEval，PESQ/STOI/SI-SDR/ViSQOL）
+│   └── prepare_libritts16k.py  # 从 LibriTTS test-clean 精确生成 libritts16k 数据集
 ├── dataset/                  # 原始数据集放置处（libritts16k 等，见下）
 ├── DATA_INVENTORY.md         # 数据清单
 └── LICENSE                   # MIT
@@ -55,7 +57,17 @@ pip install -r requirements.txt
 
 ## 数据集
 
-实验使用 libritts16k —— 从 LibriTTS（[OpenSLR 60](https://www.openslr.org/60)）中选取的 38 个说话人、每说话人 3 个片段、16kHz 单声道 wav。将音频放到 `dataset/libritts16k/`，文件名以 `{spk}_` 开头（LibriTTS 原生命名，形如 `{spk}_{book}_{spk}_{book}_{utt}_{seg}.wav`）。
+实验使用 libritts16k —— 从 LibriTTS test-clean（[OpenSLR 60](https://www.openslr.org/60)）精确选取的 38 个说话人、每说话人 3 个片段、16kHz 单声道 wav（另含 spk61 的 1 个片段，因过短被实验排除）。
+
+**复现方式（精确，推荐）**：先下载 LibriTTS test-clean（24kHz），再用脚本生成与论文完全一致的 115 个切片：
+
+```bash
+python tools/prepare_libritts16k.py \
+    --libritts /path/to/LibriTTS/test-clean \
+    --out dataset/libritts16k
+```
+
+脚本只处理清单里列出的 115 个文件，因此输出与论文实验使用的音频完全一致（同一批 utterance、同样的 16kHz 降采样）。
 
 38 个说话人 ID（`src/registry.py` 的 `SPEAKERS_38`）：
 
@@ -65,12 +77,7 @@ pip install -r requirements.txt
 7021 7127 7176 7729 8224 8230 8455 8463 8555
 ```
 
-要求：
-- 每个说话人至少 1 个 `{spk}_*.wav` 文件；加载时取该说话人时长最长的文件（`src/registry.py` 的 `clean_path_v19`）。
-- wavmark 嵌入要求音频 ≥ 约 2s（原实现的最小 chunk 长度），短片段会断言失败。
-- 16kHz 单声道。LibriTTS 原生为 24kHz，需先降采样到 16kHz。
-
-> 注：此切片是本研究手动准备的（38 说话人 × 3 片段），原始文件未随仓库分发。复现需自行从 LibriTTS 选取相同说话人并降采样；或联系作者获取该切片的下载方式。
+要求：每个说话人至少 1 个 `{spk}_*.wav`；加载时取该说话人时长最长的文件（`src/registry.py` 的 `clean_path_v19`）；wavmark 嵌入要求音频 ≥ 约 2s。
 
 ## 复现
 

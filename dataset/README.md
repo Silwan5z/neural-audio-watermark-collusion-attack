@@ -2,16 +2,16 @@
 
 此目录存放实验用原始音频，**不随仓库分发**（已 .gitignore）。
 
-## 需要的目录结构
+## 生成 libritts16k
 
-```
-dataset/
-└── libritts16k/            # LibriTTS 16kHz 切片
-    ├── 121_000000.wav      # 命名约定 {spk}_{file}.wav
-    ├── 121_000001.wav
-    ├── 237_000000.wav
-    └── ...
+```bash
+python tools/prepare_libritts16k.py \
+    --libritts /path/to/LibriTTS/test-clean \
+    --out dataset/libritts16k
 ```
 
-- 下载：LibriTTS 可从 [OpenSLR](https://www.openslr.org/60) 获取，16kHz 版本见 `train-clean-*`。
-- 命名约定见 `src/registry.py` 的 `clean_path_v19`：同一说话人下取时长最长的文件（避免 wavmark 嵌入的最小 chunk 长度断言失败）。
+- 输入：LibriTTS test-clean（[OpenSLR 60](https://www.openslr.org/60)），24kHz，目录结构 `{spk}/{book}/{spk}_{book}_{utt}_{seg}.wav`。
+- 输出：`dataset/libritts16k/` 下 115 个 16kHz 单声道 wav，命名 `{spk}_{book}_{spk}_{book}_{utt}_{seg}.wav`。
+- 脚本只处理清单列出的 115 个文件，输出与论文实验使用的音频完全一致。
+
+加载约定见 `src/registry.py` 的 `clean_path_v19`：同一说话人下取时长最长的文件。
