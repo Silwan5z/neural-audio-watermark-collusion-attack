@@ -1,0 +1,29 @@
+# 音频评估项目依赖
+
+# 音频读写
+soundfile>=0.12.1
+librosa>=0.10.0
+
+# PESQ (Perceptual Evaluation of Speech Quality)
+pesq>=0.0.4
+
+# STOI (Short-Time Objective Intelligibility)
+pystoi>=0.3.3
+
+# 数值计算
+numpy>=1.23.0
+scipy>=1.10.0
+
+# 数据处理与结果输出
+pandas>=2.0.0
+tqdm>=4.65.0
+PyYAML>=6.0
+
+# ─────────────────────────────────────────────
+# ViSQOL（二选一，推荐 pyvisqol）
+# ─────────────────────────────────────────────
+# 方式一：pyvisqol（推荐，无需 Bazel，直接 pip 安装）
+#   pip install pyvisqol -i https://pypi.org/simple/
+#
+# 方式二：官方 visqol（需要预编译环境，部分系统可直接安装）
+#   pip install visqol

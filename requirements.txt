@@ -1,0 +1,29 @@
+# 核心数值
+numpy>=1.23.0
+scipy>=1.10.0
+
+# 音频读写 / 处理
+soundfile>=0.12.1
+librosa>=0.10.0
+
+# 深度学习（按 CUDA 版本单独安装，见 README）
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# 水印模型（pip 包，权重自动下载 / 内置）
+audioseal>=0.2.0
+wavmark>=0.0.3
+
+# 音质评估
+pesq>=0.0.4
+pystoi>=0.3.3
+
+# 配置 / 数据
+PyYAML>=6.0
+pandas>=2.0.0
+tqdm>=4.65.0
+
+# TimbreWM distortions 模块依赖
+julius>=0.2.8
+audiomentations>=0.28.0
+kornia>=0.8.3

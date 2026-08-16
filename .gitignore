@@ -1,0 +1,27 @@
+# 虚拟环境
+.venv/
+__pycache__/
+*.pyc
+
+# 模型权重（不随仓库分发，见 README）
+*.pth
+*.pt
+*.pth.tar
+*.ckpt
+third_party/wmcodec/save_model/g_*
+third_party/timbrewm/hifigan/model/*/generator_v1
+third_party/voicemark/checkpoints/
+
+# 原始数据集（见 README 下载）—— 只跟踪说明文件，音频一律不入库
+dataset/*
+!dataset/README.md
+
+# 运行时产物
+results/
+cache/
+*.wav
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
