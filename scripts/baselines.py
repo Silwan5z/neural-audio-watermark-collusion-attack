@@ -114,7 +114,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--K", type=int, required=True)
-    ap.add_argument("--n_trials", type=int, default=150)
+    ap.add_argument("--n_trials", type=int, default=300)
     args = ap.parse_args()
 
     model = args.model

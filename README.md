@@ -13,12 +13,15 @@
 │   ├── registry.py           # 全空间注册表 + 种子函数（payload 确定性复现）
 │   └── convex.py             # 凸攻击权重求解（盲 + payload-aware 二次规划）
 ├── scripts/                  # 可执行实验脚本
-│   ├── attack.py             # 攻击主表：mean / blind_gram_cb / extreme_pair
-│   ├── framing.py            # 篡改：mean / framing_cb（payload-aware）
-│   ├── blind_distance.py     # 盲方法：两两波形距离矩阵（精确变换）
-│   ├── blind_minimax.py      # 盲方法：minimax 距离
+│   ├── attack.py             # 攻击主表：mean / fwp（farthest waveform pair）
+│   ├── rp.py                 # RP（random pair）：均匀随机配对对照
+│   ├── eep.py                # EEP（energy-extreme pair）：能量最高/最低配对对照
+│   ├── framing.py            # 篡改：mean / tct（targeted convex tampering, payload-aware）
+│   ├── blind_distance.py     # 盲方法：DM（dispersion maximization，两两波形距离矩阵精确变换）
+│   ├── blind_minimax.py      # 盲方法：BDB（blind distance balancing）
+│   ├── pgr.py                # PGR（payload geometry reference，payload-aware minimax 参照，评估用，非盲攻击）
 │   ├── baselines.py          # 经典 baseline：median/min/max/rand_minmax/copy_paste
-│   ├── minimax_framing.py    # minimax 变体（payload-aware 性质验证）
+│   ├── minimax_framing.py    # minimax 变体性质验证（对称性/不规则几何，探针脚本，非正式数据产出）
 │   ├── pulse_noise.py        # 脉冲噪声对照（Kiyavash & Moulin）
 │   ├── stats.py              # 按说话人分层的 McNemar + bootstrap
 │   └── summary.py            # 汇总主表
@@ -26,7 +29,7 @@
 │   ├── voicemark/            # VoiceMark（含 SpeechTokenizer）
 │   ├── wmcodec/              # WMCodec
 │   └── timbrewm/             # TimbreWM（含 HiFi-GAN）
-├── data/                     # 论文定稿数值快照（103 个 CSV + stats_all.txt）
+├── data/                     # 论文定稿数值快照（n=300，见 DATA_INVENTORY.md）
 ├── tools/                    # 辅助工具
 │   ├── eval/                 # 可选：独立音频质量评估（AudioEval，PESQ/STOI/SI-SDR/ViSQOL）
 │   └── prepare_libritts16k.py  # 从 LibriTTS test-clean 精确生成 libritts16k 数据集
@@ -79,25 +82,49 @@ python tools/prepare_libritts16k.py \
 
 要求：每个说话人至少 1 个 `{spk}_*.wav`；加载时取该说话人时长最长的文件（`src/registry.py` 的 `clean_path_v19`）；wavmark 嵌入要求音频 ≥ 约 2s。
 
+## 方法命名
+
+代码内部方法名（CSV `method` 列、函数名）与论文正文命名的对应关系：
+
+| 代码内部名 | 论文命名 | 脚本 | 性质 |
+|---|---|---|---|
+| `mean` | Mean | `attack.py` | 盲攻击 |
+| `fwp` | FWP（farthest waveform pair） | `attack.py` | 盲攻击 |
+| `rp` | RP（random pair） | `rp.py` | 盲攻击对照 |
+| `eep` | EEP（energy-extreme pair） | `eep.py` | 盲攻击对照 |
+| `dm` | DM（dispersion maximization） | `blind_distance.py` | 盲攻击 |
+| `bdb` | BDB（blind distance balancing） | `blind_minimax.py` | 盲攻击 |
+| `pgr` | PGR（payload geometry reference） | `pgr.py` | **评估参照，非盲攻击**（用真实 payload Gram，只用于诊断"payload 知情能多赚多少"） |
+| `tct` | TCT（targeted convex tampering） | `framing.py` | 篡改（payload-aware） |
+
+`src/convex.py` 中的 `blind_gram_cb`（盲估计 Gram 的 CB 方法）**不在论文正文方法家族表中**，本轮不产出对应的 `data/` 数据，仅作为历史参照代码保留在 `src/convex.py`。
+
 ## 复现
 
 每个脚本单独产出对应 CSV，结果写入 `results/evaluation/`（首次运行自动创建）。计算设备默认 `cuda:0`，可用环境变量 `WATERMARK_DEVICE` 覆盖（如 `WATERMARK_DEVICE=cpu`）。
 
 ```bash
-# 攻击主表（mean / blind_gram_cb / extreme_pair，150 trial）
-python scripts/attack.py --model audioseal --K 5 --n_trials 150
+# 攻击主表（mean / fwp，300 trial）
+python scripts/attack.py --model audioseal --K 5 --n_trials 300
 
-# 经典 baseline（median/min/max/rand_minmax/copy_paste，150 trial）
-python scripts/baselines.py --model audioseal --K 5 --n_trials 150
+# RP / EEP 对照（均匀随机配对 / 能量极值配对，300 trial）
+python scripts/rp.py --model audioseal --K 5 --n_trials 300
+python scripts/eep.py --model audioseal --K 5 --n_trials 300
 
-# 盲方法：两两波形距离矩阵（精确变换）
-python scripts/blind_distance.py --model audioseal --K 5 --n_trials 150
+# 经典 baseline（median/min/max/rand_minmax/copy_paste，300 trial）
+python scripts/baselines.py --model audioseal --K 5 --n_trials 300
 
-# 盲方法：minimax 距离
-python scripts/blind_minimax.py --model audioseal --K 5 --n_trials 150
+# 盲方法：DM（两两波形距离矩阵，精确变换）
+python scripts/blind_distance.py --model audioseal --K 5 --n_trials 300
 
-# 篡改（payload-aware，mean / framing_cb）
-python scripts/framing.py --model audioseal --K 5 --n_trials 150
+# 盲方法：BDB（blind distance balancing）
+python scripts/blind_minimax.py --model audioseal --K 5 --n_trials 300
+
+# PGR（payload-aware 参照，评估用，非盲攻击）
+python scripts/pgr.py --model audioseal --K 5 --n_trials 300
+
+# 篡改（payload-aware，mean / tct）
+python scripts/framing.py --model audioseal --K 5 --n_trials 300
 
 # 脉冲噪声对照（Kiyavash & Moulin）
 python scripts/pulse_noise.py --model audioseal --K 5 --n_trials 50

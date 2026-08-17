@@ -1,18 +1,15 @@
-"""盲 minimax 攻击方法（全盲，不用 payload）。
+"""BDB（Blind Distance Balancing）：盲 minimax 攻击方法（全盲，不用 payload）。
 
-min_α max_i [Ĝα]_i，其中 Ĝ 是盲估计的码字 Gram（成员 i 的残留证据强度）。
-目标：让"最强的成员证据"最小（最坏情况最小化）。
+max_a min_i [Dα]_i，等价于本实现中最小化的 min_a max_i[-Dα]_i（LSE 光滑近似），
+其中 D 是两两波形距离矩阵（精确，非估计）。目标：让"最弱的成员证据"最大化
+（最坏情况均衡，避免某个成员的残留证据独大）。
 
-盲 Gram 来源（与 blind_dist_cb 一致的精确变换）：
-  两两波形距离 D_ij = ||x_i - x_j||²，在成员能量近似相等假设下
-  D = const - 2G，故 G ≈ -(D - const)/2。用 Ĝ = -D（常数项在 sum(a)=1 下不影响 argmin）。
+因此 BDB = min_a max_i [-D α]_i = min_a max_i [- (Dα)_i]，
+这里直接用 min_a max_i[-Dα]_i 的 LSE 光滑近似求解。
 
-因此盲 minimax = min_a max_i [-D α]_i = min_a max_i [- (Dα)_i]，
-即最小化"最大距离加权和"的负值 = 最大化最小... 这里直接用 min_a max_i[-Dα]_i 的 LSE 光滑近似。
+等价地：min_a LSE_i(-Dα)，多起点 + FWP warm start。
 
-等价地：min_a LSE_i(-Dα)，多起点 + extreme_pair warm start。
-
-用法：python scripts/blind_minimax.py --model timbrewm --K 5 --n_trials 150
+用法：python scripts/blind_minimax.py --model timbrewm --K 5 --n_trials 300
 """
 from __future__ import annotations
 import argparse
@@ -47,7 +44,7 @@ def dist_matrix(wavs):
     return D
 
 
-def extreme_pair(wavs, K):
+def fwp(wavs, K):
     best_e = -1
     bp = None
     for i in range(K):
@@ -61,7 +58,7 @@ def extreme_pair(wavs, K):
     return a
 
 
-def blind_minimax_weights(wavs, cap=0.5, n_random_starts=5):
+def bdb_weights(wavs, cap=0.5, n_random_starts=5):
     """min_a max_i[-Dα]_i = min_a LSE(-Dα)，盲（只用波形距离）。"""
     D = dist_matrix(wavs)
     K = D.shape[0]
@@ -77,7 +74,7 @@ def blind_minimax_weights(wavs, cap=0.5, n_random_starts=5):
     cons = [{"type": "eq", "fun": lambda a: np.sum(a) - 1.0}]
     bounds = [(0, cap)] * K
 
-    starts = [np.full(K, 1.0 / K), extreme_pair(wavs, K)]
+    starts = [np.full(K, 1.0 / K), fwp(wavs, K)]
     rng = np.random.default_rng(0)
     for _ in range(n_random_starts):
         idx = rng.choice(K, size=min(K, int(np.ceil(1 / cap))), replace=False)
@@ -132,7 +129,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--K", type=int, required=True)
-    ap.add_argument("--n_trials", type=int, default=150)
+    ap.add_argument("--n_trials", type=int, default=300)
     args = ap.parse_args()
 
     model = args.model
@@ -140,7 +137,7 @@ def main():
     d = NBITS[model]
     registry_bits = full_registry_bits(model)
     trial_idx = speaker_trial_index(n_total=args.n_trials)
-    out_csv = RESULTS / f"blind_minimax_cb_{model}_K{K}.csv"
+    out_csv = RESULTS / f"bdb_{model}_K{K}.csv"
 
     rows = []
     t_start = time.time()
@@ -151,7 +148,7 @@ def main():
         n = min(len(w) for w in wavs)
         wavs = [w[:n] for w in wavs]
 
-        a = blind_minimax_weights(wavs, CAP)
+        a = bdb_weights(wavs, CAP)
         y = sum(a[i] * wavs[i] for i in range(K)).astype(np.float32)
         asr, r3e, r5e, acc = metrics_of(model, y, coll_ints, registry_bits, d)
 
@@ -161,7 +158,7 @@ def main():
         sdr = si_sdr(wm_ref, y)
         rows.append({
             "model": model, "K": K, "spk": spk, "local_t": local_t, "gi": gi,
-            "method": "blind_minimax_cb",
+            "method": "bdb",
             "ASR": asr, "R3_escape": r3e, "R5_escape": r5e,
             "ACC_near": "" if acc is None else acc,
             "ACC_near_norm": "" if acc is None else f"{acc/d:.4f}",
@@ -179,7 +176,7 @@ def main():
     asrs = [r["ASR"] for r in rows]
     r5s = [r["R5_escape"] for r in rows]
     accs = [float(r["ACC_near_norm"]) for r in rows if r["ACC_near_norm"] != ""]
-    print(f"\n=== {model} K={K} 盲minimax（n={len(trial_idx)}）===")
+    print(f"\n=== {model} K={K} BDB（n={len(trial_idx)}）===")
     print(f"  ASR={np.mean(asrs):.3f}  R5_escape={np.mean(r5s):.3f}  ACC_near_norm={np.mean(accs):.3f}")
 
 

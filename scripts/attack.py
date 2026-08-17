@@ -1,6 +1,8 @@
-"""攻击主脚本：全空间注册表 + 多说话人（38人）+ 150 trial 均匀分配。
+"""攻击主脚本：全空间注册表 + 多说话人（38人）+ 300 trial 均匀分配。
 
-方法：mean / blind_gram_cb / extreme_pair（核心三方法，全部盲）
+方法：Mean / FWP（farthest waveform pair，核心两方法，全部盲）。
+注：盲估计Gram的 blind_gram_cb 方法不在论文正文方法家族表中（详见 README），
+本脚本不再产出该方法的数据。
 指标：
   - ASR：top-1 逃逸率（P[top1 not in coalition]）
   - R@3 / R@5：top-K 候选名单逃逸率（P[topK ∩ coalition = empty]），取证兜底能力
@@ -22,16 +24,15 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from registry import (  # noqa: E402
-    NBITS, CAP, get_or_embed, full_registry_bits,
+    NBITS, get_or_embed, full_registry_bits,
     speaker_trial_index, coalition_seed, sample_coalition,
 )
 from watermarks import detect, pesq_wb, stoi, si_sdr  # noqa: E402
-from convex import blind_cb_weights  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 
 
-def extreme_pair(wavs, K):
+def fwp(wavs, K):
     best_e = -1
     bp = None
     for i in range(K):
@@ -90,7 +91,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--K", type=int, required=True)
-    ap.add_argument("--n_trials", type=int, default=150)
+    ap.add_argument("--n_trials", type=int, default=300)
     args = ap.parse_args()
 
     model = args.model
@@ -111,14 +112,13 @@ def main():
         wavs = [w[:n] for w in wavs]
 
         a_mean = np.ones(K) / K
-        a_gram = blind_cb_weights(wavs, CAP)  # 盲 CB：只用波形残差，不用 payload
-        a_pair = extreme_pair(wavs, K)
+        a_pair = fwp(wavs, K)
 
-        # 固定取 coalition 里的第一个成员做音质参照（不随机，同一 trial 内 mean/cb/extreme_pair
-        # 三个方法共用同一个参照成员，保证组内可比）
+        # 固定取 coalition 里的第一个成员做音质参照（不随机，同一 trial 内 mean/fwp
+        # 两个方法共用同一个参照成员，保证组内可比）
         wm_ref = wavs[0]
 
-        for mname, a in [("mean", a_mean), ("blind_gram_cb", a_gram), ("extreme_pair", a_pair)]:
+        for mname, a in [("mean", a_mean), ("fwp", a_pair)]:
             y = sum(a[i] * wavs[i] for i in range(K)).astype(np.float32)
             asr, r3e, r5e, acc, agg = metrics_of(model, y, coll_ints, registry_bits, a, d)
             # PESQ/STOI/SI-SDR 参照随机挑中的那个合谋者的水印音频（不是 clean）
@@ -144,7 +144,7 @@ def main():
         w.writerows(rows)
 
     print(f"\n=== {model} K={K} 汇总（全空间注册表, 38说话人, n={len(trial_idx)}）===")
-    for m in ["mean", "blind_gram_cb", "extreme_pair"]:
+    for m in ["mean", "fwp"]:
         asrs = [r["ASR"] for r in rows if r["method"] == m]
         r5s = [r["R5_escape"] for r in rows if r["method"] == m]
         accs = [r["ACC_near_norm"] for r in rows if r["method"] == m and r["ACC_near_norm"] != ""]

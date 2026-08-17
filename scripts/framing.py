@@ -1,13 +1,13 @@
-"""篡改（framing）主脚本：全空间注册表 + 多说话人 + opportunistic 目标。
+"""TCT（Targeted Convex Tampering）主脚本：全空间注册表 + 多说话人 + opportunistic 目标。
 
 口径（用户确认）：
 - 篡改 = payload-aware（知道 target payload）
 - 目标选择 = opportunistic：从注册表里选几何最近、最容易篡改的 target
-- 方法：mean（baseline） vs framing_cb（`argmin‖Cᵀa−c_t‖²`）
+- 方法：mean（baseline） vs tct（`argmin‖Cᵀa−c_t‖²`）
 
 指标：target_top1（top-1 是否命中指定 target），单候选 + N 候选 ≥1 两种口径。
 
-用法：python scripts/framing.py --model timbrewm --K 5 --n_trials 150
+用法：python scripts/framing.py --model timbrewm --K 5 --n_trials 300
 """
 from __future__ import annotations
 import argparse
@@ -32,7 +32,7 @@ RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 N_CAND = 10  # opportunistic 候选数
 
 
-def framing_cb(C, c_t, cap=0.5):
+def tct(C, c_t, cap=0.5):
     """payload-aware 篡改：a* = argmin ||Cᵀa − c_t||²。"""
     K = C.shape[0]
     def obj(a):
@@ -60,7 +60,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--K", type=int, required=True)
-    ap.add_argument("--n_trials", type=int, default=150)
+    ap.add_argument("--n_trials", type=int, default=300)
     args = ap.parse_args()
 
     model = args.model
@@ -99,7 +99,7 @@ def main():
         for q_t in cands:
             c_t = int_to_bits(q_t, d)
             wm_ref = wavs[0]
-            for mname, a in [("mean", np.ones(K) / K), ("framing_cb", framing_cb(C, c_t, CAP))]:
+            for mname, a in [("mean", np.ones(K) / K), ("tct", tct(C, c_t, CAP))]:
                 y = sum(a[i] * wavs[i] for i in range(K)).astype(np.float32)
                 scores, _, _ = detect(model, y, registry_bits)
                 # top1 转 codeword int 与 q_t 比较
@@ -121,16 +121,16 @@ def main():
 
     # 汇总：单候选平均命中率 + 每 trial N候选≥1
     print(f"\n=== {model} K={K} 篡改汇总（opportunistic, n={len(trial_idx)}）===")
-    for m in ["mean", "framing_cb"]:
+    for m in ["mean", "tct"]:
         v = [r["target_top1"] for r in rows if r["method"] == m]
         print(f"  {m:12s}: 单候选命中率={np.mean(v)*100:.1f}%")
     # 每 trial ≥1 命中
     by_trial = {}
     for r in rows:
-        if r["method"] == "framing_cb":
+        if r["method"] == "tct":
             by_trial.setdefault((r["spk"], r["local_t"]), []).append(r["target_top1"])
     any_hit = [1 if max(v) == 1 else 0 for v in by_trial.values()]
-    print(f"  framing_cb  N候选≥1命中率={np.mean(any_hit)*100:.1f}%")
+    print(f"  tct  N候选≥1命中率={np.mean(any_hit)*100:.1f}%")
 
 
 if __name__ == "__main__":
