@@ -12,8 +12,10 @@
 from __future__ import annotations
 import argparse
 import csv
+import os
 import sys
 import time
+import uuid
 from pathlib import Path
 
 import numpy as np
@@ -26,10 +28,37 @@ from registry import (  # noqa: E402
     speaker_trial_index, coalition_seed, sample_coalition,
     int_to_bits, full_registry_size,
 )
-from watermarks import detect  # noqa: E402
+from watermarks import detect, detect_wavmark_many, get_wavmark  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 N_CAND = 10  # opportunistic 候选数
+
+
+def write_rows_atomic(path, rows):
+    """Publish a complete CSV atomically so a restart never reads a partial row."""
+    if not rows:
+        return
+    tmp = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
+    with tmp.open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        w.writeheader()
+        w.writerows(rows)
+    os.replace(tmp, path)
+
+
+def load_completed_trials(partial_csv):
+    """Load only full 10-target / two-method trial records from a checkpoint."""
+    if not partial_csv.exists():
+        return [], set()
+    with partial_csv.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    by_trial = {}
+    for row in rows:
+        by_trial.setdefault(int(row["gi"]), []).append(row)
+    expected = 2 * N_CAND
+    completed = {gi for gi, trial_rows in by_trial.items() if len(trial_rows) == expected}
+    rows = [row for row in rows if int(row["gi"]) in completed]
+    return rows, completed
 
 
 def tct(C, c_t, cap=0.5):
@@ -56,6 +85,41 @@ def convex_dist(C, c_t):
     return float(np.sqrt(obj(res.x)))
 
 
+def convex_dist_batch_exact(C, targets):
+    """Exact distances from many targets to conv(C), for K <= 8.
+
+    The nearest point lies in the relative interior of some face.  Enumerating
+    all nonempty faces and solving their equality-constrained projections in
+    batch is equivalent to the SLSQP formulation above, but avoids one Python
+    optimizer call per candidate target.
+    """
+    C = np.asarray(C, dtype=np.float64)
+    targets = np.asarray(targets, dtype=np.float64)
+    K, _ = C.shape
+    n = len(targets)
+    best_sq = np.full(n, np.inf, dtype=np.float64)
+    for mask in range(1, 1 << K):
+        ids = [i for i in range(K) if mask & (1 << i)]
+        P = C[ids]  # [face_size, d]
+        s = len(ids)
+        # min_a ||P.T a - x||^2 subject to 1.T a = 1, for every x at once.
+        kkt = np.empty((s + 1, s + 1), dtype=np.float64)
+        kkt[:s, :s] = P @ P.T
+        kkt[:s, s] = 1.0
+        kkt[s, :s] = 1.0
+        kkt[s, s] = 0.0
+        rhs = np.vstack((P @ targets.T, np.ones((1, n))))
+        sol = np.linalg.lstsq(kkt, rhs, rcond=None)[0]
+        a = sol[:s]
+        valid = np.all(a >= -1e-9, axis=0)
+        if not np.any(valid):
+            continue
+        proj = a.T @ P
+        dist_sq = np.sum((proj - targets) ** 2, axis=1)
+        best_sq[valid] = np.minimum(best_sq[valid], dist_sq[valid])
+    return np.sqrt(best_sq)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
@@ -70,11 +134,18 @@ def main():
     registry_bits = full_registry_bits(model)
 
     trial_idx = speaker_trial_index(n_total=args.n_trials)
+    RESULTS.mkdir(parents=True, exist_ok=True)
     out_csv = RESULTS / f"tamper_{model}_K{K}.csv"
-    rows = []
+    partial_csv = RESULTS / f"tamper_{model}_K{K}.partial.csv"
+    rows, completed = load_completed_trials(partial_csv)
+    if completed:
+        print(f"  resuming {model} K={K}: {len(completed)}/{len(trial_idx)} trials from {partial_csv.name}",
+              flush=True)
     t_start = time.time()
 
     for gi, (spk, local_t) in enumerate(trial_idx):
+        if gi in completed:
+            continue
         rng = np.random.default_rng(coalition_seed(spk, K, local_t))
         coll_ints = sample_coalition(rng, model, K)
         wavs = [get_or_embed(model, spk, ci) for ci in coll_ints]
@@ -89,35 +160,52 @@ def main():
         cand_ids = [ci for ci in range(reg_size) if ci not in coll_set]
         rng_sub = np.random.default_rng(coalition_seed(spk, K, local_t) + 999)
         sample_ids = rng_sub.choice(cand_ids, size=min(subset_size, len(cand_ids)), replace=False)
-        cand = []
-        for ci in sample_ids:
-            cand.append((convex_dist(C, int_to_bits(ci, d)), ci))
-        cand.sort(key=lambda x: x[0])
-        cands = [ci for _, ci in cand[:N_CAND]]
+        cand_dist = convex_dist_batch_exact(C, registry_bits[sample_ids])
+        cands = sample_ids[np.argsort(cand_dist)[:N_CAND]].tolist()
 
-        # 每个候选 target：mean / framing_cb，测 target_top1
+        # Mean output is independent of the target.  Decode it once, then
+        # compare that same top-1 identity against every opportunistic target.
+        # This is exactly equivalent to the previous inner-loop calculation.
+        mean_a = np.ones(K) / K
+        mean_y = sum(mean_a[i] * wavs[i] for i in range(K)).astype(np.float32)
+
+        # Each target still needs an independent TCT optimization.  WavMark
+        # then decodes the resulting waveforms in a shared sliding-window batch.
+        tct_outputs = []
         for q_t in cands:
             c_t = int_to_bits(q_t, d)
-            wm_ref = wavs[0]
-            for mname, a in [("mean", np.ones(K) / K), ("tct", tct(C, c_t, CAP))]:
-                y = sum(a[i] * wavs[i] for i in range(K)).astype(np.float32)
-                scores, _, _ = detect(model, y, registry_bits)
-                # top1 转 codeword int 与 q_t 比较
-                top1_idx = int(np.argsort(scores)[::-1][0])
-                top1_int = int((registry_bits[top1_idx] @ (2 ** np.arange(d))).sum())
-                tt1 = int(top1_int == q_t)
-                rows.append({
-                    "model": model, "K": K, "spk": spk, "local_t": local_t, "gi": gi,
-                    "target": q_t, "method": mname, "target_top1": tt1,
-                })
-        if (gi + 1) % 30 == 0:
-            print(f"  {model} K={K}: {gi+1}/{len(trial_idx)} ({time.time()-t_start:.0f}s)", flush=True)
+            a = tct(C, c_t, CAP)
+            tct_outputs.append(sum(a[i] * wavs[i] for i in range(K)).astype(np.float32))
 
-    RESULTS.mkdir(parents=True, exist_ok=True)
-    with open(out_csv, "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-        w.writeheader()
-        w.writerows(rows)
+        if model == "wavmark":
+            decoded = detect_wavmark_many(
+                get_wavmark(), [mean_y, *tct_outputs], registry_bits)
+        else:
+            decoded = [detect(model, mean_y, registry_bits)]
+            decoded.extend(detect(model, y, registry_bits) for y in tct_outputs)
+
+        mean_scores, _, _ = decoded[0]
+        mean_top1_idx = int(np.argsort(mean_scores)[::-1][0])
+        mean_top1_int = int((registry_bits[mean_top1_idx] @ (2 ** np.arange(d))).sum())
+        for q_t, (scores, _, _) in zip(cands, decoded[1:]):
+            rows.append({
+                "model": model, "K": K, "spk": spk, "local_t": local_t, "gi": gi,
+                "target": q_t, "method": "mean", "target_top1": int(mean_top1_int == q_t),
+            })
+            # top1 转 codeword int 与 q_t 比较
+            top1_idx = int(np.argsort(scores)[::-1][0])
+            top1_int = int((registry_bits[top1_idx] @ (2 ** np.arange(d))).sum())
+            rows.append({
+                "model": model, "K": K, "spk": spk, "local_t": local_t, "gi": gi,
+                "target": q_t, "method": "tct", "target_top1": int(top1_int == q_t),
+            })
+        if (gi + 1) % 10 == 0:
+            write_rows_atomic(partial_csv, rows)
+            print(f"  {model} K={K}: {gi+1}/{len(trial_idx)} checkpointed ({time.time()-t_start:.0f}s)",
+                  flush=True)
+
+    write_rows_atomic(partial_csv, rows)
+    write_rows_atomic(out_csv, rows)
 
     # 汇总：单候选平均命中率 + 每 trial N候选≥1
     print(f"\n=== {model} K={K} 篡改汇总（opportunistic, n={len(trial_idx)}）===")

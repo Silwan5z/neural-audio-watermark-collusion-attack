@@ -56,7 +56,7 @@ pip install -r requirements.txt
 | WavMark | 无需手动（`pip install wavmark` 权重内置）| [WavMark](https://arxiv.org/abs/2308.12770)（MIT）|
 | VoiceMark | `voicemark.pth` → `third_party/voicemark/`；`SpeechTokenizer.pt` → `third_party/voicemark/speechtokenizer/pretrained_model/` | [VoiceMark: Zero-Shot Voice Cloning-Resistant Watermarking Approach Leveraging Speaker-Specific Latents](https://arxiv.org/abs/2505.21568)（Interspeech 2025）|
 | WMCodec | `g_00150000` → `third_party/wmcodec/save_model/` | [WMCodec: End-to-End Neural Speech Codec with Deep Watermarking for Authenticity Verification](https://arxiv.org/abs/2409.12121) |
-| TimbreWM | `compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar` → `third_party/timbrewm/results/ckpt/pth/` | [TimbreWM](https://arxiv.org/abs/2312.03410) |
+| TimbreWM | `compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar` → `third_party/timbrewm/results/ckpt/pth/`；`generator_v1` → `third_party/timbrewm/hifigan/model/VCTK_V1/` | [官方代码与权重](https://github.com/TimbreWatermarking/TimbreWatermarking) |
 
 ## 数据集
 
@@ -81,6 +81,18 @@ python tools/prepare_libritts16k.py \
 ```
 
 要求：每个说话人至少 1 个 `{spk}_*.wav`；加载时取该说话人时长最长的文件（`src/registry.py` 的 `clean_path_v19`）；wavmark 嵌入要求音频 ≥ 约 2s。
+
+### 当前本地实验集（已配置）
+
+本工作目录已配置 `dataset/collusion_300/`：English（LibriSpeech train-clean-100）和 Chinese（AISHELL-3）各 50 位说话人、每人 3 条，合计 300 条。所有文件均为单声道 16 kHz、10 秒 PCM WAV；`manifest.csv` 记录可追溯源文件。`src/registry.py` 已自动识别该清单，因此直接运行实验即可，无需再执行上面的 LibriTTS 准备脚本。
+
+在此机器上使用已建好的虚拟环境：
+
+```bash
+source /private/users/lym/venv/bin/activate
+export PYTHONPATH=src
+export WATERMARK_DEVICE=cuda:0  # 可改为 cuda:1 至 cuda:6
+```
 
 ## 方法命名
 

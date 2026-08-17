@@ -40,7 +40,7 @@ from registry import (  # noqa: E402
     NBITS, get_or_embed, full_registry_bits,
     speaker_trial_index, coalition_seed, sample_coalition,
 )
-from watermarks import detect, pesq_wb, stoi, si_sdr  # noqa: E402
+from watermarks import detect, detect_many, pesq_wb, stoi, si_sdr  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 BLOCK_LEN = 320  # 20ms @ 16kHz
@@ -87,8 +87,8 @@ def _rows_to_ints(row_idx, registry_bits):
     return (registry_bits[row_idx] @ weights).tolist()
 
 
-def metrics_of(model, y, coll_ints, registry_bits, d):
-    scores, _, hard = detect(model, y.astype(np.float32), registry_bits)
+def metrics_of(model, y, coll_ints, registry_bits, d, decoded=None):
+    scores, _, hard = decoded if decoded is not None else detect(model, y.astype(np.float32), registry_bits)
     rank = np.argsort(scores)[::-1]
     coll_set = set(coll_ints)
 
@@ -146,9 +146,11 @@ def main():
             "copy_paste": copy_paste_mix(wavs, mix_rng),
         }
 
-        for mname, y in methods.items():
+        method_items = list(methods.items())
+        decoded_outputs = detect_many(model, [y.astype(np.float32) for _, y in method_items], registry_bits)
+        for (mname, y), decoded in zip(method_items, decoded_outputs):
             y = y.astype(np.float32)
-            asr, r3e, r5e, acc = metrics_of(model, y, coll_ints, registry_bits, d)
+            asr, r3e, r5e, acc = metrics_of(model, y, coll_ints, registry_bits, d, decoded)
             pesq = pesq_wb(wm_ref, y)
             st = stoi(wm_ref, y)
             sdr = si_sdr(wm_ref, y)

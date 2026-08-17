@@ -21,7 +21,7 @@ from registry import (  # noqa: E402
     speaker_trial_index, coalition_seed, sample_coalition,
     int_to_bits, full_registry_size,
 )
-from watermarks import detect  # noqa: E402
+from watermarks import detect_many  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 EPS = [0.0, 0.001, 0.01, 0.05]
@@ -66,17 +66,31 @@ def main():
         a_mean = np.ones(K) / K
         y_mean = sum(a_mean[i] * wavs[i] for i in range(K)).astype(np.float32)
 
+        conditions = []
+        # eps=0 is deliberately listed for every r0 in the CSV, but all three
+        # rows are the identical waveform.  Decode it once and reuse the exact
+        # same result rather than spending three WavMark passes on it.
+        unique_outputs = [y_mean]
+        condition_output_idx = []
         for eps in EPS:
             for r0 in R0S:
                 y = y_mean if eps == 0.0 else add_impulsive(y_mean, eps, r0, rng)
-                scores, _, _ = detect(model, y, registry_bits)
-                top1_idx = int(np.argsort(scores)[::-1][0])
-                top1_int = int((registry_bits[top1_idx] @ (2 ** np.arange(d))).sum())
-                asr = int(top1_int not in coll_set)
-                rows.append({
-                    "model": model, "K": K, "spk": spk, "local_t": local_t,
-                    "eps": eps, "r0": r0, "ASR": asr,
-                })
+                conditions.append((eps, r0, y))
+                if eps == 0.0:
+                    condition_output_idx.append(0)
+                else:
+                    condition_output_idx.append(len(unique_outputs))
+                    unique_outputs.append(y)
+        decoded_unique = detect_many(model, unique_outputs, registry_bits)
+        for (eps, r0, _), output_idx in zip(conditions, condition_output_idx):
+            scores, _, _ = decoded_unique[output_idx]
+            top1_idx = int(np.argsort(scores)[::-1][0])
+            top1_int = int((registry_bits[top1_idx] @ (2 ** np.arange(d))).sum())
+            asr = int(top1_int not in coll_set)
+            rows.append({
+                "model": model, "K": K, "spk": spk, "local_t": local_t,
+                "eps": eps, "r0": r0, "ASR": asr,
+            })
         if (gi + 1) % 20 == 0:
             print(f"  {model} K={K}: {gi+1}/{len(trial_idx)} ({time.time()-t_start:.0f}s)", flush=True)
 

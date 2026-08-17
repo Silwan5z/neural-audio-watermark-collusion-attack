@@ -7,8 +7,12 @@
 """
 from __future__ import annotations
 
+import csv
+import hashlib
 import json
+import os
 import sys
+import uuid
 from pathlib import Path
 
 import numpy as np
@@ -22,14 +26,15 @@ CACHE_DIR = Path(__file__).resolve().parent.parent / "cache"
 NBITS = {"audioseal": 16, "timbrewm": 10, "wavmark": 16, "voicemark": 16, "wmcodec": 16}
 CAP = 0.5
 
-# ── 38 个说话人（libritts16k 现有全部 39 人，排除说话人 61：唯一候选音频仅 0.81s，
-#    低于 wavmark 嵌入所需最小 chunk 长度约 2s，其余四个模型不受影响）──
-SPEAKERS_38 = ["121", "237", "260", "672", "908", "1089", "1188", "1221", "1284",
-               "1320", "1580", "1995", "2300", "2830", "2961", "3570", "3575", "3729",
-               "4077", "4446", "4507", "4970", "4992", "5105", "5142", "5639", "5683",
-               "6829", "6930", "7021", "7127", "7176", "7729", "8224", "8230", "8455",
-               "8463", "8555"]
-assert len(SPEAKERS_38) == 38
+MANIFEST = REAL_ANALYSIS / "collusion_300" / "manifest.csv"
+
+
+def speakers():
+    """Return the 100 bilingual speakers from the generated manifest."""
+    if not MANIFEST.exists():
+        raise FileNotFoundError(f"missing dataset manifest: {MANIFEST}")
+    with MANIFEST.open(encoding="utf-8", newline="") as f:
+        return sorted({f"{r['language']}:{r['speaker_id']}" for r in csv.DictReader(f)})
 
 
 def trials_per_speaker_plan(n_total=300, n_spk=38):
@@ -40,11 +45,15 @@ def trials_per_speaker_plan(n_total=300, n_spk=38):
     return [q + 1 if i < r else q for i in range(n_spk)]
 
 
-def speaker_trial_index(n_total=300, n_spk=38):
+def speaker_trial_index(n_total=300, n_spk=None):
     """返回长度 n_total 的列表，每个元素是 (spk, local_t)，local_t 是该说话人内部的 trial 编号。"""
+    spks = speakers()
+    n_spk = len(spks) if n_spk is None else n_spk
+    if n_spk != len(spks):
+        raise ValueError(f"requested {n_spk} speakers but dataset has {len(spks)}")
     counts = trials_per_speaker_plan(n_total, n_spk)
     out = []
-    for spk, c in zip(SPEAKERS_38, counts):
+    for spk, c in zip(spks, counts):
         for local_t in range(c):
             out.append((spk, local_t))
     assert len(out) == n_total
@@ -53,18 +62,19 @@ def speaker_trial_index(n_total=300, n_spk=38):
 
 def coalition_seed(spk, K, local_t):
     """与 v18 的 coalition_seed 保持同一形式，但输入是每说话人内部的 local_t。"""
-    return (int(spk) * 100000 + K * 1000 + local_t + 42) % (2 ** 31)
+    h = int.from_bytes(hashlib.sha256(spk.encode("utf-8")).digest()[:4], "little")
+    return (h * 100000 + K * 1000 + local_t + 42) % (2 ** 31)
 
 
 def clean_path_v19(spk):
     """clean 路径：libritts16k 目录里该说话人时长最长的文件（不是排序后第一个）。
     发现说话人 61 唯一的候选文件只有 0.81s，短于 wavmark 嵌入所需的最小 chunk 长度（约2s），
     必须选最长文件而不是任意/首个文件，否则 wavmark embed 会断言失败。"""
-    import soundfile as _sf
-    cands = sorted(REAL_ANALYSIS.glob(f"libritts16k/{spk}_*.wav"))
+    language, speaker_id = spk.split(":", 1)
+    cands = sorted((REAL_ANALYSIS / "collusion_300" / language / speaker_id).glob("*.wav"))
     if not cands:
         raise FileNotFoundError(f"未找到说话人 {spk} 的 clean 音频")
-    durs = [(_sf.info(str(p)).frames / _sf.info(str(p)).samplerate, p) for p in cands]
+    durs = [(sf.info(str(p)).frames / sf.info(str(p)).samplerate, p) for p in cands]
     return max(durs, key=lambda x: x[0])[1]
 
 
@@ -91,12 +101,23 @@ def get_or_embed(model, spk, codeword_int):
     d = NBITS[model]
     cache_path = CACHE_DIR / model / spk / f"{codeword_int}.wav"
     if cache_path.exists():
-        return sf.read(cache_path, dtype="float32")[0]
+        # Several GPU workers can request a shared payload simultaneously.
+        # Only accept a complete, finite cache file; otherwise regenerate it.
+        try:
+            cached, sr = sf.read(cache_path, dtype="float32")
+            if sr == 16000 and len(cached) >= 16000 and np.isfinite(cached).all():
+                return cached
+        except RuntimeError:
+            pass
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     clean = load_clean(spk)
     bits = int_to_bits(codeword_int, d).tolist()
     wm = embed(model, clean, bits)
-    sf.write(cache_path, wm, 16000, subtype="FLOAT")
+    # Publish atomically: readers observe either an existing valid WAV or the
+    # fully written replacement, never a partial header/body.
+    tmp_path = cache_path.parent / f".{codeword_int}.{uuid.uuid4().hex}.wav"
+    sf.write(tmp_path, wm, 16000, subtype="FLOAT")
+    os.replace(tmp_path, cache_path)
     return wm
 
 

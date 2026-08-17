@@ -27,7 +27,7 @@ from registry import (  # noqa: E402
     NBITS, get_or_embed, full_registry_bits,
     speaker_trial_index, coalition_seed, sample_coalition,
 )
-from watermarks import detect, pesq_wb, stoi, si_sdr  # noqa: E402
+from watermarks import detect, detect_many, pesq_wb, stoi, si_sdr  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 
@@ -46,9 +46,9 @@ def fwp(wavs, K):
     return a
 
 
-def metrics_of(model, y, coll_ints, registry_bits, a, d):
+def metrics_of(model, y, coll_ints, registry_bits, a, d, decoded=None):
     """返回 (asr, r3_escape, r5_escape, acc_near, agg_resid)。"""
-    scores, _, hard = detect(model, y.astype(np.float32), registry_bits)
+    scores, _, hard = decoded if decoded is not None else detect(model, y.astype(np.float32), registry_bits)
     rank = np.argsort(scores)[::-1]
     coll_set = set(coll_ints)
 
@@ -118,9 +118,12 @@ def main():
         # 两个方法共用同一个参照成员，保证组内可比）
         wm_ref = wavs[0]
 
-        for mname, a in [("mean", a_mean), ("fwp", a_pair)]:
-            y = sum(a[i] * wavs[i] for i in range(K)).astype(np.float32)
-            asr, r3e, r5e, acc, agg = metrics_of(model, y, coll_ints, registry_bits, a, d)
+        methods = [("mean", a_mean), ("fwp", a_pair)]
+        outputs = [sum(a[i] * wavs[i] for i in range(K)).astype(np.float32)
+                   for _, a in methods]
+        decoded_outputs = detect_many(model, outputs, registry_bits)
+        for (mname, a), y, decoded in zip(methods, outputs, decoded_outputs):
+            asr, r3e, r5e, acc, agg = metrics_of(model, y, coll_ints, registry_bits, a, d, decoded)
             # PESQ/STOI/SI-SDR 参照随机挑中的那个合谋者的水印音频（不是 clean）
             pesq = pesq_wb(wm_ref, y)
             st = stoi(wm_ref, y)

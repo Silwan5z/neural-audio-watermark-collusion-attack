@@ -255,18 +255,71 @@ def detect_voicemark(m, wm16k, codebook_bits):
 
 
 def detect_wavmark(m, wm16k, codebook_bits):
-    import wavmark
-    sig = wm16k.astype(np.float64)
-    pay, info = wavmark.decode_watermark(m["model"], sig, decode_batch_size=200,
-                                         len_start_bit=16, show_progress=False)
-    presence = float(len(info.get("results", [])) > 0)
-    hard = np.array(pay[:16], dtype=np.int8) if pay is not None else None
-    # WavMark 归 Partial：raw soft 未校准，soft 排名用 hard payload 的 Hamming 距离
-    if hard is not None:
-        scores = -np.abs(codebook_bits - hard[None, :]).sum(axis=1).astype(float)
-    else:
-        scores = np.zeros(len(codebook_bits))
-    return scores, presence, hard
+    """Single-signal wrapper for the batched WavMark implementation.
+
+    Keeping this public function means every existing WavMark experiment gets
+    the larger (400-window) GPU batches, including experiments with one output
+    per trial.  The windowing, start-pattern test and majority vote are exactly
+    the same as ``wavmark.decode_watermark``.
+    """
+    return detect_wavmark_many(m, [wm16k], codebook_bits)[0]
+
+
+def detect_wavmark_many(m, signals, codebook_bits, window_batch_size=400):
+    """Decode multiple WavMark signals by batching their sliding windows.
+
+    This mirrors ``wavmark.decode_watermark`` exactly: 1 s windows, 50 ms
+    shifts, exact 16-bit start-pattern matching, then majority voting.  The
+    only change is that windows from distinct outputs share GPU forward passes.
+    """
+    import torch
+    from wavmark.utils import wm_add_util
+
+    start_bit = np.asarray(wm_add_util.fix_pattern[:16], dtype=np.int8)
+    window, step = 16000, 800
+    windows, owners = [], []
+    for owner, sig in enumerate(signals):
+        sig = np.asarray(sig, dtype=np.float32)
+        total = (len(sig) - window) // step
+        for p in range(total):
+            windows.append(sig[p * step:p * step + window])
+            owners.append(owner)
+
+    # Keep the original per-window order, but do the start-pattern comparison
+    # for an entire GPU batch at once rather than in a Python loop.
+    owners = np.asarray(owners, dtype=np.intp)
+    matched = [[] for _ in signals]
+    for offset in range(0, len(windows), window_batch_size):
+        batch = np.stack(windows[offset:offset + window_batch_size])
+        with torch.no_grad():
+            bits = (m["model"].decode(torch.from_numpy(batch).to(m["dev"])) >= 0.5)
+            bits = bits.int().cpu().numpy()
+        owner_batch = owners[offset:offset + len(bits)]
+        keep = np.all(bits[:, :16] == start_bit[None, :], axis=1)
+        for owner in np.unique(owner_batch[keep]):
+            matched[int(owner)].extend(bits[keep & (owner_batch == owner)])
+
+    out = []
+    for hit in matched:
+        if hit:
+            voted = (np.asarray(hit).mean(axis=0) >= 0.5).astype(np.int8)
+            hard = voted[16:32]
+            scores = -np.abs(codebook_bits - hard[None, :]).sum(axis=1).astype(float)
+            out.append((scores, 1.0, hard))
+        else:
+            out.append((np.zeros(len(codebook_bits)), 0.0, None))
+    return out
+
+
+def detect_many(model, signals, codebook_bits):
+    """Decode several outputs from one trial without changing their semantics.
+
+    WavMark shares its sliding-window forward passes; other backends preserve
+    the previous one-output-at-a-time code path.
+    """
+    if model == "wavmark":
+        return detect_wavmark_many(get_wavmark(), signals, codebook_bits)
+    return [detect(model, signal, codebook_bits) for signal in signals]
 
 
 def detect_wmcodec(m, wm16k, codebook_bits):
