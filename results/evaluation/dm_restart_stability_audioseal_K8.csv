@@ -1,0 +1,2 @@
+model,K,n_trials,n_restarts,starts_per_restart,restart_cosine_mean,restart_cosine_median,all_start_cosine_mean,all_start_cosine_median,restart_objective_std_mean,detail_csv
+audioseal,8,20,4,7,0.994731,0.999796,0.970048,0.996983,0.0000000002,dm_restart_stability_detail_audioseal_K8.csv

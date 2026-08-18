@@ -1,0 +1,2 @@
+model,K,n_trials,n_restarts,starts_per_restart,restart_cosine_mean,restart_cosine_median,all_start_cosine_mean,all_start_cosine_median,restart_objective_std_mean,detail_csv
+voicemark,8,20,4,7,1.000000,1.000000,0.999998,1.000000,0.0000000000,dm_restart_stability_detail_voicemark_K8.csv
