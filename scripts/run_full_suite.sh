@@ -22,10 +22,18 @@ models=(audioseal wavmark voicemark wmcodec timbrewm)
 ks=(2 3 5 8)
 
 add_task() {
-    local script=$1 model=$2 k=$3 trials=$4 prefix=$5
+    local script=$1 model=$2 k=$3 trials=$4 prefix=$5 expected_rows=1 actual_rows
     local output="results/evaluation/${prefix}_${model}_K${k}.csv"
-    # A CSV is written only when a script completes, so it is safe to resume.
-    [[ -s "$output" ]] && return
+    # Smoke tests intentionally use the final filename.  For the two migrated
+    # multi-row scripts, require a full n=300-sized file before skipping it.
+    case "$prefix" in
+        evidence_chain) expected_rows=$((trials * 9)) ;;
+        framing_hull) expected_rows=$((trials * 2 * 10)) ;;
+    esac
+    if [[ -s "$output" ]]; then
+        actual_rows=$(($(wc -l < "$output") - 1))
+        (( actual_rows >= expected_rows )) && return
+    fi
     TASKS+=("$script|$model|$k|$trials|$prefix")
 }
 
@@ -44,6 +52,17 @@ for model in "${models[@]}"; do
         add_task blind_minimax "$model" "$k" 300 bdb
         add_task pgr "$model" "$k" 300 pgr
         add_task framing "$model" "$k" 300 tamper
+        # Migrated evidence scripts write resumable partial CSVs and publish the
+        # final file at this same evaluation path, so the existing lock queue
+        # can schedule them without a second dispatcher.
+        add_task evidence_chain "$model" "$k" 300 evidence_chain
+        add_task framing_hull "$model" "$k" 300 framing_hull
+        if [[ "$k" == "5" || "$k" == "8" ]]; then
+            add_task dm_restart_stability "$model" "$k" 20 dm_restart_stability
+        fi
+        if [[ ( "$model" == "voicemark" || "$model" == "wmcodec" ) && ( "$k" == "5" || "$k" == "8" ) ]]; then
+            add_task detector_oracle "$model" "$k" 40 detector_oracle
+        fi
         add_task pulse_noise "$model" "$k" 50 pulse_noise
     done
 done
@@ -60,6 +79,12 @@ next_task_index() {
     exec 9>"$LOCK_FILE"
     flock -x 9
     idx=$(<"$STATE_FILE")
+    # Keep the state at the end of the manifest.  Besides preventing needless
+    # over-claims, this makes a later manifest extension safe to resume.
+    if (( idx >= ${#TASKS[@]} )); then
+        flock -u 9
+        return 1
+    fi
     printf '%s\n' "$((idx + 1))" > "$STATE_FILE"
     flock -u 9
     printf '%s\n' "$idx"
@@ -68,8 +93,7 @@ next_task_index() {
 run_worker() {
     local gpu=$1 idx script model k trials prefix log
     while true; do
-        idx=$(next_task_index)
-        (( idx < ${#TASKS[@]} )) || break
+        idx=$(next_task_index) || break
         IFS='|' read -r script model k trials prefix <<< "${TASKS[$idx]}"
         log="results/logs/full_${script}_${model}_K${k}.log"
         echo "$(date '+%F %T') gpu=${gpu} start ${script} ${model} K=${k} n=${trials}" | tee -a "$log"
@@ -89,4 +113,5 @@ done
 wait
 
 "$PYTHON" scripts/minimax_framing.py > results/logs/minimax_framing.log 2>&1
+"$PYTHON" scripts/mechanism_diag.py --n_trials 300 > results/logs/mechanism_diag.log 2>&1
 echo "$(date '+%F %T') all full-suite experiment jobs completed"
