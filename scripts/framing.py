@@ -1,13 +1,15 @@
-"""TCT（Targeted Convex Tampering）主脚本：全空间注册表 + 多说话人 + opportunistic 目标。
+"""TCT（Targeted Convex Tampering）主脚本：全空间注册表 + 可选目标策略。
 
 口径（用户确认）：
 - 篡改 = payload-aware（知道 target payload）
-- 目标选择 = opportunistic：从注册表里选几何最近、最容易篡改的 target
+- 目标选择 = opportunistic（默认）：从注册表里选几何最近、最容易篡改的 target；
+  arbitrary：从全部非 coalition 注册表项中均匀随机抽取 target。
 - 方法：mean（baseline） vs tct（`argmin‖Cᵀa−c_t‖²`）
 
 指标：target_top1（top-1 是否命中指定 target），单候选 + N 候选 ≥1 两种口径。
 
 用法：python scripts/framing.py --model timbrewm --K 5 --n_trials 300
+      python scripts/framing.py --model timbrewm --K 5 --target_policy arbitrary
 """
 from __future__ import annotations
 import argparse
@@ -28,7 +30,8 @@ from registry import (  # noqa: E402
     speaker_trial_index, coalition_seed, sample_coalition,
     int_to_bits, full_registry_size,
 )
-from watermarks import detect, detect_wavmark_many, get_wavmark  # noqa: E402
+from watermarks import detect, detect_many, detect_wavmark_many, get_wavmark  # noqa: E402
+from registry_size_control import active_registry  # noqa: E402
 
 RESULTS = Path(__file__).resolve().parent.parent / "results" / "evaluation"
 N_CAND = 10  # opportunistic 候选数
@@ -120,11 +123,27 @@ def convex_dist_batch_exact(C, targets):
     return np.sqrt(best_sq)
 
 
+def restricted_top1_and_margin(scores, active_ids, target):
+    """Top-1 identity and target margin within one active candidate registry."""
+    active_ids = np.asarray(active_ids, dtype=np.int64)
+    active_scores = np.asarray(scores)[active_ids]
+    top1 = int(active_ids[np.argsort(active_scores, kind="stable")[::-1][0]])
+    target_pos = int(np.flatnonzero(active_ids == target)[0])
+    other_scores = np.delete(active_scores, target_pos)
+    margin = float(active_scores[target_pos] - np.max(other_scores))
+    return top1, margin
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--K", type=int, required=True)
     ap.add_argument("--n_trials", type=int, default=300)
+    ap.add_argument("--target_policy", choices=["opportunistic", "arbitrary"],
+                    default="opportunistic")
+    ap.add_argument("--registry_size", type=int, default=None,
+                    help="Restrict attribution to an independently sampled active registry. "
+                         "Payloads and detector scores remain native/full-length.")
     args = ap.parse_args()
 
     model = args.model
@@ -132,11 +151,16 @@ def main():
     d = NBITS[model]
     reg_size = full_registry_size(model)
     registry_bits = full_registry_bits(model)
+    if args.registry_size is not None and not K <= args.registry_size <= reg_size:
+        ap.error(f"registry_size must satisfy K <= N <= {reg_size}")
 
     trial_idx = speaker_trial_index(n_total=args.n_trials)
     RESULTS.mkdir(parents=True, exist_ok=True)
-    out_csv = RESULTS / f"tamper_{model}_K{K}.csv"
-    partial_csv = RESULTS / f"tamper_{model}_K{K}.partial.csv"
+    prefix = "tamper" if args.target_policy == "opportunistic" else "tamper_arbitrary"
+    if args.registry_size is not None:
+        prefix += f"_N{args.registry_size}"
+    out_csv = RESULTS / f"{prefix}_{model}_K{K}.csv"
+    partial_csv = RESULTS / f"{prefix}_{model}_K{K}.partial.csv"
     rows, completed = load_completed_trials(partial_csv)
     if completed:
         print(f"  resuming {model} K={K}: {len(completed)}/{len(trial_idx)} trials from {partial_csv.name}",
@@ -153,15 +177,26 @@ def main():
         wavs = [w[:n] for w in wavs]
         C = np.array([int_to_bits(ci, d) for ci in coll_ints])  # [K,d] {0,1}
 
-        # opportunistic：从注册表抽样子集找几何最近的 N_CAND 个 target（非 coalition 成员）
-        # 全空间（65536）逐个算凸包距离太慢，随机抽 subset 个候选再选最近 N_CAND
+        # Both policies draw from the same non-member registry population.  The
+        # arbitrary control samples targets uniformly; the default policy
+        # preserves the original geometrically easiest-target protocol.
         coll_set = set(coll_ints)
-        subset_size = min(reg_size, 2000)
-        cand_ids = [ci for ci in range(reg_size) if ci not in coll_set]
+        if args.registry_size is None:
+            active_ids = np.arange(reg_size, dtype=np.int64)
+        else:
+            active_ids = active_registry(
+                reg_size, coll_ints, args.registry_size, spk, K, local_t)
+        cand_ids = active_ids[~np.isin(active_ids, np.asarray(coll_ints, dtype=np.int64))]
         rng_sub = np.random.default_rng(coalition_seed(spk, K, local_t) + 999)
-        sample_ids = rng_sub.choice(cand_ids, size=min(subset_size, len(cand_ids)), replace=False)
-        cand_dist = convex_dist_batch_exact(C, registry_bits[sample_ids])
-        cands = sample_ids[np.argsort(cand_dist)[:N_CAND]].tolist()
+        if args.target_policy == "arbitrary":
+            cands = rng_sub.choice(cand_ids, size=min(N_CAND, len(cand_ids)), replace=False).tolist()
+        else:
+            # Full-space enumeration is expensive; sample a fixed 2,000-item
+            # subset then choose its exact nearest convex-hull candidates.
+            subset_size = min(reg_size, 2000)
+            sample_ids = rng_sub.choice(cand_ids, size=min(subset_size, len(cand_ids)), replace=False)
+            cand_dist = convex_dist_batch_exact(C, registry_bits[sample_ids])
+            cands = sample_ids[np.argsort(cand_dist)[:N_CAND]].tolist()
 
         # Mean output is independent of the target.  Decode it once, then
         # compare that same top-1 identity against every opportunistic target.
@@ -180,25 +215,33 @@ def main():
         if model == "wavmark":
             decoded = detect_wavmark_many(
                 get_wavmark(), [mean_y, *tct_outputs], registry_bits)
+        elif args.registry_size is not None:
+            # The matched-registry control batches all 11 outputs into one
+            # model forward, then restricts only the identity competition.
+            decoded = detect_many(model, [mean_y, *tct_outputs], registry_bits)
         else:
             decoded = [detect(model, mean_y, registry_bits)]
             decoded.extend(detect(model, y, registry_bits) for y in tct_outputs)
 
         mean_scores, _, _ = decoded[0]
-        mean_top1_idx = int(np.argsort(mean_scores)[::-1][0])
-        mean_top1_int = int((registry_bits[mean_top1_idx] @ (2 ** np.arange(d))).sum())
         for q_t, (scores, _, _) in zip(cands, decoded[1:]):
-            rows.append({
+            mean_top1_int, mean_margin = restricted_top1_and_margin(
+                mean_scores, active_ids, q_t)
+            mean_row = {
                 "model": model, "K": K, "spk": spk, "local_t": local_t, "gi": gi,
                 "target": q_t, "method": "mean", "target_top1": int(mean_top1_int == q_t),
-            })
-            # top1 转 codeword int 与 q_t 比较
-            top1_idx = int(np.argsort(scores)[::-1][0])
-            top1_int = int((registry_bits[top1_idx] @ (2 ** np.arange(d))).sum())
-            rows.append({
+            }
+            top1_int, target_margin = restricted_top1_and_margin(scores, active_ids, q_t)
+            tct_row = {
                 "model": model, "K": K, "spk": spk, "local_t": local_t, "gi": gi,
                 "target": q_t, "method": "tct", "target_top1": int(top1_int == q_t),
-            })
+            }
+            if args.registry_size is not None:
+                mean_row.update(N_registry=args.registry_size,
+                                target_margin=f"{mean_margin:.8f}")
+                tct_row.update(N_registry=args.registry_size,
+                               target_margin=f"{target_margin:.8f}")
+            rows.extend([mean_row, tct_row])
         if (gi + 1) % 10 == 0:
             write_rows_atomic(partial_csv, rows)
             print(f"  {model} K={K}: {gi+1}/{len(trial_idx)} checkpointed ({time.time()-t_start:.0f}s)",
@@ -208,15 +251,18 @@ def main():
     write_rows_atomic(out_csv, rows)
 
     # 汇总：单候选平均命中率 + 每 trial N候选≥1
-    print(f"\n=== {model} K={K} 篡改汇总（opportunistic, n={len(trial_idx)}）===")
+    print(f"\n=== {model} K={K} 篡改汇总（{args.target_policy}, n={len(trial_idx)}）===")
     for m in ["mean", "tct"]:
-        v = [r["target_top1"] for r in rows if r["method"] == m]
+        # Rows restored from a CSV checkpoint are strings, whereas new rows are
+        # integers.  Normalize before aggregation so a resumed completed run
+        # cannot fail after publishing its final output.
+        v = [int(r["target_top1"]) for r in rows if r["method"] == m]
         print(f"  {m:12s}: 单候选命中率={np.mean(v)*100:.1f}%")
     # 每 trial ≥1 命中
     by_trial = {}
     for r in rows:
         if r["method"] == "tct":
-            by_trial.setdefault((r["spk"], r["local_t"]), []).append(r["target_top1"])
+            by_trial.setdefault((r["spk"], r["local_t"]), []).append(int(r["target_top1"]))
     any_hit = [1 if max(v) == 1 else 0 for v in by_trial.values()]
     print(f"  tct  N候选≥1命中率={np.mean(any_hit)*100:.1f}%")
 

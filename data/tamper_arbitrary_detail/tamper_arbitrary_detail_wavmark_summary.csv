@@ -1,0 +1,5 @@
+model,K,n_trials,n_targets_per_trial,per_target_hit_rate,any_of_10_hit_rate
+wavmark,2,300,10,0.00000000,0.00000000
+wavmark,3,300,10,0.00033333,0.00333333
+wavmark,5,300,10,0.00033333,0.00333333
+wavmark,8,300,10,0.00066667,0.00666667

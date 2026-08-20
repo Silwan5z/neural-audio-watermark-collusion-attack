@@ -1,0 +1,1801 @@
+model,K,trial_id,spk,local_t,method,codec,codec_setting,ASR,attribution_margin,PESQ,STOI,SI_SDR
+voicemark,5,0,chinese:SSB0005,0,mean,none,none,1,19.57172987,4.1517,0.9694,16.66
+voicemark,5,0,chinese:SSB0005,0,fwp,none,none,1,38.16793646,3.7191,0.9573,13.96
+voicemark,5,0,chinese:SSB0005,0,mean,mp3_128k,MP3 128 kbps,1,24.31594887,4.0309,0.9694,16.53
+voicemark,5,0,chinese:SSB0005,0,fwp,mp3_128k,MP3 128 kbps,1,29.91279610,3.6290,0.9573,13.91
+voicemark,5,0,chinese:SSB0005,0,mean,opus_64k,Opus 64 kbps,1,17.94864941,4.1449,0.9693,16.66
+voicemark,5,0,chinese:SSB0005,0,fwp,opus_64k,Opus 64 kbps,1,28.75526810,3.7085,0.9569,13.96
+voicemark,5,1,chinese:SSB0005,1,mean,none,none,1,23.37817795,4.4014,0.9799,17.17
+voicemark,5,1,chinese:SSB0005,1,fwp,none,none,1,11.83242880,4.2412,0.9700,15.63
+voicemark,5,1,chinese:SSB0005,1,mean,mp3_128k,MP3 128 kbps,1,27.45301342,4.2298,0.9799,16.72
+voicemark,5,1,chinese:SSB0005,1,fwp,mp3_128k,MP3 128 kbps,1,8.66798040,4.1082,0.9700,15.32
+voicemark,5,1,chinese:SSB0005,1,mean,opus_64k,Opus 64 kbps,1,20.98476675,4.3934,0.9796,17.00
+voicemark,5,1,chinese:SSB0005,1,fwp,opus_64k,Opus 64 kbps,1,10.84366862,4.2317,0.9691,15.48
+voicemark,5,2,chinese:SSB0005,2,mean,none,none,1,36.31726478,4.1846,0.9714,18.07
+voicemark,5,2,chinese:SSB0005,2,fwp,none,none,1,10.95325331,3.6799,0.9608,15.26
+voicemark,5,2,chinese:SSB0005,2,mean,mp3_128k,MP3 128 kbps,1,30.35814055,3.9992,0.9714,17.66
+voicemark,5,2,chinese:SSB0005,2,fwp,mp3_128k,MP3 128 kbps,1,3.38719562,3.5362,0.9608,15.06
+voicemark,5,2,chinese:SSB0005,2,mean,opus_64k,Opus 64 kbps,1,32.64095484,4.1792,0.9713,18.01
+voicemark,5,2,chinese:SSB0005,2,fwp,opus_64k,Opus 64 kbps,1,5.67253590,3.6716,0.9603,15.23
+voicemark,5,3,chinese:SSB0009,0,mean,none,none,1,25.01618596,3.9566,0.9673,13.37
+voicemark,5,3,chinese:SSB0009,0,fwp,none,none,1,18.26082610,3.3877,0.9536,9.90
+voicemark,5,3,chinese:SSB0009,0,mean,mp3_128k,MP3 128 kbps,1,29.67948195,3.7219,0.9673,13.04
+voicemark,5,3,chinese:SSB0009,0,fwp,mp3_128k,MP3 128 kbps,1,11.83738818,3.2323,0.9536,9.76
+voicemark,5,3,chinese:SSB0009,0,mean,opus_64k,Opus 64 kbps,1,27.46462270,3.9553,0.9673,13.35
+voicemark,5,3,chinese:SSB0009,0,fwp,opus_64k,Opus 64 kbps,1,17.07458868,3.3813,0.9534,9.89
+voicemark,5,4,chinese:SSB0009,1,mean,none,none,1,29.04165330,4.3379,0.9787,13.86
+voicemark,5,4,chinese:SSB0009,1,fwp,none,none,1,10.06150400,3.7022,0.9542,9.24
+voicemark,5,4,chinese:SSB0009,1,mean,mp3_128k,MP3 128 kbps,1,23.91941046,4.1959,0.9787,13.68
+voicemark,5,4,chinese:SSB0009,1,fwp,mp3_128k,MP3 128 kbps,1,10.76440256,3.6023,0.9542,9.18
+voicemark,5,4,chinese:SSB0009,1,mean,opus_64k,Opus 64 kbps,1,25.46526836,4.3343,0.9787,13.82
+voicemark,5,4,chinese:SSB0009,1,fwp,opus_64k,Opus 64 kbps,1,11.04001270,3.6914,0.9540,9.23
+voicemark,5,5,chinese:SSB0009,2,mean,none,none,1,15.54310424,4.1635,0.9729,14.64
+voicemark,5,5,chinese:SSB0009,2,fwp,none,none,1,18.19023891,3.6632,0.9597,11.36
+voicemark,5,5,chinese:SSB0009,2,mean,mp3_128k,MP3 128 kbps,1,18.10356136,3.9564,0.9729,14.31
+voicemark,5,5,chinese:SSB0009,2,fwp,mp3_128k,MP3 128 kbps,1,24.28099063,3.5000,0.9597,11.20
+voicemark,5,5,chinese:SSB0009,2,mean,opus_64k,Opus 64 kbps,1,13.94924393,4.1605,0.9727,14.59
+voicemark,5,5,chinese:SSB0009,2,fwp,opus_64k,Opus 64 kbps,1,23.87317405,3.6495,0.9595,11.34
+voicemark,5,6,chinese:SSB0011,0,mean,none,none,1,8.46617512,4.0354,0.9675,16.91
+voicemark,5,6,chinese:SSB0011,0,fwp,none,none,1,7.71278978,4.2225,0.9746,18.78
+voicemark,5,6,chinese:SSB0011,0,mean,mp3_128k,MP3 128 kbps,1,8.25623626,3.8071,0.9675,16.57
+voicemark,5,6,chinese:SSB0011,0,fwp,mp3_128k,MP3 128 kbps,1,7.48359084,3.9875,0.9746,18.24
+voicemark,5,6,chinese:SSB0011,0,mean,opus_64k,Opus 64 kbps,1,8.82479006,4.0424,0.9674,16.86
+voicemark,5,6,chinese:SSB0011,0,fwp,opus_64k,Opus 64 kbps,1,6.72511695,4.2202,0.9743,18.69
+voicemark,5,7,chinese:SSB0011,1,mean,none,none,1,27.95990594,3.9136,0.9570,14.39
+voicemark,5,7,chinese:SSB0011,1,fwp,none,none,1,48.52420731,3.8896,0.9651,15.48
+voicemark,5,7,chinese:SSB0011,1,mean,mp3_128k,MP3 128 kbps,1,22.89711037,3.7832,0.9570,14.26
+voicemark,5,7,chinese:SSB0011,1,fwp,mp3_128k,MP3 128 kbps,1,49.63925585,3.7561,0.9651,15.31
+voicemark,5,7,chinese:SSB0011,1,mean,opus_64k,Opus 64 kbps,1,25.12105312,3.9055,0.9569,14.32
+voicemark,5,7,chinese:SSB0011,1,fwp,opus_64k,Opus 64 kbps,1,49.95080196,3.8741,0.9649,15.35
+voicemark,5,8,chinese:SSB0011,2,mean,none,none,1,6.65854142,4.2094,0.9708,16.93
+voicemark,5,8,chinese:SSB0011,2,fwp,none,none,1,13.26158318,3.8726,0.9616,15.78
+voicemark,5,8,chinese:SSB0011,2,mean,mp3_128k,MP3 128 kbps,1,10.18361439,4.0069,0.9708,16.69
+voicemark,5,8,chinese:SSB0011,2,fwp,mp3_128k,MP3 128 kbps,1,9.28661114,3.6855,0.9616,15.64
+voicemark,5,8,chinese:SSB0011,2,mean,opus_64k,Opus 64 kbps,1,8.06314647,4.2075,0.9707,16.87
+voicemark,5,8,chinese:SSB0011,2,fwp,opus_64k,Opus 64 kbps,1,14.98815009,3.8650,0.9614,15.74
+voicemark,5,9,chinese:SSB0012,0,mean,none,none,1,22.15622582,4.1257,0.9742,15.26
+voicemark,5,9,chinese:SSB0012,0,fwp,none,none,1,41.46273217,3.7230,0.9560,13.19
+voicemark,5,9,chinese:SSB0012,0,mean,mp3_128k,MP3 128 kbps,1,23.60773876,4.0111,0.9742,15.12
+voicemark,5,9,chinese:SSB0012,0,fwp,mp3_128k,MP3 128 kbps,1,39.77499416,3.6115,0.9559,13.11
+voicemark,5,9,chinese:SSB0012,0,mean,opus_64k,Opus 64 kbps,1,20.08098175,4.1214,0.9740,15.24
+voicemark,5,9,chinese:SSB0012,0,fwp,opus_64k,Opus 64 kbps,1,40.68940345,3.7036,0.9557,13.16
+voicemark,5,10,chinese:SSB0012,1,mean,none,none,1,4.92124199,4.0737,0.9626,15.73
+voicemark,5,10,chinese:SSB0012,1,fwp,none,none,1,8.13206827,3.2435,0.9451,10.97
+voicemark,5,10,chinese:SSB0012,1,mean,mp3_128k,MP3 128 kbps,1,7.82973843,3.8705,0.9626,15.26
+voicemark,5,10,chinese:SSB0012,1,fwp,mp3_128k,MP3 128 kbps,1,9.04839896,3.0799,0.9451,10.81
+voicemark,5,10,chinese:SSB0012,1,mean,opus_64k,Opus 64 kbps,1,4.89774118,4.0721,0.9622,15.59
+voicemark,5,10,chinese:SSB0012,1,fwp,opus_64k,Opus 64 kbps,1,1.98503506,3.2371,0.9447,10.92
+voicemark,5,11,chinese:SSB0012,2,mean,none,none,1,22.55391459,3.7597,0.9506,11.93
+voicemark,5,11,chinese:SSB0012,2,fwp,none,none,1,27.65063159,3.8971,0.9586,14.76
+voicemark,5,11,chinese:SSB0012,2,mean,mp3_128k,MP3 128 kbps,1,34.08664036,3.5895,0.9506,11.76
+voicemark,5,11,chinese:SSB0012,2,fwp,mp3_128k,MP3 128 kbps,1,24.00390820,3.6961,0.9586,14.45
+voicemark,5,11,chinese:SSB0012,2,mean,opus_64k,Opus 64 kbps,1,30.40610857,3.7508,0.9504,11.88
+voicemark,5,11,chinese:SSB0012,2,fwp,opus_64k,Opus 64 kbps,1,25.23101124,3.8848,0.9581,14.65
+voicemark,5,12,chinese:SSB0016,0,mean,none,none,1,30.73605706,3.9853,0.9534,14.96
+voicemark,5,12,chinese:SSB0016,0,fwp,none,none,0,-2.79829027,3.9644,0.9650,16.66
+voicemark,5,12,chinese:SSB0016,0,mean,mp3_128k,MP3 128 kbps,1,24.80794989,3.9399,0.9534,14.93
+voicemark,5,12,chinese:SSB0016,0,fwp,mp3_128k,MP3 128 kbps,1,9.20636003,3.9232,0.9650,16.63
+voicemark,5,12,chinese:SSB0016,0,mean,opus_64k,Opus 64 kbps,1,28.15622457,3.9807,0.9534,14.98
+voicemark,5,12,chinese:SSB0016,0,fwp,opus_64k,Opus 64 kbps,0,-3.33589945,3.9568,0.9648,16.69
+voicemark,5,13,chinese:SSB0016,1,mean,none,none,1,9.25797084,4.2388,0.9685,18.75
+voicemark,5,13,chinese:SSB0016,1,fwp,none,none,1,19.08284259,3.9171,0.9499,16.45
+voicemark,5,13,chinese:SSB0016,1,mean,mp3_128k,MP3 128 kbps,1,21.50627944,4.0765,0.9685,18.29
+voicemark,5,13,chinese:SSB0016,1,fwp,mp3_128k,MP3 128 kbps,1,7.91635652,3.7948,0.9499,16.20
+voicemark,5,13,chinese:SSB0016,1,mean,opus_64k,Opus 64 kbps,1,9.70049277,4.2322,0.9684,18.51
+voicemark,5,13,chinese:SSB0016,1,fwp,opus_64k,Opus 64 kbps,1,16.97361914,3.9113,0.9497,16.31
+voicemark,5,14,chinese:SSB0016,2,mean,none,none,1,21.86047861,4.1042,0.9519,14.61
+voicemark,5,14,chinese:SSB0016,2,fwp,none,none,1,27.34300515,3.5394,0.9387,11.70
+voicemark,5,14,chinese:SSB0016,2,mean,mp3_128k,MP3 128 kbps,1,11.16395645,4.0093,0.9519,14.49
+voicemark,5,14,chinese:SSB0016,2,fwp,mp3_128k,MP3 128 kbps,1,27.21942713,3.4632,0.9387,11.64
+voicemark,5,14,chinese:SSB0016,2,mean,opus_64k,Opus 64 kbps,1,19.71466585,4.1008,0.9519,14.54
+voicemark,5,14,chinese:SSB0016,2,fwp,opus_64k,Opus 64 kbps,1,24.99131391,3.5330,0.9383,11.65
+voicemark,5,15,chinese:SSB0018,0,mean,none,none,1,26.42222569,4.1458,0.9694,15.94
+voicemark,5,15,chinese:SSB0018,0,fwp,none,none,1,19.51649067,3.8062,0.9570,13.20
+voicemark,5,15,chinese:SSB0018,0,mean,mp3_128k,MP3 128 kbps,1,30.28955185,3.9742,0.9694,15.64
+voicemark,5,15,chinese:SSB0018,0,fwp,mp3_128k,MP3 128 kbps,1,12.63247314,3.6630,0.9570,13.04
+voicemark,5,15,chinese:SSB0018,0,mean,opus_64k,Opus 64 kbps,1,29.10491562,4.1436,0.9694,15.79
+voicemark,5,15,chinese:SSB0018,0,fwp,opus_64k,Opus 64 kbps,1,16.92494979,3.8009,0.9569,13.11
+voicemark,5,16,chinese:SSB0018,1,mean,none,none,1,30.81093972,4.0243,0.9762,16.17
+voicemark,5,16,chinese:SSB0018,1,fwp,none,none,1,4.28925912,3.9888,0.9815,17.53
+voicemark,5,16,chinese:SSB0018,1,mean,mp3_128k,MP3 128 kbps,1,24.22039965,3.8457,0.9762,15.89
+voicemark,5,16,chinese:SSB0018,1,fwp,mp3_128k,MP3 128 kbps,0,-2.63621764,3.7776,0.9815,17.12
+voicemark,5,16,chinese:SSB0018,1,mean,opus_64k,Opus 64 kbps,1,29.85808247,4.0155,0.9760,16.11
+voicemark,5,16,chinese:SSB0018,1,fwp,opus_64k,Opus 64 kbps,0,-2.46918963,3.9773,0.9811,17.46
+voicemark,5,17,chinese:SSB0018,2,mean,none,none,1,29.26243882,4.3261,0.9819,16.47
+voicemark,5,17,chinese:SSB0018,2,fwp,none,none,1,36.16466594,4.0085,0.9678,13.63
+voicemark,5,17,chinese:SSB0018,2,mean,mp3_128k,MP3 128 kbps,1,23.25051672,4.0605,0.9819,15.96
+voicemark,5,17,chinese:SSB0018,2,fwp,mp3_128k,MP3 128 kbps,1,47.56987214,3.7923,0.9677,13.34
+voicemark,5,17,chinese:SSB0018,2,mean,opus_64k,Opus 64 kbps,1,23.85444485,4.3256,0.9817,16.31
+voicemark,5,17,chinese:SSB0018,2,fwp,opus_64k,Opus 64 kbps,1,46.43323362,4.0017,0.9674,13.53
+voicemark,5,18,chinese:SSB0033,0,mean,none,none,1,19.17641437,4.3017,0.9805,21.05
+voicemark,5,18,chinese:SSB0033,0,fwp,none,none,1,16.58913410,3.9886,0.9686,18.05
+voicemark,5,18,chinese:SSB0033,0,mean,mp3_128k,MP3 128 kbps,1,21.80766620,4.0529,0.9805,20.27
+voicemark,5,18,chinese:SSB0033,0,fwp,mp3_128k,MP3 128 kbps,1,16.61617696,3.7788,0.9686,17.73
+voicemark,5,18,chinese:SSB0033,0,mean,opus_64k,Opus 64 kbps,1,15.73313965,4.2994,0.9804,20.34
+voicemark,5,18,chinese:SSB0033,0,fwp,opus_64k,Opus 64 kbps,1,15.47220820,3.9886,0.9683,17.70
+voicemark,5,19,chinese:SSB0033,1,mean,none,none,1,28.13035908,4.4545,0.9816,20.07
+voicemark,5,19,chinese:SSB0033,1,fwp,none,none,1,41.47096578,4.2889,0.9696,17.71
+voicemark,5,19,chinese:SSB0033,1,mean,mp3_128k,MP3 128 kbps,1,28.97822204,4.3755,0.9816,20.07
+voicemark,5,19,chinese:SSB0033,1,fwp,mp3_128k,MP3 128 kbps,1,37.70811393,4.2266,0.9696,17.77
+voicemark,5,19,chinese:SSB0033,1,mean,opus_64k,Opus 64 kbps,1,27.49280907,4.4512,0.9814,19.67
+voicemark,5,19,chinese:SSB0033,1,fwp,opus_64k,Opus 64 kbps,1,40.63542670,4.2784,0.9692,17.52
+voicemark,5,20,chinese:SSB0033,2,mean,none,none,1,29.83409392,4.3833,0.9851,20.64
+voicemark,5,20,chinese:SSB0033,2,fwp,none,none,1,15.35638801,3.9900,0.9651,17.09
+voicemark,5,20,chinese:SSB0033,2,mean,mp3_128k,MP3 128 kbps,1,35.38926020,4.2104,0.9851,20.28
+voicemark,5,20,chinese:SSB0033,2,fwp,mp3_128k,MP3 128 kbps,1,17.51863524,3.8590,0.9651,16.95
+voicemark,5,20,chinese:SSB0033,2,mean,opus_64k,Opus 64 kbps,1,30.53257177,4.3757,0.9850,20.23
+voicemark,5,20,chinese:SSB0033,2,fwp,opus_64k,Opus 64 kbps,1,15.21670285,3.9738,0.9649,16.87
+voicemark,5,21,chinese:SSB0038,0,mean,none,none,1,16.58902880,4.3284,0.9727,16.47
+voicemark,5,21,chinese:SSB0038,0,fwp,none,none,1,16.75229344,4.2289,0.9829,17.77
+voicemark,5,21,chinese:SSB0038,0,mean,mp3_128k,MP3 128 kbps,1,30.04427365,4.2205,0.9727,16.31
+voicemark,5,21,chinese:SSB0038,0,fwp,mp3_128k,MP3 128 kbps,1,13.64745219,4.0999,0.9829,17.50
+voicemark,5,21,chinese:SSB0038,0,mean,opus_64k,Opus 64 kbps,1,26.30231005,4.3238,0.9727,16.37
+voicemark,5,21,chinese:SSB0038,0,fwp,opus_64k,Opus 64 kbps,1,15.46683997,4.2189,0.9827,17.56
+voicemark,5,22,chinese:SSB0038,1,mean,none,none,1,29.39321681,4.1710,0.9621,15.38
+voicemark,5,22,chinese:SSB0038,1,fwp,none,none,1,16.26316923,4.2713,0.9726,17.18
+voicemark,5,22,chinese:SSB0038,1,mean,mp3_128k,MP3 128 kbps,1,14.54750334,4.0368,0.9621,15.21
+voicemark,5,22,chinese:SSB0038,1,fwp,mp3_128k,MP3 128 kbps,1,1.93997744,4.1140,0.9726,16.94
+voicemark,5,22,chinese:SSB0038,1,mean,opus_64k,Opus 64 kbps,1,27.72625605,4.1710,0.9620,15.34
+voicemark,5,22,chinese:SSB0038,1,fwp,opus_64k,Opus 64 kbps,1,4.98264592,4.2593,0.9723,17.12
+voicemark,5,23,chinese:SSB0038,2,mean,none,none,1,17.38377552,3.8585,0.9581,17.46
+voicemark,5,23,chinese:SSB0038,2,fwp,none,none,1,6.71568365,3.2807,0.9427,13.83
+voicemark,5,23,chinese:SSB0038,2,mean,mp3_128k,MP3 128 kbps,1,11.54809984,3.6296,0.9581,16.83
+voicemark,5,23,chinese:SSB0038,2,fwp,mp3_128k,MP3 128 kbps,1,11.88581800,3.1017,0.9427,13.55
+voicemark,5,23,chinese:SSB0038,2,mean,opus_64k,Opus 64 kbps,1,18.98203304,3.8571,0.9580,17.28
+voicemark,5,23,chinese:SSB0038,2,fwp,opus_64k,Opus 64 kbps,1,2.44782459,3.2707,0.9424,13.72
+voicemark,5,24,chinese:SSB0043,0,mean,none,none,1,18.61883809,4.3543,0.9711,17.19
+voicemark,5,24,chinese:SSB0043,0,fwp,none,none,1,20.19652766,4.0090,0.9427,14.94
+voicemark,5,24,chinese:SSB0043,0,mean,mp3_128k,MP3 128 kbps,1,24.53349147,4.2711,0.9711,17.15
+voicemark,5,24,chinese:SSB0043,0,fwp,mp3_128k,MP3 128 kbps,1,24.36251049,3.9530,0.9427,14.92
+voicemark,5,24,chinese:SSB0043,0,mean,opus_64k,Opus 64 kbps,1,21.49875649,4.3534,0.9710,17.14
+voicemark,5,24,chinese:SSB0043,0,fwp,opus_64k,Opus 64 kbps,1,21.14294072,3.9985,0.9424,14.91
+voicemark,5,25,chinese:SSB0043,1,mean,none,none,1,29.44061922,4.2872,0.9659,18.09
+voicemark,5,25,chinese:SSB0043,1,fwp,none,none,1,24.42041154,3.9014,0.9486,15.10
+voicemark,5,25,chinese:SSB0043,1,mean,mp3_128k,MP3 128 kbps,1,20.72420389,4.1844,0.9659,17.97
+voicemark,5,25,chinese:SSB0043,1,fwp,mp3_128k,MP3 128 kbps,1,38.14890391,3.8232,0.9486,15.05
+voicemark,5,25,chinese:SSB0043,1,mean,opus_64k,Opus 64 kbps,1,27.61770627,4.2866,0.9657,18.16
+voicemark,5,25,chinese:SSB0043,1,fwp,opus_64k,Opus 64 kbps,1,30.14288799,3.9020,0.9481,15.18
+voicemark,5,26,chinese:SSB0043,2,mean,none,none,1,18.51578338,3.9380,0.9567,13.27
+voicemark,5,26,chinese:SSB0043,2,fwp,none,none,1,44.13882600,4.1622,0.9751,15.90
+voicemark,5,26,chinese:SSB0043,2,mean,mp3_128k,MP3 128 kbps,1,36.46067043,3.8297,0.9567,13.19
+voicemark,5,26,chinese:SSB0043,2,fwp,mp3_128k,MP3 128 kbps,1,39.92804676,4.0165,0.9751,15.76
+voicemark,5,26,chinese:SSB0043,2,mean,opus_64k,Opus 64 kbps,1,25.57103613,3.9308,0.9565,13.30
+voicemark,5,26,chinese:SSB0043,2,fwp,opus_64k,Opus 64 kbps,1,41.42760167,4.1429,0.9746,15.86
+voicemark,5,27,chinese:SSB0057,0,mean,none,none,1,22.38134536,3.8303,0.9649,14.83
+voicemark,5,27,chinese:SSB0057,0,fwp,none,none,1,3.42626751,3.3294,0.9498,11.68
+voicemark,5,27,chinese:SSB0057,0,mean,mp3_128k,MP3 128 kbps,1,29.48065836,3.6184,0.9649,14.32
+voicemark,5,27,chinese:SSB0057,0,fwp,mp3_128k,MP3 128 kbps,1,4.94626051,3.1767,0.9498,11.50
+voicemark,5,27,chinese:SSB0057,0,mean,opus_64k,Opus 64 kbps,1,25.39376199,3.8230,0.9647,14.62
+voicemark,5,27,chinese:SSB0057,0,fwp,opus_64k,Opus 64 kbps,1,4.75663954,3.3176,0.9495,11.59
+voicemark,5,28,chinese:SSB0057,1,mean,none,none,1,34.70993833,4.1257,0.9732,15.41
+voicemark,5,28,chinese:SSB0057,1,fwp,none,none,1,10.95043689,3.8595,0.9568,12.79
+voicemark,5,28,chinese:SSB0057,1,mean,mp3_128k,MP3 128 kbps,1,21.93981478,3.9291,0.9732,14.79
+voicemark,5,28,chinese:SSB0057,1,fwp,mp3_128k,MP3 128 kbps,1,23.46307120,3.6717,0.9568,12.47
+voicemark,5,28,chinese:SSB0057,1,mean,opus_64k,Opus 64 kbps,1,30.45129965,4.1283,0.9730,15.22
+voicemark,5,28,chinese:SSB0057,1,fwp,opus_64k,Opus 64 kbps,1,16.18935079,3.8418,0.9567,12.72
+voicemark,5,29,chinese:SSB0057,2,mean,none,none,1,18.50011731,4.0185,0.9664,16.37
+voicemark,5,29,chinese:SSB0057,2,fwp,none,none,1,4.89328108,3.9054,0.9623,15.58
+voicemark,5,29,chinese:SSB0057,2,mean,mp3_128k,MP3 128 kbps,1,16.72670180,3.7373,0.9664,15.47
+voicemark,5,29,chinese:SSB0057,2,fwp,mp3_128k,MP3 128 kbps,1,7.01692412,3.6521,0.9623,14.83
+voicemark,5,29,chinese:SSB0057,2,mean,opus_64k,Opus 64 kbps,1,16.60776575,4.0129,0.9662,16.04
+voicemark,5,29,chinese:SSB0057,2,fwp,opus_64k,Opus 64 kbps,1,5.29160094,3.8606,0.9620,15.31
+voicemark,5,30,chinese:SSB0073,0,mean,none,none,1,4.39009360,3.3477,0.9513,12.01
+voicemark,5,30,chinese:SSB0073,0,fwp,none,none,1,5.50590968,3.0345,0.9384,10.72
+voicemark,5,30,chinese:SSB0073,0,mean,mp3_128k,MP3 128 kbps,1,6.00134969,3.2856,0.9513,11.96
+voicemark,5,30,chinese:SSB0073,0,fwp,mp3_128k,MP3 128 kbps,1,5.25666147,2.9844,0.9384,10.68
+voicemark,5,30,chinese:SSB0073,0,mean,opus_64k,Opus 64 kbps,1,4.94716831,3.3420,0.9512,12.01
+voicemark,5,30,chinese:SSB0073,0,fwp,opus_64k,Opus 64 kbps,1,4.04716623,3.0274,0.9381,10.72
+voicemark,5,31,chinese:SSB0073,1,mean,none,none,1,14.80536775,3.9280,0.9679,13.75
+voicemark,5,31,chinese:SSB0073,1,fwp,none,none,1,34.79540529,3.4134,0.9545,11.98
+voicemark,5,31,chinese:SSB0073,1,mean,mp3_128k,MP3 128 kbps,1,6.91235530,3.8600,0.9679,13.70
+voicemark,5,31,chinese:SSB0073,1,fwp,mp3_128k,MP3 128 kbps,1,30.30770928,3.3637,0.9545,11.96
+voicemark,5,31,chinese:SSB0073,1,mean,opus_64k,Opus 64 kbps,1,8.63207619,3.9263,0.9676,13.71
+voicemark,5,31,chinese:SSB0073,1,fwp,opus_64k,Opus 64 kbps,1,32.14107764,3.4119,0.9541,11.95
+voicemark,5,32,chinese:SSB0073,2,mean,none,none,1,26.87327217,4.1825,0.9714,12.79
+voicemark,5,32,chinese:SSB0073,2,fwp,none,none,1,9.03106694,3.7042,0.9470,9.55
+voicemark,5,32,chinese:SSB0073,2,mean,mp3_128k,MP3 128 kbps,1,23.97117893,4.1427,0.9714,12.77
+voicemark,5,32,chinese:SSB0073,2,fwp,mp3_128k,MP3 128 kbps,1,13.46609030,3.6744,0.9470,9.55
+voicemark,5,32,chinese:SSB0073,2,mean,opus_64k,Opus 64 kbps,1,27.45773508,4.1828,0.9711,12.78
+voicemark,5,32,chinese:SSB0073,2,fwp,opus_64k,Opus 64 kbps,1,12.26697288,3.7051,0.9467,9.55
+voicemark,5,33,chinese:SSB0080,0,mean,none,none,1,12.45923208,4.1858,0.9664,19.94
+voicemark,5,33,chinese:SSB0080,0,fwp,none,none,1,14.31280527,3.9080,0.9470,16.35
+voicemark,5,33,chinese:SSB0080,0,mean,mp3_128k,MP3 128 kbps,1,11.29325884,4.1023,0.9664,19.69
+voicemark,5,33,chinese:SSB0080,0,fwp,mp3_128k,MP3 128 kbps,1,12.20317293,3.8392,0.9471,16.23
+voicemark,5,33,chinese:SSB0080,0,mean,opus_64k,Opus 64 kbps,1,11.86222448,4.1777,0.9662,19.71
+voicemark,5,33,chinese:SSB0080,0,fwp,opus_64k,Opus 64 kbps,1,13.78676063,3.8867,0.9469,16.26
+voicemark,5,34,chinese:SSB0080,1,mean,none,none,1,13.97316574,4.2125,0.9741,14.02
+voicemark,5,34,chinese:SSB0080,1,fwp,none,none,1,24.91240853,3.9684,0.9528,12.62
+voicemark,5,34,chinese:SSB0080,1,mean,mp3_128k,MP3 128 kbps,1,29.36899054,4.0856,0.9741,13.93
+voicemark,5,34,chinese:SSB0080,1,fwp,mp3_128k,MP3 128 kbps,1,34.44948477,3.8486,0.9528,12.55
+voicemark,5,34,chinese:SSB0080,1,mean,opus_64k,Opus 64 kbps,1,15.11231274,4.2098,0.9739,13.96
+voicemark,5,34,chinese:SSB0080,1,fwp,opus_64k,Opus 64 kbps,1,29.14840659,3.9606,0.9525,12.55
+voicemark,5,35,chinese:SSB0080,2,mean,none,none,1,23.93928169,4.3333,0.9634,15.19
+voicemark,5,35,chinese:SSB0080,2,fwp,none,none,1,3.55653565,4.3061,0.9799,15.22
+voicemark,5,35,chinese:SSB0080,2,mean,mp3_128k,MP3 128 kbps,1,25.98728028,4.2035,0.9634,15.05
+voicemark,5,35,chinese:SSB0080,2,fwp,mp3_128k,MP3 128 kbps,1,12.32819543,4.2024,0.9799,15.09
+voicemark,5,35,chinese:SSB0080,2,mean,opus_64k,Opus 64 kbps,1,24.25577235,4.3253,0.9633,15.09
+voicemark,5,35,chinese:SSB0080,2,fwp,opus_64k,Opus 64 kbps,1,2.07838057,4.2903,0.9795,15.09
+voicemark,5,36,chinese:SSB0112,0,mean,none,none,1,30.17264345,4.0884,0.9674,13.09
+voicemark,5,36,chinese:SSB0112,0,fwp,none,none,1,16.53675253,3.9438,0.9723,12.86
+voicemark,5,36,chinese:SSB0112,0,mean,mp3_128k,MP3 128 kbps,1,27.71545063,3.7283,0.9675,12.60
+voicemark,5,36,chinese:SSB0112,0,fwp,mp3_128k,MP3 128 kbps,1,26.47263463,3.6212,0.9723,12.34
+voicemark,5,36,chinese:SSB0112,0,mean,opus_64k,Opus 64 kbps,1,27.57690181,4.0922,0.9674,12.88
+voicemark,5,36,chinese:SSB0112,0,fwp,opus_64k,Opus 64 kbps,1,26.44661883,3.9426,0.9718,12.64
+voicemark,5,37,chinese:SSB0112,1,mean,none,none,1,13.84630431,4.3071,0.9757,14.95
+voicemark,5,37,chinese:SSB0112,1,fwp,none,none,1,13.53221094,4.2123,0.9666,13.48
+voicemark,5,37,chinese:SSB0112,1,mean,mp3_128k,MP3 128 kbps,1,27.64074250,4.1231,0.9757,14.73
+voicemark,5,37,chinese:SSB0112,1,fwp,mp3_128k,MP3 128 kbps,1,11.57892628,4.0363,0.9666,13.31
+voicemark,5,37,chinese:SSB0112,1,mean,opus_64k,Opus 64 kbps,1,22.21648691,4.3039,0.9756,14.97
+voicemark,5,37,chinese:SSB0112,1,fwp,opus_64k,Opus 64 kbps,1,12.32556866,4.2014,0.9663,13.44
+voicemark,5,38,chinese:SSB0112,2,mean,none,none,1,32.05545111,4.2093,0.9720,15.27
+voicemark,5,38,chinese:SSB0112,2,fwp,none,none,1,29.50849379,4.0819,0.9657,13.62
+voicemark,5,38,chinese:SSB0112,2,mean,mp3_128k,MP3 128 kbps,1,30.28498042,3.9044,0.9720,14.67
+voicemark,5,38,chinese:SSB0112,2,fwp,mp3_128k,MP3 128 kbps,1,27.36334792,3.8018,0.9657,13.27
+voicemark,5,38,chinese:SSB0112,2,mean,opus_64k,Opus 64 kbps,1,30.09284477,4.2044,0.9719,15.06
+voicemark,5,38,chinese:SSB0112,2,fwp,opus_64k,Opus 64 kbps,1,29.25462342,4.0695,0.9652,13.48
+voicemark,5,39,chinese:SSB0122,0,mean,none,none,1,31.89122890,4.1709,0.9732,14.59
+voicemark,5,39,chinese:SSB0122,0,fwp,none,none,1,29.61417634,3.5967,0.9534,10.66
+voicemark,5,39,chinese:SSB0122,0,mean,mp3_128k,MP3 128 kbps,1,19.07196391,3.9423,0.9732,14.12
+voicemark,5,39,chinese:SSB0122,0,fwp,mp3_128k,MP3 128 kbps,1,26.28380225,3.4163,0.9534,10.46
+voicemark,5,39,chinese:SSB0122,0,mean,opus_64k,Opus 64 kbps,1,24.04542889,4.1708,0.9731,14.46
+voicemark,5,39,chinese:SSB0122,0,fwp,opus_64k,Opus 64 kbps,1,25.16467303,3.5818,0.9531,10.59
+voicemark,5,40,chinese:SSB0122,1,mean,none,none,1,24.89472138,3.9627,0.9655,14.59
+voicemark,5,40,chinese:SSB0122,1,fwp,none,none,1,9.45183548,3.7059,0.9468,12.24
+voicemark,5,40,chinese:SSB0122,1,mean,mp3_128k,MP3 128 kbps,1,27.94284714,3.7723,0.9655,14.39
+voicemark,5,40,chinese:SSB0122,1,fwp,mp3_128k,MP3 128 kbps,1,8.19358957,3.5631,0.9468,12.16
+voicemark,5,40,chinese:SSB0122,1,mean,opus_64k,Opus 64 kbps,1,18.02725907,3.9616,0.9655,14.59
+voicemark,5,40,chinese:SSB0122,1,fwp,opus_64k,Opus 64 kbps,1,2.22547159,3.6983,0.9467,12.25
+voicemark,5,41,chinese:SSB0122,2,mean,none,none,1,34.42625390,4.2539,0.9799,14.22
+voicemark,5,41,chinese:SSB0122,2,fwp,none,none,1,22.17339667,4.2873,0.9865,15.28
+voicemark,5,41,chinese:SSB0122,2,mean,mp3_128k,MP3 128 kbps,1,29.89654918,4.0446,0.9799,13.87
+voicemark,5,41,chinese:SSB0122,2,fwp,mp3_128k,MP3 128 kbps,1,23.18815101,4.0583,0.9864,14.86
+voicemark,5,41,chinese:SSB0122,2,mean,opus_64k,Opus 64 kbps,1,29.14244222,4.2500,0.9797,14.18
+voicemark,5,41,chinese:SSB0122,2,fwp,opus_64k,Opus 64 kbps,1,20.31254957,4.2766,0.9862,15.18
+voicemark,5,42,chinese:SSB0133,0,mean,none,none,1,27.54499231,4.1654,0.9666,14.78
+voicemark,5,42,chinese:SSB0133,0,fwp,none,none,1,22.39954967,3.6782,0.9454,12.12
+voicemark,5,42,chinese:SSB0133,0,mean,mp3_128k,MP3 128 kbps,1,32.95501915,3.9555,0.9666,14.42
+voicemark,5,42,chinese:SSB0133,0,fwp,mp3_128k,MP3 128 kbps,1,28.10620832,3.5143,0.9454,11.93
+voicemark,5,42,chinese:SSB0133,0,mean,opus_64k,Opus 64 kbps,1,27.61488438,4.1484,0.9663,14.66
+voicemark,5,42,chinese:SSB0133,0,fwp,opus_64k,Opus 64 kbps,1,27.00642788,3.6664,0.9450,12.05
+voicemark,5,43,chinese:SSB0133,1,mean,none,none,1,28.24683541,4.1565,0.9716,16.52
+voicemark,5,43,chinese:SSB0133,1,fwp,none,none,1,22.29148569,3.5138,0.9525,13.42
+voicemark,5,43,chinese:SSB0133,1,mean,mp3_128k,MP3 128 kbps,1,28.55852630,3.9078,0.9716,16.07
+voicemark,5,43,chinese:SSB0133,1,fwp,mp3_128k,MP3 128 kbps,1,23.31096864,3.2936,0.9525,13.21
+voicemark,5,43,chinese:SSB0133,1,mean,opus_64k,Opus 64 kbps,1,18.41012500,4.1519,0.9715,16.43
+voicemark,5,43,chinese:SSB0133,1,fwp,opus_64k,Opus 64 kbps,1,22.54165295,3.4956,0.9522,13.42
+voicemark,5,44,chinese:SSB0133,2,mean,none,none,1,37.74674400,3.9837,0.9628,16.33
+voicemark,5,44,chinese:SSB0133,2,fwp,none,none,1,13.57350588,3.5326,0.9448,14.30
+voicemark,5,44,chinese:SSB0133,2,mean,mp3_128k,MP3 128 kbps,1,38.34056181,3.6913,0.9629,15.49
+voicemark,5,44,chinese:SSB0133,2,fwp,mp3_128k,MP3 128 kbps,1,20.91869350,3.2831,0.9448,13.79
+voicemark,5,44,chinese:SSB0133,2,mean,opus_64k,Opus 64 kbps,1,38.25724803,3.9795,0.9626,15.99
+voicemark,5,44,chinese:SSB0133,2,fwp,opus_64k,Opus 64 kbps,1,17.80910296,3.5272,0.9442,14.07
+voicemark,5,45,chinese:SSB0139,0,mean,none,none,1,13.14791862,4.0413,0.9745,13.46
+voicemark,5,45,chinese:SSB0139,0,fwp,none,none,1,10.97955595,4.0319,0.9821,14.78
+voicemark,5,45,chinese:SSB0139,0,mean,mp3_128k,MP3 128 kbps,1,23.08211181,3.9280,0.9744,13.40
+voicemark,5,45,chinese:SSB0139,0,fwp,mp3_128k,MP3 128 kbps,1,21.33036929,3.9357,0.9821,14.72
+voicemark,5,45,chinese:SSB0139,0,mean,opus_64k,Opus 64 kbps,1,15.17336479,4.0363,0.9743,13.41
+voicemark,5,45,chinese:SSB0139,0,fwp,opus_64k,Opus 64 kbps,1,15.12669884,4.0282,0.9819,14.66
+voicemark,5,46,chinese:SSB0139,1,mean,none,none,1,20.41315158,4.2001,0.9789,15.93
+voicemark,5,46,chinese:SSB0139,1,fwp,none,none,1,41.02149035,3.7481,0.9702,13.28
+voicemark,5,46,chinese:SSB0139,1,mean,mp3_128k,MP3 128 kbps,1,25.26389946,3.9575,0.9789,15.55
+voicemark,5,46,chinese:SSB0139,1,fwp,mp3_128k,MP3 128 kbps,1,38.30489619,3.5608,0.9702,13.12
+voicemark,5,46,chinese:SSB0139,1,mean,opus_64k,Opus 64 kbps,1,19.78719576,4.1925,0.9789,15.59
+voicemark,5,46,chinese:SSB0139,1,fwp,opus_64k,Opus 64 kbps,1,40.13093400,3.7465,0.9699,13.07
+voicemark,5,47,chinese:SSB0139,2,mean,none,none,1,27.38955985,3.7529,0.9728,15.26
+voicemark,5,47,chinese:SSB0139,2,fwp,none,none,1,6.24641598,3.1008,0.9652,11.33
+voicemark,5,47,chinese:SSB0139,2,mean,mp3_128k,MP3 128 kbps,1,32.75688126,3.6263,0.9728,15.06
+voicemark,5,47,chinese:SSB0139,2,fwp,mp3_128k,MP3 128 kbps,1,9.16345609,3.0141,0.9652,11.25
+voicemark,5,47,chinese:SSB0139,2,mean,opus_64k,Opus 64 kbps,1,26.07881975,3.7514,0.9727,15.07
+voicemark,5,47,chinese:SSB0139,2,fwp,opus_64k,Opus 64 kbps,1,8.38702417,3.0939,0.9649,11.25
+voicemark,5,48,chinese:SSB0145,0,mean,none,none,1,31.93753982,3.9465,0.9690,15.84
+voicemark,5,48,chinese:SSB0145,0,fwp,none,none,1,14.26004946,3.3658,0.9539,12.75
+voicemark,5,48,chinese:SSB0145,0,mean,mp3_128k,MP3 128 kbps,1,29.19636461,3.7000,0.9690,15.20
+voicemark,5,48,chinese:SSB0145,0,fwp,mp3_128k,MP3 128 kbps,1,10.52151835,3.1823,0.9539,12.42
+voicemark,5,48,chinese:SSB0145,0,mean,opus_64k,Opus 64 kbps,1,33.36397907,3.9428,0.9689,15.70
+voicemark,5,48,chinese:SSB0145,0,fwp,opus_64k,Opus 64 kbps,1,12.00699848,3.3521,0.9537,12.66
+voicemark,5,49,chinese:SSB0145,1,mean,none,none,1,31.64255192,4.2969,0.9720,14.95
+voicemark,5,49,chinese:SSB0145,1,fwp,none,none,1,17.90946816,3.9179,0.9518,11.29
+voicemark,5,49,chinese:SSB0145,1,mean,mp3_128k,MP3 128 kbps,1,28.55754581,4.1236,0.9720,14.61
+voicemark,5,49,chinese:SSB0145,1,fwp,mp3_128k,MP3 128 kbps,1,12.85435152,3.7868,0.9517,11.16
+voicemark,5,49,chinese:SSB0145,1,mean,opus_64k,Opus 64 kbps,1,32.96566066,4.2934,0.9720,14.87
+voicemark,5,49,chinese:SSB0145,1,fwp,opus_64k,Opus 64 kbps,1,16.39177501,3.9084,0.9516,11.27
+voicemark,5,50,chinese:SSB0145,2,mean,none,none,1,6.39433468,4.0770,0.9768,14.03
+voicemark,5,50,chinese:SSB0145,2,fwp,none,none,1,15.41790462,4.1507,0.9856,16.21
+voicemark,5,50,chinese:SSB0145,2,mean,mp3_128k,MP3 128 kbps,1,13.45902920,3.8349,0.9768,13.61
+voicemark,5,50,chinese:SSB0145,2,fwp,mp3_128k,MP3 128 kbps,1,18.19856544,3.9180,0.9855,15.54
+voicemark,5,50,chinese:SSB0145,2,mean,opus_64k,Opus 64 kbps,1,10.50499225,4.0739,0.9766,13.99
+voicemark,5,50,chinese:SSB0145,2,fwp,opus_64k,Opus 64 kbps,1,21.87173267,4.1376,0.9852,16.09
+voicemark,5,51,chinese:SSB0149,0,mean,none,none,1,18.80594837,3.5091,0.9614,11.90
+voicemark,5,51,chinese:SSB0149,0,fwp,none,none,1,9.32040611,2.8038,0.9408,8.40
+voicemark,5,51,chinese:SSB0149,0,mean,mp3_128k,MP3 128 kbps,1,18.66627764,3.4472,0.9614,11.88
+voicemark,5,51,chinese:SSB0149,0,fwp,mp3_128k,MP3 128 kbps,1,10.48649201,2.7668,0.9409,8.39
+voicemark,5,51,chinese:SSB0149,0,mean,opus_64k,Opus 64 kbps,1,18.23812392,3.4974,0.9613,11.91
+voicemark,5,51,chinese:SSB0149,0,fwp,opus_64k,Opus 64 kbps,1,10.48017918,2.7930,0.9406,8.42
+voicemark,5,52,chinese:SSB0149,1,mean,none,none,1,4.29722175,4.3130,0.9824,13.72
+voicemark,5,52,chinese:SSB0149,1,fwp,none,none,1,22.86417832,4.0068,0.9711,10.68
+voicemark,5,52,chinese:SSB0149,1,mean,mp3_128k,MP3 128 kbps,1,18.55348073,4.2541,0.9824,13.70
+voicemark,5,52,chinese:SSB0149,1,fwp,mp3_128k,MP3 128 kbps,1,26.62454961,3.9637,0.9711,10.67
+voicemark,5,52,chinese:SSB0149,1,mean,opus_64k,Opus 64 kbps,1,8.08967771,4.3098,0.9822,13.70
+voicemark,5,52,chinese:SSB0149,1,fwp,opus_64k,Opus 64 kbps,1,25.98701444,3.9957,0.9707,10.68
+voicemark,5,53,chinese:SSB0149,2,mean,none,none,1,26.77608634,3.9410,0.9731,12.40
+voicemark,5,53,chinese:SSB0149,2,fwp,none,none,1,16.47681834,3.4414,0.9604,9.50
+voicemark,5,53,chinese:SSB0149,2,mean,mp3_128k,MP3 128 kbps,1,25.83852905,3.8851,0.9731,12.38
+voicemark,5,53,chinese:SSB0149,2,fwp,mp3_128k,MP3 128 kbps,1,15.39207926,3.3915,0.9604,9.49
+voicemark,5,53,chinese:SSB0149,2,mean,opus_64k,Opus 64 kbps,1,25.63647704,3.9371,0.9728,12.38
+voicemark,5,53,chinese:SSB0149,2,fwp,opus_64k,Opus 64 kbps,1,15.43357435,3.4369,0.9601,9.49
+voicemark,5,54,chinese:SSB0193,0,mean,none,none,1,18.72697457,3.9993,0.9687,13.63
+voicemark,5,54,chinese:SSB0193,0,fwp,none,none,1,34.50678581,3.4852,0.9474,11.53
+voicemark,5,54,chinese:SSB0193,0,mean,mp3_128k,MP3 128 kbps,1,16.34010978,3.9073,0.9687,13.54
+voicemark,5,54,chinese:SSB0193,0,fwp,mp3_128k,MP3 128 kbps,1,38.92972646,3.4024,0.9474,11.49
+voicemark,5,54,chinese:SSB0193,0,mean,opus_64k,Opus 64 kbps,1,14.29587411,3.9913,0.9685,13.62
+voicemark,5,54,chinese:SSB0193,0,fwp,opus_64k,Opus 64 kbps,1,35.06030300,3.4717,0.9471,11.54
+voicemark,5,55,chinese:SSB0193,1,mean,none,none,1,30.60500889,4.0704,0.9672,14.17
+voicemark,5,55,chinese:SSB0193,1,fwp,none,none,1,21.82997810,3.5335,0.9437,10.41
+voicemark,5,55,chinese:SSB0193,1,mean,mp3_128k,MP3 128 kbps,1,24.19057350,3.8259,0.9672,13.73
+voicemark,5,55,chinese:SSB0193,1,fwp,mp3_128k,MP3 128 kbps,1,19.39517026,3.3545,0.9437,10.24
+voicemark,5,55,chinese:SSB0193,1,mean,opus_64k,Opus 64 kbps,1,24.84689244,4.0657,0.9671,13.99
+voicemark,5,55,chinese:SSB0193,1,fwp,opus_64k,Opus 64 kbps,1,22.55816824,3.5237,0.9435,10.34
+voicemark,5,56,chinese:SSB0193,2,mean,none,none,1,25.99304687,4.2006,0.9703,14.04
+voicemark,5,56,chinese:SSB0193,2,fwp,none,none,1,17.14679157,3.7366,0.9575,11.91
+voicemark,5,56,chinese:SSB0193,2,mean,mp3_128k,MP3 128 kbps,1,25.70460178,4.0873,0.9703,13.93
+voicemark,5,56,chinese:SSB0193,2,fwp,mp3_128k,MP3 128 kbps,1,17.65944787,3.6397,0.9575,11.87
+voicemark,5,56,chinese:SSB0193,2,mean,opus_64k,Opus 64 kbps,1,25.96593287,4.1986,0.9702,13.97
+voicemark,5,56,chinese:SSB0193,2,fwp,opus_64k,Opus 64 kbps,1,15.05074045,3.7207,0.9572,11.88
+voicemark,5,57,chinese:SSB0197,0,mean,none,none,1,15.02801495,3.9008,0.9638,17.62
+voicemark,5,57,chinese:SSB0197,0,fwp,none,none,1,24.20164707,4.2227,0.9795,20.24
+voicemark,5,57,chinese:SSB0197,0,mean,mp3_128k,MP3 128 kbps,1,21.50353765,3.6993,0.9638,16.90
+voicemark,5,57,chinese:SSB0197,0,fwp,mp3_128k,MP3 128 kbps,1,20.00187620,3.9826,0.9795,18.98
+voicemark,5,57,chinese:SSB0197,0,mean,opus_64k,Opus 64 kbps,1,19.77506545,3.8999,0.9635,17.40
+voicemark,5,57,chinese:SSB0197,0,fwp,opus_64k,Opus 64 kbps,1,21.77526467,4.2141,0.9790,19.68
+voicemark,5,58,chinese:SSB0197,1,mean,none,none,1,29.31657857,4.0693,0.9684,16.01
+voicemark,5,58,chinese:SSB0197,1,fwp,none,none,1,25.42749990,3.9782,0.9747,16.54
+voicemark,5,58,chinese:SSB0197,1,mean,mp3_128k,MP3 128 kbps,1,31.33536236,3.7458,0.9684,15.04
+voicemark,5,58,chinese:SSB0197,1,fwp,mp3_128k,MP3 128 kbps,1,36.64006374,3.6421,0.9747,15.35
+voicemark,5,58,chinese:SSB0197,1,mean,opus_64k,Opus 64 kbps,1,30.74526639,4.0632,0.9681,15.63
+voicemark,5,58,chinese:SSB0197,1,fwp,opus_64k,Opus 64 kbps,1,27.80537630,3.9642,0.9742,16.02
+voicemark,5,59,chinese:SSB0197,2,mean,none,none,1,13.35905986,4.3868,0.9675,16.00
+voicemark,5,59,chinese:SSB0197,2,fwp,none,none,1,9.53973072,4.3765,0.9779,16.60
+voicemark,5,59,chinese:SSB0197,2,mean,mp3_128k,MP3 128 kbps,1,10.93996139,4.1812,0.9675,15.60
+voicemark,5,59,chinese:SSB0197,2,fwp,mp3_128k,MP3 128 kbps,1,12.91249463,4.1747,0.9779,16.14
+voicemark,5,59,chinese:SSB0197,2,mean,opus_64k,Opus 64 kbps,1,12.71094732,4.3806,0.9674,15.82
+voicemark,5,59,chinese:SSB0197,2,fwp,opus_64k,Opus 64 kbps,1,9.50926754,4.3704,0.9774,16.33
+voicemark,5,60,chinese:SSB0200,0,mean,none,none,1,15.29707727,4.3023,0.9649,14.02
+voicemark,5,60,chinese:SSB0200,0,fwp,none,none,1,17.70211426,4.3394,0.9744,15.60
+voicemark,5,60,chinese:SSB0200,0,mean,mp3_128k,MP3 128 kbps,1,12.86464333,4.1378,0.9649,13.84
+voicemark,5,60,chinese:SSB0200,0,fwp,mp3_128k,MP3 128 kbps,1,4.18470007,4.1344,0.9744,15.30
+voicemark,5,60,chinese:SSB0200,0,mean,opus_64k,Opus 64 kbps,1,14.58596567,4.2965,0.9648,13.95
+voicemark,5,60,chinese:SSB0200,0,fwp,opus_64k,Opus 64 kbps,1,16.42615851,4.3364,0.9739,15.48
+voicemark,5,61,chinese:SSB0200,1,mean,none,none,1,24.37021425,3.5902,0.9659,12.46
+voicemark,5,61,chinese:SSB0200,1,fwp,none,none,1,4.65126552,3.7684,0.9714,15.40
+voicemark,5,61,chinese:SSB0200,1,mean,mp3_128k,MP3 128 kbps,1,13.58135974,3.5060,0.9659,12.41
+voicemark,5,61,chinese:SSB0200,1,fwp,mp3_128k,MP3 128 kbps,1,7.73564015,3.6695,0.9714,15.28
+voicemark,5,61,chinese:SSB0200,1,mean,opus_64k,Opus 64 kbps,1,20.71226903,3.5882,0.9658,12.50
+voicemark,5,61,chinese:SSB0200,1,fwp,opus_64k,Opus 64 kbps,1,6.02577591,3.7537,0.9710,15.37
+voicemark,5,62,chinese:SSB0200,2,mean,none,none,1,29.97717435,4.2223,0.9664,13.47
+voicemark,5,62,chinese:SSB0200,2,fwp,none,none,1,18.38357690,4.2994,0.9796,13.95
+voicemark,5,62,chinese:SSB0200,2,mean,mp3_128k,MP3 128 kbps,1,24.78359955,4.0651,0.9664,13.25
+voicemark,5,62,chinese:SSB0200,2,fwp,mp3_128k,MP3 128 kbps,1,26.82169941,4.1218,0.9796,13.71
+voicemark,5,62,chinese:SSB0200,2,mean,opus_64k,Opus 64 kbps,1,27.23693575,4.2209,0.9664,13.39
+voicemark,5,62,chinese:SSB0200,2,fwp,opus_64k,Opus 64 kbps,1,22.05700352,4.2969,0.9791,13.84
+voicemark,5,63,chinese:SSB0241,0,mean,none,none,1,26.38055409,3.7011,0.9584,13.15
+voicemark,5,63,chinese:SSB0241,0,fwp,none,none,1,22.46255475,3.2873,0.9454,11.30
+voicemark,5,63,chinese:SSB0241,0,mean,mp3_128k,MP3 128 kbps,1,38.83539338,3.5762,0.9584,13.04
+voicemark,5,63,chinese:SSB0241,0,fwp,mp3_128k,MP3 128 kbps,1,19.82704686,3.1839,0.9454,11.23
+voicemark,5,63,chinese:SSB0241,0,mean,opus_64k,Opus 64 kbps,1,32.15699276,3.6901,0.9582,13.09
+voicemark,5,63,chinese:SSB0241,0,fwp,opus_64k,Opus 64 kbps,1,23.62763634,3.2767,0.9450,11.27
+voicemark,5,64,chinese:SSB0241,1,mean,none,none,1,25.08902679,4.2181,0.9726,15.06
+voicemark,5,64,chinese:SSB0241,1,fwp,none,none,1,14.07760092,3.8473,0.9582,12.52
+voicemark,5,64,chinese:SSB0241,1,mean,mp3_128k,MP3 128 kbps,1,27.31065961,4.0833,0.9726,14.89
+voicemark,5,64,chinese:SSB0241,1,fwp,mp3_128k,MP3 128 kbps,1,20.29763013,3.7338,0.9582,12.42
+voicemark,5,64,chinese:SSB0241,1,mean,opus_64k,Opus 64 kbps,1,24.45107977,4.2104,0.9724,14.93
+voicemark,5,64,chinese:SSB0241,1,fwp,opus_64k,Opus 64 kbps,1,15.74696953,3.8335,0.9578,12.41
+voicemark,5,65,chinese:SSB0241,2,mean,none,none,1,24.12460467,4.2896,0.9764,16.47
+voicemark,5,65,chinese:SSB0241,2,fwp,none,none,1,16.58019711,4.0188,0.9645,13.40
+voicemark,5,65,chinese:SSB0241,2,mean,mp3_128k,MP3 128 kbps,1,20.97007712,4.0860,0.9764,15.98
+voicemark,5,65,chinese:SSB0241,2,fwp,mp3_128k,MP3 128 kbps,1,9.15933528,3.8571,0.9645,13.15
+voicemark,5,65,chinese:SSB0241,2,mean,opus_64k,Opus 64 kbps,1,19.92034621,4.2820,0.9762,16.25
+voicemark,5,65,chinese:SSB0241,2,fwp,opus_64k,Opus 64 kbps,1,13.12107210,3.9996,0.9642,13.29
+voicemark,5,66,chinese:SSB0246,0,mean,none,none,1,19.46572328,4.1913,0.9779,18.14
+voicemark,5,66,chinese:SSB0246,0,fwp,none,none,1,28.83462548,4.3427,0.9816,18.62
+voicemark,5,66,chinese:SSB0246,0,mean,mp3_128k,MP3 128 kbps,1,18.48547624,4.0372,0.9779,17.83
+voicemark,5,66,chinese:SSB0246,0,fwp,mp3_128k,MP3 128 kbps,1,21.38394029,4.1524,0.9816,18.30
+voicemark,5,66,chinese:SSB0246,0,mean,opus_64k,Opus 64 kbps,1,17.46593305,4.1883,0.9777,17.93
+voicemark,5,66,chinese:SSB0246,0,fwp,opus_64k,Opus 64 kbps,1,27.72471320,4.3265,0.9813,18.34
+voicemark,5,67,chinese:SSB0246,1,mean,none,none,1,9.96560976,4.1918,0.9773,17.55
+voicemark,5,67,chinese:SSB0246,1,fwp,none,none,1,30.11875147,3.7924,0.9648,15.24
+voicemark,5,67,chinese:SSB0246,1,mean,mp3_128k,MP3 128 kbps,1,15.59406615,3.9578,0.9773,16.92
+voicemark,5,67,chinese:SSB0246,1,fwp,mp3_128k,MP3 128 kbps,1,35.93363731,3.5802,0.9648,14.84
+voicemark,5,67,chinese:SSB0246,1,mean,opus_64k,Opus 64 kbps,1,10.90981516,4.1838,0.9770,17.19
+voicemark,5,67,chinese:SSB0246,1,fwp,opus_64k,Opus 64 kbps,1,38.30674005,3.7709,0.9640,14.99
+voicemark,5,68,chinese:SSB0246,2,mean,none,none,1,43.97278198,4.1361,0.9743,16.35
+voicemark,5,68,chinese:SSB0246,2,fwp,none,none,1,12.48604375,3.5256,0.9588,12.90
+voicemark,5,68,chinese:SSB0246,2,mean,mp3_128k,MP3 128 kbps,1,34.66369760,3.9805,0.9743,16.20
+voicemark,5,68,chinese:SSB0246,2,fwp,mp3_128k,MP3 128 kbps,1,18.90914213,3.3991,0.9588,12.88
+voicemark,5,68,chinese:SSB0246,2,mean,opus_64k,Opus 64 kbps,1,45.34203473,4.1320,0.9740,16.06
+voicemark,5,68,chinese:SSB0246,2,fwp,opus_64k,Opus 64 kbps,1,18.81513988,3.5168,0.9583,12.81
+voicemark,5,69,chinese:SSB0261,0,mean,none,none,1,30.64364328,4.1048,0.9709,14.60
+voicemark,5,69,chinese:SSB0261,0,fwp,none,none,1,18.94509548,3.5867,0.9510,12.08
+voicemark,5,69,chinese:SSB0261,0,mean,mp3_128k,MP3 128 kbps,1,25.77266941,3.9743,0.9709,14.40
+voicemark,5,69,chinese:SSB0261,0,fwp,mp3_128k,MP3 128 kbps,1,14.62529484,3.4750,0.9510,11.97
+voicemark,5,69,chinese:SSB0261,0,mean,opus_64k,Opus 64 kbps,1,26.26315696,4.0970,0.9710,14.54
+voicemark,5,69,chinese:SSB0261,0,fwp,opus_64k,Opus 64 kbps,1,17.12250829,3.5757,0.9511,12.02
+voicemark,5,70,chinese:SSB0261,1,mean,none,none,1,26.85266551,3.9288,0.9657,16.85
+voicemark,5,70,chinese:SSB0261,1,fwp,none,none,1,23.79016018,3.6765,0.9613,14.53
+voicemark,5,70,chinese:SSB0261,1,mean,mp3_128k,MP3 128 kbps,1,23.60865908,3.8276,0.9656,16.68
+voicemark,5,70,chinese:SSB0261,1,fwp,mp3_128k,MP3 128 kbps,1,24.92796054,3.5869,0.9613,14.44
+voicemark,5,70,chinese:SSB0261,1,mean,opus_64k,Opus 64 kbps,1,26.81316104,3.9224,0.9656,16.78
+voicemark,5,70,chinese:SSB0261,1,fwp,opus_64k,Opus 64 kbps,1,24.14893341,3.6619,0.9610,14.47
+voicemark,5,71,chinese:SSB0261,2,mean,none,none,1,23.92168148,3.7623,0.9531,12.09
+voicemark,5,71,chinese:SSB0261,2,fwp,none,none,1,4.57097912,3.2139,0.9407,10.16
+voicemark,5,71,chinese:SSB0261,2,mean,mp3_128k,MP3 128 kbps,1,12.16641045,3.6815,0.9531,12.04
+voicemark,5,71,chinese:SSB0261,2,fwp,mp3_128k,MP3 128 kbps,1,7.21633919,3.1571,0.9407,10.14
+voicemark,5,71,chinese:SSB0261,2,mean,opus_64k,Opus 64 kbps,1,19.73381284,3.7635,0.9530,12.04
+voicemark,5,71,chinese:SSB0261,2,fwp,opus_64k,Opus 64 kbps,1,2.05642889,3.2043,0.9404,10.12
+voicemark,5,72,chinese:SSB0267,0,mean,none,none,1,30.13213720,4.2058,0.9611,16.35
+voicemark,5,72,chinese:SSB0267,0,fwp,none,none,1,29.00027934,3.9268,0.9503,14.61
+voicemark,5,72,chinese:SSB0267,0,mean,mp3_128k,MP3 128 kbps,1,30.10603504,3.9437,0.9610,16.08
+voicemark,5,72,chinese:SSB0267,0,fwp,mp3_128k,MP3 128 kbps,1,21.60947116,3.6997,0.9503,14.52
+voicemark,5,72,chinese:SSB0267,0,mean,opus_64k,Opus 64 kbps,1,33.14563815,4.2026,0.9609,16.40
+voicemark,5,72,chinese:SSB0267,0,fwp,opus_64k,Opus 64 kbps,1,20.19532168,3.9272,0.9501,14.68
+voicemark,5,73,chinese:SSB0267,1,mean,none,none,1,32.96828714,4.3456,0.9668,18.57
+voicemark,5,73,chinese:SSB0267,1,fwp,none,none,1,22.92960963,3.9379,0.9434,15.42
+voicemark,5,73,chinese:SSB0267,1,mean,mp3_128k,MP3 128 kbps,1,36.61103066,4.0407,0.9668,17.52
+voicemark,5,73,chinese:SSB0267,1,fwp,mp3_128k,MP3 128 kbps,1,14.05268255,3.6913,0.9434,14.90
+voicemark,5,73,chinese:SSB0267,1,mean,opus_64k,Opus 64 kbps,1,34.75064491,4.3390,0.9667,18.31
+voicemark,5,73,chinese:SSB0267,1,fwp,opus_64k,Opus 64 kbps,1,19.15640479,3.9217,0.9431,15.25
+voicemark,5,74,chinese:SSB0267,2,mean,none,none,1,26.12168431,4.1414,0.9640,19.20
+voicemark,5,74,chinese:SSB0267,2,fwp,none,none,1,22.67505508,3.6474,0.9411,16.62
+voicemark,5,74,chinese:SSB0267,2,mean,mp3_128k,MP3 128 kbps,1,27.04750969,3.8742,0.9640,18.16
+voicemark,5,74,chinese:SSB0267,2,fwp,mp3_128k,MP3 128 kbps,1,18.32032609,3.4179,0.9411,16.04
+voicemark,5,74,chinese:SSB0267,2,mean,opus_64k,Opus 64 kbps,1,25.37638928,4.1384,0.9640,18.93
+voicemark,5,74,chinese:SSB0267,2,fwp,opus_64k,Opus 64 kbps,1,21.04463559,3.6386,0.9411,16.48
+voicemark,5,75,chinese:SSB0273,0,mean,none,none,1,15.86662559,4.2488,0.9778,18.41
+voicemark,5,75,chinese:SSB0273,0,fwp,none,none,1,12.65662441,3.7577,0.9605,14.69
+voicemark,5,75,chinese:SSB0273,0,mean,mp3_128k,MP3 128 kbps,1,11.29882193,4.0939,0.9778,18.18
+voicemark,5,75,chinese:SSB0273,0,fwp,mp3_128k,MP3 128 kbps,1,0.08665943,3.6263,0.9605,14.62
+voicemark,5,75,chinese:SSB0273,0,mean,opus_64k,Opus 64 kbps,1,16.50493693,4.2432,0.9777,18.44
+voicemark,5,75,chinese:SSB0273,0,fwp,opus_64k,Opus 64 kbps,1,0.96034762,3.7424,0.9602,14.74
+voicemark,5,76,chinese:SSB0273,1,mean,none,none,1,20.82239639,4.0916,0.9718,14.80
+voicemark,5,76,chinese:SSB0273,1,fwp,none,none,1,19.14894339,4.0760,0.9723,16.32
+voicemark,5,76,chinese:SSB0273,1,mean,mp3_128k,MP3 128 kbps,1,19.53244464,3.9150,0.9718,14.62
+voicemark,5,76,chinese:SSB0273,1,fwp,mp3_128k,MP3 128 kbps,1,21.66962928,3.8924,0.9722,16.06
+voicemark,5,76,chinese:SSB0273,1,mean,opus_64k,Opus 64 kbps,1,21.01005239,4.0875,0.9717,14.79
+voicemark,5,76,chinese:SSB0273,1,fwp,opus_64k,Opus 64 kbps,1,22.06160626,4.0664,0.9719,16.28
+voicemark,5,77,chinese:SSB0273,2,mean,none,none,1,25.77956476,4.3313,0.9807,17.83
+voicemark,5,77,chinese:SSB0273,2,fwp,none,none,1,18.40144113,4.0574,0.9675,16.32
+voicemark,5,77,chinese:SSB0273,2,mean,mp3_128k,MP3 128 kbps,1,13.37301928,4.1652,0.9807,17.55
+voicemark,5,77,chinese:SSB0273,2,fwp,mp3_128k,MP3 128 kbps,1,18.38971763,3.9041,0.9675,16.13
+voicemark,5,77,chinese:SSB0273,2,mean,opus_64k,Opus 64 kbps,1,24.31831076,4.3281,0.9806,17.75
+voicemark,5,77,chinese:SSB0273,2,fwp,opus_64k,Opus 64 kbps,1,24.63635997,4.0431,0.9673,16.23
+voicemark,5,78,chinese:SSB0287,0,mean,none,none,1,29.15590996,4.2660,0.9653,14.65
+voicemark,5,78,chinese:SSB0287,0,fwp,none,none,1,16.92633201,3.9839,0.9536,11.56
+voicemark,5,78,chinese:SSB0287,0,mean,mp3_128k,MP3 128 kbps,1,40.97490159,4.1910,0.9653,14.62
+voicemark,5,78,chinese:SSB0287,0,fwp,mp3_128k,MP3 128 kbps,1,16.14159054,3.9311,0.9536,11.54
+voicemark,5,78,chinese:SSB0287,0,mean,opus_64k,Opus 64 kbps,1,36.16786716,4.2607,0.9651,14.60
+voicemark,5,78,chinese:SSB0287,0,fwp,opus_64k,Opus 64 kbps,1,14.68149016,3.9696,0.9532,11.54
+voicemark,5,79,chinese:SSB0287,1,mean,none,none,1,23.88454079,4.1149,0.9678,16.70
+voicemark,5,79,chinese:SSB0287,1,fwp,none,none,1,26.01524832,3.7020,0.9554,13.93
+voicemark,5,79,chinese:SSB0287,1,mean,mp3_128k,MP3 128 kbps,1,33.16735566,4.0323,0.9678,16.67
+voicemark,5,79,chinese:SSB0287,1,fwp,mp3_128k,MP3 128 kbps,1,26.27899930,3.6389,0.9555,13.91
+voicemark,5,79,chinese:SSB0287,1,mean,opus_64k,Opus 64 kbps,1,32.01195818,4.1123,0.9676,16.68
+voicemark,5,79,chinese:SSB0287,1,fwp,opus_64k,Opus 64 kbps,1,26.83107883,3.7018,0.9550,13.90
+voicemark,5,80,chinese:SSB0287,2,mean,none,none,1,41.13816388,4.3855,0.9722,15.03
+voicemark,5,80,chinese:SSB0287,2,fwp,none,none,1,25.89121704,3.9422,0.9442,11.33
+voicemark,5,80,chinese:SSB0287,2,mean,mp3_128k,MP3 128 kbps,1,44.24538982,4.2833,0.9722,14.98
+voicemark,5,80,chinese:SSB0287,2,fwp,mp3_128k,MP3 128 kbps,1,28.47715836,3.8809,0.9442,11.31
+voicemark,5,80,chinese:SSB0287,2,mean,opus_64k,Opus 64 kbps,1,45.58071267,4.3837,0.9722,14.99
+voicemark,5,80,chinese:SSB0287,2,fwp,opus_64k,Opus 64 kbps,1,28.23754146,3.9306,0.9440,11.31
+voicemark,5,81,chinese:SSB0288,0,mean,none,none,1,19.75846913,3.7405,0.9669,17.67
+voicemark,5,81,chinese:SSB0288,0,fwp,none,none,1,13.17990076,3.2509,0.9527,14.02
+voicemark,5,81,chinese:SSB0288,0,mean,mp3_128k,MP3 128 kbps,1,29.47011765,3.6047,0.9669,17.40
+voicemark,5,81,chinese:SSB0288,0,fwp,mp3_128k,MP3 128 kbps,1,13.27947259,3.1633,0.9527,14.03
+voicemark,5,81,chinese:SSB0288,0,mean,opus_64k,Opus 64 kbps,1,23.39093379,3.6964,0.9667,17.38
+voicemark,5,81,chinese:SSB0288,0,fwp,opus_64k,Opus 64 kbps,1,13.79950526,3.2496,0.9525,13.94
+voicemark,5,82,chinese:SSB0288,1,mean,none,none,1,39.06558233,3.9840,0.9630,18.14
+voicemark,5,82,chinese:SSB0288,1,fwp,none,none,1,25.38222732,3.4705,0.9446,15.05
+voicemark,5,82,chinese:SSB0288,1,mean,mp3_128k,MP3 128 kbps,1,36.20827679,3.8182,0.9630,17.86
+voicemark,5,82,chinese:SSB0288,1,fwp,mp3_128k,MP3 128 kbps,1,25.05022783,3.3435,0.9445,14.94
+voicemark,5,82,chinese:SSB0288,1,mean,opus_64k,Opus 64 kbps,1,41.22658575,3.9711,0.9628,17.88
+voicemark,5,82,chinese:SSB0288,1,fwp,opus_64k,Opus 64 kbps,1,21.24071830,3.4613,0.9443,14.92
+voicemark,5,83,chinese:SSB0288,2,mean,none,none,1,18.87907150,4.4065,0.9803,19.87
+voicemark,5,83,chinese:SSB0288,2,fwp,none,none,1,17.85712678,3.8332,0.9569,16.13
+voicemark,5,83,chinese:SSB0288,2,mean,mp3_128k,MP3 128 kbps,1,24.77204354,4.2814,0.9803,19.76
+voicemark,5,83,chinese:SSB0288,2,fwp,mp3_128k,MP3 128 kbps,1,22.83409517,3.7601,0.9569,16.24
+voicemark,5,83,chinese:SSB0288,2,mean,opus_64k,Opus 64 kbps,1,21.41105243,4.3982,0.9801,19.48
+voicemark,5,83,chinese:SSB0288,2,fwp,opus_64k,Opus 64 kbps,1,13.70472721,3.8374,0.9567,15.98
+voicemark,5,84,chinese:SSB0299,0,mean,none,none,1,26.78762247,4.1773,0.9816,13.88
+voicemark,5,84,chinese:SSB0299,0,fwp,none,none,1,10.22952425,3.9614,0.9743,12.12
+voicemark,5,84,chinese:SSB0299,0,mean,mp3_128k,MP3 128 kbps,1,31.28456106,3.8758,0.9816,13.41
+voicemark,5,84,chinese:SSB0299,0,fwp,mp3_128k,MP3 128 kbps,1,10.91843009,3.6750,0.9743,11.87
+voicemark,5,84,chinese:SSB0299,0,mean,opus_64k,Opus 64 kbps,1,26.01292568,4.1700,0.9814,13.66
+voicemark,5,84,chinese:SSB0299,0,fwp,opus_64k,Opus 64 kbps,1,11.43643378,3.9448,0.9740,11.96
+voicemark,5,85,chinese:SSB0299,1,mean,none,none,1,17.18075287,4.2723,0.9829,16.70
+voicemark,5,85,chinese:SSB0299,1,fwp,none,none,1,6.42937746,4.0063,0.9703,13.40
+voicemark,5,85,chinese:SSB0299,1,mean,mp3_128k,MP3 128 kbps,1,11.77395857,3.9430,0.9829,15.95
+voicemark,5,85,chinese:SSB0299,1,fwp,mp3_128k,MP3 128 kbps,1,5.61714669,3.7047,0.9703,13.03
+voicemark,5,85,chinese:SSB0299,1,mean,opus_64k,Opus 64 kbps,1,12.58262421,4.2676,0.9829,16.45
+voicemark,5,85,chinese:SSB0299,1,fwp,opus_64k,Opus 64 kbps,1,6.33644024,3.9934,0.9701,13.28
+voicemark,5,86,chinese:SSB0299,2,mean,none,none,1,33.52460900,4.2537,0.9836,15.31
+voicemark,5,86,chinese:SSB0299,2,fwp,none,none,1,22.35793285,3.8277,0.9693,12.49
+voicemark,5,86,chinese:SSB0299,2,mean,mp3_128k,MP3 128 kbps,1,21.48770200,4.0224,0.9836,14.95
+voicemark,5,86,chinese:SSB0299,2,fwp,mp3_128k,MP3 128 kbps,1,25.01033401,3.6271,0.9693,12.34
+voicemark,5,86,chinese:SSB0299,2,mean,opus_64k,Opus 64 kbps,1,28.45281178,4.2503,0.9834,15.17
+voicemark,5,86,chinese:SSB0299,2,fwp,opus_64k,Opus 64 kbps,1,25.62204774,3.8157,0.9690,12.47
+voicemark,5,87,chinese:SSB0307,0,mean,none,none,1,26.62844651,4.0128,0.9582,15.56
+voicemark,5,87,chinese:SSB0307,0,fwp,none,none,1,38.13268462,3.8130,0.9675,17.16
+voicemark,5,87,chinese:SSB0307,0,mean,mp3_128k,MP3 128 kbps,1,32.53222552,3.8700,0.9581,15.31
+voicemark,5,87,chinese:SSB0307,0,fwp,mp3_128k,MP3 128 kbps,1,38.64552981,3.6910,0.9675,16.81
+voicemark,5,87,chinese:SSB0307,0,mean,opus_64k,Opus 64 kbps,1,23.31513274,4.0056,0.9581,15.51
+voicemark,5,87,chinese:SSB0307,0,fwp,opus_64k,Opus 64 kbps,1,38.30805921,3.8067,0.9674,17.10
+voicemark,5,88,chinese:SSB0307,1,mean,none,none,1,22.12518060,4.3510,0.9715,15.98
+voicemark,5,88,chinese:SSB0307,1,fwp,none,none,1,25.92470588,4.0820,0.9444,14.01
+voicemark,5,88,chinese:SSB0307,1,mean,mp3_128k,MP3 128 kbps,1,19.90659121,4.1010,0.9715,15.35
+voicemark,5,88,chinese:SSB0307,1,fwp,mp3_128k,MP3 128 kbps,1,21.12273060,3.8453,0.9444,13.61
+voicemark,5,88,chinese:SSB0307,1,mean,opus_64k,Opus 64 kbps,1,21.86028917,4.3463,0.9713,15.76
+voicemark,5,88,chinese:SSB0307,1,fwp,opus_64k,Opus 64 kbps,1,21.24353790,4.0773,0.9443,13.84
+voicemark,5,89,chinese:SSB0307,2,mean,none,none,1,6.80358373,3.8409,0.9549,15.26
+voicemark,5,89,chinese:SSB0307,2,fwp,none,none,1,24.03933027,3.9392,0.9540,16.84
+voicemark,5,89,chinese:SSB0307,2,mean,mp3_128k,MP3 128 kbps,1,20.33987108,3.5036,0.9549,14.40
+voicemark,5,89,chinese:SSB0307,2,fwp,mp3_128k,MP3 128 kbps,1,16.46408095,3.5862,0.9540,15.62
+voicemark,5,89,chinese:SSB0307,2,mean,opus_64k,Opus 64 kbps,1,7.65552833,3.8405,0.9547,15.13
+voicemark,5,89,chinese:SSB0307,2,fwp,opus_64k,Opus 64 kbps,1,19.96501972,3.9320,0.9533,16.51
+voicemark,5,90,chinese:SSB0309,0,mean,none,none,0,-1.27043161,3.8172,0.9651,15.71
+voicemark,5,90,chinese:SSB0309,0,fwp,none,none,1,12.10877717,3.9081,0.9686,16.30
+voicemark,5,90,chinese:SSB0309,0,mean,mp3_128k,MP3 128 kbps,1,12.45491286,3.7416,0.9651,15.65
+voicemark,5,90,chinese:SSB0309,0,fwp,mp3_128k,MP3 128 kbps,1,11.14997780,3.8358,0.9686,16.23
+voicemark,5,90,chinese:SSB0309,0,mean,opus_64k,Opus 64 kbps,1,1.99382885,3.8091,0.9650,15.70
+voicemark,5,90,chinese:SSB0309,0,fwp,opus_64k,Opus 64 kbps,1,10.06109960,3.8900,0.9683,16.25
+voicemark,5,91,chinese:SSB0309,1,mean,none,none,1,17.80413179,4.0236,0.9727,15.53
+voicemark,5,91,chinese:SSB0309,1,fwp,none,none,1,22.91520296,4.1923,0.9811,17.06
+voicemark,5,91,chinese:SSB0309,1,mean,mp3_128k,MP3 128 kbps,1,30.16456477,3.8937,0.9727,15.43
+voicemark,5,91,chinese:SSB0309,1,fwp,mp3_128k,MP3 128 kbps,1,29.75357442,4.0637,0.9811,16.92
+voicemark,5,91,chinese:SSB0309,1,mean,opus_64k,Opus 64 kbps,1,24.96182064,4.0210,0.9725,15.45
+voicemark,5,91,chinese:SSB0309,1,fwp,opus_64k,Opus 64 kbps,1,21.17590822,4.1826,0.9807,16.90
+voicemark,5,92,chinese:SSB0309,2,mean,none,none,1,20.15410333,4.0153,0.9804,15.94
+voicemark,5,92,chinese:SSB0309,2,fwp,none,none,1,19.70582090,3.4477,0.9654,12.47
+voicemark,5,92,chinese:SSB0309,2,mean,mp3_128k,MP3 128 kbps,1,39.87671474,3.9378,0.9804,15.89
+voicemark,5,92,chinese:SSB0309,2,fwp,mp3_128k,MP3 128 kbps,1,14.62504369,3.3910,0.9654,12.45
+voicemark,5,92,chinese:SSB0309,2,mean,opus_64k,Opus 64 kbps,1,25.30707778,4.0068,0.9803,15.83
+voicemark,5,92,chinese:SSB0309,2,fwp,opus_64k,Opus 64 kbps,1,10.59830773,3.4336,0.9652,12.42
+voicemark,5,93,chinese:SSB0315,0,mean,none,none,1,0.81359625,3.6145,0.9598,12.25
+voicemark,5,93,chinese:SSB0315,0,fwp,none,none,1,21.11932517,3.8806,0.9725,14.15
+voicemark,5,93,chinese:SSB0315,0,mean,mp3_128k,MP3 128 kbps,1,11.87056948,3.4370,0.9598,12.09
+voicemark,5,93,chinese:SSB0315,0,fwp,mp3_128k,MP3 128 kbps,1,25.37450940,3.7164,0.9725,13.90
+voicemark,5,93,chinese:SSB0315,0,mean,opus_64k,Opus 64 kbps,1,4.48616618,3.6084,0.9597,12.25
+voicemark,5,93,chinese:SSB0315,0,fwp,opus_64k,Opus 64 kbps,1,25.36438314,3.8711,0.9722,14.09
+voicemark,5,94,chinese:SSB0315,1,mean,none,none,1,23.34766844,3.8414,0.9753,15.30
+voicemark,5,94,chinese:SSB0315,1,fwp,none,none,1,13.41251899,3.2534,0.9535,11.32
+voicemark,5,94,chinese:SSB0315,1,mean,mp3_128k,MP3 128 kbps,1,29.74104846,3.6235,0.9753,14.99
+voicemark,5,94,chinese:SSB0315,1,fwp,mp3_128k,MP3 128 kbps,1,16.43600915,3.1022,0.9535,11.21
+voicemark,5,94,chinese:SSB0315,1,mean,opus_64k,Opus 64 kbps,1,28.08510074,3.8260,0.9750,15.29
+voicemark,5,94,chinese:SSB0315,1,fwp,opus_64k,Opus 64 kbps,1,8.86155051,3.2349,0.9531,11.34
+voicemark,5,95,chinese:SSB0315,2,mean,none,none,1,3.95087966,3.4548,0.9716,13.84
+voicemark,5,95,chinese:SSB0315,2,fwp,none,none,1,13.96592211,3.3778,0.9683,12.24
+voicemark,5,95,chinese:SSB0315,2,mean,mp3_128k,MP3 128 kbps,1,22.28584528,3.0350,0.9716,12.98
+voicemark,5,95,chinese:SSB0315,2,fwp,mp3_128k,MP3 128 kbps,1,10.33635360,2.9653,0.9683,11.78
+voicemark,5,95,chinese:SSB0315,2,mean,opus_64k,Opus 64 kbps,1,12.18625435,3.4544,0.9716,13.51
+voicemark,5,95,chinese:SSB0315,2,fwp,opus_64k,Opus 64 kbps,1,8.61075779,3.3638,0.9679,12.04
+voicemark,5,96,chinese:SSB0316,0,mean,none,none,1,6.47346108,4.3752,0.9753,17.67
+voicemark,5,96,chinese:SSB0316,0,fwp,none,none,1,25.15914838,4.1263,0.9653,14.92
+voicemark,5,96,chinese:SSB0316,0,mean,mp3_128k,MP3 128 kbps,1,13.27507028,4.1655,0.9753,17.20
+voicemark,5,96,chinese:SSB0316,0,fwp,mp3_128k,MP3 128 kbps,1,26.13532691,3.9344,0.9654,14.67
+voicemark,5,96,chinese:SSB0316,0,mean,opus_64k,Opus 64 kbps,1,9.75349068,4.3768,0.9750,17.53
+voicemark,5,96,chinese:SSB0316,0,fwp,opus_64k,Opus 64 kbps,1,27.99428846,4.1188,0.9650,14.80
+voicemark,5,97,chinese:SSB0316,1,mean,none,none,1,38.31160702,3.9447,0.9650,14.59
+voicemark,5,97,chinese:SSB0316,1,fwp,none,none,1,14.39368832,3.4594,0.9456,11.94
+voicemark,5,97,chinese:SSB0316,1,mean,mp3_128k,MP3 128 kbps,1,41.79898026,3.7952,0.9649,14.45
+voicemark,5,97,chinese:SSB0316,1,fwp,mp3_128k,MP3 128 kbps,1,27.58944449,3.3396,0.9455,11.89
+voicemark,5,97,chinese:SSB0316,1,mean,opus_64k,Opus 64 kbps,1,38.29869206,3.9404,0.9648,14.52
+voicemark,5,97,chinese:SSB0316,1,fwp,opus_64k,Opus 64 kbps,1,21.46452027,3.4530,0.9454,11.91
+voicemark,5,98,chinese:SSB0316,2,mean,none,none,1,28.82498506,3.6275,0.9725,16.82
+voicemark,5,98,chinese:SSB0316,2,fwp,none,none,1,14.16149268,2.9872,0.9575,13.88
+voicemark,5,98,chinese:SSB0316,2,mean,mp3_128k,MP3 128 kbps,1,30.35846351,3.4019,0.9725,16.37
+voicemark,5,98,chinese:SSB0316,2,fwp,mp3_128k,MP3 128 kbps,1,24.26393764,2.8270,0.9574,13.66
+voicemark,5,98,chinese:SSB0316,2,mean,opus_64k,Opus 64 kbps,1,30.18827967,3.6194,0.9725,16.61
+voicemark,5,98,chinese:SSB0316,2,fwp,opus_64k,Opus 64 kbps,1,19.77471380,2.9733,0.9574,13.77
+voicemark,5,99,chinese:SSB0323,0,mean,none,none,1,36.93095167,3.3097,0.9530,12.84
+voicemark,5,99,chinese:SSB0323,0,fwp,none,none,1,3.31903203,3.4087,0.9515,14.30
+voicemark,5,99,chinese:SSB0323,0,mean,mp3_128k,MP3 128 kbps,1,21.27389719,3.1731,0.9530,12.77
+voicemark,5,99,chinese:SSB0323,0,fwp,mp3_128k,MP3 128 kbps,0,-2.64352808,3.2751,0.9515,14.21
+voicemark,5,99,chinese:SSB0323,0,mean,opus_64k,Opus 64 kbps,1,28.75353256,3.2957,0.9526,12.84
+voicemark,5,99,chinese:SSB0323,0,fwp,opus_64k,Opus 64 kbps,0,-2.46361749,3.3931,0.9507,14.25
+voicemark,5,100,chinese:SSB0323,1,mean,none,none,1,24.62314811,3.9525,0.9639,15.75
+voicemark,5,100,chinese:SSB0323,1,fwp,none,none,1,19.95116073,3.4606,0.9489,12.55
+voicemark,5,100,chinese:SSB0323,1,mean,mp3_128k,MP3 128 kbps,1,26.49830284,3.8355,0.9639,15.61
+voicemark,5,100,chinese:SSB0323,1,fwp,mp3_128k,MP3 128 kbps,1,17.62190252,3.3760,0.9489,12.49
+voicemark,5,100,chinese:SSB0323,1,mean,opus_64k,Opus 64 kbps,1,21.92894218,3.9474,0.9636,15.65
+voicemark,5,100,chinese:SSB0323,1,fwp,opus_64k,Opus 64 kbps,1,17.67332783,3.4480,0.9482,12.49
+voicemark,5,101,chinese:SSB0323,2,mean,none,none,1,21.38136837,4.0777,0.9718,13.11
+voicemark,5,101,chinese:SSB0323,2,fwp,none,none,1,11.86921839,4.1082,0.9747,13.59
+voicemark,5,101,chinese:SSB0323,2,mean,mp3_128k,MP3 128 kbps,1,19.70515959,4.0027,0.9718,13.07
+voicemark,5,101,chinese:SSB0323,2,fwp,mp3_128k,MP3 128 kbps,1,15.22076277,4.0259,0.9747,13.54
+voicemark,5,101,chinese:SSB0323,2,mean,opus_64k,Opus 64 kbps,1,20.99188855,4.0699,0.9714,13.07
+voicemark,5,101,chinese:SSB0323,2,fwp,opus_64k,Opus 64 kbps,1,14.54829158,4.0951,0.9740,13.54
+voicemark,5,102,chinese:SSB0338,0,mean,none,none,1,16.89295322,3.7758,0.9650,11.54
+voicemark,5,102,chinese:SSB0338,0,fwp,none,none,1,5.79478007,3.7841,0.9677,12.48
+voicemark,5,102,chinese:SSB0338,0,mean,mp3_128k,MP3 128 kbps,1,14.75127992,3.6649,0.9650,11.46
+voicemark,5,102,chinese:SSB0338,0,fwp,mp3_128k,MP3 128 kbps,1,4.39755058,3.6724,0.9677,12.38
+voicemark,5,102,chinese:SSB0338,0,mean,opus_64k,Opus 64 kbps,1,13.99637395,3.7699,0.9648,11.51
+voicemark,5,102,chinese:SSB0338,0,fwp,opus_64k,Opus 64 kbps,1,4.99351105,3.7704,0.9673,12.42
+voicemark,5,103,chinese:SSB0338,1,mean,none,none,1,17.21491970,3.9518,0.9707,13.30
+voicemark,5,103,chinese:SSB0338,1,fwp,none,none,1,22.54751204,3.0753,0.9493,9.96
+voicemark,5,103,chinese:SSB0338,1,mean,mp3_128k,MP3 128 kbps,1,21.70931357,3.8244,0.9706,13.22
+voicemark,5,103,chinese:SSB0338,1,fwp,mp3_128k,MP3 128 kbps,1,19.57671960,2.9872,0.9493,9.92
+voicemark,5,103,chinese:SSB0338,1,mean,opus_64k,Opus 64 kbps,1,17.58323360,3.9426,0.9706,13.32
+voicemark,5,103,chinese:SSB0338,1,fwp,opus_64k,Opus 64 kbps,1,21.25954483,3.0659,0.9492,9.96
+voicemark,5,104,chinese:SSB0338,2,mean,none,none,1,21.93929460,4.2216,0.9734,14.25
+voicemark,5,104,chinese:SSB0338,2,fwp,none,none,1,18.21214093,4.1646,0.9760,13.87
+voicemark,5,104,chinese:SSB0338,2,mean,mp3_128k,MP3 128 kbps,1,23.69548082,4.0812,0.9734,14.07
+voicemark,5,104,chinese:SSB0338,2,fwp,mp3_128k,MP3 128 kbps,1,21.51962424,4.0337,0.9761,13.69
+voicemark,5,104,chinese:SSB0338,2,mean,opus_64k,Opus 64 kbps,1,18.63934329,4.2206,0.9733,14.19
+voicemark,5,104,chinese:SSB0338,2,fwp,opus_64k,Opus 64 kbps,1,21.62229142,4.1571,0.9758,13.78
+voicemark,5,105,chinese:SSB0339,0,mean,none,none,1,13.52483215,4.1273,0.9706,13.25
+voicemark,5,105,chinese:SSB0339,0,fwp,none,none,1,21.06431364,3.8778,0.9473,11.30
+voicemark,5,105,chinese:SSB0339,0,mean,mp3_128k,MP3 128 kbps,1,10.23274400,4.0538,0.9706,13.18
+voicemark,5,105,chinese:SSB0339,0,fwp,mp3_128k,MP3 128 kbps,1,26.14668541,3.8145,0.9473,11.26
+voicemark,5,105,chinese:SSB0339,0,mean,opus_64k,Opus 64 kbps,1,12.75183374,4.1235,0.9706,13.26
+voicemark,5,105,chinese:SSB0339,0,fwp,opus_64k,Opus 64 kbps,1,8.80640238,3.8334,0.9602,11.00
+voicemark,5,106,chinese:SSB0339,1,mean,none,none,1,21.67264182,4.1839,0.9660,14.09
+voicemark,5,106,chinese:SSB0339,1,fwp,none,none,1,15.79291851,3.7606,0.9505,11.38
+voicemark,5,106,chinese:SSB0339,1,mean,mp3_128k,MP3 128 kbps,1,15.83614799,4.0943,0.9659,14.03
+voicemark,5,106,chinese:SSB0339,1,fwp,mp3_128k,MP3 128 kbps,1,27.84163522,3.6943,0.9504,11.36
+voicemark,5,106,chinese:SSB0339,1,mean,opus_64k,Opus 64 kbps,1,19.06408523,4.1797,0.9658,14.09
+voicemark,5,106,chinese:SSB0339,1,fwp,opus_64k,Opus 64 kbps,1,21.62065622,3.7448,0.9501,11.36
+voicemark,5,107,chinese:SSB0339,2,mean,none,none,1,22.11579690,4.1783,0.9730,14.63
+voicemark,5,107,chinese:SSB0339,2,fwp,none,none,1,11.93930919,3.7181,0.9540,12.31
+voicemark,5,107,chinese:SSB0339,2,mean,mp3_128k,MP3 128 kbps,1,16.60446316,3.9777,0.9730,14.35
+voicemark,5,107,chinese:SSB0339,2,fwp,mp3_128k,MP3 128 kbps,1,14.62062361,3.5587,0.9540,12.14
+voicemark,5,107,chinese:SSB0339,2,mean,opus_64k,Opus 64 kbps,1,20.73579097,4.1730,0.9729,14.57
+voicemark,5,107,chinese:SSB0339,2,fwp,opus_64k,Opus 64 kbps,1,13.57160416,3.7033,0.9538,12.25
+voicemark,5,108,chinese:SSB0341,0,mean,none,none,1,23.05295798,3.7437,0.9672,12.65
+voicemark,5,108,chinese:SSB0341,0,fwp,none,none,1,24.97149706,3.5419,0.9688,14.65
+voicemark,5,108,chinese:SSB0341,0,mean,mp3_128k,MP3 128 kbps,1,17.42506641,3.5950,0.9672,12.54
+voicemark,5,108,chinese:SSB0341,0,fwp,mp3_128k,MP3 128 kbps,1,13.00673690,3.4108,0.9688,14.48
+voicemark,5,108,chinese:SSB0341,0,mean,opus_64k,Opus 64 kbps,1,26.12576641,3.7392,0.9671,12.57
+voicemark,5,108,chinese:SSB0341,0,fwp,opus_64k,Opus 64 kbps,1,17.52451883,3.5324,0.9687,14.53
+voicemark,5,109,chinese:SSB0341,1,mean,none,none,1,26.81164546,3.8703,0.9687,13.14
+voicemark,5,109,chinese:SSB0341,1,fwp,none,none,1,18.30246693,4.2741,0.9785,14.09
+voicemark,5,109,chinese:SSB0341,1,mean,mp3_128k,MP3 128 kbps,1,32.82542367,3.8137,0.9687,13.18
+voicemark,5,109,chinese:SSB0341,1,fwp,mp3_128k,MP3 128 kbps,1,27.09631184,4.2070,0.9785,14.08
+voicemark,5,109,chinese:SSB0341,1,mean,opus_64k,Opus 64 kbps,1,27.07067553,3.8624,0.9687,13.19
+voicemark,5,109,chinese:SSB0341,1,fwp,opus_64k,Opus 64 kbps,1,18.80144595,4.2582,0.9782,14.10
+voicemark,5,110,chinese:SSB0341,2,mean,none,none,1,21.74724829,4.0275,0.9647,13.17
+voicemark,5,110,chinese:SSB0341,2,fwp,none,none,1,20.21335114,3.4894,0.9505,10.58
+voicemark,5,110,chinese:SSB0341,2,mean,mp3_128k,MP3 128 kbps,1,19.75106389,3.9314,0.9647,13.09
+voicemark,5,110,chinese:SSB0341,2,fwp,mp3_128k,MP3 128 kbps,1,15.92235363,3.4259,0.9505,10.54
+voicemark,5,110,chinese:SSB0341,2,mean,opus_64k,Opus 64 kbps,1,20.57026808,4.0252,0.9646,13.17
+voicemark,5,110,chinese:SSB0341,2,fwp,opus_64k,Opus 64 kbps,1,16.51102316,3.4785,0.9502,10.56
+voicemark,5,111,chinese:SSB0342,0,mean,none,none,1,36.86125156,4.1691,0.9749,17.07
+voicemark,5,111,chinese:SSB0342,0,fwp,none,none,1,15.36430069,3.9472,0.9785,17.11
+voicemark,5,111,chinese:SSB0342,0,mean,mp3_128k,MP3 128 kbps,1,39.58405151,3.8342,0.9749,16.34
+voicemark,5,111,chinese:SSB0342,0,fwp,mp3_128k,MP3 128 kbps,1,11.36769492,3.6403,0.9785,16.38
+voicemark,5,111,chinese:SSB0342,0,mean,opus_64k,Opus 64 kbps,1,37.14801015,4.1632,0.9748,16.68
+voicemark,5,111,chinese:SSB0342,0,fwp,opus_64k,Opus 64 kbps,1,9.99165241,3.9296,0.9782,16.69
+voicemark,5,112,chinese:SSB0342,1,mean,none,none,1,16.17075364,4.1647,0.9723,15.88
+voicemark,5,112,chinese:SSB0342,1,fwp,none,none,1,8.13315248,4.1585,0.9780,17.41
+voicemark,5,112,chinese:SSB0342,1,mean,mp3_128k,MP3 128 kbps,1,12.86160147,3.6753,0.9722,14.75
+voicemark,5,112,chinese:SSB0342,1,fwp,mp3_128k,MP3 128 kbps,1,16.86730747,3.6909,0.9779,15.65
+voicemark,5,112,chinese:SSB0342,1,mean,opus_64k,Opus 64 kbps,1,17.27998031,4.1606,0.9723,15.31
+voicemark,5,112,chinese:SSB0342,1,fwp,opus_64k,Opus 64 kbps,1,5.70539158,4.1521,0.9778,16.67
+voicemark,5,113,chinese:SSB0342,2,mean,none,none,1,19.21212459,3.6866,0.9607,14.50
+voicemark,5,113,chinese:SSB0342,2,fwp,none,none,1,8.68593010,3.5971,0.9600,16.33
+voicemark,5,113,chinese:SSB0342,2,mean,mp3_128k,MP3 128 kbps,1,20.15259100,3.4255,0.9607,14.16
+voicemark,5,113,chinese:SSB0342,2,fwp,mp3_128k,MP3 128 kbps,1,19.77089882,3.3612,0.9600,15.78
+voicemark,5,113,chinese:SSB0342,2,mean,opus_64k,Opus 64 kbps,1,20.10320252,3.6808,0.9605,14.47
+voicemark,5,113,chinese:SSB0342,2,fwp,opus_64k,Opus 64 kbps,1,10.79055130,3.5775,0.9596,16.21
+voicemark,5,114,chinese:SSB0354,0,mean,none,none,1,45.91176608,3.9452,0.9607,18.46
+voicemark,5,114,chinese:SSB0354,0,fwp,none,none,1,14.21772461,3.3180,0.9459,16.28
+voicemark,5,114,chinese:SSB0354,0,mean,mp3_128k,MP3 128 kbps,1,30.62363954,3.8640,0.9607,18.49
+voicemark,5,114,chinese:SSB0354,0,fwp,mp3_128k,MP3 128 kbps,1,10.75309416,3.2763,0.9460,16.45
+voicemark,5,114,chinese:SSB0354,0,mean,opus_64k,Opus 64 kbps,1,42.53474733,3.8165,0.9606,18.61
+voicemark,5,114,chinese:SSB0354,0,fwp,opus_64k,Opus 64 kbps,1,9.81896239,3.3956,0.9459,16.37
+voicemark,5,115,chinese:SSB0354,1,mean,none,none,1,37.60803129,4.3488,0.9700,20.17
+voicemark,5,115,chinese:SSB0354,1,fwp,none,none,1,28.97617764,3.7729,0.9494,16.40
+voicemark,5,115,chinese:SSB0354,1,mean,mp3_128k,MP3 128 kbps,1,23.97696272,4.0760,0.9700,19.43
+voicemark,5,115,chinese:SSB0354,1,fwp,mp3_128k,MP3 128 kbps,1,27.57081139,3.5890,0.9494,16.12
+voicemark,5,115,chinese:SSB0354,1,mean,opus_64k,Opus 64 kbps,1,38.36411934,4.1881,0.9698,19.83
+voicemark,5,115,chinese:SSB0354,1,fwp,opus_64k,Opus 64 kbps,1,28.20196466,3.7506,0.9491,16.23
+voicemark,5,116,chinese:SSB0354,2,mean,none,none,1,34.02773682,3.9169,0.9627,17.53
+voicemark,5,116,chinese:SSB0354,2,fwp,none,none,1,36.66452293,3.5903,0.9482,16.52
+voicemark,5,116,chinese:SSB0354,2,mean,mp3_128k,MP3 128 kbps,1,42.71970536,3.8168,0.9627,17.44
+voicemark,5,116,chinese:SSB0354,2,fwp,mp3_128k,MP3 128 kbps,1,39.13260522,3.5022,0.9482,16.43
+voicemark,5,116,chinese:SSB0354,2,mean,opus_64k,Opus 64 kbps,1,39.45785888,3.9188,0.9624,17.44
+voicemark,5,116,chinese:SSB0354,2,fwp,opus_64k,Opus 64 kbps,1,39.80342965,3.5901,0.9478,16.37
+voicemark,5,117,chinese:SSB0366,0,mean,none,none,1,16.04787800,4.2204,0.9719,15.62
+voicemark,5,117,chinese:SSB0366,0,fwp,none,none,1,30.45340120,3.5762,0.9315,10.93
+voicemark,5,117,chinese:SSB0366,0,mean,mp3_128k,MP3 128 kbps,1,17.40771839,4.1061,0.9719,15.51
+voicemark,5,117,chinese:SSB0366,0,fwp,mp3_128k,MP3 128 kbps,1,32.01196587,3.4879,0.9315,10.91
+voicemark,5,117,chinese:SSB0366,0,mean,opus_64k,Opus 64 kbps,1,16.43400285,4.2160,0.9720,15.53
+voicemark,5,117,chinese:SSB0366,0,fwp,opus_64k,Opus 64 kbps,1,30.72134584,3.5659,0.9313,10.88
+voicemark,5,118,chinese:SSB0366,1,mean,none,none,1,26.88497113,4.2009,0.9634,14.93
+voicemark,5,118,chinese:SSB0366,1,fwp,none,none,1,16.46146004,3.7077,0.9420,12.42
+voicemark,5,118,chinese:SSB0366,1,mean,mp3_128k,MP3 128 kbps,1,23.76083937,3.9394,0.9634,14.67
+voicemark,5,118,chinese:SSB0366,1,fwp,mp3_128k,MP3 128 kbps,1,19.26373312,3.4979,0.9419,12.30
+voicemark,5,118,chinese:SSB0366,1,mean,opus_64k,Opus 64 kbps,1,24.91482997,4.1947,0.9633,14.88
+voicemark,5,118,chinese:SSB0366,1,fwp,opus_64k,Opus 64 kbps,1,20.57879621,3.6890,0.9414,12.43
+voicemark,5,119,chinese:SSB0366,2,mean,none,none,1,23.59723613,3.9691,0.9653,15.39
+voicemark,5,119,chinese:SSB0366,2,fwp,none,none,1,20.20222189,3.2730,0.9398,12.22
+voicemark,5,119,chinese:SSB0366,2,mean,mp3_128k,MP3 128 kbps,1,22.93694815,3.7909,0.9653,15.23
+voicemark,5,119,chinese:SSB0366,2,fwp,mp3_128k,MP3 128 kbps,1,15.58124486,3.1369,0.9398,12.15
+voicemark,5,119,chinese:SSB0366,2,mean,opus_64k,Opus 64 kbps,1,19.96818921,3.9613,0.9652,15.38
+voicemark,5,119,chinese:SSB0366,2,fwp,opus_64k,Opus 64 kbps,1,18.13112685,3.2556,0.9396,12.21
+voicemark,5,120,chinese:SSB0375,0,mean,none,none,1,16.62401041,4.2635,0.9748,15.87
+voicemark,5,120,chinese:SSB0375,0,fwp,none,none,1,8.42390889,3.9712,0.9646,12.71
+voicemark,5,120,chinese:SSB0375,0,mean,mp3_128k,MP3 128 kbps,1,6.92074489,4.1162,0.9748,15.62
+voicemark,5,120,chinese:SSB0375,0,fwp,mp3_128k,MP3 128 kbps,1,9.41738051,3.8469,0.9646,12.59
+voicemark,5,120,chinese:SSB0375,0,mean,opus_64k,Opus 64 kbps,1,11.07324494,4.2621,0.9747,15.73
+voicemark,5,120,chinese:SSB0375,0,fwp,opus_64k,Opus 64 kbps,1,8.12435207,3.9652,0.9643,12.62
+voicemark,5,121,chinese:SSB0375,1,mean,none,none,1,18.15697305,4.2679,0.9719,13.49
+voicemark,5,121,chinese:SSB0375,1,fwp,none,none,1,14.55701596,4.2914,0.9764,15.68
+voicemark,5,121,chinese:SSB0375,1,mean,mp3_128k,MP3 128 kbps,1,13.60570274,4.1443,0.9719,13.41
+voicemark,5,121,chinese:SSB0375,1,fwp,mp3_128k,MP3 128 kbps,1,4.87733646,4.1702,0.9764,15.53
+voicemark,5,121,chinese:SSB0375,1,mean,opus_64k,Opus 64 kbps,1,10.94814883,4.2635,0.9718,13.42
+voicemark,5,121,chinese:SSB0375,1,fwp,opus_64k,Opus 64 kbps,1,8.99953118,4.2863,0.9763,15.54
+voicemark,5,122,chinese:SSB0375,2,mean,none,none,1,30.37023292,4.3718,0.9813,14.62
+voicemark,5,122,chinese:SSB0375,2,fwp,none,none,1,21.31787689,4.2473,0.9782,12.85
+voicemark,5,122,chinese:SSB0375,2,mean,mp3_128k,MP3 128 kbps,1,23.16439676,4.1877,0.9813,14.35
+voicemark,5,122,chinese:SSB0375,2,fwp,mp3_128k,MP3 128 kbps,1,29.36977792,4.0794,0.9782,12.68
+voicemark,5,122,chinese:SSB0375,2,mean,opus_64k,Opus 64 kbps,1,29.88870102,4.3687,0.9813,14.57
+voicemark,5,122,chinese:SSB0375,2,fwp,opus_64k,Opus 64 kbps,1,26.30289076,4.2434,0.9779,12.87
+voicemark,5,123,chinese:SSB0379,0,mean,none,none,1,12.34753442,3.6003,0.9683,13.18
+voicemark,5,123,chinese:SSB0379,0,fwp,none,none,1,10.09502344,3.5678,0.9679,14.27
+voicemark,5,123,chinese:SSB0379,0,mean,mp3_128k,MP3 128 kbps,1,23.43485165,3.4939,0.9683,13.14
+voicemark,5,123,chinese:SSB0379,0,fwp,mp3_128k,MP3 128 kbps,1,15.58585064,3.4803,0.9679,14.17
+voicemark,5,123,chinese:SSB0379,0,mean,opus_64k,Opus 64 kbps,1,14.86972035,3.5961,0.9682,13.16
+voicemark,5,123,chinese:SSB0379,0,fwp,opus_64k,Opus 64 kbps,1,10.31713221,3.5492,0.9677,14.20
+voicemark,5,124,chinese:SSB0379,1,mean,none,none,1,29.99941363,3.9408,0.9825,14.97
+voicemark,5,124,chinese:SSB0379,1,fwp,none,none,1,25.44473875,3.8436,0.9831,16.05
+voicemark,5,124,chinese:SSB0379,1,mean,mp3_128k,MP3 128 kbps,1,18.93568807,3.7513,0.9825,14.78
+voicemark,5,124,chinese:SSB0379,1,fwp,mp3_128k,MP3 128 kbps,1,43.38919334,3.6512,0.9831,15.87
+voicemark,5,124,chinese:SSB0379,1,mean,opus_64k,Opus 64 kbps,1,20.88930169,3.9303,0.9824,14.90
+voicemark,5,124,chinese:SSB0379,1,fwp,opus_64k,Opus 64 kbps,1,27.15415132,3.8304,0.9828,16.00
+voicemark,5,125,chinese:SSB0379,2,mean,none,none,1,27.26518080,4.1799,0.9783,16.99
+voicemark,5,125,chinese:SSB0379,2,fwp,none,none,1,1.17777351,3.8008,0.9716,14.92
+voicemark,5,125,chinese:SSB0379,2,mean,mp3_128k,MP3 128 kbps,1,23.68127169,3.9273,0.9783,16.28
+voicemark,5,125,chinese:SSB0379,2,fwp,mp3_128k,MP3 128 kbps,0,-2.25489238,3.6212,0.9717,14.51
+voicemark,5,125,chinese:SSB0379,2,mean,opus_64k,Opus 64 kbps,1,30.31732156,4.1760,0.9782,16.66
+voicemark,5,125,chinese:SSB0379,2,fwp,opus_64k,Opus 64 kbps,0,-3.27838321,3.7925,0.9713,14.68
+voicemark,5,126,chinese:SSB0380,0,mean,none,none,1,21.18557634,4.1070,0.9603,12.61
+voicemark,5,126,chinese:SSB0380,0,fwp,none,none,1,27.11747093,3.7200,0.9514,11.89
+voicemark,5,126,chinese:SSB0380,0,mean,mp3_128k,MP3 128 kbps,1,17.44699388,4.0766,0.9603,12.60
+voicemark,5,126,chinese:SSB0380,0,fwp,mp3_128k,MP3 128 kbps,1,28.18868113,3.6969,0.9514,11.88
+voicemark,5,126,chinese:SSB0380,0,mean,opus_64k,Opus 64 kbps,1,18.94808361,4.1068,0.9601,12.61
+voicemark,5,126,chinese:SSB0380,0,fwp,opus_64k,Opus 64 kbps,1,27.31361366,3.7082,0.9508,11.88
+voicemark,5,127,chinese:SSB0380,1,mean,none,none,1,20.82888754,4.0553,0.9658,12.45
+voicemark,5,127,chinese:SSB0380,1,fwp,none,none,1,19.98027270,4.1025,0.9586,11.22
+voicemark,5,127,chinese:SSB0380,1,mean,mp3_128k,MP3 128 kbps,1,23.07410731,3.9988,0.9658,12.42
+voicemark,5,127,chinese:SSB0380,1,fwp,mp3_128k,MP3 128 kbps,1,26.98809765,4.0636,0.9586,11.20
+voicemark,5,127,chinese:SSB0380,1,mean,opus_64k,Opus 64 kbps,1,21.02066355,4.0511,0.9653,12.45
+voicemark,5,127,chinese:SSB0380,1,fwp,opus_64k,Opus 64 kbps,1,22.30472355,4.0913,0.9578,11.21
+voicemark,5,128,chinese:SSB0380,2,mean,none,none,1,20.60261311,3.9291,0.9645,14.65
+voicemark,5,128,chinese:SSB0380,2,fwp,none,none,1,33.19656182,3.4565,0.9509,10.47
+voicemark,5,128,chinese:SSB0380,2,mean,mp3_128k,MP3 128 kbps,1,33.92201095,3.7816,0.9645,14.55
+voicemark,5,128,chinese:SSB0380,2,fwp,mp3_128k,MP3 128 kbps,1,34.85143018,3.3382,0.9509,10.43
+voicemark,5,128,chinese:SSB0380,2,mean,opus_64k,Opus 64 kbps,1,27.34460471,3.9286,0.9642,14.55
+voicemark,5,128,chinese:SSB0380,2,fwp,opus_64k,Opus 64 kbps,1,34.79944444,3.4476,0.9503,10.42
+voicemark,5,129,chinese:SSB0382,0,mean,none,none,1,3.24263134,4.2503,0.9756,14.96
+voicemark,5,129,chinese:SSB0382,0,fwp,none,none,1,19.00922042,4.1362,0.9741,15.68
+voicemark,5,129,chinese:SSB0382,0,mean,mp3_128k,MP3 128 kbps,1,11.14682492,4.0241,0.9756,14.59
+voicemark,5,129,chinese:SSB0382,0,fwp,mp3_128k,MP3 128 kbps,1,10.21672203,3.9125,0.9741,15.25
+voicemark,5,129,chinese:SSB0382,0,mean,opus_64k,Opus 64 kbps,1,5.15564247,4.2439,0.9754,14.89
+voicemark,5,129,chinese:SSB0382,0,fwp,opus_64k,Opus 64 kbps,1,18.72293328,4.1269,0.9738,15.55
+voicemark,5,130,chinese:SSB0382,1,mean,none,none,1,24.91257440,4.1567,0.9596,11.51
+voicemark,5,130,chinese:SSB0382,1,fwp,none,none,1,22.40573132,3.9481,0.9509,10.28
+voicemark,5,130,chinese:SSB0382,1,mean,mp3_128k,MP3 128 kbps,1,25.24869147,3.9561,0.9596,11.28
+voicemark,5,130,chinese:SSB0382,1,fwp,mp3_128k,MP3 128 kbps,1,22.97037174,3.7582,0.9509,10.11
+voicemark,5,130,chinese:SSB0382,1,mean,opus_64k,Opus 64 kbps,1,24.47534923,4.1559,0.9595,11.45
+voicemark,5,130,chinese:SSB0382,1,fwp,opus_64k,Opus 64 kbps,1,20.54686110,3.9401,0.9507,10.24
+voicemark,5,131,chinese:SSB0382,2,mean,none,none,1,21.91363721,4.0169,0.9670,14.73
+voicemark,5,131,chinese:SSB0382,2,fwp,none,none,1,9.06092226,3.6055,0.9498,13.33
+voicemark,5,131,chinese:SSB0382,2,mean,mp3_128k,MP3 128 kbps,1,24.97076735,3.8109,0.9670,14.37
+voicemark,5,131,chinese:SSB0382,2,fwp,mp3_128k,MP3 128 kbps,1,17.12584158,3.4361,0.9498,13.07
+voicemark,5,131,chinese:SSB0382,2,mean,opus_64k,Opus 64 kbps,1,20.89820870,4.0146,0.9670,14.68
+voicemark,5,131,chinese:SSB0382,2,fwp,opus_64k,Opus 64 kbps,1,9.10297032,3.5997,0.9496,13.24
+voicemark,5,132,chinese:SSB0385,0,mean,none,none,1,23.65117907,3.6626,0.9604,13.04
+voicemark,5,132,chinese:SSB0385,0,fwp,none,none,1,14.78597612,3.0108,0.9403,9.88
+voicemark,5,132,chinese:SSB0385,0,mean,mp3_128k,MP3 128 kbps,1,31.62964972,3.5440,0.9604,12.83
+voicemark,5,132,chinese:SSB0385,0,fwp,mp3_128k,MP3 128 kbps,1,15.83050751,2.9476,0.9403,9.78
+voicemark,5,132,chinese:SSB0385,0,mean,opus_64k,Opus 64 kbps,1,24.17251500,3.6591,0.9600,12.97
+voicemark,5,132,chinese:SSB0385,0,fwp,opus_64k,Opus 64 kbps,1,14.87580651,3.0020,0.9392,9.84
+voicemark,5,133,chinese:SSB0385,1,mean,none,none,1,29.45236112,4.0319,0.9711,12.63
+voicemark,5,133,chinese:SSB0385,1,fwp,none,none,1,33.86349798,3.4529,0.9589,9.55
+voicemark,5,133,chinese:SSB0385,1,mean,mp3_128k,MP3 128 kbps,1,37.74348696,3.8645,0.9711,12.44
+voicemark,5,133,chinese:SSB0385,1,fwp,mp3_128k,MP3 128 kbps,1,38.19759609,3.3495,0.9588,9.45
+voicemark,5,133,chinese:SSB0385,1,mean,opus_64k,Opus 64 kbps,1,30.34538934,4.0213,0.9706,12.54
+voicemark,5,133,chinese:SSB0385,1,fwp,opus_64k,Opus 64 kbps,1,36.43349848,3.4353,0.9580,9.50
+voicemark,5,134,chinese:SSB0385,2,mean,none,none,1,15.00595112,3.7927,0.9713,13.30
+voicemark,5,134,chinese:SSB0385,2,fwp,none,none,1,6.77133959,3.1472,0.9547,9.95
+voicemark,5,134,chinese:SSB0385,2,mean,mp3_128k,MP3 128 kbps,1,15.22438899,3.7746,0.9713,13.36
+voicemark,5,134,chinese:SSB0385,2,fwp,mp3_128k,MP3 128 kbps,1,3.37326431,3.1726,0.9547,10.04
+voicemark,5,134,chinese:SSB0385,2,mean,opus_64k,Opus 64 kbps,1,14.95371416,3.8122,0.9709,13.39
+voicemark,5,134,chinese:SSB0385,2,fwp,opus_64k,Opus 64 kbps,1,3.65717326,3.1650,0.9537,10.03
+voicemark,5,135,chinese:SSB0393,0,mean,none,none,1,44.53130929,4.0998,0.9672,14.46
+voicemark,5,135,chinese:SSB0393,0,fwp,none,none,1,22.62267897,4.1080,0.9739,15.10
+voicemark,5,135,chinese:SSB0393,0,mean,mp3_128k,MP3 128 kbps,1,22.32432569,3.8278,0.9672,14.11
+voicemark,5,135,chinese:SSB0393,0,fwp,mp3_128k,MP3 128 kbps,1,14.39056575,3.8448,0.9738,14.69
+voicemark,5,135,chinese:SSB0393,0,mean,opus_64k,Opus 64 kbps,1,42.37132936,4.0880,0.9670,14.39
+voicemark,5,135,chinese:SSB0393,0,fwp,opus_64k,Opus 64 kbps,1,17.01778775,4.0906,0.9735,14.96
+voicemark,5,136,chinese:SSB0393,1,mean,none,none,1,12.37964025,4.1461,0.9678,14.16
+voicemark,5,136,chinese:SSB0393,1,fwp,none,none,1,6.34615150,4.2554,0.9745,15.63
+voicemark,5,136,chinese:SSB0393,1,mean,mp3_128k,MP3 128 kbps,1,10.38818997,3.9020,0.9678,13.64
+voicemark,5,136,chinese:SSB0393,1,fwp,mp3_128k,MP3 128 kbps,1,15.22439659,3.9769,0.9744,14.89
+voicemark,5,136,chinese:SSB0393,1,mean,opus_64k,Opus 64 kbps,1,8.66698341,4.1420,0.9678,13.98
+voicemark,5,136,chinese:SSB0393,1,fwp,opus_64k,Opus 64 kbps,1,10.53114483,4.2448,0.9742,15.31
+voicemark,5,137,chinese:SSB0393,2,mean,none,none,1,21.18354813,3.8552,0.9677,14.33
+voicemark,5,137,chinese:SSB0393,2,fwp,none,none,1,22.37368941,3.8061,0.9556,12.01
+voicemark,5,137,chinese:SSB0393,2,mean,mp3_128k,MP3 128 kbps,1,20.14633833,3.7138,0.9678,14.16
+voicemark,5,137,chinese:SSB0393,2,fwp,mp3_128k,MP3 128 kbps,1,24.09838911,3.6794,0.9556,11.92
+voicemark,5,137,chinese:SSB0393,2,mean,opus_64k,Opus 64 kbps,1,21.16937905,3.8503,0.9675,14.31
+voicemark,5,137,chinese:SSB0393,2,fwp,opus_64k,Opus 64 kbps,1,24.10348501,3.7910,0.9554,12.02
+voicemark,5,138,chinese:SSB0394,0,mean,none,none,1,19.15909995,4.1136,0.9507,16.50
+voicemark,5,138,chinese:SSB0394,0,fwp,none,none,1,2.70174989,4.2988,0.9650,19.03
+voicemark,5,138,chinese:SSB0394,0,mean,mp3_128k,MP3 128 kbps,1,16.07120512,3.8497,0.9507,16.27
+voicemark,5,138,chinese:SSB0394,0,fwp,mp3_128k,MP3 128 kbps,1,3.79215048,4.0079,0.9650,18.56
+voicemark,5,138,chinese:SSB0394,0,mean,opus_64k,Opus 64 kbps,1,16.70328365,4.1090,0.9505,16.32
+voicemark,5,138,chinese:SSB0394,0,fwp,opus_64k,Opus 64 kbps,1,1.92526996,4.2852,0.9644,18.70
+voicemark,5,139,chinese:SSB0394,1,mean,none,none,1,21.85213076,3.8480,0.9473,18.80
+voicemark,5,139,chinese:SSB0394,1,fwp,none,none,1,20.91396391,3.9758,0.9588,20.78
+voicemark,5,139,chinese:SSB0394,1,mean,mp3_128k,MP3 128 kbps,1,29.56288948,3.7086,0.9472,18.68
+voicemark,5,139,chinese:SSB0394,1,fwp,mp3_128k,MP3 128 kbps,1,30.39687965,3.8311,0.9588,20.58
+voicemark,5,139,chinese:SSB0394,1,mean,opus_64k,Opus 64 kbps,1,23.73602576,3.8463,0.9470,18.79
+voicemark,5,139,chinese:SSB0394,1,fwp,opus_64k,Opus 64 kbps,1,26.56975817,3.9695,0.9584,20.64
+voicemark,5,140,chinese:SSB0394,2,mean,none,none,1,20.62810170,4.2685,0.9638,21.56
+voicemark,5,140,chinese:SSB0394,2,fwp,none,none,1,23.43139482,3.6797,0.9223,17.81
+voicemark,5,140,chinese:SSB0394,2,mean,mp3_128k,MP3 128 kbps,1,20.72339447,4.1379,0.9638,21.41
+voicemark,5,140,chinese:SSB0394,2,fwp,mp3_128k,MP3 128 kbps,1,25.81816805,3.5903,0.9223,17.75
+voicemark,5,140,chinese:SSB0394,2,mean,opus_64k,Opus 64 kbps,1,21.23171002,4.2626,0.9635,21.47
+voicemark,5,140,chinese:SSB0394,2,fwp,opus_64k,Opus 64 kbps,1,21.80684455,3.6696,0.9220,17.80
+voicemark,5,141,chinese:SSB0395,0,mean,none,none,1,24.33785396,4.0665,0.9639,15.32
+voicemark,5,141,chinese:SSB0395,0,fwp,none,none,1,25.30197806,3.6460,0.9417,12.54
+voicemark,5,141,chinese:SSB0395,0,mean,mp3_128k,MP3 128 kbps,1,25.89453493,3.9578,0.9639,15.22
+voicemark,5,141,chinese:SSB0395,0,fwp,mp3_128k,MP3 128 kbps,1,28.15133532,3.5677,0.9418,12.48
+voicemark,5,141,chinese:SSB0395,0,mean,opus_64k,Opus 64 kbps,1,24.61652101,4.0651,0.9638,14.97
+voicemark,5,141,chinese:SSB0395,0,fwp,opus_64k,Opus 64 kbps,1,26.24033821,3.6375,0.9415,12.32
+voicemark,5,142,chinese:SSB0395,1,mean,none,none,1,20.31336010,3.9493,0.9607,18.49
+voicemark,5,142,chinese:SSB0395,1,fwp,none,none,1,22.16790387,3.7915,0.9652,18.46
+voicemark,5,142,chinese:SSB0395,1,mean,mp3_128k,MP3 128 kbps,1,18.61991984,3.7280,0.9607,18.13
+voicemark,5,142,chinese:SSB0395,1,fwp,mp3_128k,MP3 128 kbps,1,14.36469612,3.6011,0.9652,18.08
+voicemark,5,142,chinese:SSB0395,1,mean,opus_64k,Opus 64 kbps,1,18.92201646,3.9371,0.9605,18.13
+voicemark,5,142,chinese:SSB0395,1,fwp,opus_64k,Opus 64 kbps,1,7.84514595,3.4511,0.9373,14.78
+voicemark,5,143,chinese:SSB0395,2,mean,none,none,1,16.02940546,4.2035,0.9661,16.82
+voicemark,5,143,chinese:SSB0395,2,fwp,none,none,1,14.56406431,3.9807,0.9505,14.96
+voicemark,5,143,chinese:SSB0395,2,mean,mp3_128k,MP3 128 kbps,1,11.90927688,4.0469,0.9661,16.59
+voicemark,5,143,chinese:SSB0395,2,fwp,mp3_128k,MP3 128 kbps,1,5.91628610,3.8436,0.9505,14.82
+voicemark,5,143,chinese:SSB0395,2,mean,opus_64k,Opus 64 kbps,1,10.73765378,4.1981,0.9657,16.49
+voicemark,5,143,chinese:SSB0395,2,fwp,opus_64k,Opus 64 kbps,1,10.72822100,3.9538,0.9501,14.75
+voicemark,5,144,chinese:SSB0407,0,mean,none,none,1,31.61654360,4.2991,0.9660,17.47
+voicemark,5,144,chinese:SSB0407,0,fwp,none,none,1,16.34823518,4.3549,0.9741,17.22
+voicemark,5,144,chinese:SSB0407,0,mean,mp3_128k,MP3 128 kbps,1,31.81918048,4.2045,0.9660,17.37
+voicemark,5,144,chinese:SSB0407,0,fwp,mp3_128k,MP3 128 kbps,1,24.90914734,4.2667,0.9741,17.12
+voicemark,5,144,chinese:SSB0407,0,mean,opus_64k,Opus 64 kbps,1,30.81496169,4.2991,0.9658,17.30
+voicemark,5,144,chinese:SSB0407,0,fwp,opus_64k,Opus 64 kbps,1,15.08383277,3.8339,0.9394,13.56
+voicemark,5,145,chinese:SSB0407,1,mean,none,none,1,25.67924000,4.2364,0.9554,16.59
+voicemark,5,145,chinese:SSB0407,1,fwp,none,none,1,17.39468440,4.1963,0.9497,17.61
+voicemark,5,145,chinese:SSB0407,1,mean,mp3_128k,MP3 128 kbps,1,15.03351259,4.0632,0.9554,16.34
+voicemark,5,145,chinese:SSB0407,1,fwp,mp3_128k,MP3 128 kbps,1,18.43410865,4.0327,0.9497,17.26
+voicemark,5,145,chinese:SSB0407,1,mean,opus_64k,Opus 64 kbps,1,24.51996296,4.2301,0.9554,16.72
+voicemark,5,145,chinese:SSB0407,1,fwp,opus_64k,Opus 64 kbps,1,17.67427238,4.1874,0.9495,17.67
+voicemark,5,146,chinese:SSB0407,2,mean,none,none,1,24.95917091,4.1727,0.9677,16.63
+voicemark,5,146,chinese:SSB0407,2,fwp,none,none,1,28.55818949,4.1947,0.9682,17.38
+voicemark,5,146,chinese:SSB0407,2,mean,mp3_128k,MP3 128 kbps,1,28.37527770,4.0649,0.9676,16.46
+voicemark,5,146,chinese:SSB0407,2,fwp,mp3_128k,MP3 128 kbps,1,44.83121354,4.0809,0.9682,17.17
+voicemark,5,146,chinese:SSB0407,2,mean,opus_64k,Opus 64 kbps,1,25.70892003,4.1661,0.9676,16.59
+voicemark,5,146,chinese:SSB0407,2,fwp,opus_64k,Opus 64 kbps,1,30.44519627,4.1871,0.9680,17.26
+voicemark,5,147,chinese:SSB0415,0,mean,none,none,1,23.40260131,4.2611,0.9693,14.19
+voicemark,5,147,chinese:SSB0415,0,fwp,none,none,1,16.15500177,4.2111,0.9720,14.89
+voicemark,5,147,chinese:SSB0415,0,mean,mp3_128k,MP3 128 kbps,1,27.37917129,3.9883,0.9693,13.76
+voicemark,5,147,chinese:SSB0415,0,fwp,mp3_128k,MP3 128 kbps,1,19.44496506,3.9416,0.9720,14.35
+voicemark,5,147,chinese:SSB0415,0,mean,opus_64k,Opus 64 kbps,1,22.89533105,4.2573,0.9691,14.01
+voicemark,5,147,chinese:SSB0415,0,fwp,opus_64k,Opus 64 kbps,1,16.73870291,4.2018,0.9716,14.62
+voicemark,5,148,chinese:SSB0415,1,mean,none,none,1,52.39239132,4.0154,0.9580,12.91
+voicemark,5,148,chinese:SSB0415,1,fwp,none,none,1,34.74199045,3.5802,0.9445,11.08
+voicemark,5,148,chinese:SSB0415,1,mean,mp3_128k,MP3 128 kbps,1,36.16896218,3.8807,0.9580,12.78
+voicemark,5,148,chinese:SSB0415,1,fwp,mp3_128k,MP3 128 kbps,1,22.49112484,3.4655,0.9444,11.00
+voicemark,5,148,chinese:SSB0415,1,mean,opus_64k,Opus 64 kbps,1,50.02600316,4.0139,0.9581,12.86
+voicemark,5,148,chinese:SSB0415,1,fwp,opus_64k,Opus 64 kbps,1,31.62813984,3.5768,0.9444,11.03
+voicemark,5,149,chinese:SSB0415,2,mean,none,none,1,2.48519878,4.3493,0.9753,15.69
+voicemark,5,149,chinese:SSB0415,2,fwp,none,none,1,12.87101328,3.9694,0.9606,12.17
+voicemark,5,149,chinese:SSB0415,2,mean,mp3_128k,MP3 128 kbps,1,7.45662712,4.1405,0.9753,15.31
+voicemark,5,149,chinese:SSB0415,2,fwp,mp3_128k,MP3 128 kbps,1,16.99287446,3.7848,0.9606,12.01
+voicemark,5,149,chinese:SSB0415,2,mean,opus_64k,Opus 64 kbps,1,1.39188761,4.3466,0.9753,15.56
+voicemark,5,149,chinese:SSB0415,2,fwp,opus_64k,Opus 64 kbps,1,13.44748522,3.9569,0.9603,12.10
+voicemark,5,150,english:103,0,mean,none,none,1,15.33556103,4.0930,0.9786,12.12
+voicemark,5,150,english:103,0,fwp,none,none,1,14.83692538,4.1591,0.9834,12.91
+voicemark,5,150,english:103,0,mean,mp3_128k,MP3 128 kbps,1,15.89567681,3.9764,0.9786,12.05
+voicemark,5,150,english:103,0,fwp,mp3_128k,MP3 128 kbps,1,13.91390522,4.0412,0.9834,12.75
+voicemark,5,150,english:103,0,mean,opus_64k,Opus 64 kbps,1,23.61032926,4.0842,0.9775,12.14
+voicemark,5,150,english:103,0,fwp,opus_64k,Opus 64 kbps,1,17.64467281,4.1445,0.9811,12.85
+voicemark,5,151,english:103,1,mean,none,none,1,11.31303256,4.1485,0.9789,11.70
+voicemark,5,151,english:103,1,fwp,none,none,1,21.32498611,3.6600,0.9664,8.73
+voicemark,5,151,english:103,1,mean,mp3_128k,MP3 128 kbps,1,17.86134252,3.9042,0.9789,11.16
+voicemark,5,151,english:103,1,fwp,mp3_128k,MP3 128 kbps,1,27.20204894,3.4527,0.9664,8.44
+voicemark,5,151,english:103,1,mean,opus_64k,Opus 64 kbps,1,11.82016855,4.1431,0.9778,11.56
+voicemark,5,151,english:103,1,fwp,opus_64k,Opus 64 kbps,1,26.98055684,3.6416,0.9641,8.65
+voicemark,5,152,english:103,2,mean,none,none,1,16.92762156,4.1956,0.9828,10.96
+voicemark,5,152,english:103,2,fwp,none,none,1,22.58788627,3.9743,0.9830,12.09
+voicemark,5,152,english:103,2,mean,mp3_128k,MP3 128 kbps,1,37.69405483,4.0427,0.9827,10.79
+voicemark,5,152,english:103,2,fwp,mp3_128k,MP3 128 kbps,1,25.22453980,3.8397,0.9830,11.85
+voicemark,5,152,english:103,2,mean,opus_64k,Opus 64 kbps,1,15.78973895,4.1880,0.9818,10.95
+voicemark,5,152,english:103,2,fwp,opus_64k,Opus 64 kbps,1,25.80514750,3.9620,0.9803,12.01
+voicemark,5,153,english:1034,0,mean,none,none,1,20.40194748,4.3994,0.9808,18.71
+voicemark,5,153,english:1034,0,fwp,none,none,1,19.85415966,4.0760,0.9662,15.84
+voicemark,5,153,english:1034,0,mean,mp3_128k,MP3 128 kbps,1,21.59122732,4.3370,0.9808,18.60
+voicemark,5,153,english:1034,0,fwp,mp3_128k,MP3 128 kbps,1,22.84402634,4.0226,0.9662,15.78
+voicemark,5,153,english:1034,0,mean,opus_64k,Opus 64 kbps,1,22.20860429,4.3853,0.9797,18.19
+voicemark,5,153,english:1034,0,fwp,opus_64k,Opus 64 kbps,1,19.73358151,4.0586,0.9644,15.50
+voicemark,5,154,english:1034,1,mean,none,none,1,18.35453718,4.4182,0.9757,17.13
+voicemark,5,154,english:1034,1,fwp,none,none,0,-1.78731050,4.2814,0.9649,15.21
+voicemark,5,154,english:1034,1,mean,mp3_128k,MP3 128 kbps,1,8.47951326,4.3387,0.9757,17.05
+voicemark,5,154,english:1034,1,fwp,mp3_128k,MP3 128 kbps,1,14.57286154,4.2123,0.9649,15.17
+voicemark,5,154,english:1034,1,mean,opus_64k,Opus 64 kbps,1,14.55888881,4.4029,0.9746,16.81
+voicemark,5,154,english:1034,1,fwp,opus_64k,Opus 64 kbps,1,13.45965176,4.2701,0.9631,14.97
+voicemark,5,155,english:1034,2,mean,none,none,1,24.10931027,4.1345,0.9764,16.43
+voicemark,5,155,english:1034,2,fwp,none,none,1,16.76258916,4.0382,0.9672,14.59
+voicemark,5,155,english:1034,2,mean,mp3_128k,MP3 128 kbps,1,20.69689973,4.0759,0.9763,16.36
+voicemark,5,155,english:1034,2,fwp,mp3_128k,MP3 128 kbps,1,17.94798225,3.9874,0.9672,14.55
+voicemark,5,155,english:1034,2,mean,opus_64k,Opus 64 kbps,1,26.00607908,4.1220,0.9751,16.13
+voicemark,5,155,english:1034,2,fwp,opus_64k,Opus 64 kbps,1,16.05939054,4.0244,0.9648,14.39
+voicemark,5,156,english:1040,0,mean,none,none,1,19.64263579,4.1228,0.9690,15.03
+voicemark,5,156,english:1040,0,fwp,none,none,1,20.79615196,3.9181,0.9786,16.02
+voicemark,5,156,english:1040,0,mean,mp3_128k,MP3 128 kbps,1,26.50603629,4.0945,0.9689,15.01
+voicemark,5,156,english:1040,0,fwp,mp3_128k,MP3 128 kbps,1,14.40754780,3.8861,0.9786,16.01
+voicemark,5,156,english:1040,0,mean,opus_64k,Opus 64 kbps,1,22.57586631,4.1205,0.9690,15.00
+voicemark,5,156,english:1040,0,fwp,opus_64k,Opus 64 kbps,1,15.58137885,3.9142,0.9785,15.95
+voicemark,5,157,english:1040,1,mean,none,none,1,26.83873327,4.2035,0.9792,15.91
+voicemark,5,157,english:1040,1,fwp,none,none,1,8.66162505,3.6149,0.9682,12.07
+voicemark,5,157,english:1040,1,mean,mp3_128k,MP3 128 kbps,1,12.62441586,4.1467,0.9792,15.87
+voicemark,5,157,english:1040,1,fwp,mp3_128k,MP3 128 kbps,1,9.25465948,3.5734,0.9682,12.06
+voicemark,5,157,english:1040,1,mean,opus_64k,Opus 64 kbps,1,17.06350825,4.2010,0.9792,15.82
+voicemark,5,157,english:1040,1,fwp,opus_64k,Opus 64 kbps,1,7.78185958,3.6086,0.9680,12.03
+voicemark,5,158,english:1040,2,mean,none,none,1,7.22657288,4.2302,0.9765,14.76
+voicemark,5,158,english:1040,2,fwp,none,none,1,31.79046783,3.6865,0.9499,10.75
+voicemark,5,158,english:1040,2,mean,mp3_128k,MP3 128 kbps,1,21.85772341,4.1646,0.9765,14.71
+voicemark,5,158,english:1040,2,fwp,mp3_128k,MP3 128 kbps,1,38.34138534,3.6339,0.9499,10.74
+voicemark,5,158,english:1040,2,mean,opus_64k,Opus 64 kbps,1,8.89831955,4.2317,0.9765,14.71
+voicemark,5,158,english:1040,2,fwp,opus_64k,Opus 64 kbps,1,36.43866008,3.6850,0.9497,10.72
+voicemark,5,159,english:1069,0,mean,none,none,1,27.71976593,4.4544,0.9856,17.85
+voicemark,5,159,english:1069,0,fwp,none,none,1,23.79392233,4.0567,0.9669,13.75
+voicemark,5,159,english:1069,0,mean,mp3_128k,MP3 128 kbps,1,31.59202071,4.0333,0.9856,14.97
+voicemark,5,159,english:1069,0,fwp,mp3_128k,MP3 128 kbps,1,26.85547770,3.6379,0.9669,12.36
+voicemark,5,159,english:1069,0,mean,opus_64k,Opus 64 kbps,1,34.04911918,4.4533,0.9854,16.88
+voicemark,5,159,english:1069,0,fwp,opus_64k,Opus 64 kbps,1,26.22648469,4.0462,0.9666,13.39
+voicemark,5,160,english:1069,1,mean,none,none,1,22.02830144,4.1073,0.9722,14.22
+voicemark,5,160,english:1069,1,fwp,none,none,1,31.60257540,3.8425,0.9731,14.77
+voicemark,5,160,english:1069,1,mean,mp3_128k,MP3 128 kbps,1,15.32886909,3.7979,0.9722,13.49
+voicemark,5,160,english:1069,1,fwp,mp3_128k,MP3 128 kbps,1,16.49364334,3.5503,0.9730,14.02
+voicemark,5,160,english:1069,1,mean,opus_64k,Opus 64 kbps,1,18.94768667,4.1000,0.9721,14.20
+voicemark,5,160,english:1069,1,fwp,opus_64k,Opus 64 kbps,1,27.03799203,3.8381,0.9727,14.76
+voicemark,5,161,english:1069,2,mean,none,none,1,28.62225687,4.4105,0.9861,15.79
+voicemark,5,161,english:1069,2,fwp,none,none,1,17.51425132,4.3054,0.9802,14.22
+voicemark,5,161,english:1069,2,mean,mp3_128k,MP3 128 kbps,1,33.90979544,4.0910,0.9861,14.42
+voicemark,5,161,english:1069,2,fwp,mp3_128k,MP3 128 kbps,1,29.94313846,4.0203,0.9803,13.22
+voicemark,5,161,english:1069,2,mean,opus_64k,Opus 64 kbps,1,29.26936873,4.4065,0.9860,15.49
+voicemark,5,161,english:1069,2,fwp,opus_64k,Opus 64 kbps,1,14.64999667,4.3000,0.9801,13.99
+voicemark,5,162,english:1081,0,mean,none,none,1,24.48430186,4.2283,0.9859,14.69
+voicemark,5,162,english:1081,0,fwp,none,none,1,12.09417162,3.8205,0.9758,12.51
+voicemark,5,162,english:1081,0,mean,mp3_128k,MP3 128 kbps,1,23.69406468,4.0059,0.9859,14.31
+voicemark,5,162,english:1081,0,fwp,mp3_128k,MP3 128 kbps,1,16.75717500,3.6443,0.9758,12.28
+voicemark,5,162,english:1081,0,mean,opus_64k,Opus 64 kbps,1,19.13399844,4.2210,0.9858,14.10
+voicemark,5,162,english:1081,0,fwp,opus_64k,Opus 64 kbps,1,13.16415989,3.8174,0.9756,12.10
+voicemark,5,163,english:1081,1,mean,none,none,1,11.00669397,4.3155,0.9849,15.30
+voicemark,5,163,english:1081,1,fwp,none,none,1,6.73868003,3.7220,0.9774,12.47
+voicemark,5,163,english:1081,1,mean,mp3_128k,MP3 128 kbps,1,18.12449710,4.1519,0.9849,15.02
+voicemark,5,163,english:1081,1,fwp,mp3_128k,MP3 128 kbps,1,16.42714004,3.6129,0.9774,12.35
+voicemark,5,163,english:1081,1,mean,opus_64k,Opus 64 kbps,1,15.71891169,4.3158,0.9848,14.66
+voicemark,5,163,english:1081,1,fwp,opus_64k,Opus 64 kbps,1,7.76411953,3.7198,0.9771,12.10
+voicemark,5,164,english:1081,2,mean,none,none,1,8.61495918,3.9418,0.9858,15.46
+voicemark,5,164,english:1081,2,fwp,none,none,1,11.66752216,3.4573,0.9798,13.34
+voicemark,5,164,english:1081,2,mean,mp3_128k,MP3 128 kbps,1,24.82487114,3.7706,0.9858,15.17
+voicemark,5,164,english:1081,2,fwp,mp3_128k,MP3 128 kbps,1,7.89220075,3.3334,0.9797,13.19
+voicemark,5,164,english:1081,2,mean,opus_64k,Opus 64 kbps,1,14.27788644,3.9356,0.9857,14.79
+voicemark,5,164,english:1081,2,fwp,opus_64k,Opus 64 kbps,1,8.55746989,3.4524,0.9796,12.88
+voicemark,5,165,english:1088,0,mean,none,none,1,13.06727064,4.3750,0.9822,20.72
+voicemark,5,165,english:1088,0,fwp,none,none,1,20.13403889,4.0586,0.9751,16.96
+voicemark,5,165,english:1088,0,mean,mp3_128k,MP3 128 kbps,1,17.08603475,4.2642,0.9822,20.52
+voicemark,5,165,english:1088,0,fwp,mp3_128k,MP3 128 kbps,1,17.81186220,3.9706,0.9751,16.89
+voicemark,5,165,english:1088,0,mean,opus_64k,Opus 64 kbps,1,18.33643468,4.3736,0.9820,20.66
+voicemark,5,165,english:1088,0,fwp,opus_64k,Opus 64 kbps,1,22.51725167,4.0473,0.9748,16.91
+voicemark,5,166,english:1088,1,mean,none,none,1,11.67057396,4.0727,0.9691,16.91
+voicemark,5,166,english:1088,1,fwp,none,none,1,22.54802726,4.3908,0.9830,19.27
+voicemark,5,166,english:1088,1,mean,mp3_128k,MP3 128 kbps,1,19.60565683,4.0174,0.9691,16.86
+voicemark,5,166,english:1088,1,fwp,mp3_128k,MP3 128 kbps,1,19.21829375,4.3222,0.9830,19.18
+voicemark,5,166,english:1088,1,mean,opus_64k,Opus 64 kbps,1,12.91116796,4.0666,0.9691,16.92
+voicemark,5,166,english:1088,1,fwp,opus_64k,Opus 64 kbps,1,23.36033825,4.3856,0.9828,19.19
+voicemark,5,167,english:1088,2,mean,none,none,1,30.32019711,4.1887,0.9797,17.92
+voicemark,5,167,english:1088,2,fwp,none,none,1,27.91128083,3.8787,0.9829,18.05
+voicemark,5,167,english:1088,2,mean,mp3_128k,MP3 128 kbps,1,24.14298275,4.0520,0.9797,17.69
+voicemark,5,167,english:1088,2,fwp,mp3_128k,MP3 128 kbps,1,17.56157311,3.7662,0.9829,17.81
+voicemark,5,167,english:1088,2,mean,opus_64k,Opus 64 kbps,1,23.93987460,4.1864,0.9796,17.91
+voicemark,5,167,english:1088,2,fwp,opus_64k,Opus 64 kbps,1,24.30524297,3.8693,0.9828,17.99
+voicemark,5,168,english:1098,0,mean,none,none,1,15.95674090,4.4991,0.9926,22.45
+voicemark,5,168,english:1098,0,fwp,none,none,1,18.48322897,4.3409,0.9844,19.14
+voicemark,5,168,english:1098,0,mean,mp3_128k,MP3 128 kbps,1,28.76621494,4.0894,0.9926,18.37
+voicemark,5,168,english:1098,0,fwp,mp3_128k,MP3 128 kbps,1,22.95305861,3.9759,0.9843,16.78
+voicemark,5,168,english:1098,0,mean,opus_64k,Opus 64 kbps,1,13.38981731,4.4934,0.9925,21.24
+voicemark,5,168,english:1098,0,fwp,opus_64k,Opus 64 kbps,1,14.31226560,4.3331,0.9843,18.53
+voicemark,5,169,english:1098,1,mean,none,none,1,20.51391512,4.3409,0.9857,17.72
+voicemark,5,169,english:1098,1,fwp,none,none,1,10.54942708,4.0991,0.9791,14.90
+voicemark,5,169,english:1098,1,mean,mp3_128k,MP3 128 kbps,1,29.13833778,4.0077,0.9857,16.41
+voicemark,5,169,english:1098,1,fwp,mp3_128k,MP3 128 kbps,1,30.96262833,3.7784,0.9790,14.21
+voicemark,5,169,english:1098,1,mean,opus_64k,Opus 64 kbps,1,22.14912316,4.3394,0.9856,17.39
+voicemark,5,169,english:1098,1,fwp,opus_64k,Opus 64 kbps,1,14.51931183,4.0974,0.9789,14.75
+voicemark,5,170,english:1098,2,mean,none,none,1,10.74051674,4.3324,0.9801,18.84
+voicemark,5,170,english:1098,2,fwp,none,none,1,8.77285881,4.1790,0.9735,16.79
+voicemark,5,170,english:1098,2,mean,mp3_128k,MP3 128 kbps,1,23.27990290,3.9769,0.9801,17.04
+voicemark,5,170,english:1098,2,fwp,mp3_128k,MP3 128 kbps,1,13.10733535,3.8415,0.9735,15.62
+voicemark,5,170,english:1098,2,mean,opus_64k,Opus 64 kbps,1,11.35516188,4.3220,0.9800,18.43
+voicemark,5,170,english:1098,2,fwp,opus_64k,Opus 64 kbps,1,5.53661648,4.1707,0.9731,16.54
+voicemark,5,171,english:1116,0,mean,none,none,1,24.25447755,4.0346,0.9860,9.48
+voicemark,5,171,english:1116,0,fwp,none,none,0,-2.23788065,3.3617,0.9734,5.25
+voicemark,5,171,english:1116,0,mean,mp3_128k,MP3 128 kbps,1,31.92977938,3.6630,0.9860,9.03
+voicemark,5,171,english:1116,0,fwp,mp3_128k,MP3 128 kbps,1,4.27418528,3.0929,0.9734,5.09
+voicemark,5,171,english:1116,0,mean,opus_64k,Opus 64 kbps,1,31.01472818,4.0309,0.9859,9.34
+voicemark,5,171,english:1116,0,fwp,opus_64k,Opus 64 kbps,0,-4.61576665,3.3370,0.9731,5.17
+voicemark,5,172,english:1116,1,mean,none,none,1,23.03224759,3.4821,0.9744,6.80
+voicemark,5,172,english:1116,1,fwp,none,none,1,16.18710217,3.5295,0.9779,7.82
+voicemark,5,172,english:1116,1,mean,mp3_128k,MP3 128 kbps,1,23.60066085,3.2150,0.9744,6.60
+voicemark,5,172,english:1116,1,fwp,mp3_128k,MP3 128 kbps,1,16.54315088,3.2681,0.9779,7.57
+voicemark,5,172,english:1116,1,mean,opus_64k,Opus 64 kbps,1,20.31622264,3.4762,0.9742,6.72
+voicemark,5,172,english:1116,1,fwp,opus_64k,Opus 64 kbps,1,15.16461006,3.5196,0.9775,7.72
+voicemark,5,173,english:1116,2,mean,none,none,1,20.53859348,4.1314,0.9864,10.69
+voicemark,5,173,english:1116,2,fwp,none,none,1,16.91506057,3.7071,0.9812,7.31
+voicemark,5,173,english:1116,2,mean,mp3_128k,MP3 128 kbps,1,32.01620894,3.8892,0.9864,10.51
+voicemark,5,173,english:1116,2,fwp,mp3_128k,MP3 128 kbps,1,27.75215280,3.5035,0.9811,7.22
+voicemark,5,173,english:1116,2,mean,opus_64k,Opus 64 kbps,1,22.38172628,4.1219,0.9862,10.66
+voicemark,5,173,english:1116,2,fwp,opus_64k,Opus 64 kbps,1,23.36369359,3.6920,0.9809,7.29
+voicemark,5,174,english:118,0,mean,none,none,1,10.92251939,4.2830,0.9827,15.82
+voicemark,5,174,english:118,0,fwp,none,none,1,10.78467578,3.9502,0.9774,14.04
+voicemark,5,174,english:118,0,mean,mp3_128k,MP3 128 kbps,1,3.39871597,4.1905,0.9827,15.71
+voicemark,5,174,english:118,0,fwp,mp3_128k,MP3 128 kbps,1,9.15228635,3.8719,0.9774,13.95
+voicemark,5,174,english:118,0,mean,opus_64k,Opus 64 kbps,1,7.93704218,4.2831,0.9825,14.31
+voicemark,5,174,english:118,0,fwp,opus_64k,Opus 64 kbps,1,9.24139202,3.9489,0.9770,12.90
+voicemark,5,175,english:118,1,mean,none,none,0,-0.12927526,4.2148,0.9773,13.26
+voicemark,5,175,english:118,1,fwp,none,none,1,3.39735233,3.9633,0.9711,11.23
+voicemark,5,175,english:118,1,mean,mp3_128k,MP3 128 kbps,1,3.29263971,4.1446,0.9773,13.22
+voicemark,5,175,english:118,1,fwp,mp3_128k,MP3 128 kbps,0,-0.18887568,3.9058,0.9711,11.23
+voicemark,5,175,english:118,1,mean,opus_64k,Opus 64 kbps,0,-0.59701484,4.2096,0.9771,12.34
+voicemark,5,175,english:118,1,fwp,opus_64k,Opus 64 kbps,0,-0.33973122,3.9513,0.9706,10.61
+voicemark,5,176,english:118,2,mean,none,none,1,19.36274586,3.9132,0.9757,13.90
+voicemark,5,176,english:118,2,fwp,none,none,1,16.86797252,3.6817,0.9693,11.69
+voicemark,5,176,english:118,2,mean,mp3_128k,MP3 128 kbps,1,19.06424212,3.7771,0.9757,13.77
+voicemark,5,176,english:118,2,fwp,mp3_128k,MP3 128 kbps,1,16.37375885,3.5716,0.9693,11.62
+voicemark,5,176,english:118,2,mean,opus_64k,Opus 64 kbps,1,24.11200739,3.9032,0.9754,12.85
+voicemark,5,176,english:118,2,fwp,opus_64k,Opus 64 kbps,1,16.72738372,3.6671,0.9689,11.00
+voicemark,5,177,english:1183,0,mean,none,none,1,15.85008553,4.0191,0.9771,10.72
+voicemark,5,177,english:1183,0,fwp,none,none,1,37.31600177,3.6684,0.9723,9.21
+voicemark,5,177,english:1183,0,mean,mp3_128k,MP3 128 kbps,1,14.68643206,3.4637,0.9771,8.32
+voicemark,5,177,english:1183,0,fwp,mp3_128k,MP3 128 kbps,1,37.00622668,3.1840,0.9722,7.55
+voicemark,5,177,english:1183,0,mean,opus_64k,Opus 64 kbps,1,15.46155322,4.0069,0.9766,9.92
+voicemark,5,177,english:1183,0,fwp,opus_64k,Opus 64 kbps,1,36.88074009,3.6518,0.9708,8.79
+voicemark,5,178,english:1183,1,mean,none,none,1,15.71597445,4.0976,0.9819,10.34
+voicemark,5,178,english:1183,1,fwp,none,none,1,16.83358052,3.7811,0.9857,10.59
+voicemark,5,178,english:1183,1,mean,mp3_128k,MP3 128 kbps,1,10.86214362,3.5616,0.9818,8.10
+voicemark,5,178,english:1183,1,fwp,mp3_128k,MP3 128 kbps,1,15.59968769,3.2709,0.9856,8.30
+voicemark,5,178,english:1183,1,mean,opus_64k,Opus 64 kbps,1,17.82966639,4.0853,0.9815,9.64
+voicemark,5,178,english:1183,1,fwp,opus_64k,Opus 64 kbps,1,16.53873876,3.7682,0.9846,9.76
+voicemark,5,179,english:1183,2,mean,none,none,1,12.54164672,4.2073,0.9808,12.24
+voicemark,5,179,english:1183,2,fwp,none,none,1,7.72958632,3.6088,0.9663,8.20
+voicemark,5,179,english:1183,2,mean,mp3_128k,MP3 128 kbps,1,10.01711985,3.7912,0.9808,10.05
+voicemark,5,179,english:1183,2,fwp,mp3_128k,MP3 128 kbps,1,12.57587151,3.2685,0.9662,7.17
+voicemark,5,179,english:1183,2,mean,opus_64k,Opus 64 kbps,1,11.43670138,4.1990,0.9803,11.68
+voicemark,5,179,english:1183,2,fwp,opus_64k,Opus 64 kbps,1,9.26642325,3.5881,0.9651,7.96
+voicemark,5,180,english:1235,0,mean,none,none,1,18.25925057,4.1554,0.9762,17.58
+voicemark,5,180,english:1235,0,fwp,none,none,1,13.92589228,4.1542,0.9841,19.25
+voicemark,5,180,english:1235,0,mean,mp3_128k,MP3 128 kbps,1,16.76020474,3.9364,0.9762,16.96
+voicemark,5,180,english:1235,0,fwp,mp3_128k,MP3 128 kbps,1,13.08184456,3.9393,0.9841,18.40
+voicemark,5,180,english:1235,0,mean,opus_64k,Opus 64 kbps,1,18.74299992,4.1514,0.9759,17.25
+voicemark,5,180,english:1235,0,fwp,opus_64k,Opus 64 kbps,1,13.26150487,4.1500,0.9836,18.59
+voicemark,5,181,english:1235,1,mean,none,none,1,11.07064418,4.4006,0.9760,17.96
+voicemark,5,181,english:1235,1,fwp,none,none,1,34.60109901,4.0920,0.9506,14.68
+voicemark,5,181,english:1235,1,mean,mp3_128k,MP3 128 kbps,1,11.80649185,4.2251,0.9760,17.62
+voicemark,5,181,english:1235,1,fwp,mp3_128k,MP3 128 kbps,1,24.75828080,3.9630,0.9506,14.52
+voicemark,5,181,english:1235,1,mean,opus_64k,Opus 64 kbps,1,10.87127272,4.3980,0.9758,17.69
+voicemark,5,181,english:1235,1,fwp,opus_64k,Opus 64 kbps,1,31.51566763,4.0830,0.9502,14.56
+voicemark,5,182,english:1235,2,mean,none,none,1,23.88919314,4.1245,0.9632,15.86
+voicemark,5,182,english:1235,2,fwp,none,none,1,24.81035479,4.1043,0.9693,17.31
+voicemark,5,182,english:1235,2,mean,mp3_128k,MP3 128 kbps,1,23.07550350,4.0100,0.9632,15.85
+voicemark,5,182,english:1235,2,fwp,mp3_128k,MP3 128 kbps,1,30.25315292,4.0027,0.9693,17.29
+voicemark,5,182,english:1235,2,mean,opus_64k,Opus 64 kbps,1,21.00124127,4.1200,0.9629,15.79
+voicemark,5,182,english:1235,2,fwp,opus_64k,Opus 64 kbps,1,26.65534656,4.1013,0.9689,17.16
+voicemark,5,183,english:1246,0,mean,none,none,1,5.86243807,3.0606,0.9665,11.53
+voicemark,5,183,english:1246,0,fwp,none,none,1,25.83913046,2.7002,0.9548,8.42
+voicemark,5,183,english:1246,0,mean,mp3_128k,MP3 128 kbps,1,16.24626154,2.7268,0.9665,10.28
+voicemark,5,183,english:1246,0,fwp,mp3_128k,MP3 128 kbps,1,29.32115378,2.4332,0.9547,7.73
+voicemark,5,183,english:1246,0,mean,opus_64k,Opus 64 kbps,1,7.94392106,3.0652,0.9662,11.16
+voicemark,5,183,english:1246,0,fwp,opus_64k,Opus 64 kbps,1,27.33013609,2.6359,0.9564,8.59
+voicemark,5,184,english:1246,1,mean,none,none,1,15.08252537,3.6610,0.9744,11.52
+voicemark,5,184,english:1246,1,fwp,none,none,1,8.35472757,3.1770,0.9621,8.61
+voicemark,5,184,english:1246,1,mean,mp3_128k,MP3 128 kbps,1,18.11510796,3.1709,0.9744,10.11
+voicemark,5,184,english:1246,1,fwp,mp3_128k,MP3 128 kbps,1,14.14885197,2.5919,0.9602,7.23
+voicemark,5,184,english:1246,1,mean,opus_64k,Opus 64 kbps,1,14.48884606,3.6591,0.9744,11.11
+voicemark,5,184,english:1246,1,fwp,opus_64k,Opus 64 kbps,1,6.36779972,2.9329,0.9601,7.80
+voicemark,5,185,english:1246,2,mean,none,none,1,18.66044699,4.1893,0.9731,10.93
+voicemark,5,185,english:1246,2,fwp,none,none,1,9.67431826,3.6001,0.9537,8.04
+voicemark,5,185,english:1246,2,mean,mp3_128k,MP3 128 kbps,1,28.36588800,3.8598,0.9731,10.31
+voicemark,5,185,english:1246,2,fwp,mp3_128k,MP3 128 kbps,1,14.05743603,3.3359,0.9536,7.77
+voicemark,5,185,english:1246,2,mean,opus_64k,Opus 64 kbps,1,25.79962519,4.1860,0.9729,10.79
+voicemark,5,185,english:1246,2,fwp,opus_64k,Opus 64 kbps,1,11.90539178,3.5826,0.9536,7.95
+voicemark,5,186,english:125,0,mean,none,none,1,10.73947708,4.1488,0.9780,8.39
+voicemark,5,186,english:125,0,fwp,none,none,1,6.56936446,3.7783,0.9647,6.23
+voicemark,5,186,english:125,0,mean,mp3_128k,MP3 128 kbps,1,26.55654629,3.9265,0.9780,8.14
+voicemark,5,186,english:125,0,fwp,mp3_128k,MP3 128 kbps,1,1.42057990,3.6151,0.9648,6.06
+voicemark,5,186,english:125,0,mean,opus_64k,Opus 64 kbps,1,7.55082113,4.1465,0.9774,8.35
+voicemark,5,186,english:125,0,fwp,opus_64k,Opus 64 kbps,1,2.40491852,3.7638,0.9637,6.19
+voicemark,5,187,english:125,1,mean,none,none,1,23.08399006,4.1072,0.9513,10.84
+voicemark,5,187,english:125,1,fwp,none,none,1,26.13859378,3.6710,0.9321,8.93
+voicemark,5,187,english:125,1,mean,mp3_128k,MP3 128 kbps,1,32.70460399,3.9501,0.9513,10.74
+voicemark,5,187,english:125,1,fwp,mp3_128k,MP3 128 kbps,1,37.03383253,3.5549,0.9321,8.90
+voicemark,5,187,english:125,1,mean,opus_64k,Opus 64 kbps,1,28.10635829,4.1018,0.9509,10.88
+voicemark,5,187,english:125,1,fwp,opus_64k,Opus 64 kbps,1,28.47386614,3.6650,0.9311,8.98
+voicemark,5,188,english:125,2,mean,none,none,1,20.75900451,4.2968,0.9559,11.91
+voicemark,5,188,english:125,2,fwp,none,none,1,27.37596904,4.0478,0.9458,10.77
+voicemark,5,188,english:125,2,mean,mp3_128k,MP3 128 kbps,1,23.31123637,4.1297,0.9559,11.73
+voicemark,5,188,english:125,2,fwp,mp3_128k,MP3 128 kbps,1,9.34194526,3.9183,0.9458,10.71
+voicemark,5,188,english:125,2,mean,opus_64k,Opus 64 kbps,1,21.18701214,4.2911,0.9555,11.94
+voicemark,5,188,english:125,2,fwp,opus_64k,Opus 64 kbps,1,15.35593785,4.0401,0.9448,10.85
+voicemark,5,189,english:1263,0,mean,none,none,1,22.93929327,4.2742,0.9812,16.71
+voicemark,5,189,english:1263,0,fwp,none,none,1,27.91759124,3.9935,0.9743,14.46
+voicemark,5,189,english:1263,0,mean,mp3_128k,MP3 128 kbps,1,15.71852009,4.0837,0.9812,16.24
+voicemark,5,189,english:1263,0,fwp,mp3_128k,MP3 128 kbps,1,31.89403581,3.8104,0.9743,14.18
+voicemark,5,189,english:1263,0,mean,opus_64k,Opus 64 kbps,1,19.93536557,4.2699,0.9811,16.40
+voicemark,5,189,english:1263,0,fwp,opus_64k,Opus 64 kbps,1,29.90191223,3.9821,0.9741,14.28
+voicemark,5,190,english:1263,1,mean,none,none,1,19.31082697,4.4232,0.9885,16.25
+voicemark,5,190,english:1263,1,fwp,none,none,1,12.04400009,4.2212,0.9770,13.56
+voicemark,5,190,english:1263,1,mean,mp3_128k,MP3 128 kbps,1,12.94046506,4.2696,0.9885,16.01
+voicemark,5,190,english:1263,1,fwp,mp3_128k,MP3 128 kbps,1,19.34966285,4.0955,0.9770,13.43
+voicemark,5,190,english:1263,1,mean,opus_64k,Opus 64 kbps,1,14.99743204,4.4192,0.9885,15.98
+voicemark,5,190,english:1263,1,fwp,opus_64k,Opus 64 kbps,1,12.96025899,4.2187,0.9769,13.40
+voicemark,5,191,english:1263,2,mean,none,none,1,21.47527306,4.2932,0.9842,17.20
+voicemark,5,191,english:1263,2,fwp,none,none,1,17.36345754,4.0209,0.9786,14.67
+voicemark,5,191,english:1263,2,mean,mp3_128k,MP3 128 kbps,1,18.80560448,4.0332,0.9842,16.52
+voicemark,5,191,english:1263,2,fwp,mp3_128k,MP3 128 kbps,1,4.81896389,3.7663,0.9786,14.32
+voicemark,5,191,english:1263,2,mean,opus_64k,Opus 64 kbps,1,21.63284701,4.2920,0.9841,16.75
+voicemark,5,191,english:1263,2,fwp,opus_64k,Opus 64 kbps,1,7.88158433,4.0215,0.9785,14.36
+voicemark,5,192,english:1334,0,mean,none,none,1,22.61587721,4.2798,0.9831,11.13
+voicemark,5,192,english:1334,0,fwp,none,none,1,29.93542882,4.0378,0.9834,12.40
+voicemark,5,192,english:1334,0,mean,mp3_128k,MP3 128 kbps,1,22.54795499,4.0424,0.9831,10.73
+voicemark,5,192,english:1334,0,fwp,mp3_128k,MP3 128 kbps,1,26.58020802,3.8093,0.9834,11.87
+voicemark,5,192,english:1334,0,mean,opus_64k,Opus 64 kbps,1,23.31739512,4.2769,0.9830,11.06
+voicemark,5,192,english:1334,0,fwp,opus_64k,Opus 64 kbps,1,28.08799118,4.0363,0.9832,12.22
+voicemark,5,193,english:1334,1,mean,none,none,1,1.96729469,4.2095,0.9773,11.07
+voicemark,5,193,english:1334,1,fwp,none,none,1,20.76477067,4.3665,0.9868,13.44
+voicemark,5,193,english:1334,1,mean,mp3_128k,MP3 128 kbps,1,3.37995391,3.9782,0.9773,10.72
+voicemark,5,193,english:1334,1,fwp,mp3_128k,MP3 128 kbps,1,24.06661442,4.1136,0.9868,12.83
+voicemark,5,193,english:1334,1,mean,opus_64k,Opus 64 kbps,0,-0.83355117,4.2025,0.9771,11.03
+voicemark,5,193,english:1334,1,fwp,opus_64k,Opus 64 kbps,1,25.25719843,4.3599,0.9866,13.34
+voicemark,5,194,english:1334,2,mean,none,none,1,16.74537123,4.1437,0.9749,11.55
+voicemark,5,194,english:1334,2,fwp,none,none,1,24.27330874,4.1154,0.9791,12.18
+voicemark,5,194,english:1334,2,mean,mp3_128k,MP3 128 kbps,1,20.90522392,3.8805,0.9749,10.82
+voicemark,5,194,english:1334,2,fwp,mp3_128k,MP3 128 kbps,1,19.30749935,3.8425,0.9791,11.32
+voicemark,5,194,english:1334,2,mean,opus_64k,Opus 64 kbps,1,12.75229117,4.1394,0.9749,11.33
+voicemark,5,194,english:1334,2,fwp,opus_64k,Opus 64 kbps,1,20.29790643,4.1115,0.9788,11.93
+voicemark,5,195,english:1355,0,mean,none,none,1,20.97221090,4.2439,0.9779,16.66
+voicemark,5,195,english:1355,0,fwp,none,none,1,14.18690928,3.9966,0.9653,13.73
+voicemark,5,195,english:1355,0,mean,mp3_128k,MP3 128 kbps,1,18.87654245,4.0016,0.9779,16.28
+voicemark,5,195,english:1355,0,fwp,mp3_128k,MP3 128 kbps,1,11.82224821,3.7837,0.9653,13.53
+voicemark,5,195,english:1355,0,mean,opus_64k,Opus 64 kbps,1,17.73218559,4.2349,0.9777,16.56
+voicemark,5,195,english:1355,0,fwp,opus_64k,Opus 64 kbps,1,13.95546538,3.9885,0.9651,13.69
+voicemark,5,196,english:1355,1,mean,none,none,1,4.65442330,4.2073,0.9731,18.24
+voicemark,5,196,english:1355,1,fwp,none,none,1,14.30999565,3.9035,0.9510,14.69
+voicemark,5,196,english:1355,1,mean,mp3_128k,MP3 128 kbps,1,19.86045850,3.9894,0.9731,17.81
+voicemark,5,196,english:1355,1,fwp,mp3_128k,MP3 128 kbps,1,3.37194078,3.7465,0.9509,14.55
+voicemark,5,196,english:1355,1,mean,opus_64k,Opus 64 kbps,1,5.77484798,4.2024,0.9731,17.92
+voicemark,5,196,english:1355,1,fwp,opus_64k,Opus 64 kbps,1,9.22248858,3.9005,0.9510,14.53
+voicemark,5,197,english:1355,2,mean,none,none,1,18.52319970,3.5648,0.9691,16.17
+voicemark,5,197,english:1355,2,fwp,none,none,1,11.72100969,3.5466,0.9715,17.32
+voicemark,5,197,english:1355,2,mean,mp3_128k,MP3 128 kbps,1,15.17149966,3.3446,0.9691,15.83
+voicemark,5,197,english:1355,2,fwp,mp3_128k,MP3 128 kbps,1,7.04932290,3.3293,0.9715,16.88
+voicemark,5,197,english:1355,2,mean,opus_64k,Opus 64 kbps,1,19.55873358,3.5594,0.9691,16.12
+voicemark,5,197,english:1355,2,fwp,opus_64k,Opus 64 kbps,1,8.44216447,3.5353,0.9713,17.22
+voicemark,5,198,english:1363,0,mean,none,none,1,12.15717556,4.0538,0.9639,18.19
+voicemark,5,198,english:1363,0,fwp,none,none,1,18.51533663,3.9118,0.9499,16.87
+voicemark,5,198,english:1363,0,mean,mp3_128k,MP3 128 kbps,1,5.61994761,4.0015,0.9638,18.13
+voicemark,5,198,english:1363,0,fwp,mp3_128k,MP3 128 kbps,1,21.32429428,3.8640,0.9499,16.82
+voicemark,5,198,english:1363,0,mean,opus_64k,Opus 64 kbps,1,27.76349691,3.9828,0.9513,14.26
+voicemark,5,198,english:1363,0,fwp,opus_64k,Opus 64 kbps,1,28.42201186,3.8502,0.9373,13.61
+voicemark,5,199,english:1363,1,mean,none,none,1,11.73705310,4.1376,0.9612,17.37
+voicemark,5,199,english:1363,1,fwp,none,none,1,17.29025077,3.9423,0.9464,16.39
+voicemark,5,199,english:1363,1,mean,mp3_128k,MP3 128 kbps,1,12.43718541,4.0684,0.9612,17.24
+voicemark,5,199,english:1363,1,fwp,mp3_128k,MP3 128 kbps,1,18.47382182,3.8806,0.9464,16.30
+voicemark,5,199,english:1363,1,mean,opus_64k,Opus 64 kbps,1,31.56829991,4.0754,0.9492,14.07
+voicemark,5,199,english:1363,1,fwp,opus_64k,Opus 64 kbps,1,39.09477982,3.8744,0.9341,13.61
+voicemark,5,200,english:1363,2,mean,none,none,1,17.66362119,4.4249,0.9694,17.95
+voicemark,5,200,english:1363,2,fwp,none,none,1,22.40956934,4.4754,0.9799,18.72
+voicemark,5,200,english:1363,2,mean,mp3_128k,MP3 128 kbps,1,19.80298741,4.3494,0.9693,17.82
+voicemark,5,200,english:1363,2,fwp,mp3_128k,MP3 128 kbps,1,19.99209332,4.3787,0.9798,18.56
+voicemark,5,200,english:1363,2,mean,opus_64k,Opus 64 kbps,1,38.58469512,4.3730,0.9571,14.14
+voicemark,5,200,english:1363,2,fwp,opus_64k,Opus 64 kbps,1,45.92219716,4.4109,0.9674,14.51
+voicemark,5,201,english:1447,0,mean,none,none,1,14.55405959,3.9608,0.9047,15.33
+voicemark,5,201,english:1447,0,fwp,none,none,1,14.14400129,4.0964,0.9326,17.55
+voicemark,5,201,english:1447,0,mean,mp3_128k,MP3 128 kbps,1,15.29368418,3.5034,0.9047,14.58
+voicemark,5,201,english:1447,0,fwp,mp3_128k,MP3 128 kbps,1,23.26230340,3.6416,0.9325,16.35
+voicemark,5,201,english:1447,0,mean,opus_64k,Opus 64 kbps,1,15.00582402,3.9439,0.9040,14.99
+voicemark,5,201,english:1447,0,fwp,opus_64k,Opus 64 kbps,1,17.99740367,4.0792,0.9311,16.74
+voicemark,5,202,english:1447,1,mean,none,none,1,22.98151781,3.6120,0.9027,16.84
+voicemark,5,202,english:1447,1,fwp,none,none,1,6.06342981,3.5652,0.9269,17.16
+voicemark,5,202,english:1447,1,mean,mp3_128k,MP3 128 kbps,1,26.02850488,3.2923,0.9027,16.34
+voicemark,5,202,english:1447,1,fwp,mp3_128k,MP3 128 kbps,1,12.12599028,3.2617,0.9270,16.62
+voicemark,5,202,english:1447,1,mean,opus_64k,Opus 64 kbps,1,24.73357834,3.6106,0.9026,16.44
+voicemark,5,202,english:1447,1,fwp,opus_64k,Opus 64 kbps,1,5.47355656,3.5520,0.9263,16.80
+voicemark,5,203,english:1447,2,mean,none,none,1,13.88516575,3.9599,0.9218,16.67
+voicemark,5,203,english:1447,2,fwp,none,none,1,21.08259436,3.9505,0.9393,18.22
+voicemark,5,203,english:1447,2,mean,mp3_128k,MP3 128 kbps,1,12.60596190,3.7368,0.9218,16.49
+voicemark,5,203,english:1447,2,fwp,mp3_128k,MP3 128 kbps,1,21.51050843,3.7130,0.9392,17.86
+voicemark,5,203,english:1447,2,mean,opus_64k,Opus 64 kbps,1,15.74692918,3.9557,0.9209,16.47
+voicemark,5,203,english:1447,2,fwp,opus_64k,Opus 64 kbps,1,20.66768373,3.9349,0.9377,17.75
+voicemark,5,204,english:1455,0,mean,none,none,1,15.17278511,4.0548,0.9791,12.71
+voicemark,5,204,english:1455,0,fwp,none,none,1,8.62987676,3.8552,0.9664,10.18
+voicemark,5,204,english:1455,0,mean,mp3_128k,MP3 128 kbps,1,11.31347300,3.7763,0.9790,12.14
+voicemark,5,204,english:1455,0,fwp,mp3_128k,MP3 128 kbps,1,17.82778901,3.6073,0.9663,9.82
+voicemark,5,204,english:1455,0,mean,opus_64k,Opus 64 kbps,1,10.94819128,4.0539,0.9789,12.51
+voicemark,5,204,english:1455,0,fwp,opus_64k,Opus 64 kbps,1,5.35774217,3.2612,0.9497,8.55
+voicemark,5,205,english:1455,1,mean,none,none,1,13.63187991,1.1710,0.9738,12.08
+voicemark,5,205,english:1455,1,fwp,none,none,1,14.03219805,1.1500,0.9575,9.88
+voicemark,5,205,english:1455,1,mean,mp3_128k,MP3 128 kbps,1,13.07401089,1.1642,0.9737,11.28
+voicemark,5,205,english:1455,1,fwp,mp3_128k,MP3 128 kbps,1,14.71429348,1.1441,0.9575,9.34
+voicemark,5,205,english:1455,1,mean,opus_64k,Opus 64 kbps,1,10.99491692,1.1701,0.9737,11.73
+voicemark,5,205,english:1455,1,fwp,opus_64k,Opus 64 kbps,1,11.98790498,1.1485,0.9572,9.60
+voicemark,5,206,english:1455,2,mean,none,none,1,8.60968590,1.1478,0.9723,12.09
+voicemark,5,206,english:1455,2,fwp,none,none,1,25.56219107,3.7151,0.9757,13.14
+voicemark,5,206,english:1455,2,mean,mp3_128k,MP3 128 kbps,1,13.62637207,1.1452,0.9723,11.70
+voicemark,5,206,english:1455,2,fwp,mp3_128k,MP3 128 kbps,1,29.34062407,3.4906,0.9757,12.64
+voicemark,5,206,english:1455,2,mean,opus_64k,Opus 64 kbps,1,14.99699491,1.1467,0.9721,12.04
+voicemark,5,206,english:1455,2,fwp,opus_64k,Opus 64 kbps,1,24.44526903,3.7022,0.9752,13.00
+voicemark,5,207,english:150,0,mean,none,none,1,21.19497502,4.2282,0.9801,11.70
+voicemark,5,207,english:150,0,fwp,none,none,1,15.71219909,3.8129,0.9690,8.38
+voicemark,5,207,english:150,0,mean,mp3_128k,MP3 128 kbps,1,33.32791647,3.9647,0.9801,11.05
+voicemark,5,207,english:150,0,fwp,mp3_128k,MP3 128 kbps,1,20.27874896,3.5890,0.9689,8.10
+voicemark,5,207,english:150,0,mean,opus_64k,Opus 64 kbps,1,30.10866074,4.2195,0.9773,11.50
+voicemark,5,207,english:150,0,fwp,opus_64k,Opus 64 kbps,1,6.07119161,3.8012,0.9658,8.31
+voicemark,5,208,english:150,1,mean,none,none,1,15.77684978,4.2848,0.9819,12.43
+voicemark,5,208,english:150,1,fwp,none,none,1,34.89211359,3.8834,0.9659,9.07
+voicemark,5,208,english:150,1,mean,mp3_128k,MP3 128 kbps,1,25.98344410,4.0035,0.9818,11.69
+voicemark,5,208,english:150,1,fwp,mp3_128k,MP3 128 kbps,1,23.71318789,3.6140,0.9658,8.72
+voicemark,5,208,english:150,1,mean,opus_64k,Opus 64 kbps,1,16.48209188,4.2799,0.9794,12.25
+voicemark,5,208,english:150,1,fwp,opus_64k,Opus 64 kbps,1,24.88608954,3.8720,0.9632,8.98
+voicemark,5,209,english:150,2,mean,none,none,1,18.30235447,3.9579,0.9676,11.53
+voicemark,5,209,english:150,2,fwp,none,none,1,12.28032869,3.5307,0.9576,8.93
+voicemark,5,209,english:150,2,mean,mp3_128k,MP3 128 kbps,1,38.22338344,3.6926,0.9676,10.78
+voicemark,5,209,english:150,2,fwp,mp3_128k,MP3 128 kbps,1,33.25725918,3.2957,0.9575,8.48
+voicemark,5,209,english:150,2,mean,opus_64k,Opus 64 kbps,1,32.75905694,3.9519,0.9651,11.34
+voicemark,5,209,english:150,2,fwp,opus_64k,Opus 64 kbps,1,22.90814666,3.5242,0.9545,8.77
+voicemark,5,210,english:1502,0,mean,none,none,1,27.09185784,4.4145,0.9765,19.48
+voicemark,5,210,english:1502,0,fwp,none,none,1,19.14095546,4.1538,0.9627,15.92
+voicemark,5,210,english:1502,0,mean,mp3_128k,MP3 128 kbps,1,23.77012968,4.1541,0.9764,18.55
+voicemark,5,210,english:1502,0,fwp,mp3_128k,MP3 128 kbps,1,15.77206551,3.9370,0.9627,15.54
+voicemark,5,210,english:1502,0,mean,opus_64k,Opus 64 kbps,1,28.16238035,4.4011,0.9762,18.13
+voicemark,5,210,english:1502,0,fwp,opus_64k,Opus 64 kbps,1,17.24598845,4.1351,0.9620,15.27
+voicemark,5,211,english:1502,1,mean,none,none,1,33.52513705,4.2878,0.9748,18.81
+voicemark,5,211,english:1502,1,fwp,none,none,1,25.46511356,3.7415,0.9492,15.91
+voicemark,5,211,english:1502,1,mean,mp3_128k,MP3 128 kbps,1,31.03319144,4.1868,0.9748,18.68
+voicemark,5,211,english:1502,1,fwp,mp3_128k,MP3 128 kbps,1,18.60554826,3.6723,0.9492,15.88
+voicemark,5,211,english:1502,1,mean,opus_64k,Opus 64 kbps,1,29.83569628,4.2791,0.9745,17.79
+voicemark,5,211,english:1502,1,fwp,opus_64k,Opus 64 kbps,1,24.00485270,3.7252,0.9487,15.35
+voicemark,5,212,english:1502,2,mean,none,none,1,22.80510665,4.0704,0.9611,19.56
+voicemark,5,212,english:1502,2,fwp,none,none,1,42.43958900,3.7712,0.9519,17.37
+voicemark,5,212,english:1502,2,mean,mp3_128k,MP3 128 kbps,1,11.30793393,3.8904,0.9611,19.06
+voicemark,5,212,english:1502,2,fwp,mp3_128k,MP3 128 kbps,1,34.50176156,3.6222,0.9520,17.07
+voicemark,5,212,english:1502,2,mean,opus_64k,Opus 64 kbps,1,18.54352952,4.0666,0.9608,18.24
+voicemark,5,212,english:1502,2,fwp,opus_64k,Opus 64 kbps,1,38.16663181,3.7571,0.9514,16.49
+voicemark,5,213,english:1553,0,mean,none,none,1,11.30003741,4.2349,0.9906,14.34
+voicemark,5,213,english:1553,0,fwp,none,none,1,47.53116878,3.6165,0.9819,10.19
+voicemark,5,213,english:1553,0,mean,mp3_128k,MP3 128 kbps,1,30.33529936,3.8155,0.9906,12.76
+voicemark,5,213,english:1553,0,fwp,mp3_128k,MP3 128 kbps,1,35.22156168,3.5339,0.9874,10.76
+voicemark,5,213,english:1553,0,mean,opus_64k,Opus 64 kbps,1,24.47259311,4.2270,0.9906,14.03
+voicemark,5,213,english:1553,0,fwp,opus_64k,Opus 64 kbps,1,34.85580592,3.9038,0.9873,11.45
+voicemark,5,214,english:1553,1,mean,none,none,1,3.95391549,4.2299,0.9861,12.82
+voicemark,5,214,english:1553,1,fwp,none,none,1,9.87207255,3.7789,0.9764,9.29
+voicemark,5,214,english:1553,1,mean,mp3_128k,MP3 128 kbps,1,11.93246690,3.8424,0.9861,11.35
+voicemark,5,214,english:1553,1,fwp,mp3_128k,MP3 128 kbps,1,11.51379002,3.4504,0.9764,8.56
+voicemark,5,214,english:1553,1,mean,opus_64k,Opus 64 kbps,1,1.24952126,4.2274,0.9860,12.45
+voicemark,5,214,english:1553,1,fwp,opus_64k,Opus 64 kbps,1,7.31730470,3.7699,0.9763,9.10
+voicemark,5,215,english:1553,2,mean,none,none,1,22.40695738,4.2211,0.9841,12.89
+voicemark,5,215,english:1553,2,fwp,none,none,1,18.46373341,3.6959,0.9728,9.89
+voicemark,5,215,english:1553,2,mean,mp3_128k,MP3 128 kbps,1,34.34925596,3.7911,0.9841,11.23
+voicemark,5,215,english:1553,2,fwp,mp3_128k,MP3 128 kbps,1,26.94845638,3.3131,0.9728,8.96
+voicemark,5,215,english:1553,2,mean,opus_64k,Opus 64 kbps,1,20.08578753,4.2195,0.9840,12.61
+voicemark,5,215,english:1553,2,fwp,opus_64k,Opus 64 kbps,1,27.90772820,3.6904,0.9726,9.76
+voicemark,5,216,english:1578,0,mean,none,none,1,10.93458471,4.3400,0.9780,16.23
+voicemark,5,216,english:1578,0,fwp,none,none,1,17.61115746,4.4250,0.9886,19.02
+voicemark,5,216,english:1578,0,mean,mp3_128k,MP3 128 kbps,1,10.01711072,4.3180,0.9780,16.21
+voicemark,5,216,english:1578,0,fwp,mp3_128k,MP3 128 kbps,1,18.28645535,4.3965,0.9886,19.00
+voicemark,5,216,english:1578,0,mean,opus_64k,Opus 64 kbps,1,10.99021650,4.3389,0.9780,16.10
+voicemark,5,216,english:1578,0,fwp,opus_64k,Opus 64 kbps,1,18.94515418,4.4255,0.9883,18.71
+voicemark,5,217,english:1578,1,mean,none,none,1,23.79877939,4.3531,0.9828,18.60
+voicemark,5,217,english:1578,1,fwp,none,none,1,8.71858297,4.3109,0.9867,19.81
+voicemark,5,217,english:1578,1,mean,mp3_128k,MP3 128 kbps,1,19.25823402,4.2848,0.9828,18.48
+voicemark,5,217,english:1578,1,fwp,mp3_128k,MP3 128 kbps,1,10.41079378,4.2482,0.9867,19.66
+voicemark,5,217,english:1578,1,mean,opus_64k,Opus 64 kbps,1,19.85239363,4.3471,0.9827,18.20
+voicemark,5,217,english:1578,1,fwp,opus_64k,Opus 64 kbps,1,10.36717307,4.3053,0.9864,19.26
+voicemark,5,218,english:1578,2,mean,none,none,1,8.80167937,4.3215,0.9785,18.89
+voicemark,5,218,english:1578,2,fwp,none,none,1,39.40654823,3.9108,0.9623,15.63
+voicemark,5,218,english:1578,2,mean,mp3_128k,MP3 128 kbps,1,9.64137436,4.2851,0.9785,18.84
+voicemark,5,218,english:1578,2,fwp,mp3_128k,MP3 128 kbps,1,47.30215187,3.8901,0.9622,15.61
+voicemark,5,218,english:1578,2,mean,opus_64k,Opus 64 kbps,1,7.15045160,4.3174,0.9784,18.46
+voicemark,5,218,english:1578,2,fwp,opus_64k,Opus 64 kbps,1,41.15585903,3.9049,0.9621,15.39
+voicemark,5,219,english:1594,0,mean,none,none,1,14.36455815,4.0587,0.9838,12.08
+voicemark,5,219,english:1594,0,fwp,none,none,1,9.77215790,3.6133,0.9771,9.73
+voicemark,5,219,english:1594,0,mean,mp3_128k,MP3 128 kbps,1,14.78955046,3.8063,0.9838,11.59
+voicemark,5,219,english:1594,0,fwp,mp3_128k,MP3 128 kbps,1,18.18244426,3.2439,0.9747,8.25
+voicemark,5,219,english:1594,0,mean,opus_64k,Opus 64 kbps,1,13.89273811,4.0519,0.9838,11.82
+voicemark,5,219,english:1594,0,fwp,opus_64k,Opus 64 kbps,1,20.02418400,3.4273,0.9747,8.32
+voicemark,5,220,english:1594,1,mean,none,none,1,11.98116192,4.0659,0.9815,9.87
+voicemark,5,220,english:1594,1,fwp,none,none,1,36.71845728,4.1085,0.9871,11.22
+voicemark,5,220,english:1594,1,mean,mp3_128k,MP3 128 kbps,1,10.64312181,3.7902,0.9815,9.47
+voicemark,5,220,english:1594,1,fwp,mp3_128k,MP3 128 kbps,1,39.98648845,3.8280,0.9870,10.70
+voicemark,5,220,english:1594,1,mean,opus_64k,Opus 64 kbps,1,10.63197119,4.0606,0.9813,9.66
+voicemark,5,220,english:1594,1,fwp,opus_64k,Opus 64 kbps,1,39.94019686,4.0997,0.9868,10.91
+voicemark,5,221,english:1594,2,mean,none,none,1,15.23330140,3.3710,0.9702,9.49
+voicemark,5,221,english:1594,2,fwp,none,none,0,-2.69987289,3.2624,0.9744,10.09
+voicemark,5,221,english:1594,2,mean,mp3_128k,MP3 128 kbps,1,9.24393050,3.1814,0.9702,9.31
+voicemark,5,221,english:1594,2,fwp,mp3_128k,MP3 128 kbps,1,6.71329478,3.1002,0.9744,9.80
+voicemark,5,221,english:1594,2,mean,opus_64k,Opus 64 kbps,1,6.85050711,3.3609,0.9701,9.40
+voicemark,5,221,english:1594,2,fwp,opus_64k,Opus 64 kbps,0,-0.58257496,3.2558,0.9740,9.87
+voicemark,5,222,english:1624,0,mean,none,none,1,9.89960813,4.2259,0.9754,14.23
+voicemark,5,222,english:1624,0,fwp,none,none,1,7.38764049,3.5940,0.9575,11.39
+voicemark,5,222,english:1624,0,mean,mp3_128k,MP3 128 kbps,1,6.88829643,3.9541,0.9754,13.81
+voicemark,5,222,english:1624,0,fwp,mp3_128k,MP3 128 kbps,1,5.72537275,3.3866,0.9575,11.16
+voicemark,5,222,english:1624,0,mean,opus_64k,Opus 64 kbps,1,7.49053269,4.2248,0.9753,14.09
+voicemark,5,222,english:1624,0,fwp,opus_64k,Opus 64 kbps,1,7.20274493,3.5867,0.9573,11.29
+voicemark,5,223,english:1624,1,mean,none,none,1,4.66609266,4.0025,0.9747,14.81
+voicemark,5,223,english:1624,1,fwp,none,none,1,21.11020262,4.0327,0.9776,16.15
+voicemark,5,223,english:1624,1,mean,mp3_128k,MP3 128 kbps,1,4.58733569,3.7609,0.9747,14.48
+voicemark,5,223,english:1624,1,fwp,mp3_128k,MP3 128 kbps,1,22.05974554,3.9238,0.9810,15.44
+voicemark,5,223,english:1624,1,mean,opus_64k,Opus 64 kbps,1,0.15573311,3.9946,0.9746,14.84
+voicemark,5,223,english:1624,1,fwp,opus_64k,Opus 64 kbps,1,16.65106086,4.0258,0.9775,16.19
+voicemark,5,224,english:1624,2,mean,none,none,1,20.16305155,4.1741,0.9769,16.28
+voicemark,5,224,english:1624,2,fwp,none,none,1,20.58076947,3.8377,0.9671,13.55
+voicemark,5,224,english:1624,2,mean,mp3_128k,MP3 128 kbps,1,28.23153910,3.8671,0.9769,15.63
+voicemark,5,224,english:1624,2,fwp,mp3_128k,MP3 128 kbps,1,29.52865678,3.5515,0.9671,13.18
+voicemark,5,224,english:1624,2,mean,opus_64k,Opus 64 kbps,1,22.53428298,4.1785,0.9768,16.09
+voicemark,5,224,english:1624,2,fwp,opus_64k,Opus 64 kbps,1,25.74208376,3.8309,0.9670,13.39
+voicemark,5,225,english:163,0,mean,none,none,1,7.54581579,3.7411,0.9676,14.71
+voicemark,5,225,english:163,0,fwp,none,none,1,16.91234710,3.5848,0.9775,16.21
+voicemark,5,225,english:163,0,mean,mp3_128k,MP3 128 kbps,1,12.91939039,3.4232,0.9676,13.97
+voicemark,5,225,english:163,0,fwp,mp3_128k,MP3 128 kbps,1,18.77177987,3.2752,0.9774,15.16
+voicemark,5,225,english:163,0,mean,opus_64k,Opus 64 kbps,1,10.06409441,3.7330,0.9669,14.20
+voicemark,5,225,english:163,0,fwp,opus_64k,Opus 64 kbps,1,17.36711007,3.5659,0.9761,15.44
+voicemark,5,226,english:163,1,mean,none,none,1,14.95855901,4.1434,0.9758,15.46
+voicemark,5,226,english:163,1,fwp,none,none,1,19.97946539,3.8342,0.9658,12.69
+voicemark,5,226,english:163,1,mean,mp3_128k,MP3 128 kbps,1,16.91925353,3.6740,0.9758,14.12
+voicemark,5,226,english:163,1,fwp,mp3_128k,MP3 128 kbps,1,21.66571626,3.4070,0.9658,12.13
+voicemark,5,226,english:163,1,mean,opus_64k,Opus 64 kbps,1,14.94391243,4.1403,0.9751,14.71
+voicemark,5,226,english:163,1,fwp,opus_64k,Opus 64 kbps,1,20.49877654,3.8264,0.9647,12.28
+voicemark,5,227,english:163,2,mean,none,none,1,4.37380481,3.9746,0.9775,14.59
+voicemark,5,227,english:163,2,fwp,none,none,1,8.47514120,3.7038,0.9793,14.75
+voicemark,5,227,english:163,2,mean,mp3_128k,MP3 128 kbps,1,16.68829588,3.6481,0.9775,13.93
+voicemark,5,227,english:163,2,fwp,mp3_128k,MP3 128 kbps,1,7.89562908,3.4128,0.9793,14.06
+voicemark,5,227,english:163,2,mean,opus_64k,Opus 64 kbps,1,6.00358615,3.9642,0.9770,14.21
+voicemark,5,227,english:163,2,fwp,opus_64k,Opus 64 kbps,1,5.90019600,3.6878,0.9782,14.25
+voicemark,5,228,english:1723,0,mean,none,none,1,24.38164132,4.0537,0.9824,8.11
+voicemark,5,228,english:1723,0,fwp,none,none,1,21.91891860,3.7483,0.9730,6.24
+voicemark,5,228,english:1723,0,mean,mp3_128k,MP3 128 kbps,1,21.78178046,3.6565,0.9823,7.48
+voicemark,5,228,english:1723,0,fwp,mp3_128k,MP3 128 kbps,1,22.17220473,3.4116,0.9730,5.84
+voicemark,5,228,english:1723,0,mean,opus_64k,Opus 64 kbps,1,20.84641302,4.0528,0.9821,8.05
+voicemark,5,228,english:1723,0,fwp,opus_64k,Opus 64 kbps,1,22.61955166,3.7685,0.9725,6.23
+voicemark,5,229,english:1723,1,mean,none,none,1,16.28540909,3.8730,0.9770,5.34
+voicemark,5,229,english:1723,1,fwp,none,none,1,17.77877130,3.8465,0.9823,7.51
+voicemark,5,229,english:1723,1,mean,mp3_128k,MP3 128 kbps,1,19.51054188,3.3260,0.9770,4.61
+voicemark,5,229,english:1723,1,fwp,mp3_128k,MP3 128 kbps,1,13.41502311,3.2640,0.9822,6.39
+voicemark,5,229,english:1723,1,mean,opus_64k,Opus 64 kbps,1,17.02003373,3.8645,0.9767,5.11
+voicemark,5,229,english:1723,1,fwp,opus_64k,Opus 64 kbps,1,15.00026743,3.8318,0.9817,7.15
+voicemark,5,230,english:1723,2,mean,none,none,1,23.17875843,4.2673,0.9821,8.67
+voicemark,5,230,english:1723,2,fwp,none,none,1,16.47613949,3.9047,0.9630,4.71
+voicemark,5,230,english:1723,2,mean,mp3_128k,MP3 128 kbps,1,26.35458536,3.8583,0.9821,8.19
+voicemark,5,230,english:1723,2,fwp,mp3_128k,MP3 128 kbps,1,22.97617737,3.5537,0.9628,4.54
+voicemark,5,230,english:1723,2,mean,opus_64k,Opus 64 kbps,1,24.04975307,4.2603,0.9819,8.59
+voicemark,5,230,english:1723,2,fwp,opus_64k,Opus 64 kbps,1,15.34638494,3.8969,0.9625,4.72
+voicemark,5,231,english:1737,0,mean,none,none,1,19.68178850,4.3623,0.9811,13.07
+voicemark,5,231,english:1737,0,fwp,none,none,1,21.03900386,4.3773,0.9878,14.09
+voicemark,5,231,english:1737,0,mean,mp3_128k,MP3 128 kbps,1,32.68611914,3.7402,0.9811,10.04
+voicemark,5,231,english:1737,0,fwp,mp3_128k,MP3 128 kbps,1,26.62776884,3.7364,0.9878,10.55
+voicemark,5,231,english:1737,0,mean,opus_64k,Opus 64 kbps,1,28.76230562,4.3571,0.9808,12.42
+voicemark,5,231,english:1737,0,fwp,opus_64k,Opus 64 kbps,1,22.30830940,4.3634,0.9872,13.15
+voicemark,5,232,english:1737,1,mean,none,none,1,17.19095426,3.9306,0.9624,10.73
+voicemark,5,232,english:1737,1,fwp,none,none,1,21.53199023,3.9097,0.9725,12.85
+voicemark,5,232,english:1737,1,mean,mp3_128k,MP3 128 kbps,1,26.76887601,3.3302,0.9624,9.19
+voicemark,5,232,english:1737,1,fwp,mp3_128k,MP3 128 kbps,1,26.87798953,3.3413,0.9725,10.33
+voicemark,5,232,english:1737,1,mean,opus_64k,Opus 64 kbps,1,16.05376821,3.9252,0.9620,10.75
+voicemark,5,232,english:1737,1,fwp,opus_64k,Opus 64 kbps,1,20.54521989,3.8930,0.9716,12.45
+voicemark,5,233,english:1737,2,mean,none,none,1,27.66461462,4.1706,0.9738,11.55
+voicemark,5,233,english:1737,2,fwp,none,none,1,31.03686767,3.8396,0.9629,10.03
+voicemark,5,233,english:1737,2,mean,mp3_128k,MP3 128 kbps,1,29.49576915,3.4774,0.9738,9.10
+voicemark,5,233,english:1737,2,fwp,mp3_128k,MP3 128 kbps,1,43.30241346,3.2115,0.9629,8.11
+voicemark,5,233,english:1737,2,mean,opus_64k,Opus 64 kbps,1,29.56408730,4.1650,0.9734,11.04
+voicemark,5,233,english:1737,2,fwp,opus_64k,Opus 64 kbps,1,37.76745777,3.8256,0.9624,9.53
+voicemark,5,234,english:1743,0,mean,none,none,1,24.21168816,4.3393,0.9824,14.60
+voicemark,5,234,english:1743,0,fwp,none,none,1,24.90486397,4.2420,0.9808,14.23
+voicemark,5,234,english:1743,0,mean,mp3_128k,MP3 128 kbps,1,16.08751091,4.1078,0.9824,14.14
+voicemark,5,234,english:1743,0,fwp,mp3_128k,MP3 128 kbps,1,21.78537137,4.0240,0.9808,13.81
+voicemark,5,234,english:1743,0,mean,opus_64k,Opus 64 kbps,1,22.40647590,4.3373,0.9823,14.34
+voicemark,5,234,english:1743,0,fwp,opus_64k,Opus 64 kbps,1,22.47569246,4.2422,0.9805,13.97
+voicemark,5,235,english:1743,1,mean,none,none,1,26.00172666,4.2393,0.9767,12.18
+voicemark,5,235,english:1743,1,fwp,none,none,1,14.81954802,4.2733,0.9848,13.27
+voicemark,5,235,english:1743,1,mean,mp3_128k,MP3 128 kbps,1,18.69661627,4.0112,0.9767,11.86
+voicemark,5,235,english:1743,1,fwp,mp3_128k,MP3 128 kbps,1,25.52693494,4.0409,0.9848,12.83
+voicemark,5,235,english:1743,1,mean,opus_64k,Opus 64 kbps,1,19.75094194,4.2390,0.9766,12.00
+voicemark,5,235,english:1743,1,fwp,opus_64k,Opus 64 kbps,1,11.06747025,4.2767,0.9847,13.07
+voicemark,5,236,english:1743,2,mean,none,none,1,29.17015358,3.9987,0.9768,15.26
+voicemark,5,236,english:1743,2,fwp,none,none,1,25.67400967,3.7416,0.9699,12.26
+voicemark,5,236,english:1743,2,mean,mp3_128k,MP3 128 kbps,1,22.41125612,3.8272,0.9768,14.95
+voicemark,5,236,english:1743,2,fwp,mp3_128k,MP3 128 kbps,1,20.67097479,3.5831,0.9699,12.11
+voicemark,5,236,english:1743,2,mean,opus_64k,Opus 64 kbps,1,28.26949545,3.9984,0.9766,15.03
+voicemark,5,236,english:1743,2,fwp,opus_64k,Opus 64 kbps,1,22.27398691,3.7388,0.9697,12.13
+voicemark,5,237,english:1841,0,mean,none,none,1,27.18966044,3.1354,0.9617,7.91
+voicemark,5,237,english:1841,0,fwp,none,none,1,23.80157368,2.6615,0.9506,5.43
+voicemark,5,237,english:1841,0,mean,mp3_128k,MP3 128 kbps,1,35.43079273,2.7565,0.9617,6.84
+voicemark,5,237,english:1841,0,fwp,mp3_128k,MP3 128 kbps,1,32.78131693,2.4047,0.9506,4.71
+voicemark,5,237,english:1841,0,mean,opus_64k,Opus 64 kbps,1,27.55408872,3.1413,0.9616,7.63
+voicemark,5,237,english:1841,0,fwp,opus_64k,Opus 64 kbps,1,28.67510895,2.6654,0.9503,5.22
+voicemark,5,238,english:1841,1,mean,none,none,1,15.09736806,4.1898,0.9822,7.84
+voicemark,5,238,english:1841,1,fwp,none,none,1,23.51142103,4.1924,0.9884,9.34
+voicemark,5,238,english:1841,1,mean,mp3_128k,MP3 128 kbps,1,14.70754453,3.5945,0.9822,6.13
+voicemark,5,238,english:1841,1,fwp,mp3_128k,MP3 128 kbps,1,27.40451228,3.5869,0.9884,7.36
+voicemark,5,238,english:1841,1,mean,opus_64k,Opus 64 kbps,1,14.00274901,4.1847,0.9822,7.46
+voicemark,5,238,english:1841,1,fwp,opus_64k,Opus 64 kbps,1,28.61261020,4.1856,0.9883,8.72
+voicemark,5,239,english:1841,2,mean,none,none,1,21.42559639,3.7733,0.9675,9.61
+voicemark,5,239,english:1841,2,fwp,none,none,1,15.31316125,3.1897,0.9527,6.61
+voicemark,5,239,english:1841,2,mean,mp3_128k,MP3 128 kbps,1,26.54026851,3.2964,0.9675,7.72
+voicemark,5,239,english:1841,2,fwp,mp3_128k,MP3 128 kbps,1,24.23896465,2.8068,0.9526,5.43
+voicemark,5,239,english:1841,2,mean,opus_64k,Opus 64 kbps,1,27.49158737,3.7726,0.9674,9.12
+voicemark,5,239,english:1841,2,fwp,opus_64k,Opus 64 kbps,1,16.01258403,3.1828,0.9524,6.31
+voicemark,5,240,english:1867,0,mean,none,none,1,16.08234195,4.2059,0.9880,11.06
+voicemark,5,240,english:1867,0,fwp,none,none,1,16.62698619,3.7925,0.9820,8.66
+voicemark,5,240,english:1867,0,mean,mp3_128k,MP3 128 kbps,1,19.73983272,3.9345,0.9880,10.53
+voicemark,5,240,english:1867,0,fwp,mp3_128k,MP3 128 kbps,1,10.62858986,3.5427,0.9819,8.33
+voicemark,5,240,english:1867,0,mean,opus_64k,Opus 64 kbps,1,19.42302231,4.2052,0.9879,10.89
+voicemark,5,240,english:1867,0,fwp,opus_64k,Opus 64 kbps,1,15.41513109,3.7871,0.9817,8.55
+voicemark,5,241,english:1867,1,mean,none,none,1,20.43285630,4.1162,0.9862,9.45
+voicemark,5,241,english:1867,1,fwp,none,none,1,12.44910838,4.3090,0.9896,11.04
+voicemark,5,241,english:1867,1,mean,mp3_128k,MP3 128 kbps,1,19.82785126,3.8823,0.9862,9.08
+voicemark,5,241,english:1867,1,fwp,mp3_128k,MP3 128 kbps,1,21.29445162,4.0619,0.9896,10.49
+voicemark,5,241,english:1867,1,mean,opus_64k,Opus 64 kbps,1,13.11872455,4.1141,0.9862,9.33
+voicemark,5,241,english:1867,1,fwp,opus_64k,Opus 64 kbps,1,21.96869607,4.3025,0.9894,10.88
+voicemark,5,242,english:1867,2,mean,none,none,1,27.28150118,4.1110,0.9840,10.99
+voicemark,5,242,english:1867,2,fwp,none,none,1,20.06439435,3.8291,0.9884,11.84
+voicemark,5,242,english:1867,2,mean,mp3_128k,MP3 128 kbps,1,18.39745626,3.8995,0.9840,10.64
+voicemark,5,242,english:1867,2,fwp,mp3_128k,MP3 128 kbps,1,23.95174012,3.6307,0.9884,11.41
+voicemark,5,242,english:1867,2,mean,opus_64k,Opus 64 kbps,1,20.47571561,4.1111,0.9839,10.94
+voicemark,5,242,english:1867,2,fwp,opus_64k,Opus 64 kbps,1,21.18078002,3.8264,0.9882,11.76
+voicemark,5,243,english:1898,0,mean,none,none,1,2.10820580,4.0345,0.9768,11.53
+voicemark,5,243,english:1898,0,fwp,none,none,1,14.71465775,3.8807,0.9813,11.93
+voicemark,5,243,english:1898,0,mean,mp3_128k,MP3 128 kbps,1,1.16545290,3.7742,0.9768,11.01
+voicemark,5,243,english:1898,0,fwp,mp3_128k,MP3 128 kbps,1,12.97995168,3.6481,0.9813,11.36
+voicemark,5,243,english:1898,0,mean,opus_64k,Opus 64 kbps,1,0.89174747,4.0259,0.9764,11.41
+voicemark,5,243,english:1898,0,fwp,opus_64k,Opus 64 kbps,1,13.60258715,3.7140,0.9806,11.77
+voicemark,5,244,english:1898,1,mean,none,none,1,40.31733004,3.9731,0.9769,12.69
+voicemark,5,244,english:1898,1,fwp,none,none,1,30.45047952,3.2071,0.9657,8.58
+voicemark,5,244,english:1898,1,mean,mp3_128k,MP3 128 kbps,1,30.33184573,3.7500,0.9769,12.22
+voicemark,5,244,english:1898,1,fwp,mp3_128k,MP3 128 kbps,1,30.72167978,3.0497,0.9657,8.36
+voicemark,5,244,english:1898,1,mean,opus_64k,Opus 64 kbps,1,29.33553515,3.9629,0.9768,12.58
+voicemark,5,244,english:1898,1,fwp,opus_64k,Opus 64 kbps,1,31.85909822,3.0719,0.9653,8.49
+voicemark,5,245,english:1898,2,mean,none,none,1,13.68247575,4.2507,0.9784,16.81
+voicemark,5,245,english:1898,2,fwp,none,none,1,4.94299498,3.5513,0.9609,11.31
+voicemark,5,245,english:1898,2,mean,mp3_128k,MP3 128 kbps,1,8.41097837,3.8463,0.9783,14.47
+voicemark,5,245,english:1898,2,fwp,mp3_128k,MP3 128 kbps,1,3.87279138,3.2065,0.9609,10.61
+voicemark,5,245,english:1898,2,mean,opus_64k,Opus 64 kbps,1,10.17969123,4.2428,0.9781,16.12
+voicemark,5,245,english:1898,2,fwp,opus_64k,Opus 64 kbps,1,3.57761182,3.5339,0.9604,11.11
+voicemark,5,246,english:19,0,mean,none,none,1,18.67730748,4.0417,0.9026,13.04
+voicemark,5,246,english:19,0,fwp,none,none,1,27.17945507,4.1749,0.9274,14.83
+voicemark,5,246,english:19,0,mean,mp3_128k,MP3 128 kbps,1,17.64843582,3.9684,0.9026,12.95
+voicemark,5,246,english:19,0,fwp,mp3_128k,MP3 128 kbps,1,42.75946449,4.0984,0.9275,14.69
+voicemark,5,246,english:19,0,mean,opus_64k,Opus 64 kbps,1,18.64677165,4.0336,0.9016,13.03
+voicemark,5,246,english:19,0,fwp,opus_64k,Opus 64 kbps,1,31.19825796,4.1588,0.9252,14.76
+voicemark,5,247,english:19,1,mean,none,none,1,27.56352137,4.0892,0.9309,12.08
+voicemark,5,247,english:19,1,fwp,none,none,1,31.37344591,4.2400,0.9426,14.38
+voicemark,5,247,english:19,1,mean,mp3_128k,MP3 128 kbps,1,27.02484269,4.0316,0.9309,12.03
+voicemark,5,247,english:19,1,fwp,mp3_128k,MP3 128 kbps,1,20.83561107,4.1722,0.9426,14.29
+voicemark,5,247,english:19,1,mean,opus_64k,Opus 64 kbps,1,27.55994227,4.0872,0.9302,12.06
+voicemark,5,247,english:19,1,fwp,opus_64k,Opus 64 kbps,1,26.94493435,4.2283,0.9413,14.32
+voicemark,5,248,english:19,2,mean,none,none,1,23.26278005,4.0018,0.9202,14.59
+voicemark,5,248,english:19,2,fwp,none,none,1,24.00878655,3.5958,0.8757,11.98
+voicemark,5,248,english:19,2,mean,mp3_128k,MP3 128 kbps,1,28.56260525,3.9422,0.9203,14.53
+voicemark,5,248,english:19,2,fwp,mp3_128k,MP3 128 kbps,1,14.58249419,3.5452,0.8758,11.94
+voicemark,5,248,english:19,2,mean,opus_64k,Opus 64 kbps,1,25.48404183,4.0030,0.9195,14.55
+voicemark,5,248,english:19,2,fwp,opus_64k,Opus 64 kbps,1,19.51106383,3.5858,0.8749,11.95
+voicemark,5,249,english:1926,0,mean,none,none,1,36.61807993,4.0907,0.9795,9.42
+voicemark,5,249,english:1926,0,fwp,none,none,1,42.10746702,3.9467,0.9814,10.77
+voicemark,5,249,english:1926,0,mean,mp3_128k,MP3 128 kbps,1,34.12694051,3.9391,0.9795,9.32
+voicemark,5,249,english:1926,0,fwp,mp3_128k,MP3 128 kbps,1,45.81876354,3.7980,0.9814,10.64
+voicemark,5,249,english:1926,0,mean,opus_64k,Opus 64 kbps,1,29.41689234,4.0860,0.9795,9.42
+voicemark,5,249,english:1926,0,fwp,opus_64k,Opus 64 kbps,1,45.36423173,3.9317,0.9813,10.77
+voicemark,5,250,english:1926,1,mean,none,none,1,7.05596115,3.6910,0.9733,8.21
+voicemark,5,250,english:1926,1,fwp,none,none,1,17.59015689,3.6556,0.9753,9.87
+voicemark,5,250,english:1926,1,mean,mp3_128k,MP3 128 kbps,1,14.19969761,3.5457,0.9733,8.08
+voicemark,5,250,english:1926,1,fwp,mp3_128k,MP3 128 kbps,1,20.93562868,3.5130,0.9753,9.68
+voicemark,5,250,english:1926,1,mean,opus_64k,Opus 64 kbps,1,5.70238312,3.6856,0.9731,8.19
+voicemark,5,250,english:1926,1,fwp,opus_64k,Opus 64 kbps,1,15.99045662,3.6322,0.9751,9.83
+voicemark,5,251,english:1926,2,mean,none,none,1,6.93720073,3.9138,0.9797,10.42
+voicemark,5,251,english:1926,2,fwp,none,none,1,3.84813029,3.3098,0.9713,8.28
+voicemark,5,251,english:1926,2,mean,mp3_128k,MP3 128 kbps,1,21.20971671,3.7308,0.9796,10.25
+voicemark,5,251,english:1926,2,fwp,mp3_128k,MP3 128 kbps,1,4.12232757,3.1784,0.9713,8.18
+voicemark,5,251,english:1926,2,mean,opus_64k,Opus 64 kbps,1,9.78416263,3.9055,0.9795,10.38
+voicemark,5,251,english:1926,2,fwp,opus_64k,Opus 64 kbps,1,4.48442423,3.3000,0.9712,8.27
+voicemark,5,252,english:196,0,mean,none,none,1,26.73244996,3.7464,0.9694,13.79
+voicemark,5,252,english:196,0,fwp,none,none,1,2.77759793,2.9255,0.9581,10.48
+voicemark,5,252,english:196,0,mean,mp3_128k,MP3 128 kbps,1,19.21523373,3.6314,0.9694,13.71
+voicemark,5,252,english:196,0,fwp,mp3_128k,MP3 128 kbps,1,2.05754179,2.8580,0.9581,10.44
+voicemark,5,252,english:196,0,mean,opus_64k,Opus 64 kbps,1,20.32432170,3.7394,0.9694,13.78
+voicemark,5,252,english:196,0,fwp,opus_64k,Opus 64 kbps,1,1.67753749,2.9190,0.9579,10.45
+voicemark,5,253,english:196,1,mean,none,none,1,24.00464604,4.0735,0.9821,14.71
+voicemark,5,253,english:196,1,fwp,none,none,1,28.96495393,3.9346,0.9783,14.05
+voicemark,5,253,english:196,1,mean,mp3_128k,MP3 128 kbps,1,30.75470114,3.8433,0.9821,14.40
+voicemark,5,253,english:196,1,fwp,mp3_128k,MP3 128 kbps,1,31.41159745,3.7210,0.9783,13.81
+voicemark,5,253,english:196,1,mean,opus_64k,Opus 64 kbps,1,28.94253435,4.0706,0.9820,14.56
+voicemark,5,253,english:196,1,fwp,opus_64k,Opus 64 kbps,1,31.29766513,3.9290,0.9781,13.91
+voicemark,5,254,english:196,2,mean,none,none,1,32.26368006,4.1907,0.9740,14.77
+voicemark,5,254,english:196,2,fwp,none,none,1,19.00485841,3.7848,0.9675,12.25
+voicemark,5,254,english:196,2,mean,mp3_128k,MP3 128 kbps,1,25.46842262,4.0357,0.9740,14.52
+voicemark,5,254,english:196,2,fwp,mp3_128k,MP3 128 kbps,1,18.10607898,3.6599,0.9675,12.12
+voicemark,5,254,english:196,2,mean,opus_64k,Opus 64 kbps,1,28.35174534,4.1880,0.9738,14.71
+voicemark,5,254,english:196,2,fwp,opus_64k,Opus 64 kbps,1,19.19986047,3.7730,0.9672,12.20
+voicemark,5,255,english:1963,0,mean,none,none,1,10.46730482,3.8257,0.9868,10.32
+voicemark,5,255,english:1963,0,fwp,none,none,1,23.39571804,4.1045,0.9906,12.01
+voicemark,5,255,english:1963,0,mean,mp3_128k,MP3 128 kbps,1,8.72091524,3.8241,0.9868,10.28
+voicemark,5,255,english:1963,0,fwp,mp3_128k,MP3 128 kbps,1,25.64750768,4.1045,0.9906,11.96
+voicemark,5,255,english:1963,0,mean,opus_64k,Opus 64 kbps,1,7.97854109,3.8290,0.9867,10.26
+voicemark,5,255,english:1963,0,fwp,opus_64k,Opus 64 kbps,1,20.69582178,4.1083,0.9904,11.92
+voicemark,5,256,english:1963,1,mean,none,none,1,16.89924597,3.9498,0.9917,13.05
+voicemark,5,256,english:1963,1,fwp,none,none,1,21.56917357,3.2482,0.9852,9.48
+voicemark,5,256,english:1963,1,mean,mp3_128k,MP3 128 kbps,1,21.83092033,3.9520,0.9917,12.99
+voicemark,5,256,english:1963,1,fwp,mp3_128k,MP3 128 kbps,1,20.40841967,3.2476,0.9852,9.45
+voicemark,5,256,english:1963,1,mean,opus_64k,Opus 64 kbps,1,19.23399280,3.9587,0.9916,12.96
+voicemark,5,256,english:1963,1,fwp,opus_64k,Opus 64 kbps,1,23.65795524,3.2482,0.9850,9.40
+voicemark,5,257,english:1963,2,mean,none,none,1,22.45975530,3.9417,0.9890,11.36
+voicemark,5,257,english:1963,2,fwp,none,none,1,16.71231466,3.7659,0.9850,9.97
+voicemark,5,257,english:1963,2,mean,mp3_128k,MP3 128 kbps,1,28.08689772,3.9967,0.9890,11.36
+voicemark,5,257,english:1963,2,fwp,mp3_128k,MP3 128 kbps,1,20.77643086,3.8804,0.9850,9.98
+voicemark,5,257,english:1963,2,mean,opus_64k,Opus 64 kbps,1,21.95854980,3.9531,0.9889,11.32
+voicemark,5,257,english:1963,2,fwp,opus_64k,Opus 64 kbps,1,17.63353807,3.7835,0.9849,9.95
+voicemark,5,258,english:1970,0,mean,none,none,1,20.44844630,4.2404,0.9763,15.18
+voicemark,5,258,english:1970,0,fwp,none,none,1,22.00353139,3.7876,0.9625,12.41
+voicemark,5,258,english:1970,0,mean,mp3_128k,MP3 128 kbps,1,16.38556157,4.0707,0.9763,14.89
+voicemark,5,258,english:1970,0,fwp,mp3_128k,MP3 128 kbps,1,21.24764356,3.6410,0.9625,12.25
+voicemark,5,258,english:1970,0,mean,opus_64k,Opus 64 kbps,1,23.13978207,4.2334,0.9758,15.00
+voicemark,5,258,english:1970,0,fwp,opus_64k,Opus 64 kbps,1,24.20618921,3.7792,0.9615,12.27
+voicemark,5,259,english:1970,1,mean,none,none,1,10.76493913,3.8465,0.9606,13.20
+voicemark,5,259,english:1970,1,fwp,none,none,1,16.09362996,4.0838,0.9772,15.36
+voicemark,5,259,english:1970,1,mean,mp3_128k,MP3 128 kbps,1,4.03802490,3.7256,0.9606,13.06
+voicemark,5,259,english:1970,1,fwp,mp3_128k,MP3 128 kbps,1,10.91070909,3.9441,0.9771,15.14
+voicemark,5,259,english:1970,1,mean,opus_64k,Opus 64 kbps,1,10.25804538,3.8430,0.9603,13.11
+voicemark,5,259,english:1970,1,fwp,opus_64k,Opus 64 kbps,1,15.92526039,4.0660,0.9763,15.17
+voicemark,5,260,english:1970,2,mean,none,none,1,20.93230645,4.4205,0.9787,15.49
+voicemark,5,260,english:1970,2,fwp,none,none,1,23.14309655,4.0593,0.9447,12.36
+voicemark,5,260,english:1970,2,mean,mp3_128k,MP3 128 kbps,1,19.15816253,4.2642,0.9787,15.23
+voicemark,5,260,english:1970,2,fwp,mp3_128k,MP3 128 kbps,1,24.84189497,3.9233,0.9447,12.25
+voicemark,5,260,english:1970,2,mean,opus_64k,Opus 64 kbps,1,13.23293646,4.4186,0.9782,15.39
+voicemark,5,260,english:1970,2,fwp,opus_64k,Opus 64 kbps,1,22.50415957,4.0602,0.9438,12.29
+voicemark,5,261,english:198,0,mean,none,none,1,24.45313868,4.1064,0.9811,16.65
+voicemark,5,261,english:198,0,fwp,none,none,1,4.75037940,3.5047,0.9690,13.13
+voicemark,5,261,english:198,0,mean,mp3_128k,MP3 128 kbps,1,20.14495020,3.8977,0.9811,16.25
+voicemark,5,261,english:198,0,fwp,mp3_128k,MP3 128 kbps,1,7.79139162,3.3611,0.9689,12.96
+voicemark,5,261,english:198,0,mean,opus_64k,Opus 64 kbps,1,27.71237959,4.1004,0.9809,15.93
+voicemark,5,261,english:198,0,fwp,opus_64k,Opus 64 kbps,1,4.79981592,3.4982,0.9686,12.78
+voicemark,5,262,english:198,1,mean,none,none,1,24.20526549,4.3632,0.9839,16.95
+voicemark,5,262,english:198,1,fwp,none,none,1,6.70397741,3.8216,0.9770,13.59
+voicemark,5,262,english:198,1,mean,mp3_128k,MP3 128 kbps,1,16.64109119,4.1628,0.9839,16.45
+voicemark,5,262,english:198,1,fwp,mp3_128k,MP3 128 kbps,1,5.75498371,3.6492,0.9770,13.41
+voicemark,5,262,english:198,1,mean,opus_64k,Opus 64 kbps,1,21.80931799,4.3466,0.9836,16.25
+voicemark,5,262,english:198,1,fwp,opus_64k,Opus 64 kbps,1,8.85710136,3.9599,0.9768,13.22
+voicemark,5,263,english:198,2,mean,none,none,1,30.35329687,4.1882,0.9825,16.16
+voicemark,5,263,english:198,2,fwp,none,none,1,29.79890377,3.5845,0.9725,12.79
+voicemark,5,263,english:198,2,mean,mp3_128k,MP3 128 kbps,1,22.66933286,4.0184,0.9825,15.87
+voicemark,5,263,english:198,2,fwp,mp3_128k,MP3 128 kbps,1,27.90856053,3.4455,0.9725,12.67
+voicemark,5,263,english:198,2,mean,opus_64k,Opus 64 kbps,1,32.30238163,4.1849,0.9822,15.51
+voicemark,5,263,english:198,2,fwp,opus_64k,Opus 64 kbps,1,27.64733110,3.5789,0.9720,12.42
+voicemark,5,264,english:1992,0,mean,none,none,1,26.63408331,4.3684,0.9775,18.54
+voicemark,5,264,english:1992,0,fwp,none,none,1,23.28160072,4.0968,0.9637,16.24
+voicemark,5,264,english:1992,0,mean,mp3_128k,MP3 128 kbps,1,21.08672913,4.1163,0.9775,18.07
+voicemark,5,264,english:1992,0,fwp,mp3_128k,MP3 128 kbps,1,24.19242096,3.8874,0.9636,15.95
+voicemark,5,264,english:1992,0,mean,opus_64k,Opus 64 kbps,1,17.93739852,4.3675,0.9775,18.46
+voicemark,5,264,english:1992,0,fwp,opus_64k,Opus 64 kbps,1,26.04789570,4.0842,0.9633,16.12
+voicemark,5,265,english:1992,1,mean,none,none,0,-1.80179912,4.0646,0.9759,20.68
+voicemark,5,265,english:1992,1,fwp,none,none,1,24.71935453,3.3854,0.9542,17.28
+voicemark,5,265,english:1992,1,mean,mp3_128k,MP3 128 kbps,1,7.25843517,3.6100,0.9759,18.66
+voicemark,5,265,english:1992,1,fwp,mp3_128k,MP3 128 kbps,1,28.98130198,3.0474,0.9542,16.27
+voicemark,5,265,english:1992,1,mean,opus_64k,Opus 64 kbps,1,2.49685621,4.0621,0.9758,20.17
+voicemark,5,265,english:1992,1,fwp,opus_64k,Opus 64 kbps,1,27.81278020,3.3771,0.9541,17.10
+voicemark,5,266,english:1992,2,mean,none,none,1,32.81473976,4.2876,0.9748,19.18
+voicemark,5,266,english:1992,2,fwp,none,none,1,14.05916675,4.2765,0.9830,19.37
+voicemark,5,266,english:1992,2,mean,mp3_128k,MP3 128 kbps,1,30.02769362,3.8931,0.9748,17.83
+voicemark,5,266,english:1992,2,fwp,mp3_128k,MP3 128 kbps,1,18.83476626,3.8832,0.9830,18.10
+voicemark,5,266,english:1992,2,mean,opus_64k,Opus 64 kbps,1,36.89803035,4.2841,0.9747,18.91
+voicemark,5,266,english:1992,2,fwp,opus_64k,Opus 64 kbps,1,21.18690843,4.2699,0.9827,19.30
+voicemark,5,267,english:200,0,mean,none,none,1,12.41283292,4.3584,0.9836,21.00
+voicemark,5,267,english:200,0,fwp,none,none,1,13.64157595,4.0162,0.9709,18.07
+voicemark,5,267,english:200,0,mean,mp3_128k,MP3 128 kbps,1,7.11318219,4.2423,0.9836,20.86
+voicemark,5,267,english:200,0,fwp,mp3_128k,MP3 128 kbps,1,6.39687930,3.9285,0.9709,18.00
+voicemark,5,267,english:200,0,mean,opus_64k,Opus 64 kbps,1,7.66131407,4.3503,0.9836,20.76
+voicemark,5,267,english:200,0,fwp,opus_64k,Opus 64 kbps,1,10.26308426,3.9970,0.9708,17.94
+voicemark,5,268,english:200,1,mean,none,none,1,10.37097560,4.3883,0.9830,21.27
+voicemark,5,268,english:200,1,fwp,none,none,1,16.09890949,4.1392,0.9726,18.47
+voicemark,5,268,english:200,1,mean,mp3_128k,MP3 128 kbps,1,7.01701748,4.2863,0.9830,21.17
+voicemark,5,268,english:200,1,fwp,mp3_128k,MP3 128 kbps,1,12.32598804,4.0699,0.9726,18.42
+voicemark,5,268,english:200,1,mean,opus_64k,Opus 64 kbps,1,6.53570580,4.3834,0.9829,21.01
+voicemark,5,268,english:200,1,fwp,opus_64k,Opus 64 kbps,1,14.64239262,4.1213,0.9724,18.31
+voicemark,5,269,english:200,2,mean,none,none,1,18.80353450,3.9079,0.9721,20.02
+voicemark,5,269,english:200,2,fwp,none,none,1,18.49340784,4.0768,0.9799,22.10
+voicemark,5,269,english:200,2,mean,mp3_128k,MP3 128 kbps,1,27.28556442,3.8601,0.9721,20.01
+voicemark,5,269,english:200,2,fwp,mp3_128k,MP3 128 kbps,1,16.88747964,4.0057,0.9799,22.03
+voicemark,5,269,english:200,2,mean,opus_64k,Opus 64 kbps,1,19.08025675,3.9102,0.9720,19.70
+voicemark,5,269,english:200,2,fwp,opus_64k,Opus 64 kbps,1,18.98746267,4.0665,0.9798,21.52
+voicemark,5,270,english:2002,0,mean,none,none,1,14.02906132,4.2780,0.9780,17.00
+voicemark,5,270,english:2002,0,fwp,none,none,1,23.00183841,4.3782,0.9827,19.07
+voicemark,5,270,english:2002,0,mean,mp3_128k,MP3 128 kbps,1,23.06573504,4.1033,0.9780,16.52
+voicemark,5,270,english:2002,0,fwp,mp3_128k,MP3 128 kbps,1,31.47285855,4.1723,0.9827,18.32
+voicemark,5,270,english:2002,0,mean,opus_64k,Opus 64 kbps,1,22.63191979,4.2797,0.9778,16.84
+voicemark,5,270,english:2002,0,fwp,opus_64k,Opus 64 kbps,1,28.31606488,4.3754,0.9825,18.69
+voicemark,5,271,english:2002,1,mean,none,none,1,24.70451244,4.3438,0.9773,15.35
+voicemark,5,271,english:2002,1,fwp,none,none,1,17.86558856,4.3959,0.9850,17.01
+voicemark,5,271,english:2002,1,mean,mp3_128k,MP3 128 kbps,1,27.71842062,4.1126,0.9773,14.90
+voicemark,5,271,english:2002,1,fwp,mp3_128k,MP3 128 kbps,1,16.78534279,4.1553,0.9850,16.30
+voicemark,5,271,english:2002,1,mean,opus_64k,Opus 64 kbps,1,29.64866054,4.3423,0.9774,15.25
+voicemark,5,271,english:2002,1,fwp,opus_64k,Opus 64 kbps,1,16.12176433,4.3927,0.9848,16.81
+voicemark,5,272,english:2002,2,mean,none,none,1,12.52812948,4.3519,0.9834,19.19
+voicemark,5,272,english:2002,2,fwp,none,none,0,-0.18373865,4.0246,0.9746,16.54
+voicemark,5,272,english:2002,2,mean,mp3_128k,MP3 128 kbps,1,8.37080172,4.2080,0.9834,18.81
+voicemark,5,272,english:2002,2,fwp,mp3_128k,MP3 128 kbps,1,7.64821618,3.9000,0.9746,16.33
+voicemark,5,272,english:2002,2,mean,opus_64k,Opus 64 kbps,1,7.73767316,4.3539,0.9833,19.08
+voicemark,5,272,english:2002,2,fwp,opus_64k,Opus 64 kbps,1,5.13753897,4.0241,0.9744,16.43
+voicemark,5,273,english:2007,0,mean,none,none,1,4.75314915,4.3678,0.9844,14.29
+voicemark,5,273,english:2007,0,fwp,none,none,1,8.04459125,4.0043,0.9768,11.95
+voicemark,5,273,english:2007,0,mean,mp3_128k,MP3 128 kbps,1,9.18016024,4.1829,0.9844,13.97
+voicemark,5,273,english:2007,0,fwp,mp3_128k,MP3 128 kbps,1,6.84881318,3.8432,0.9768,11.76
+voicemark,5,273,english:2007,0,mean,opus_64k,Opus 64 kbps,1,9.93367781,4.3563,0.9844,13.99
+voicemark,5,273,english:2007,0,fwp,opus_64k,Opus 64 kbps,1,8.00692064,3.9912,0.9765,11.72
+voicemark,5,274,english:2007,1,mean,none,none,1,32.97981996,4.1616,0.9807,13.09
+voicemark,5,274,english:2007,1,fwp,none,none,1,5.93001578,3.6665,0.9708,10.07
+voicemark,5,274,english:2007,1,mean,mp3_128k,MP3 128 kbps,1,34.38351321,4.0002,0.9807,12.88
+voicemark,5,274,english:2007,1,fwp,mp3_128k,MP3 128 kbps,1,10.87898073,3.5503,0.9708,9.97
+voicemark,5,274,english:2007,1,mean,opus_64k,Opus 64 kbps,1,34.32114279,4.1540,0.9805,12.83
+voicemark,5,274,english:2007,1,fwp,opus_64k,Opus 64 kbps,1,7.39682367,3.6535,0.9704,9.91
+voicemark,5,275,english:2007,2,mean,none,none,1,7.87896463,4.0942,0.9789,12.57
+voicemark,5,275,english:2007,2,fwp,none,none,0,-0.62455031,3.7811,0.9738,10.82
+voicemark,5,275,english:2007,2,mean,mp3_128k,MP3 128 kbps,1,10.27191167,3.8762,0.9789,12.11
+voicemark,5,275,english:2007,2,fwp,mp3_128k,MP3 128 kbps,1,2.95988089,3.5895,0.9738,10.50
+voicemark,5,275,english:2007,2,mean,opus_64k,Opus 64 kbps,1,5.90384412,4.0929,0.9787,12.27
+voicemark,5,275,english:2007,2,fwp,opus_64k,Opus 64 kbps,0,-1.37299064,3.7765,0.9733,10.60
+voicemark,5,276,english:201,0,mean,none,none,1,31.19428430,4.1237,0.9782,12.96
+voicemark,5,276,english:201,0,fwp,none,none,1,28.82857012,3.6583,0.9668,10.18
+voicemark,5,276,english:201,0,mean,mp3_128k,MP3 128 kbps,1,19.21370459,4.0567,0.9782,12.93
+voicemark,5,276,english:201,0,fwp,mp3_128k,MP3 128 kbps,1,30.03327155,3.6196,0.9668,10.18
+voicemark,5,276,english:201,0,mean,opus_64k,Opus 64 kbps,1,27.79831539,4.1215,0.9783,12.91
+voicemark,5,276,english:201,0,fwp,opus_64k,Opus 64 kbps,1,30.98724904,3.6548,0.9667,10.15
+voicemark,5,277,english:201,1,mean,none,none,1,21.06090101,4.0266,0.9811,13.75
+voicemark,5,277,english:201,1,fwp,none,none,1,14.81067433,3.5805,0.9703,10.70
+voicemark,5,277,english:201,1,mean,mp3_128k,MP3 128 kbps,1,31.61290796,3.8824,0.9811,13.58
+voicemark,5,277,english:201,1,fwp,mp3_128k,MP3 128 kbps,1,30.69707757,3.4642,0.9703,10.61
+voicemark,5,277,english:201,1,mean,opus_64k,Opus 64 kbps,1,24.92407511,4.0220,0.9810,13.72
+voicemark,5,277,english:201,1,fwp,opus_64k,Opus 64 kbps,1,24.01853199,3.5779,0.9701,10.68
+voicemark,5,278,english:201,2,mean,none,none,1,10.57836230,4.2669,0.9827,12.50
+voicemark,5,278,english:201,2,fwp,none,none,1,7.51315512,4.3756,0.9893,13.84
+voicemark,5,278,english:201,2,mean,mp3_128k,MP3 128 kbps,1,10.45394916,4.1249,0.9826,12.36
+voicemark,5,278,english:201,2,fwp,mp3_128k,MP3 128 kbps,1,3.43934241,3.7645,0.9701,9.27
+voicemark,5,278,english:201,2,mean,opus_64k,Opus 64 kbps,1,11.33793328,4.2662,0.9826,12.42
+voicemark,5,278,english:201,2,fwp,opus_64k,Opus 64 kbps,1,17.52671080,4.3672,0.9891,13.70
+voicemark,5,279,english:2092,0,mean,none,none,1,6.91279314,4.3522,0.9710,19.20
+voicemark,5,279,english:2092,0,fwp,none,none,1,14.95178294,4.1261,0.9503,16.16
+voicemark,5,279,english:2092,0,mean,mp3_128k,MP3 128 kbps,1,1.55520236,4.2865,0.9710,19.10
+voicemark,5,279,english:2092,0,fwp,mp3_128k,MP3 128 kbps,1,14.45042892,4.0830,0.9503,16.11
+voicemark,5,279,english:2092,0,mean,opus_64k,Opus 64 kbps,1,4.06101231,4.3510,0.9700,19.20
+voicemark,5,279,english:2092,0,fwp,opus_64k,Opus 64 kbps,1,11.62187038,4.1197,0.9479,16.11
+voicemark,5,280,english:2092,1,mean,none,none,1,10.25483529,4.2027,0.9642,14.66
+voicemark,5,280,english:2092,1,fwp,none,none,1,8.67065982,4.2143,0.9676,16.56
+voicemark,5,280,english:2092,1,mean,mp3_128k,MP3 128 kbps,1,9.20357038,4.1584,0.9641,14.63
+voicemark,5,280,english:2092,1,fwp,mp3_128k,MP3 128 kbps,1,14.25827523,4.1670,0.9676,16.52
+voicemark,5,280,english:2092,1,mean,opus_64k,Opus 64 kbps,1,12.13042386,4.1989,0.9632,14.60
+voicemark,5,280,english:2092,1,fwp,opus_64k,Opus 64 kbps,1,8.68895507,4.2111,0.9650,16.45
+voicemark,5,281,english:2092,2,mean,none,none,1,31.97943988,4.3231,0.9631,15.82
+voicemark,5,281,english:2092,2,fwp,none,none,1,25.88169891,4.3259,0.9770,17.49
+voicemark,5,281,english:2092,2,mean,mp3_128k,MP3 128 kbps,1,26.71573000,4.2682,0.9631,15.78
+voicemark,5,281,english:2092,2,fwp,mp3_128k,MP3 128 kbps,1,26.36735283,4.2702,0.9769,17.42
+voicemark,5,281,english:2092,2,mean,opus_64k,Opus 64 kbps,1,28.49823769,4.3229,0.9621,15.88
+voicemark,5,281,english:2092,2,fwp,opus_64k,Opus 64 kbps,1,27.00238725,4.3222,0.9743,17.49
+voicemark,5,282,english:211,0,mean,none,none,1,9.25192496,4.1562,0.9861,16.88
+voicemark,5,282,english:211,0,fwp,none,none,1,22.04484206,3.8977,0.9731,15.09
+voicemark,5,282,english:211,0,mean,mp3_128k,MP3 128 kbps,1,17.94187935,3.7892,0.9861,15.49
+voicemark,5,282,english:211,0,fwp,mp3_128k,MP3 128 kbps,1,19.56241886,3.5578,0.9731,14.16
+voicemark,5,282,english:211,0,mean,opus_64k,Opus 64 kbps,1,16.38406097,4.1402,0.9847,16.23
+voicemark,5,282,english:211,0,fwp,opus_64k,Opus 64 kbps,1,22.12791079,3.8730,0.9714,14.60
+voicemark,5,283,english:211,1,mean,none,none,1,5.66711316,4.2740,0.9740,16.20
+voicemark,5,283,english:211,1,fwp,none,none,1,42.37918655,3.9068,0.9600,13.48
+voicemark,5,283,english:211,1,mean,mp3_128k,MP3 128 kbps,1,7.82127104,3.8602,0.9740,14.93
+voicemark,5,283,english:211,1,fwp,mp3_128k,MP3 128 kbps,1,41.57120204,3.5287,0.9599,12.81
+voicemark,5,283,english:211,1,mean,opus_64k,Opus 64 kbps,1,9.24925433,4.2516,0.9726,15.65
+voicemark,5,283,english:211,1,fwp,opus_64k,Opus 64 kbps,1,42.32223551,3.8776,0.9587,13.23
+voicemark,5,284,english:211,2,mean,none,none,1,18.82104290,4.4045,0.9882,16.75
+voicemark,5,284,english:211,2,fwp,none,none,1,25.43077973,4.1853,0.9800,13.50
+voicemark,5,284,english:211,2,mean,mp3_128k,MP3 128 kbps,1,20.65000170,4.1967,0.9882,16.23
+voicemark,5,284,english:211,2,fwp,mp3_128k,MP3 128 kbps,1,22.76194753,4.0426,0.9800,13.26
+voicemark,5,284,english:211,2,mean,opus_64k,Opus 64 kbps,1,23.76616754,4.3832,0.9869,16.51
+voicemark,5,284,english:211,2,fwp,opus_64k,Opus 64 kbps,1,20.88087812,4.1513,0.9786,13.39
+voicemark,5,285,english:2136,0,mean,none,none,1,30.13625502,4.2470,0.9802,19.67
+voicemark,5,285,english:2136,0,fwp,none,none,1,23.06115113,4.1362,0.9781,18.03
+voicemark,5,285,english:2136,0,mean,mp3_128k,MP3 128 kbps,1,32.52212713,4.1092,0.9802,19.41
+voicemark,5,285,english:2136,0,fwp,mp3_128k,MP3 128 kbps,1,18.36012737,4.0124,0.9781,17.88
+voicemark,5,285,english:2136,0,mean,opus_64k,Opus 64 kbps,1,28.74126679,4.2428,0.9800,19.31
+voicemark,5,285,english:2136,0,fwp,opus_64k,Opus 64 kbps,1,15.55441382,4.1323,0.9778,17.62
+voicemark,5,286,english:2136,1,mean,none,none,1,16.50664154,4.4470,0.9876,19.99
+voicemark,5,286,english:2136,1,fwp,none,none,1,10.93108483,4.3759,0.9861,19.73
+voicemark,5,286,english:2136,1,mean,mp3_128k,MP3 128 kbps,1,7.45652953,4.2715,0.9875,19.51
+voicemark,5,286,english:2136,1,fwp,mp3_128k,MP3 128 kbps,0,-4.17936246,4.2023,0.9861,19.31
+voicemark,5,286,english:2136,1,mean,opus_64k,Opus 64 kbps,1,22.42194000,4.4445,0.9875,19.77
+voicemark,5,286,english:2136,1,fwp,opus_64k,Opus 64 kbps,1,6.45903221,4.3759,0.9858,19.31
+voicemark,5,287,english:2136,2,mean,none,none,1,16.18456602,4.3621,0.9863,18.55
+voicemark,5,287,english:2136,2,fwp,none,none,1,22.28891133,4.2023,0.9799,17.20
+voicemark,5,287,english:2136,2,mean,mp3_128k,MP3 128 kbps,1,22.77971097,4.0990,0.9863,17.80
+voicemark,5,287,english:2136,2,fwp,mp3_128k,MP3 128 kbps,1,24.53982186,3.9494,0.9799,16.66
+voicemark,5,287,english:2136,2,mean,opus_64k,Opus 64 kbps,1,16.92605418,4.3631,0.9862,18.02
+voicemark,5,287,english:2136,2,fwp,opus_64k,Opus 64 kbps,1,21.12670363,4.2023,0.9798,16.82
+voicemark,5,288,english:2159,0,mean,none,none,1,18.06795740,1.9546,0.9833,13.95
+voicemark,5,288,english:2159,0,fwp,none,none,1,31.53961714,1.8710,0.9736,11.17
+voicemark,5,288,english:2159,0,mean,mp3_128k,MP3 128 kbps,1,35.70555769,1.8959,0.9833,12.84
+voicemark,5,288,english:2159,0,fwp,mp3_128k,MP3 128 kbps,1,32.23592400,1.8196,0.9736,10.59
+voicemark,5,288,english:2159,0,mean,opus_64k,Opus 64 kbps,1,29.49636280,1.9505,0.9831,13.49
+voicemark,5,288,english:2159,0,fwp,opus_64k,Opus 64 kbps,1,31.72678825,1.8674,0.9731,10.87
+voicemark,5,289,english:2159,1,mean,none,none,1,26.51474248,2.0836,0.9799,13.96
+voicemark,5,289,english:2159,1,fwp,none,none,0,-0.02010185,2.1128,0.9845,14.68
+voicemark,5,289,english:2159,1,mean,mp3_128k,MP3 128 kbps,1,13.70816931,2.0166,0.9799,13.16
+voicemark,5,289,english:2159,1,fwp,mp3_128k,MP3 128 kbps,1,2.32756823,2.0573,0.9845,13.80
+voicemark,5,289,english:2159,1,mean,opus_64k,Opus 64 kbps,1,21.34006994,4.2668,0.9797,13.70
+voicemark,5,289,english:2159,1,fwp,opus_64k,Opus 64 kbps,0,-3.17898553,2.0952,0.9841,14.32
+voicemark,5,290,english:2159,2,mean,none,none,1,19.45653917,4.3070,0.9841,11.71
+voicemark,5,290,english:2159,2,fwp,none,none,1,20.74105949,4.3869,0.9892,13.53
+voicemark,5,290,english:2159,2,mean,mp3_128k,MP3 128 kbps,1,18.94972011,3.9486,0.9841,10.98
+voicemark,5,290,english:2159,2,fwp,mp3_128k,MP3 128 kbps,1,17.83117275,4.0229,0.9892,12.41
+voicemark,5,290,english:2159,2,mean,opus_64k,Opus 64 kbps,1,16.68365704,4.3050,0.9840,11.45
+voicemark,5,290,english:2159,2,fwp,opus_64k,Opus 64 kbps,1,20.90651986,4.3811,0.9889,13.05
+voicemark,5,291,english:2182,0,mean,none,none,1,17.19479302,1.9014,0.9796,14.36
+voicemark,5,291,english:2182,0,fwp,none,none,1,21.82039709,1.8611,0.9704,12.10
+voicemark,5,291,english:2182,0,mean,mp3_128k,MP3 128 kbps,1,14.36755382,1.8799,0.9795,14.03
+voicemark,5,291,english:2182,0,fwp,mp3_128k,MP3 128 kbps,1,32.52642215,1.8398,0.9704,11.90
+voicemark,5,291,english:2182,0,mean,opus_64k,Opus 64 kbps,1,14.19333950,1.8948,0.9793,13.91
+voicemark,5,291,english:2182,0,fwp,opus_64k,Opus 64 kbps,1,22.56477715,1.8504,0.9699,11.81
+voicemark,5,292,english:2182,1,mean,none,none,1,20.12242508,4.2951,0.9890,15.56
+voicemark,5,292,english:2182,1,fwp,none,none,1,27.85192436,4.1067,0.9815,13.39
+voicemark,5,292,english:2182,1,mean,mp3_128k,MP3 128 kbps,1,3.71206560,4.0244,0.9889,14.82
+voicemark,5,292,english:2182,1,fwp,mp3_128k,MP3 128 kbps,1,19.32596323,3.8716,0.9814,12.93
+voicemark,5,292,english:2182,1,mean,opus_64k,Opus 64 kbps,1,14.25073648,4.2912,0.9887,14.86
+voicemark,5,292,english:2182,1,fwp,opus_64k,Opus 64 kbps,1,24.22356167,4.0947,0.9810,12.92
+voicemark,5,293,english:2182,2,mean,none,none,1,4.69643509,4.3965,0.9867,12.82
+voicemark,5,293,english:2182,2,fwp,none,none,1,15.68291601,4.1297,0.9779,10.24
+voicemark,5,293,english:2182,2,mean,mp3_128k,MP3 128 kbps,1,2.41575825,4.2343,0.9867,12.68
+voicemark,5,293,english:2182,2,fwp,mp3_128k,MP3 128 kbps,1,12.03487179,4.0040,0.9779,10.17
+voicemark,5,293,english:2182,2,mean,opus_64k,Opus 64 kbps,1,3.21492386,4.3892,0.9865,12.53
+voicemark,5,293,english:2182,2,fwp,opus_64k,Opus 64 kbps,1,14.82256749,4.1137,0.9774,10.06
+voicemark,5,294,english:2196,0,mean,none,none,1,29.94810768,4.1826,0.9765,15.18
+voicemark,5,294,english:2196,0,fwp,none,none,1,36.39320756,3.7674,0.9644,12.85
+voicemark,5,294,english:2196,0,mean,mp3_128k,MP3 128 kbps,1,30.18390109,3.9388,0.9765,14.72
+voicemark,5,294,english:2196,0,fwp,mp3_128k,MP3 128 kbps,1,38.19689950,3.5729,0.9644,12.60
+voicemark,5,294,english:2196,0,mean,opus_64k,Opus 64 kbps,1,30.24900120,4.1775,0.9766,15.00
+voicemark,5,294,english:2196,0,fwp,opus_64k,Opus 64 kbps,1,38.13900660,3.7566,0.9644,12.75
+voicemark,5,295,english:2196,1,mean,none,none,1,5.49787506,4.2630,0.9841,15.19
+voicemark,5,295,english:2196,1,fwp,none,none,1,29.03834497,3.5584,0.9732,11.01
+voicemark,5,295,english:2196,1,mean,mp3_128k,MP3 128 kbps,1,5.31823225,4.1311,0.9841,15.03
+voicemark,5,295,english:2196,1,fwp,mp3_128k,MP3 128 kbps,1,23.09793085,3.4885,0.9732,10.95
+voicemark,5,295,english:2196,1,mean,opus_64k,Opus 64 kbps,1,5.37024208,4.2589,0.9840,15.13
+voicemark,5,295,english:2196,1,fwp,opus_64k,Opus 64 kbps,1,27.78504479,3.5461,0.9730,10.98
+voicemark,5,296,english:2196,2,mean,none,none,1,11.13799956,4.3327,0.9866,14.10
+voicemark,5,296,english:2196,2,fwp,none,none,1,23.32045401,4.0681,0.9792,11.37
+voicemark,5,296,english:2196,2,mean,mp3_128k,MP3 128 kbps,0,-0.97741884,4.2221,0.9866,14.06
+voicemark,5,296,english:2196,2,fwp,mp3_128k,MP3 128 kbps,1,13.54151499,3.9870,0.9792,11.35
+voicemark,5,296,english:2196,2,mean,opus_64k,Opus 64 kbps,1,5.84969299,4.3301,0.9865,14.07
+voicemark,5,296,english:2196,2,fwp,opus_64k,Opus 64 kbps,1,23.02235509,4.0547,0.9789,11.32
+voicemark,5,297,english:226,0,mean,none,none,1,15.11874381,4.3328,0.9785,13.29
+voicemark,5,297,english:226,0,fwp,none,none,1,23.46079495,3.8500,0.9746,8.82
+voicemark,5,297,english:226,0,mean,mp3_128k,MP3 128 kbps,1,20.43675653,4.0188,0.9784,11.48
+voicemark,5,297,english:226,0,fwp,mp3_128k,MP3 128 kbps,1,21.22803735,3.4407,0.9720,9.20
+voicemark,5,297,english:226,0,mean,opus_64k,Opus 64 kbps,1,18.36161126,4.3302,0.9773,12.81
+voicemark,5,297,english:226,0,fwp,opus_64k,Opus 64 kbps,1,21.80762870,3.6990,0.9701,9.85
+voicemark,5,298,english:226,1,mean,none,none,1,24.11422293,4.2441,0.9724,9.89
+voicemark,5,298,english:226,1,fwp,none,none,1,23.69151406,4.3052,0.9876,12.22
+voicemark,5,298,english:226,1,mean,mp3_128k,MP3 128 kbps,1,19.73177461,4.0408,0.9724,9.36
+voicemark,5,298,english:226,1,fwp,mp3_128k,MP3 128 kbps,1,29.48012510,4.0717,0.9876,11.37
+voicemark,5,298,english:226,1,mean,opus_64k,Opus 64 kbps,1,23.38021210,4.2419,0.9714,9.78
+voicemark,5,298,english:226,1,fwp,opus_64k,Opus 64 kbps,1,25.00297060,4.3001,0.9857,11.95
+voicemark,5,299,english:226,2,mean,none,none,1,28.21471569,4.1085,0.9821,10.51
+voicemark,5,299,english:226,2,fwp,none,none,1,14.65340625,4.2087,0.9860,12.01
+voicemark,5,299,english:226,2,mean,mp3_128k,MP3 128 kbps,1,29.63532133,3.8846,0.9821,9.95
+voicemark,5,299,english:226,2,fwp,mp3_128k,MP3 128 kbps,1,16.63017821,3.9696,0.9860,11.20
+voicemark,5,299,english:226,2,mean,opus_64k,Opus 64 kbps,1,30.57042463,4.1049,0.9811,10.40
+voicemark,5,299,english:226,2,fwp,opus_64k,Opus 64 kbps,1,13.60382938,4.1929,0.9838,11.77
