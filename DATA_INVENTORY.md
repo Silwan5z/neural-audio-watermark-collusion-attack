@@ -1,6 +1,6 @@
 # Experiment data inventory
 
-Generated: 2026-08-20 19:24:06 CST.
+Generated: 2026-08-20 22:04:55 CST.
 
 The canonical publication results are stored in `data/`. Local `results/` is runtime-only
 and is intentionally not tracked. The audio dataset under `dataset/collusion_300/` is also
@@ -38,9 +38,9 @@ coalition member, and preserve all native payload bits.
 | `tamper` | 20 |
 | `tamper_arbitrary` | 20 |
 | `tamper_arbitrary_detail` | 5 |
-| `tamper_arbitrary_matched_n1024` | 16 |
+| `tamper_arbitrary_matched_n1024` | 20 |
 | `temporal_sensitivity` | 5 |
 
-Total: 366 completed CSV files.
+Total: 370 completed CSV files.
 
 See `data/INDEX.csv` for the complete machine-readable inventory.

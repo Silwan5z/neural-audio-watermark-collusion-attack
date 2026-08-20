@@ -1,6 +1,6 @@
 # Published experiment data
 
-Generated from completed runtime outputs at 2026-08-20 19:24:06 CST.
+Generated from completed runtime outputs at 2026-08-20 22:04:55 CST.
 
 `data/` is the canonical, version-controlled result tree. Runtime checkpoints and logs
 remain under the ignored local `results/` directory. Audio datasets, caches, and model
@@ -32,9 +32,9 @@ sampled active candidate registry; they do not truncate 16-bit payloads.
 - `tamper/`: 20 CSV files
 - `tamper_arbitrary/`: 20 CSV files
 - `tamper_arbitrary_detail/`: 5 CSV files
-- `tamper_arbitrary_matched_n1024/`: 16 CSV files
+- `tamper_arbitrary_matched_n1024/`: 20 CSV files
 - `temporal_sensitivity/`: 5 CSV files
 
-Total: 366 completed CSV files.
+Total: 370 completed CSV files.
 
 See `INDEX.csv` for row counts, schemas, byte sizes, runtime source paths, and SHA-256 checksums.
