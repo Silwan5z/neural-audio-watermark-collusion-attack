@@ -29,11 +29,12 @@
 │   ├── voicemark/            # VoiceMark（含 SpeechTokenizer）
 │   ├── wmcodec/              # WMCodec
 │   └── timbrewm/             # TimbreWM（含 HiFi-GAN）
-├── data/                     # 论文定稿数值快照（n=300，见 DATA_INVENTORY.md）
+├── data/                     # 唯一受 Git 跟踪的完整结果快照（按实验类别分目录）
+├── results/                  # 本地运行时输出/checkpoint/log（不进入 Git）
 ├── tools/                    # 辅助工具
 │   ├── eval/                 # 可选：独立音频质量评估（AudioEval，PESQ/STOI/SI-SDR/ViSQOL）
-│   └── prepare_libritts16k.py  # 从 LibriTTS test-clean 精确生成 libritts16k 数据集
-├── dataset/                  # 原始数据集放置处（libritts16k 等，见下）
+│   └── prepare_libritts16k.py  # 历史 LibriTTS 数据准备工具
+├── dataset/                  # 本地音频数据集（不进入 Git）
 ├── DATA_INVENTORY.md         # 数据清单
 └── LICENSE                   # MIT
 ```
@@ -60,31 +61,17 @@ pip install -r requirements.txt
 
 ## 数据集
 
-实验使用 libritts16k —— 从 LibriTTS test-clean（[OpenSLR 60](https://www.openslr.org/60)）精确选取的 38 个说话人、每说话人 3 个片段、16kHz 单声道 wav（另含 spk61 的 1 个片段，因过短被实验排除）。
+正式实验使用本地 `dataset/collusion_300/`：
 
-**复现方式（精确，推荐）**：先下载 LibriTTS test-clean（24kHz），再用脚本生成与论文完全一致的 115 个切片：
+- English：LibriSpeech train-clean-100，50 位说话人；
+- Chinese：AISHELL-3，50 位说话人；
+- 每位说话人 3 条音频，共 300 条；
+- 每条均为单声道 16 kHz、约 10 秒 PCM WAV；
+- `manifest.csv` 保存 `language`、`speaker_id`、音频路径和来源信息。
 
-```bash
-python tools/prepare_libritts16k.py \
-    --libritts /path/to/LibriTTS/test-clean \
-    --out dataset/libritts16k
-```
+`src/registry.py` 的 `speakers()` 从该 manifest 返回 `language:speaker_id` 格式的 100 个说话人；`coalition_seed()` 使用 SHA-256 确定性种子，`clean_path_v19()` 根据语言和说话人定位音频，`get_or_embed()` 使用带校验和原子写的并发安全缓存。旧版 `SPEAKERS_38` 和 `int(spk)` 哈希协议不再使用。
 
-脚本只处理清单里列出的 115 个文件，因此输出与论文实验使用的音频完全一致（同一批 utterance、同样的 16kHz 降采样）。
-
-38 个说话人 ID（`src/registry.py` 的 `SPEAKERS_38`）：
-
-```
-121 237 260 672 908 1089 1188 1221 1284 1320 1580 1995 2300 2830 2961
-3570 3575 3729 4077 4446 4507 4970 4992 5105 5142 5639 5683 6829 6930
-7021 7127 7176 7729 8224 8230 8455 8463 8555
-```
-
-要求：每个说话人至少 1 个 `{spk}_*.wav`；加载时取该说话人时长最长的文件（`src/registry.py` 的 `clean_path_v19`）；wavmark 嵌入要求音频 ≥ 约 2s。
-
-### 当前本地实验集（已配置）
-
-本工作目录已配置 `dataset/collusion_300/`：English（LibriSpeech train-clean-100）和 Chinese（AISHELL-3）各 50 位说话人、每人 3 条，合计 300 条。所有文件均为单声道 16 kHz、10 秒 PCM WAV；`manifest.csv` 记录可追溯源文件。`src/registry.py` 已自动识别该清单，因此直接运行实验即可，无需再执行上面的 LibriTTS 准备脚本。
+音频数据集、嵌入缓存和模型权重不会提交到 Git。`tools/prepare_libritts16k.py` 仅保留为历史数据准备工具，不对应当前 100 说话人主实验。
 
 在此机器上使用已建好的虚拟环境：
 
@@ -113,7 +100,7 @@ export WATERMARK_DEVICE=cuda:0  # 可改为 cuda:1 至 cuda:6
 
 ## 复现
 
-每个脚本单独产出对应 CSV，结果写入 `results/evaluation/`（首次运行自动创建）。计算设备默认 `cuda:0`，可用环境变量 `WATERMARK_DEVICE` 覆盖（如 `WATERMARK_DEVICE=cpu`）。
+每个实验脚本先将 CSV 和断点写入本地 `results/evaluation/`。该目录只用于运行时，不受 Git 跟踪；完整结果通过 `scripts/publish_results_to_data.py` 原子整理到受版本控制的 `data/`。计算设备默认 `cuda:0`，可用环境变量 `WATERMARK_DEVICE` 覆盖（如 `WATERMARK_DEVICE=cpu`）。
 
 ```bash
 # 攻击主表（mean / fwp，300 trial）
@@ -138,6 +125,24 @@ python scripts/pgr.py --model audioseal --K 5 --n_trials 300
 # 篡改（payload-aware，mean / tct）
 python scripts/framing.py --model audioseal --K 5 --n_trials 300
 
+# 任意非合谋目标：每 trial 均匀采样 10 个 target
+python scripts/framing.py --model audioseal --K 5 --n_trials 300 \
+    --target_policy arbitrary
+
+# matched-registry arbitrary tamper：完整 payload，不截位，只限制候选集 N=1024
+python scripts/framing.py --model audioseal --K 5 --n_trials 300 \
+    --target_policy arbitrary --registry_size 1024
+
+# Registry-size control：mean/FWP；16-bit 模型含 N=256...65536 sweep
+python scripts/registry_size_control.py --model audioseal --K 5 --n_trials 300
+
+# 统一导出攻击后的音质与原生 presence
+python scripts/export_quality_presence.py
+
+# K=5 时移敏感性与独立 codec 敏感性
+python scripts/temporal_sensitivity.py --model audioseal --n_trials 100
+python scripts/codec_sensitivity.py --model audioseal --n_trials 300
+
 # 脉冲噪声对照（Kiyavash & Moulin）
 python scripts/pulse_noise.py --model audioseal --K 5 --n_trials 50
 
@@ -146,13 +151,18 @@ python scripts/summary.py
 
 # 统计检验（按说话人分层的 McNemar + bootstrap，读 data/ 下已有 CSV）
 python scripts/stats.py --model audioseal --K 5
+
+# 将所有已完成 CSV 分类覆盖到 data/，自动生成 README/INDEX/checksum
+python scripts/publish_results_to_data.py
 ```
 
 完整复现 = 5 个模型（`audioseal timbrewm wavmark voicemark wmcodec`）× 4 个 K（`2 3 5 8`）× 上述每个脚本。论文定稿的完整 CSV 快照已在 `data/` 下（见 `DATA_INVENTORY.md`），无需重跑即可复现表格与显著性检验（`summary.py` / `stats.py`）。
 
 ## 数据说明
 
-`data/` 下是论文定稿数值快照，与 `DATA_INVENTORY.md` 一一对应。每个 CSV 的 trial 可确定性复现：给定 `(model, K, spk, local_t)`，`src/registry.py` 的 `coalition_seed` / `sample_coalition` / `int_to_bits` 可重算该 trial 的完整 payload 位向量，无需额外分发码本。
+`data/` 是唯一的发布结果目录，与 `DATA_INVENTORY.md` 一一对应；`data/INDEX.csv` 逐文件记录类别、行数、列名、大小、运行时来源路径和 SHA-256。`results/` 只保存本地 checkpoint/log，可随时由脚本继续运行，不应提交。
+
+每个 trial 均可确定性复现：给定 `(model, K, spk, local_t)`，`src/registry.py` 的 `coalition_seed()`、`sample_coalition()` 和 `int_to_bits()` 可重建 coalition 与 payload。Matched-`N=1024` 实验从模型原生 registry 中独立抽取候选身份、强制包含所有 colluder，并保留完整的 10/16-bit payload；它不是 ECC，也没有截断 16-bit 模型的 6 位。
 
 ## 许可证
 
