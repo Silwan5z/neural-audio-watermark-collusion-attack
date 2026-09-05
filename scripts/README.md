@@ -9,14 +9,17 @@
 - `run_onebit_k5_pair_analysis.py` and `run_mixture_path_adaptive.py`: valid one-bit endpoints and continuous mixture paths.
 - `collect_identity_bit_confidence_k8.py`: minimum bit confidence for Single, Average, and successful MRC outputs.
 
-`framing.py`, `registry_size_control.py`, `run_mrc_ablation.py`, and the two `run_k8_constructed_payload_case*` modules are retained because the main entry points import their solvers or native-decoder helpers.
+`framing.py`, `mrc_solver.py`, `registry_size_control.py`, and the two
+`run_k8_constructed_payload_case*` modules provide the optimization and native
+decoder helpers imported by the main entry points.
 
 ## Release and figures
 
 - `merge_targeted_results.py`: merges seven final shards and validates 300 trials × 10 target attempts.
 - `summarize_one_bit_paths.py`: reduces large trajectory files to the per-trial evidence used in the paper.
-- `verify_paper_data.py`: read-only integrity and aggregate check.
+- `verify_release.py`: read-only integrity and aggregate check.
 - `build_data_manifest.py`: regenerates `data/MANIFEST.csv`.
-- `figures/`: builders for Figs. 2--4 and the editable Fig. 1 label utility.
+- `figures/`: builders for the three data-driven plots. Generated files are
+  written to the ignored `outputs/figures/` directory.
 
 Runtime output belongs under ignored `results/`; only verified final records are copied into `data/`.

@@ -14,4 +14,4 @@ Only data used by the current manuscript are tracked here.
 
 The four 16-bit systems use the same K=5 and K=8 coalitions. TimbreWM uses separately validated coalitions because its payload has 10 bits. Absolute source paths are retained as provenance; audio and marked-copy caches are not distributed.
 
-Run `python scripts/verify_paper_data.py` from the repository root to check counts, schemas, key manuscript aggregates, and `MANIFEST.csv` checksums.
+Run `python scripts/verify_release.py` from the repository root to check counts, schemas, key manuscript aggregates, and `MANIFEST.csv` checksums.

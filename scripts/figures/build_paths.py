@@ -13,7 +13,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "summary" / "path_representatives.csv"
-OUT = ROOT / "paper" / "figures"
+OUT = ROOT / "outputs" / "figures"
 
 INK = "#20262B"
 AXIS = "#596168"
@@ -96,6 +96,7 @@ def path_panel(ax: plt.Axes, data: pd.DataFrame, model: str, title: str,
 
 
 def main() -> None:
+    OUT.mkdir(parents=True, exist_ok=True)
     data = pd.read_csv(DATA)
     fig = plt.figure(figsize=(3.50, 2.85), facecolor="white")
     grid = fig.add_gridspec(2, 1, hspace=0.72)

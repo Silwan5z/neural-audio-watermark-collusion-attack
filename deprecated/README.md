@@ -1,5 +1,7 @@
 # Deprecated material
 
-`legacy_v1/` preserves the scripts, result tables, and reference PDFs from the earlier project direction. They are retained for provenance but are not used by the current manuscript, figures, or reported numbers.
+Superseded experiments are not part of the public release. A local
+`deprecated/legacy_v1/` working archive may be present, but it is ignored by
+Git. Earlier material remains recoverable from repository history.
 
-Do not mix these files with `data/` or cite their aggregates as current results. The root README and `data/MANIFEST.csv` define the active release.
+The root README and `data/MANIFEST.csv` define the active release.

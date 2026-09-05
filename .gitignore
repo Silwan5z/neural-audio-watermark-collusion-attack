@@ -21,7 +21,7 @@ results/
 cache/
 *.wav
 
-# 本机实验历史与代理缓存（不属于论文发布）
+# 本机实验历史、论文草稿与代理缓存（不属于公开发布）
 .art/
 .cache/
 .claude/
@@ -34,15 +34,12 @@ logs/
 runs/
 reports/
 checkpoints/
+/paper/
 paper_v*/
 final_submission*/
 paper_rewriting*/
-paper/main.aux
-paper/main.bbl
-paper/main.blg
-paper/main.log
-paper/main.pdf
-paper/figures/*.png
+/outputs/
+/deprecated/legacy_v1/
 docs/
 experiments/
 package.json

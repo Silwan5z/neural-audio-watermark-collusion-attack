@@ -1,36 +1,48 @@
-# Collusion Breaks Recipient Tracing in Neural Audio Watermarking
+# Neural Audio Watermark Collusion
 
-This repository contains the manuscript, final experiment records, and the code used for the paper. The release is organized around the five evidence chains that appear in the manuscript; older experiments from the previous project direction are isolated under `deprecated/legacy_v1/`.
+Code and verified experiment records for studying how waveform averaging
+affects recipient tracing in neural audio watermarking. The repository covers
+AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec on 300 ten-second
+utterances from 100 speakers.
 
-## Repository map
+The manuscript draft is intentionally not distributed in this repository.
+Bibliographic records and locally available background papers are kept under
+`references/`.
+
+## Repository structure
 
 ```text
-paper/       Compilable ICASSP manuscript, figures, tables, and PDF
-data/        Final records and summaries used by the manuscript
-scripts/     Experiment, aggregation, verification, and figure scripts
-src/         Shared registry and watermark wrappers
-third_party/ Model adapters retained under their original licenses
-dataset/     Dataset instructions only; audio is not distributed
-deprecated/  Superseded v1 experiments, scripts, and reference files
+data/        Verified records and compact summaries used by the study
+scripts/     Experiment, aggregation, verification, and plotting entry points
+src/         Shared watermark and recipient-registry interfaces
+third_party/ Required model adapters under their original licenses
+dataset/     Dataset preparation notes; speech files are not distributed
+references/  Bibliography and available background papers
+deprecated/  Notice for the local, Git-ignored legacy archive
 ```
 
-The current paper evaluates AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec on 300 ten-second utterances from 100 speakers. Each speaker contributes three utterances. Every coalition input is required to decode to its assigned payload before mixing.
+Model weights, speech files, runtime caches, logs, checkpoints, generated plots,
+and manuscript drafts are excluded from Git.
 
-## Paper evidence
+## Released evidence
 
-| Manuscript result | Released data | Main script |
+| Result | Records | Main entry point |
 |---|---|---|
-| Uniform averaging, K=2/3/5 | `data/main/` | `scripts/attack.py` |
+| Uniform averaging at K=2, 3, and 5 | `data/main/` | `scripts/attack.py` |
 | K=8 tracing and bit behavior | `data/k8/raw/` | `scripts/run_k8_population_native.py` |
-| PM and MRC targeted matches | `data/targeted/` | `scripts/run_mrc_pm_native_300clips_shard.py` |
-| One-bit mixture paths | `data/one_bit/` | `scripts/run_onebit_k5_pair_analysis.py`, `scripts/run_mixture_path_adaptive.py` |
-| Minimum bit confidence | `data/confidence/` | `scripts/collect_identity_bit_confidence_k8.py` |
+| PM and MRC exact target matches | `data/targeted/` | `scripts/run_mrc_pm_native_300clips_shard.py` |
+| One-bit mixture paths | `data/one_bit/` | `scripts/run_onebit_k5_pair_analysis.py` |
+| K=8 minimum bit confidence | `data/confidence/` | `scripts/collect_identity_bit_confidence_k8.py` |
 
-`data/summary/` contains the compact files read by the tables and figure scripts. `data/MANIFEST.csv` records every released data file, its size, row count, and SHA-256 checksum.
+`data/coalitions/` stores the validated coalitions and target-selection cache.
+The four 16-bit systems use the same K=5 and K=8 coalitions; TimbreWM uses its
+own validated 10-bit coalitions. `data/summary/` contains the compact inputs for
+tables and plots. Every released file is listed with its size, row count, and
+SHA-256 checksum in `data/MANIFEST.csv`.
 
-## Build and verify
+## Verify the release
 
-Install Python dependencies after installing a CUDA-compatible PyTorch build:
+Install a CUDA-compatible PyTorch build and the remaining dependencies:
 
 ```bash
 python -m venv .venv
@@ -38,13 +50,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Verify the released records without model inference:
+The integrity check reads existing records and does not run model inference:
 
 ```bash
-python scripts/verify_paper_data.py
+python scripts/verify_release.py
 ```
 
-Regenerate the plotted figures:
+Regenerate the three data-driven plots locally:
 
 ```bash
 python scripts/figures/build_composition.py
@@ -52,21 +64,29 @@ python scripts/figures/build_paths.py
 python scripts/figures/build_confidence.py
 ```
 
-Compile the manuscript from `paper/`:
+Plots are written to the ignored `outputs/figures/` directory.
 
-```bash
-tectonic -X compile main.tex
-```
+## Result definitions
 
-Model weights and the underlying speech files are not committed. See [dataset/README.md](dataset/README.md) and [scripts/README.md](scripts/README.md) for the required local layout and experiment entry points.
+- A mixture **escapes tracing** when its complete decoded payload matches no
+  coalition member.
+- **Tracing failure (TF)** is the percentage of trials that escape. TF is a
+  metric, not an attack.
+- A targeted hit requires the complete decoded payload to equal a selected
+  nonmember target exactly.
+- PM and MRC report the mean number of exact hits among ten selected targets on
+  a direct 0--10 scale.
 
-## Result semantics
+## Maintenance
 
-- A mixture **escapes tracing** when its complete decoded payload matches no coalition member.
-- **Tracing failure (TF)** is the percentage of trials that escape; it is a metric, not an attack.
-- A targeted hit counts only when the complete decoded payload exactly equals the selected nonmember target.
-- PM and MRC report the mean number of exact hits among ten selected targets on a direct 0--10 scale.
+- Add public result files only under the whitelisted `data/` subdirectories.
+- Run `scripts/build_data_manifest.py` after changing released data.
+- Run `scripts/verify_release.py` before committing.
+- Keep incomplete shards and runtime outputs under ignored `results/`.
+- Keep manuscript drafts under ignored `paper/` and superseded work under the
+  ignored local `deprecated/legacy_v1/` archive.
 
 ## License
 
-Project code is released under the MIT License. Code under `third_party/` retains the licenses of its upstream projects.
+Project code is released under the MIT License. Files under `third_party/` and
+`references/papers/` retain their upstream licenses or copyright terms.

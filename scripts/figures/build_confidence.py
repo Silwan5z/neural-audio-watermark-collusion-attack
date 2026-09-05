@@ -15,7 +15,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 ANALYSIS = ROOT / "data" / "confidence"
 SUMMARY = ROOT / "data" / "summary"
-FIGURES = ROOT / "paper" / "figures"
+FIGURES = ROOT / "outputs" / "figures"
 MODELS = ["audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec"]
 LABELS = {
     "audioseal": "AudioSeal",
@@ -49,6 +49,8 @@ mpl.rcParams.update({
 
 
 def main() -> None:
+    SUMMARY.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     frames = []
     for model in MODELS:
         path = ANALYSIS / f"min_bit_confidence_k8_{model}.csv"

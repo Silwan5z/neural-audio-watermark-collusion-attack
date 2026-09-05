@@ -41,7 +41,7 @@ from registry import (  # noqa: E402
     NBITS, CAP, coalition_seed, full_registry_bits, full_registry_size,
     get_or_embed, int_to_bits, source_record, speaker_trial_index,
 )
-from run_mrc_ablation import optimize_softmin, score_target_task  # noqa: E402
+from mrc_solver import optimize_softmin, score_target_task  # noqa: E402
 from watermarks import detect_many, pesq_wb, si_sdr, stoi  # noqa: E402
 
 

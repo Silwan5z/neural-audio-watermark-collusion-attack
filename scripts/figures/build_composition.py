@@ -15,7 +15,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
 ANALYSIS = ROOT / "data" / "summary"
-FIGURES = ROOT / "paper" / "figures"
+FIGURES = ROOT / "outputs" / "figures"
 MODELS = ["audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec"]
 LABELS = {
     "audioseal": "AudioSeal", "wavmark": "WavMark", "timbrewm": "TimbreWM",
@@ -81,6 +81,8 @@ def main() -> None:
     parser.add_argument("--raw-dir", type=Path, default=ROOT / "data" / "k8" / "raw")
     args = parser.parse_args()
 
+    ANALYSIS.mkdir(parents=True, exist_ok=True)
+    FIGURES.mkdir(parents=True, exist_ok=True)
     rows = [row for model in MODELS for row in summarize_model(args.raw_dir, model)]
     summary_path = ANALYSIS / "k8_composition.csv"
     with summary_path.open("w", newline="") as handle:
