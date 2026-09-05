@@ -1,9 +1,9 @@
-# 虚拟环境
+# Python environments and caches
 .venv/
 __pycache__/
 *.pyc
 
-# 模型权重（不随仓库分发，见 README）
+# Model weights not included in this release
 *.pth
 *.pt
 *.pth.tar
@@ -12,16 +12,19 @@ third_party/wmcodec/save_model/g_*
 third_party/timbrewm/hifigan/model/*/generator_v1
 third_party/voicemark/checkpoints/
 
-# 原始数据集（见 README 下载）—— 只跟踪说明文件，音频一律不入库
+# Dataset manifest is tracked; audio is not
 dataset/*
 !dataset/README.md
+!dataset/collusion_300/
+dataset/collusion_300/*
+!dataset/collusion_300/manifest.csv
 
-# 运行时产物
+# Runtime outputs
 results/
 cache/
 *.wav
 
-# 本机实验历史、论文草稿与代理缓存（不属于公开发布）
+# Local experiment history, manuscript drafts, and tool caches
 .art/
 .cache/
 .claude/
@@ -39,7 +42,7 @@ paper_v*/
 final_submission*/
 paper_rewriting*/
 /outputs/
-/deprecated/legacy_v1/
+deprecated/
 docs/
 experiments/
 package.json
@@ -48,16 +51,16 @@ run_claude.sh
 src/attacks.py
 *.zip
 
-# data/ 采用白名单：只发布当前论文依赖
+# Release data allowlist
 data/*
 !data/README.md
-!data/MANIFEST.csv
-!data/main/
-!data/main/**
-!data/k8/
-!data/k8/**
+!data/manifest.csv
+!data/average/
+!data/average/**
 !data/coalitions/
 !data/coalitions/**
+!data/targets/
+!data/targets/**
 !data/targeted/
 !data/targeted/**
 !data/one_bit/
@@ -67,7 +70,7 @@ data/*
 !data/summary/
 !data/summary/**
 
-# 编辑器
+# Editors and operating-system files
 .idea/
 .vscode/
 .DS_Store

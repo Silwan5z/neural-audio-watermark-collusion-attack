@@ -1,48 +1,63 @@
 # Neural Audio Watermark Collusion
 
-Code and verified experiment records for studying how waveform averaging
-affects recipient tracing in neural audio watermarking. The repository covers
+Code and verified records for evaluating recipient tracing after multiple
+watermarked copies of the same utterance are averaged. The release covers
 AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec on 300 ten-second
 utterances from 100 speakers.
 
-The manuscript draft is intentionally not distributed in this repository.
-Bibliographic records and locally available background papers are kept under
-`references/`.
+The manuscript draft is not distributed here. Bibliographic records and
+background papers used by the project are under `references/`.
 
-## Repository structure
+## Repository layout
 
 ```text
-data/        Verified records and compact summaries used by the study
-scripts/     Experiment, aggregation, verification, and plotting entry points
-src/         Shared watermark and recipient-registry interfaces
-third_party/ Required model adapters under their original licenses
-dataset/     Dataset preparation notes; speech files are not distributed
-references/  Bibliography and available background papers
-deprecated/  Notice for the local, Git-ignored legacy archive
+data/        Verified experiment records and compact table/figure inputs
+dataset/     Dataset manifest and preparation notes; audio is not distributed
+scripts/     Experiment, aggregation, plotting, and verification programs
+src/         Shared watermark, dataset, and payload-registry interfaces
+third_party/ Model adapters and configuration required by the experiments
+references/  Bibliography and background papers
 ```
 
-Model weights, speech files, runtime caches, logs, checkpoints, generated plots,
-and manuscript drafts are excluded from Git.
+Model weights, speech files, caches, logs, checkpoints, generated plots, and
+manuscript drafts are excluded from Git.
 
-## Released evidence
+## Released experiments
 
-| Result | Records | Main entry point |
+| Experiment | Released records | Entry point |
 |---|---|---|
-| Uniform averaging at K=2, 3, and 5 | `data/main/` | `scripts/attack.py` |
-| K=8 tracing and bit behavior | `data/k8/raw/` | `scripts/run_k8_population_native.py` |
-| PM and MRC exact target matches | `data/targeted/` | `scripts/run_mrc_pm_native_300clips_shard.py` |
-| One-bit mixture paths | `data/one_bit/` | `scripts/run_onebit_k5_pair_analysis.py` |
-| K=8 minimum bit confidence | `data/confidence/` | `scripts/collect_identity_bit_confidence_k8.py` |
+| Uniform average, K=2, 3, 5, 8 | `data/average/` | `scripts/run_average.py`, `scripts/run_average_k8.py` |
+| Targeted mixtures | `data/targeted/` | `scripts/run_targeted.py` |
+| One-bit mixture paths | `data/one_bit/` | `scripts/run_one_bit_pairs.py` |
+| K=8 bit confidence | `data/confidence/` | `scripts/collect_confidence.py` |
 
-`data/coalitions/` stores the validated coalitions and target-selection cache.
-The four 16-bit systems use the same K=5 and K=8 coalitions; TimbreWM uses its
-own validated 10-bit coalitions. `data/summary/` contains the compact inputs for
-tables and plots. Every released file is listed with its size, row count, and
-SHA-256 checksum in `data/MANIFEST.csv`.
+Payload Match and Bit Margin are the two target-selection methods. Payload
+Match selects nonmember payloads nearest to the coalition's convex payload
+region. Bit Margin selects nonmember payloads for which the weakest target bit
+can receive the largest margin. Each method evaluates ten targets and reports
+the mean number of exact full-payload hits out of ten.
 
-## Verify the release
+`data/coalitions/` stores coalitions whose source copies all decode correctly.
+AudioSeal, WavMark, VoiceMark, and WMCodec use the same K=5 and K=8 coalition
+in each trial; TimbreWM uses a separately validated coalition because it has a
+10-bit payload.
+`data/targets/` stores the ten selected targets. Compact inputs for
+tables and figures are in `data/summary/`. `data/manifest.csv` records the size,
+row count, and SHA-256 checksum of every released result file.
 
-Install a CUDA-compatible PyTorch build and the remaining dependencies:
+## Definitions
+
+- A mixture **escapes** when its decoded payload matches no coalition member.
+- **Tracing failure (TF)** is the percentage of trials that escape. A
+  trial-level record therefore uses `escaped`; only an aggregate uses TF.
+- A **targeted hit** requires the decoded payload to equal a selected nonmember
+  target exactly.
+- **Single**, **Average**, and **Targeted** denote a valid single copy, a K=8
+  uniform average, and a successful Bit Margin output, respectively.
+
+## Setup and verification
+
+Install a CUDA-compatible PyTorch build, then install the remaining packages:
 
 ```bash
 python -m venv .venv
@@ -50,13 +65,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-The integrity check reads existing records and does not run model inference:
+Verify all released counts, schemas, aggregates, and checksums without model
+inference:
 
 ```bash
 python scripts/verify_release.py
 ```
 
-Regenerate the three data-driven plots locally:
+Regenerate the three data-driven figures:
 
 ```bash
 python scripts/figures/build_composition.py
@@ -64,29 +80,17 @@ python scripts/figures/build_paths.py
 python scripts/figures/build_confidence.py
 ```
 
-Plots are written to the ignored `outputs/figures/` directory.
-
-## Result definitions
-
-- A mixture **escapes tracing** when its complete decoded payload matches no
-  coalition member.
-- **Tracing failure (TF)** is the percentage of trials that escape. TF is a
-  metric, not an attack.
-- A targeted hit requires the complete decoded payload to equal a selected
-  nonmember target exactly.
-- PM and MRC report the mean number of exact hits among ten selected targets on
-  a direct 0--10 scale.
+Generated figures are written to the ignored `outputs/figures/` directory.
 
 ## Maintenance
 
-- Add public result files only under the whitelisted `data/` subdirectories.
-- Run `scripts/build_data_manifest.py` after changing released data.
-- Run `scripts/verify_release.py` before committing.
-- Keep incomplete shards and runtime outputs under ignored `results/`.
-- Keep manuscript drafts under ignored `paper/` and superseded work under the
-  ignored local `deprecated/legacy_v1/` archive.
+- Put incomplete shards and runtime outputs under ignored `results/`.
+- Copy only verified final records into the documented `data/` directories.
+- Run `python scripts/build_data_manifest.py` after changing released data.
+- Run `python scripts/verify_release.py` before committing.
+- Keep manuscript drafts under ignored `paper/`.
 
 ## License
 
-Project code is released under the MIT License. Files under `third_party/` and
-`references/papers/` retain their upstream licenses or copyright terms.
+Project code is released under the MIT License. Third-party code, checkpoints,
+and background papers remain subject to their respective upstream terms.

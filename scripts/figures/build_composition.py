@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild the K=8 composition figure from final source-correct JSON records."""
+"""Build the K=8 bit-composition figure from validated average records."""
 from __future__ import annotations
 
 import argparse
@@ -51,7 +51,8 @@ def summarize_model(raw_dir: Path, model: str, bootstrap: int = 5000) -> list[di
     totals = np.zeros((100, 9), dtype=np.float64)
     for record in records:
         speaker = index[record["speaker"]]
-        for support, decoded in zip(record["ones_among_8"], record["decoded_hard_bits"]):
+        for support, decoded in zip(
+                record["ones_in_coalition"], record["decoded_bits"]):
             support = int(support)
             ones[speaker, support] += int(decoded)
             totals[speaker, support] += 1
@@ -66,25 +67,26 @@ def summarize_model(raw_dir: Path, model: str, bootstrap: int = 5000) -> list[di
         rates = boot_ones[valid, support] / boot_totals[valid, support]
         rows.append({
             "model": model,
-            "ones_among_8": support,
-            "n": int(totals[:, support].sum()),
+            "ones_in_coalition": support,
+            "samples": int(totals[:, support].sum()),
             "decoded_one_rate": float(ones[:, support].sum() / totals[:, support].sum()),
             "speaker_bootstrap_low": float(np.quantile(rates, 0.025)),
             "speaker_bootstrap_high": float(np.quantile(rates, 0.975)),
-            "n_speakers": int(np.count_nonzero(totals[:, support])),
+            "speakers": int(np.count_nonzero(totals[:, support])),
         })
     return rows
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--raw-dir", type=Path, default=ROOT / "data" / "k8" / "raw")
+    parser.add_argument(
+        "--input-dir", type=Path, default=ROOT / "data" / "average" / "k8")
     args = parser.parse_args()
 
     ANALYSIS.mkdir(parents=True, exist_ok=True)
     FIGURES.mkdir(parents=True, exist_ok=True)
-    rows = [row for model in MODELS for row in summarize_model(args.raw_dir, model)]
-    summary_path = ANALYSIS / "k8_composition.csv"
+    rows = [row for model in MODELS for row in summarize_model(args.input_dir, model)]
+    summary_path = ANALYSIS / "bit_composition.csv"
     with summary_path.open("w", newline="") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=rows[0].keys(), lineterminator="\n")
@@ -95,7 +97,8 @@ def main() -> None:
     blue, gray, grid = "#176C9C", "#9AA2A8", "#E1E4E6"
     for ax, model in zip(axes, MODELS):
         model_rows = [row for row in rows if row["model"] == model]
-        x = np.asarray([row["ones_among_8"] for row in model_rows], dtype=float)
+        x = np.asarray(
+            [row["ones_in_coalition"] for row in model_rows], dtype=float)
         y = np.asarray([row["decoded_one_rate"] for row in model_rows], dtype=float)
         low = np.asarray([row["speaker_bootstrap_low"] for row in model_rows], dtype=float)
         high = np.asarray([row["speaker_bootstrap_high"] for row in model_rows], dtype=float)
@@ -112,6 +115,9 @@ def main() -> None:
         ax.grid(axis="y", color=grid, lw=0.42)
         ax.spines[["top", "right"]].set_visible(False)
         ax.tick_params(length=1.8, pad=1.4)
+    axes[0].text(0.985, 0.80, "Decoded bit-1 rate",
+                 transform=axes[0].transAxes, ha="right", va="center",
+                 fontsize=8.0, color="#596168")
     # A single shared y scale is enough; repeating the same three labels in all
     # five rows adds clutter without information.
     for index, ax in enumerate(axes):

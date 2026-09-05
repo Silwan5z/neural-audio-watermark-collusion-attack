@@ -1,18 +1,10 @@
-"""多模型统一合谋攻击 — 共享基础设施（自包含）。
+"""Common embedding, decoding, and quality interfaces for five systems.
 
-统一 5 个已有水印模型的接口：
-  - AudioSeal (16k, 16bit, soft bit posterior + presence)
-  - VoiceMark  (16k, 16bit = 4 chunk × 4bit, chunk logits + presence)
-  - WavMark    (16k, 16bit + 16 pattern, raw soft, 无 presence)
-  - WMCodec    (24k, 16bit = 4 digit × 4bit, digit logits, 无 presence)
-  - TimbreWM   (22050, 10bit, 连续值, 无 presence)
-
-统一抽象：
-  - payload: 原生 bit 数 d_m 的 0/1 向量
-  - detect -> (soft_posterior_for_codebook, presence, native_hard)
-  - 每个模型实现 embed(clean16k, payload) -> wm16k 和 detect(wm16k) -> score
-
-统一 soft score：对码字 c（d_m bit）计算 log-lik 或等价分数，用于 64/16 身份排名。
+AudioSeal, VoiceMark, and WavMark operate at 16 kHz. TimbreWM and WMCodec are
+run at 22.05 and 24 kHz internally and converted at the shared interface. A
+payload is represented as native-length binary bits. ``detect`` returns one
+score per registered payload, watermark presence when available, and the
+native hard-bit decision.
 """
 from __future__ import annotations
 
@@ -23,9 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent.parent  # opensource/ 目录
-AUDIO_DIR = ROOT / "dataset"  # 原始数据集（libritts16k 等）放置处，见 README
-# 计算设备：默认 cuda:0，可用环境变量 WATERMARK_DEVICE 覆盖（如 cpu / cuda:1）
+ROOT = Path(__file__).resolve().parent.parent
 DEVICE = os.environ.get("WATERMARK_DEVICE", "cuda:0")
 SR16 = 16000
 
@@ -79,7 +69,7 @@ def si_sdr(ref, deg):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 模型加载
+# Model loading
 # ─────────────────────────────────────────────────────────────────────────────
 def get_audioseal(dev=DEVICE):
     if "audioseal" not in _models:
@@ -92,7 +82,7 @@ def get_audioseal(dev=DEVICE):
 
 
 def _clear_conflicting_modules():
-    """清理 wmcodec 与 voicemark 之间冲突的模块名（两者都有 models.py 等）。"""
+    """Clear top-level module names shared by VoiceMark and WMCodec."""
     for mod in list(sys.modules):
         base = mod.split(".")[0]
         if base in ("models", "infer", "watermark", "env", "meldataset",
@@ -166,7 +156,7 @@ def get_timbrewm(dev=DEVICE):
         import yaml
         sys.path.insert(0, str(ROOT / "third_party/timbrewm"))
         base = ROOT / "third_party/timbrewm"
-        # hifigan vocoder 用相对路径，需切 cwd 到 timbrewm 目录
+        # TimbreWM resolves its HiFi-GAN files relative to its project root.
         cwd = os.getcwd()
         os.chdir(base)
         try:
@@ -186,7 +176,7 @@ def get_timbrewm(dev=DEVICE):
             ckpt_path = base / "results/ckpt/pth/compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar"
             ckpt = torch.load(ckpt_path, map_location=dev)
             enc.load_state_dict(ckpt["encoder"])
-            dec.load_state_dict(ckpt["decoder"], strict=False)  # vocoder 单独加载，ckpt 不含
+            dec.load_state_dict(ckpt["decoder"], strict=False)
         finally:
             os.chdir(cwd)
         enc.eval(); dec.eval()
@@ -196,32 +186,29 @@ def get_timbrewm(dev=DEVICE):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 统一检测：detect(wm16k) -> (soft_scores [n_codebook], presence, native)
-# soft_scores 是码本每个身份的 log-lik（越大越像）
+# Common decoding interface.
 # ─────────────────────────────────────────────────────────────────────────────
 def _loglik_bits(prob, codebook_bits):
-    """prob [d] bit 后验，codebook [K,d] {0,1} -> [K] log-lik。"""
+    """Score registry payloads from independent bit probabilities."""
     p = np.clip(prob, 1e-9, 1 - 1e-9)
     ll1 = np.log(p); ll0 = np.log1p(-p)
     return np.where(codebook_bits == 1, ll1[None, :], ll0[None, :]).sum(axis=1)
 
 
 def _loglik_chunks(chunk_probs, codebook_bits, nchunk, bit_order="msb"):
-    """chunk_probs [nchunk, 16]（每 chunk 4bit 的 16 类概率），codebook [K, d] -> [K] log-lik。
-    每 chunk 4 bit -> 值 v∈[0,15]，loglik = Σ_k log P_k[v_k]。
-    bit_order: 'msb'（WMCodec）或 'lsb'（VoiceMark embed 用 LSB-first）。"""
-    K = codebook_bits.shape[0]
+    """Score registry payloads from 16-class, four-bit chunk outputs."""
+    coalition_size = codebook_bits.shape[0]
     d = codebook_bits.shape[1]
     bits_per_chunk = d // nchunk
     if bit_order == "msb":
         weights = 2 ** np.arange(bits_per_chunk)[::-1]
     else:  # lsb
         weights = 2 ** np.arange(bits_per_chunk)
-    ll = np.zeros(K)
+    ll = np.zeros(coalition_size)
     for k in range(nchunk):
         chunk_bits = codebook_bits[:, k * bits_per_chunk:(k + 1) * bits_per_chunk]
-        vals = chunk_bits @ weights  # [K] 0-15
-        probs = chunk_probs[k]  # [16]
+        vals = chunk_bits @ weights
+        probs = chunk_probs[k]
         ll += np.log(np.clip(probs[vals], 1e-12, 1.0))
     return ll
 
@@ -244,12 +231,11 @@ def detect_voicemark(m, wm16k, codebook_bits):
         logits, chunk_logits = m["solver"].model.detect_watermark(t, return_logits=True)
         chunk_probs = torch.softmax(chunk_logits, dim=-1)[0].cpu().numpy()  # [4,16]
         presence = float(torch.sigmoid(logits).mean().cpu())
-    # 硬 bits：每 chunk argmax
     hard = np.concatenate([np.unravel_index(np.argmax(chunk_probs[k]), (16,)) for k in range(4)]) if False else None
     vals = np.argmax(chunk_probs, axis=1)  # [4] 0-15
     bits = []
     for v in vals:
-        bits.extend([(v >> i) & 1 for i in range(4)])  # LSB-first（VoiceMark embed 一致）
+        bits.extend([(v >> i) & 1 for i in range(4)])
     hard = np.array(bits, dtype=np.int8)
     return _loglik_chunks(chunk_probs, codebook_bits, m["nchunk"], bit_order="lsb"), presence, hard
 
@@ -340,12 +326,11 @@ def detect_wmcodec(m, wm16k, codebook_bits):
     digit_logits = torch.stack(sign_score, dim=1)  # [1,4,16]
     digit_probs = torch.softmax(digit_logits, dim=-1)[0].cpu().numpy()  # [4,16]
     vals = sign_g_hat[0].cpu().numpy()
-    # 硬 bits
     bits = []
     for v in vals:
         bits.extend([(v >> (3 - i)) & 1 for i in range(4)])
     hard = np.array(bits, dtype=np.int8)
-    presence = np.nan  # 无 presence score
+    presence = np.nan
     return _loglik_chunks(digit_probs, codebook_bits, m["ndigit"], bit_order="msb"), presence, hard
 
 
@@ -355,15 +340,14 @@ def detect_timbrewm(m, wm16k, codebook_bits):
     t = torch.from_numpy(w22).float().to(m["dev"]).unsqueeze(0).unsqueeze(0)
     with torch.no_grad():
         msg = m["dec"].test_forward(t)  # [1,1,10]
-    soft = msg[0, 0].cpu().numpy()  # [10] 连续值
-    # 转概率（sigmoid 近似）
+    soft = msg[0, 0].cpu().numpy()
     prob = 1.0 / (1.0 + np.exp(-soft))
     hard = (soft >= 0).astype(np.int8)
     presence = np.nan
     return _loglik_bits(prob, codebook_bits), presence, hard
 
 
-# 模型注册表
+# Model registry
 DETECT_FN = {
     "audioseal": detect_audioseal,
     "voicemark": detect_voicemark,
@@ -374,9 +358,7 @@ DETECT_FN = {
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# extract_evidence：返回 bit 级软证据 z ∈ [-1,1]^d_m（解码前连续表示，任务 #35）
-# 统一到 d_m 维（与 code_pred = C a 同维度），chunk/digit 模型转 bit 边际证据。
-# 不得用 hard bits；这是软证据（softmax/sigmoid 的连续读出）。
+# Continuous bit evidence before hard decoding.
 # ─────────────────────────────────────────────────────────────────────────────
 def evidence_audioseal(m, wm16k):
     import torch
@@ -388,7 +370,7 @@ def evidence_audioseal(m, wm16k):
 
 
 def _chunk_logits_to_bit_evidence(chunk_probs, bit_order="lsb"):
-    """chunk_probs [nchunk,16] -> bit 边际证据 [-1,1] (d_m,)。"""
+    """Convert 16-class chunk probabilities to bit evidence in [-1, 1]."""
     nchunk, ncls = chunk_probs.shape
     bits_per_chunk = 4
     out = np.zeros(nchunk * bits_per_chunk)
@@ -414,7 +396,7 @@ def evidence_voicemark(m, wm16k):
 
 
 def evidence_wavmark(m, wm16k):
-    # WavMark 归 Partial，无可靠 soft evidence
+    # The WavMark API does not expose calibrated per-bit logits.
     return None
 
 
@@ -439,7 +421,7 @@ def evidence_timbrewm(m, wm16k):
     t = torch.from_numpy(w22).float().to(m["dev"]).unsqueeze(0).unsqueeze(0)
     with torch.no_grad():
         msg = m["dec"].test_forward(t)
-    soft = msg[0, 0].cpu().numpy()  # [10] 连续值（解码前）
+    soft = msg[0, 0].cpu().numpy()
     return 2.0 / (1.0 + np.exp(-soft)) - 1.0  # -> [-1,1]
 
 
@@ -453,7 +435,7 @@ EXTRACT_FN = {
 
 
 def extract_evidence(model_name, wm16k):
-    """返回解码前连续证据 z（各模型维度不同）。wavmark 返回 None。"""
+    """Return continuous pre-threshold bit evidence when available."""
     m = GET_MODEL[model_name]()
     return EXTRACT_FN[model_name](m, wm16k)
 GET_MODEL = {
@@ -463,17 +445,13 @@ GET_MODEL = {
     "wmcodec": get_wmcodec,
     "timbrewm": get_timbrewm,
 }
-NATIVE_SR = {"audioseal": 16000, "voicemark": 16000, "wavmark": 16000,
-             "wmcodec": 24000, "timbrewm": 22050}
-
-
 def detect(model_name, wm16k, codebook_bits):
     m = GET_MODEL[model_name]()
     return DETECT_FN[model_name](m, wm16k, codebook_bits)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 统一嵌入：embed(model_name, clean16k, payload_bits) -> wm16k
+# Common 16 kHz embedding interface.
 # ─────────────────────────────────────────────────────────────────────────────
 def embed_audioseal(m, clean16k, bits):
     import torch

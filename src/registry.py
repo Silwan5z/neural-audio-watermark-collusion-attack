@@ -1,15 +1,8 @@
-"""全空间注册表、多说话人分配、按需嵌入缓存（公共工具）。
-
-设计要点见 ../README.md。核心区别于早期版本的固定容量码本：
-- 排序注册表 = 每个模型原生全 bit 空间（不是人为选的固定容量），虚拟码字只用于打分，不需要真实音频。
-- 38 个说话人（libritts16k 现有全部 39 人，排除音频过短的说话人 61），trial 均匀分配。
-- 按 (speaker, model, codeword_int) 缓存实际嵌入的音频，避免重复嵌入。
-"""
+"""Shared payload registry, trial schedule, and marked-audio cache."""
 from __future__ import annotations
 
 import csv
 import hashlib
-import json
 import os
 import sys
 import uuid
@@ -19,15 +12,15 @@ import numpy as np
 import soundfile as sf
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from watermarks import load_audio, embed, detect, pesq_wb, stoi, si_sdr  # noqa: E402
+from watermarks import embed, load_audio  # noqa: E402
 
-REAL_ANALYSIS = Path(__file__).resolve().parent.parent / "dataset"
+DATASET_DIR = Path(__file__).resolve().parent.parent / "dataset"
 CACHE_DIR = Path(__file__).resolve().parent.parent / "cache"
-CLIP_CACHE_DIR = Path(__file__).resolve().parent.parent / "cache_clip_indexed_v20"
+CLIP_CACHE_DIR = Path(__file__).resolve().parent.parent / "cache" / "marked"
 NBITS = {"audioseal": 16, "timbrewm": 10, "wavmark": 16, "voicemark": 16, "wmcodec": 16}
 CAP = 0.5
 
-MANIFEST = REAL_ANALYSIS / "collusion_300" / "manifest.csv"
+MANIFEST = DATASET_DIR / "collusion_300" / "manifest.csv"
 
 _MANIFEST_BY_SPEAKER = None
 
@@ -42,19 +35,21 @@ def _manifest_by_speaker():
     grouped = {}
     with MANIFEST.open(encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
-            spk = f"{row['language']}:{row['speaker_id']}"
+            speaker = f"{row['language']}:{row['speaker_id']}"
             item = dict(row)
             item["clip_index"] = int(item["clip_index"])
-            item["path"] = str((MANIFEST.parent / item["path"]).resolve())
-            grouped.setdefault(spk, []).append(item)
-    for spk, rows in grouped.items():
+            relative_path = Path("dataset") / "collusion_300" / item["path"]
+            item["path"] = relative_path.as_posix()
+            item["_absolute_path"] = str((MANIFEST.parent / row["path"]).resolve())
+            grouped.setdefault(speaker, []).append(item)
+    for speaker, rows in grouped.items():
         rows.sort(key=lambda r: r["clip_index"])
         indices = [r["clip_index"] for r in rows]
         if indices != [1, 2, 3]:
-            raise ValueError(f"{spk}: expected clip indices [1, 2, 3], got {indices}")
+            raise ValueError(f"{speaker}: expected clip indices [1, 2, 3], got {indices}")
         for row in rows:
-            if not Path(row["path"]).is_file():
-                raise FileNotFoundError(row["path"])
+            if not Path(row["_absolute_path"]).is_file():
+                raise FileNotFoundError(row["_absolute_path"])
     if len(grouped) != 100:
         raise ValueError(f"expected 100 speakers, found {len(grouped)}")
     _MANIFEST_BY_SPEAKER = grouped
@@ -66,61 +61,61 @@ def speakers():
     return sorted(_manifest_by_speaker())
 
 
-def trials_per_speaker_plan(n_total=300, n_spk=38):
-    """均匀分配 n_total 个 trial 到 n_spk 个说话人：前 r 个分 q+1，其余分 q。
-    n_total=300, n_spk=38 时：q=7, r=34 → 34 个说话人分 8 个 + 4 个说话人分 7 个 = 34*8+4*7=300。
-    """
-    q, r = divmod(n_total, n_spk)
-    return [q + 1 if i < r else q for i in range(n_spk)]
+def trial_counts(n_total: int = 300, speaker_count: int = 100):
+    """Distribute trials evenly across speakers."""
+    quotient, remainder = divmod(n_total, speaker_count)
+    return [quotient + 1 if index < remainder else quotient
+            for index in range(speaker_count)]
 
 
-def speaker_trial_index(n_total=300, n_spk=None):
-    """返回长度 n_total 的列表，每个元素是 (spk, local_t)，local_t 是该说话人内部的 trial 编号。"""
-    spks = speakers()
-    n_spk = len(spks) if n_spk is None else n_spk
-    if n_spk != len(spks):
-        raise ValueError(f"requested {n_spk} speakers but dataset has {len(spks)}")
-    counts = trials_per_speaker_plan(n_total, n_spk)
-    out = []
-    for spk, c in zip(spks, counts):
-        for local_t in range(c):
-            out.append((spk, local_t))
-    assert len(out) == n_total
-    return out
+def trial_schedule(n_total: int = 300, speaker_count: int | None = None):
+    """Return ``(speaker, clip_slot)`` pairs for the fixed schedule."""
+    speaker_ids = speakers()
+    speaker_count = len(speaker_ids) if speaker_count is None else speaker_count
+    if speaker_count != len(speaker_ids):
+        raise ValueError(
+            f"requested {speaker_count} speakers but dataset has {len(speaker_ids)}")
+    counts = trial_counts(n_total, speaker_count)
+    schedule = []
+    for speaker, count in zip(speaker_ids, counts):
+        for clip_slot in range(count):
+            schedule.append((speaker, clip_slot))
+    assert len(schedule) == n_total
+    return schedule
 
 
-def coalition_seed(spk, K, local_t):
-    """与 v18 的 coalition_seed 保持同一形式，但输入是每说话人内部的 local_t。"""
-    h = int.from_bytes(hashlib.sha256(spk.encode("utf-8")).digest()[:4], "little")
-    return (h * 100000 + K * 1000 + local_t + 42) % (2 ** 31)
+def coalition_seed(speaker, k, clip_slot):
+    """Return the deterministic coalition seed for one trial."""
+    h = int.from_bytes(hashlib.sha256(speaker.encode("utf-8")).digest()[:4], "little")
+    return (h * 100000 + k * 1000 + clip_slot + 42) % (2 ** 31)
 
 
-def source_record(spk, local_t=0):
+def source_record(speaker, clip_slot=0):
     """Return the manifest row selected by a speaker-local trial index.
 
-    In the 300-trial paper schedule, local_t=0,1,2 maps to the speaker's three
+    In the 300-trial paper schedule, clip_slot=0,1,2 maps to the speaker's three
     distinct utterances. Larger schedules cycle over those utterances while
-    retaining a distinct local_t for payload seeding.
+    retaining a distinct clip_slot for payload seeding.
     """
-    rows = _manifest_by_speaker().get(spk)
+    rows = _manifest_by_speaker().get(speaker)
     if rows is None:
-        raise KeyError(f"unknown speaker: {spk}")
-    return rows[int(local_t) % len(rows)]
+        raise KeyError(f"unknown speaker: {speaker}")
+    return rows[int(clip_slot) % len(rows)]
 
 
-def clean_path_v19(spk, local_t=0):
-    """Return the scheduled clean utterance (legacy function name retained)."""
-    return Path(source_record(spk, local_t)["path"])
+def clean_path(speaker, clip_slot=0):
+    """Return the scheduled clean utterance."""
+    return Path(source_record(speaker, clip_slot)["_absolute_path"])
 
 
-def load_clean(spk, local_t=0, sr=16000):
-    return load_audio(clean_path_v19(spk, local_t), sr)
+def load_clean(speaker, clip_slot=0, sr=16000):
+    return load_audio(clean_path(speaker, clip_slot), sr)
 
 
-def cache_path_for(model, spk, local_t, codeword_int):
-    """Clip-indexed cache path isolated from the legacy speaker-only cache."""
-    clip_index = int(source_record(spk, local_t)["clip_index"])
-    return CLIP_CACHE_DIR / model / spk / f"clip_{clip_index:02d}" / f"{codeword_int}.wav"
+def cache_path_for(model, speaker, clip_slot, payload):
+    """Return the cache path for one marked utterance and payload."""
+    clip_index = int(source_record(speaker, clip_slot)["clip_index"])
+    return CLIP_CACHE_DIR / model / speaker / f"clip_{clip_index:02d}" / f"{payload}.wav"
 
 
 def full_registry_size(model):
@@ -131,16 +126,16 @@ def random_codeword_int(rng, model):
     return int(rng.integers(0, full_registry_size(model)))
 
 
-def int_to_bits(v, d):
-    """LSB-first，与 common.py:130 的身份码约定一致（仅作身份码，不影响正确性，
-    只要嵌入与检测/排序两端用同一套编码）。"""
-    return np.array([(v >> i) & 1 for i in range(d)], dtype=np.int8)
+def int_to_bits(value, length):
+    """Convert an integer payload to an LSB-first bit vector."""
+    return np.array(
+        [(value >> index) & 1 for index in range(length)], dtype=np.int8)
 
 
-def get_or_embed(model, spk, codeword_int, local_t=0):
-    """按需嵌入并缓存，返回 wav（float32, 16k）。"""
-    d = NBITS[model]
-    cache_path = cache_path_for(model, spk, local_t, codeword_int)
+def get_or_embed(model, speaker, payload, clip_slot=0):
+    """Load or create one 16 kHz marked copy and cache it atomically."""
+    payload_length = NBITS[model]
+    cache_path = cache_path_for(model, speaker, clip_slot, payload)
     if cache_path.exists():
         # Several GPU workers can request a shared payload simultaneously.
         # Only accept a complete, finite cache file; otherwise regenerate it.
@@ -151,30 +146,28 @@ def get_or_embed(model, spk, codeword_int, local_t=0):
         except RuntimeError:
             pass
     cache_path.parent.mkdir(parents=True, exist_ok=True)
-    clean = load_clean(spk, local_t)
-    bits = int_to_bits(codeword_int, d).tolist()
+    clean = load_clean(speaker, clip_slot)
+    bits = int_to_bits(payload, payload_length).tolist()
     wm = embed(model, clean, bits)
     # Publish atomically: readers observe either an existing valid WAV or the
     # fully written replacement, never a partial header/body.
-    tmp_path = cache_path.parent / f".{codeword_int}.{uuid.uuid4().hex}.wav"
+    tmp_path = cache_path.parent / f".{payload}.{uuid.uuid4().hex}.wav"
     sf.write(tmp_path, wm, 16000, subtype="FLOAT")
     os.replace(tmp_path, cache_path)
     return wm
 
 
-def sample_coalition(rng, model, K):
-    """从全空间随机采样 K 个不重复的码字整数。"""
+def sample_coalition(rng, model, k):
+    """Sample k distinct payloads from a model's full payload space."""
     n = full_registry_size(model)
-    return sorted(rng.choice(n, size=K, replace=False).tolist())
+    return sorted(rng.choice(n, size=k, replace=False).tolist())
 
 
 _REGISTRY_CACHE = {}
 
 
 def full_registry_bits(model):
-    """返回 [2^d, d] 的完整虚拟码本（仅用于检测器打分排序，不对应真实音频）。
-    d<=16 时 2^16=65536 行，内存/计算开销可忽略（detect 内部对码本的打分是纯 numpy 向量运算，
-    见 common.py 的 _loglik_bits/_loglik_chunks，随候选数线性增长，非瓶颈）。"""
+    """Return every payload in a model's registry as LSB-first bits."""
     if model in _REGISTRY_CACHE:
         return _REGISTRY_CACHE[model]
     d = NBITS[model]

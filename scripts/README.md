@@ -1,25 +1,30 @@
-# Paper scripts
+# Scripts
 
-## Main experiments
+## Experiments
 
-- `attack.py`: source-correct uniform averaging for K=2, 3, and 5.
-- `run_k8_population_native.py` and `complete_k8_source_correct_population.py`: K=8 native decoding and source-correct completion.
-- `prepare_shared4_coalitions.py`: coalitions shared by AudioSeal, WavMark, VoiceMark, and WMCodec.
-- `run_mrc_pm_native_300clips_shard.py`: PM and MRC evaluation for ten selected nonmember targets.
-- `run_onebit_k5_pair_analysis.py` and `run_mixture_path_adaptive.py`: valid one-bit endpoints and continuous mixture paths.
-- `collect_identity_bit_confidence_k8.py`: minimum bit confidence for Single, Average, and successful MRC outputs.
+- `run_average.py`: uniform averaging with valid copies at K=2, 3, or 5.
+- `run_average_k8.py`: K=8 uniform averaging with native decoder evidence.
+- `validate_average_k8.py`: validates or replaces invalid K=8 source copies.
+- `prepare_coalitions.py`: builds valid K=5 and K=8 coalitions.
+- `run_targeted.py`: evaluates Payload Match and Bit Margin on ten selected
+  nonmember targets.
+- `run_one_bit_pairs.py`: constructs valid payload pairs that differ by one bit.
+- `run_one_bit_paths.py`: evaluates mixtures between each valid one-bit pair.
+- `collect_confidence.py`: records bit confidence for Single, Average, and
+  successful Targeted outputs.
 
-`framing.py`, `mrc_solver.py`, `registry_size_control.py`, and the two
-`run_k8_constructed_payload_case*` modules provide the optimization and native
-decoder helpers imported by the main entry points.
+`payload_match.py`, `bit_margin.py`, and `native_audio.py` contain shared helper
+functions used by these entry points.
 
-## Release and figures
+## Release tools
 
-- `merge_targeted_results.py`: merges seven final shards and validates 300 trials × 10 target attempts.
-- `summarize_one_bit_paths.py`: reduces large trajectory files to the per-trial evidence used in the paper.
-- `verify_release.py`: read-only integrity and aggregate check.
-- `build_data_manifest.py`: regenerates `data/MANIFEST.csv`.
-- `figures/`: builders for the three data-driven plots. Generated files are
-  written to the ignored `outputs/figures/` directory.
+- `merge_targeted.py`: merges final targeted shards and verifies 300 trials with
+  ten targets per trial.
+- `summarize_one_bit.py`: reduces full one-bit paths to released results.
+- `verify_release.py`: checks schemas, counts, aggregates, and checksums.
+- `build_data_manifest.py`: rebuilds `data/manifest.csv`.
+- `figures/`: builds the three data-driven figures in `outputs/figures/`.
 
-Runtime output belongs under ignored `results/`; only verified final records are copied into `data/`.
+Runtime output belongs under ignored `results/`. The directory layout follows
+`experiment/k/method/system` wherever those levels apply. Only verified
+records belong under `data/`.

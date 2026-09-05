@@ -1,33 +1,33 @@
-# 核心数值
+# Numerical computing
 numpy>=1.23.0
 scipy>=1.10.0
 
-# 音频读写 / 处理
+# Audio I/O and processing
 soundfile>=0.12.1
 librosa>=0.10.0
 
-# 深度学习（按 CUDA 版本单独安装，见 README）
+# Deep learning (install a CUDA-compatible build when needed)
 torch>=2.0.0
 torchaudio>=2.0.0
 
-# 水印模型（pip 包，权重自动下载 / 内置）
+# Watermark packages
 audioseal>=0.2.0
 wavmark>=0.0.3
 
-# 音质评估
+# Audio-quality metrics
 pesq>=0.0.4
 pystoi>=0.3.3
 
-# 配置 / 数据
+# Configuration and tabular data
 PyYAML>=6.0
 pandas>=2.0.0
 tqdm>=4.65.0
 
-# TimbreWM distortions 模块依赖
+# TimbreWM dependencies
 julius>=0.2.8
 audiomentations>=0.28.0
 kornia>=0.8.3
 
-# 第三方模型封装代码的传递依赖（voicemark/wmcodec 必需）
+# VoiceMark and WMCodec dependencies
 einops>=0.7.0
 matplotlib>=3.7.0

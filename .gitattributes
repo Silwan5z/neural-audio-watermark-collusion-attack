@@ -1,4 +1,5 @@
 /data/**/*.csv text eol=lf
 /data/**/*.json text eol=lf
+/dataset/**/*.csv text eol=lf
 /references/**/*.bib text eol=lf
 /references/**/*.pdf binary

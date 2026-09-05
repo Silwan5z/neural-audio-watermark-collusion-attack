@@ -1,0 +1,301 @@
+language,speaker_id,clip_index,path,sample_rate,duration_seconds,sources
+english,103,1,english/103/english_103_01.wav,16000,10.0,LibriSpeech/train-clean-100/103/1240/103-1240-0000.flac
+english,103,2,english/103/english_103_02.wav,16000,10.0,LibriSpeech/train-clean-100/103/1240/103-1240-0001.flac
+english,103,3,english/103/english_103_03.wav,16000,10.0,LibriSpeech/train-clean-100/103/1240/103-1240-0002.flac
+english,1034,1,english/1034/english_1034_01.wav,16000,10.0,LibriSpeech/train-clean-100/1034/121119/1034-121119-0000.flac | LibriSpeech/train-clean-100/1034/121119/1034-121119-0001.flac
+english,1034,2,english/1034/english_1034_02.wav,16000,10.0,LibriSpeech/train-clean-100/1034/121119/1034-121119-0002.flac
+english,1034,3,english/1034/english_1034_03.wav,16000,10.0,LibriSpeech/train-clean-100/1034/121119/1034-121119-0003.flac
+english,1040,1,english/1040/english_1040_01.wav,16000,10.0,LibriSpeech/train-clean-100/1040/133433/1040-133433-0000.flac
+english,1040,2,english/1040/english_1040_02.wav,16000,10.0,LibriSpeech/train-clean-100/1040/133433/1040-133433-0001.flac
+english,1040,3,english/1040/english_1040_03.wav,16000,10.0,LibriSpeech/train-clean-100/1040/133433/1040-133433-0002.flac
+english,1069,1,english/1069/english_1069_01.wav,16000,10.0,LibriSpeech/train-clean-100/1069/133699/1069-133699-0000.flac
+english,1069,2,english/1069/english_1069_02.wav,16000,10.0,LibriSpeech/train-clean-100/1069/133699/1069-133699-0001.flac
+english,1069,3,english/1069/english_1069_03.wav,16000,10.0,LibriSpeech/train-clean-100/1069/133699/1069-133699-0002.flac
+english,1081,1,english/1081/english_1081_01.wav,16000,10.0,LibriSpeech/train-clean-100/1081/125237/1081-125237-0000.flac
+english,1081,2,english/1081/english_1081_02.wav,16000,10.0,LibriSpeech/train-clean-100/1081/125237/1081-125237-0001.flac | LibriSpeech/train-clean-100/1081/125237/1081-125237-0002.flac
+english,1081,3,english/1081/english_1081_03.wav,16000,10.0,LibriSpeech/train-clean-100/1081/125237/1081-125237-0003.flac | LibriSpeech/train-clean-100/1081/125237/1081-125237-0004.flac
+english,1088,1,english/1088/english_1088_01.wav,16000,10.0,LibriSpeech/train-clean-100/1088/129236/1088-129236-0000.flac | LibriSpeech/train-clean-100/1088/129236/1088-129236-0001.flac
+english,1088,2,english/1088/english_1088_02.wav,16000,10.0,LibriSpeech/train-clean-100/1088/129236/1088-129236-0002.flac
+english,1088,3,english/1088/english_1088_03.wav,16000,10.0,LibriSpeech/train-clean-100/1088/129236/1088-129236-0003.flac
+english,1098,1,english/1098/english_1098_01.wav,16000,10.0,LibriSpeech/train-clean-100/1098/133695/1098-133695-0000.flac
+english,1098,2,english/1098/english_1098_02.wav,16000,10.0,LibriSpeech/train-clean-100/1098/133695/1098-133695-0001.flac
+english,1098,3,english/1098/english_1098_03.wav,16000,10.0,LibriSpeech/train-clean-100/1098/133695/1098-133695-0002.flac
+english,1116,1,english/1116/english_1116_01.wav,16000,10.0,LibriSpeech/train-clean-100/1116/132847/1116-132847-0000.flac
+english,1116,2,english/1116/english_1116_02.wav,16000,10.0,LibriSpeech/train-clean-100/1116/132847/1116-132847-0001.flac | LibriSpeech/train-clean-100/1116/132847/1116-132847-0002.flac
+english,1116,3,english/1116/english_1116_03.wav,16000,10.0,LibriSpeech/train-clean-100/1116/132847/1116-132847-0003.flac
+english,118,1,english/118/english_118_01.wav,16000,10.0,LibriSpeech/train-clean-100/118/121721/118-121721-0000.flac | LibriSpeech/train-clean-100/118/121721/118-121721-0001.flac
+english,118,2,english/118/english_118_02.wav,16000,10.0,LibriSpeech/train-clean-100/118/121721/118-121721-0002.flac
+english,118,3,english/118/english_118_03.wav,16000,10.0,LibriSpeech/train-clean-100/118/121721/118-121721-0003.flac
+english,1183,1,english/1183/english_1183_01.wav,16000,10.0,LibriSpeech/train-clean-100/1183/124566/1183-124566-0000.flac | LibriSpeech/train-clean-100/1183/124566/1183-124566-0001.flac
+english,1183,2,english/1183/english_1183_02.wav,16000,10.0,LibriSpeech/train-clean-100/1183/124566/1183-124566-0002.flac | LibriSpeech/train-clean-100/1183/124566/1183-124566-0003.flac | LibriSpeech/train-clean-100/1183/124566/1183-124566-0004.flac
+english,1183,3,english/1183/english_1183_03.wav,16000,10.0,LibriSpeech/train-clean-100/1183/124566/1183-124566-0005.flac | LibriSpeech/train-clean-100/1183/128659/1183-128659-0000.flac | LibriSpeech/train-clean-100/1183/128659/1183-128659-0001.flac
+english,1235,1,english/1235/english_1235_01.wav,16000,10.0,LibriSpeech/train-clean-100/1235/135883/1235-135883-0000.flac
+english,1235,2,english/1235/english_1235_02.wav,16000,10.0,LibriSpeech/train-clean-100/1235/135883/1235-135883-0001.flac
+english,1235,3,english/1235/english_1235_03.wav,16000,10.0,LibriSpeech/train-clean-100/1235/135883/1235-135883-0002.flac | LibriSpeech/train-clean-100/1235/135883/1235-135883-0003.flac
+english,1246,1,english/1246/english_1246_01.wav,16000,10.0,LibriSpeech/train-clean-100/1246/124548/1246-124548-0000.flac
+english,1246,2,english/1246/english_1246_02.wav,16000,10.0,LibriSpeech/train-clean-100/1246/124548/1246-124548-0001.flac
+english,1246,3,english/1246/english_1246_03.wav,16000,10.0,LibriSpeech/train-clean-100/1246/124548/1246-124548-0002.flac
+english,125,1,english/125/english_125_01.wav,16000,10.0,LibriSpeech/train-clean-100/125/121124/125-121124-0000.flac
+english,125,2,english/125/english_125_02.wav,16000,10.0,LibriSpeech/train-clean-100/125/121124/125-121124-0001.flac
+english,125,3,english/125/english_125_03.wav,16000,10.0,LibriSpeech/train-clean-100/125/121124/125-121124-0002.flac | LibriSpeech/train-clean-100/125/121124/125-121124-0003.flac
+english,1263,1,english/1263/english_1263_01.wav,16000,10.0,LibriSpeech/train-clean-100/1263/138246/1263-138246-0000.flac
+english,1263,2,english/1263/english_1263_02.wav,16000,10.0,LibriSpeech/train-clean-100/1263/138246/1263-138246-0001.flac
+english,1263,3,english/1263/english_1263_03.wav,16000,10.0,LibriSpeech/train-clean-100/1263/138246/1263-138246-0002.flac
+english,1334,1,english/1334/english_1334_01.wav,16000,10.0,LibriSpeech/train-clean-100/1334/135589/1334-135589-0000.flac
+english,1334,2,english/1334/english_1334_02.wav,16000,10.0,LibriSpeech/train-clean-100/1334/135589/1334-135589-0001.flac | LibriSpeech/train-clean-100/1334/135589/1334-135589-0002.flac
+english,1334,3,english/1334/english_1334_03.wav,16000,10.0,LibriSpeech/train-clean-100/1334/135589/1334-135589-0003.flac
+english,1355,1,english/1355/english_1355_01.wav,16000,10.0,LibriSpeech/train-clean-100/1355/39947/1355-39947-0000.flac
+english,1355,2,english/1355/english_1355_02.wav,16000,10.0,LibriSpeech/train-clean-100/1355/39947/1355-39947-0001.flac
+english,1355,3,english/1355/english_1355_03.wav,16000,10.0,LibriSpeech/train-clean-100/1355/39947/1355-39947-0002.flac
+english,1363,1,english/1363/english_1363_01.wav,16000,10.0,LibriSpeech/train-clean-100/1363/135842/1363-135842-0000.flac | LibriSpeech/train-clean-100/1363/135842/1363-135842-0001.flac
+english,1363,2,english/1363/english_1363_02.wav,16000,10.0,LibriSpeech/train-clean-100/1363/135842/1363-135842-0002.flac
+english,1363,3,english/1363/english_1363_03.wav,16000,10.0,LibriSpeech/train-clean-100/1363/135842/1363-135842-0003.flac
+english,1447,1,english/1447/english_1447_01.wav,16000,10.0,LibriSpeech/train-clean-100/1447/130550/1447-130550-0000.flac | LibriSpeech/train-clean-100/1447/130550/1447-130550-0001.flac
+english,1447,2,english/1447/english_1447_02.wav,16000,10.0,LibriSpeech/train-clean-100/1447/130550/1447-130550-0002.flac | LibriSpeech/train-clean-100/1447/130550/1447-130550-0003.flac
+english,1447,3,english/1447/english_1447_03.wav,16000,10.0,LibriSpeech/train-clean-100/1447/130550/1447-130550-0004.flac
+english,1455,1,english/1455/english_1455_01.wav,16000,10.0,LibriSpeech/train-clean-100/1455/134435/1455-134435-0000.flac | LibriSpeech/train-clean-100/1455/134435/1455-134435-0001.flac
+english,1455,2,english/1455/english_1455_02.wav,16000,10.0,LibriSpeech/train-clean-100/1455/134435/1455-134435-0002.flac
+english,1455,3,english/1455/english_1455_03.wav,16000,10.0,LibriSpeech/train-clean-100/1455/134435/1455-134435-0003.flac
+english,150,1,english/150/english_150_01.wav,16000,10.0,LibriSpeech/train-clean-100/150/126107/150-126107-0000.flac
+english,150,2,english/150/english_150_02.wav,16000,10.0,LibriSpeech/train-clean-100/150/126107/150-126107-0001.flac
+english,150,3,english/150/english_150_03.wav,16000,10.0,LibriSpeech/train-clean-100/150/126107/150-126107-0002.flac
+english,1502,1,english/1502/english_1502_01.wav,16000,10.0,LibriSpeech/train-clean-100/1502/122615/1502-122615-0000.flac
+english,1502,2,english/1502/english_1502_02.wav,16000,10.0,LibriSpeech/train-clean-100/1502/122615/1502-122615-0001.flac | LibriSpeech/train-clean-100/1502/122615/1502-122615-0002.flac
+english,1502,3,english/1502/english_1502_03.wav,16000,10.0,LibriSpeech/train-clean-100/1502/122615/1502-122615-0003.flac
+english,1553,1,english/1553/english_1553_01.wav,16000,10.0,LibriSpeech/train-clean-100/1553/140047/1553-140047-0000.flac
+english,1553,2,english/1553/english_1553_02.wav,16000,10.0,LibriSpeech/train-clean-100/1553/140047/1553-140047-0001.flac
+english,1553,3,english/1553/english_1553_03.wav,16000,10.0,LibriSpeech/train-clean-100/1553/140047/1553-140047-0002.flac
+english,1578,1,english/1578/english_1578_01.wav,16000,10.0,LibriSpeech/train-clean-100/1578/140045/1578-140045-0000.flac
+english,1578,2,english/1578/english_1578_02.wav,16000,10.0,LibriSpeech/train-clean-100/1578/140045/1578-140045-0001.flac
+english,1578,3,english/1578/english_1578_03.wav,16000,10.0,LibriSpeech/train-clean-100/1578/140045/1578-140045-0002.flac
+english,1594,1,english/1594/english_1594_01.wav,16000,10.0,LibriSpeech/train-clean-100/1594/135914/1594-135914-0000.flac
+english,1594,2,english/1594/english_1594_02.wav,16000,10.0,LibriSpeech/train-clean-100/1594/135914/1594-135914-0001.flac
+english,1594,3,english/1594/english_1594_03.wav,16000,10.0,LibriSpeech/train-clean-100/1594/135914/1594-135914-0002.flac
+english,1624,1,english/1624/english_1624_01.wav,16000,10.0,LibriSpeech/train-clean-100/1624/142933/1624-142933-0000.flac | LibriSpeech/train-clean-100/1624/142933/1624-142933-0001.flac
+english,1624,2,english/1624/english_1624_02.wav,16000,10.0,LibriSpeech/train-clean-100/1624/142933/1624-142933-0002.flac
+english,1624,3,english/1624/english_1624_03.wav,16000,10.0,LibriSpeech/train-clean-100/1624/142933/1624-142933-0003.flac
+english,163,1,english/163/english_163_01.wav,16000,10.0,LibriSpeech/train-clean-100/163/121908/163-121908-0000.flac
+english,163,2,english/163/english_163_02.wav,16000,10.0,LibriSpeech/train-clean-100/163/121908/163-121908-0001.flac
+english,163,3,english/163/english_163_03.wav,16000,10.0,LibriSpeech/train-clean-100/163/121908/163-121908-0002.flac
+english,1723,1,english/1723/english_1723_01.wav,16000,10.0,LibriSpeech/train-clean-100/1723/141149/1723-141149-0000.flac
+english,1723,2,english/1723/english_1723_02.wav,16000,10.0,LibriSpeech/train-clean-100/1723/141149/1723-141149-0001.flac
+english,1723,3,english/1723/english_1723_03.wav,16000,10.0,LibriSpeech/train-clean-100/1723/141149/1723-141149-0002.flac
+english,1737,1,english/1737/english_1737_01.wav,16000,10.0,LibriSpeech/train-clean-100/1737/142396/1737-142396-0000.flac
+english,1737,2,english/1737/english_1737_02.wav,16000,10.0,LibriSpeech/train-clean-100/1737/142396/1737-142396-0001.flac
+english,1737,3,english/1737/english_1737_03.wav,16000,10.0,LibriSpeech/train-clean-100/1737/142396/1737-142396-0002.flac
+english,1743,1,english/1743/english_1743_01.wav,16000,10.0,LibriSpeech/train-clean-100/1743/142912/1743-142912-0000.flac
+english,1743,2,english/1743/english_1743_02.wav,16000,10.0,LibriSpeech/train-clean-100/1743/142912/1743-142912-0001.flac
+english,1743,3,english/1743/english_1743_03.wav,16000,10.0,LibriSpeech/train-clean-100/1743/142912/1743-142912-0002.flac | LibriSpeech/train-clean-100/1743/142912/1743-142912-0003.flac
+english,1841,1,english/1841/english_1841_01.wav,16000,10.0,LibriSpeech/train-clean-100/1841/150351/1841-150351-0000.flac
+english,1841,2,english/1841/english_1841_02.wav,16000,10.0,LibriSpeech/train-clean-100/1841/150351/1841-150351-0001.flac
+english,1841,3,english/1841/english_1841_03.wav,16000,10.0,LibriSpeech/train-clean-100/1841/150351/1841-150351-0002.flac
+english,1867,1,english/1867/english_1867_01.wav,16000,10.0,LibriSpeech/train-clean-100/1867/148436/1867-148436-0000.flac
+english,1867,2,english/1867/english_1867_02.wav,16000,10.0,LibriSpeech/train-clean-100/1867/148436/1867-148436-0001.flac
+english,1867,3,english/1867/english_1867_03.wav,16000,10.0,LibriSpeech/train-clean-100/1867/148436/1867-148436-0002.flac
+english,1898,1,english/1898/english_1898_01.wav,16000,10.0,LibriSpeech/train-clean-100/1898/145702/1898-145702-0000.flac
+english,1898,2,english/1898/english_1898_02.wav,16000,10.0,LibriSpeech/train-clean-100/1898/145702/1898-145702-0001.flac
+english,1898,3,english/1898/english_1898_03.wav,16000,10.0,LibriSpeech/train-clean-100/1898/145702/1898-145702-0002.flac
+english,19,1,english/19/english_19_01.wav,16000,10.0,LibriSpeech/train-clean-100/19/198/19-198-0000.flac | LibriSpeech/train-clean-100/19/198/19-198-0001.flac
+english,19,2,english/19/english_19_02.wav,16000,10.0,LibriSpeech/train-clean-100/19/198/19-198-0002.flac
+english,19,3,english/19/english_19_03.wav,16000,10.0,LibriSpeech/train-clean-100/19/198/19-198-0003.flac
+english,1926,1,english/1926/english_1926_01.wav,16000,10.0,LibriSpeech/train-clean-100/1926/143879/1926-143879-0000.flac
+english,1926,2,english/1926/english_1926_02.wav,16000,10.0,LibriSpeech/train-clean-100/1926/143879/1926-143879-0001.flac | LibriSpeech/train-clean-100/1926/143879/1926-143879-0002.flac
+english,1926,3,english/1926/english_1926_03.wav,16000,10.0,LibriSpeech/train-clean-100/1926/143879/1926-143879-0003.flac | LibriSpeech/train-clean-100/1926/143879/1926-143879-0004.flac
+english,196,1,english/196/english_196_01.wav,16000,10.0,LibriSpeech/train-clean-100/196/122150/196-122150-0000.flac
+english,196,2,english/196/english_196_02.wav,16000,10.0,LibriSpeech/train-clean-100/196/122150/196-122150-0001.flac
+english,196,3,english/196/english_196_03.wav,16000,10.0,LibriSpeech/train-clean-100/196/122150/196-122150-0002.flac
+english,1963,1,english/1963/english_1963_01.wav,16000,10.0,LibriSpeech/train-clean-100/1963/142393/1963-142393-0000.flac | LibriSpeech/train-clean-100/1963/142393/1963-142393-0001.flac
+english,1963,2,english/1963/english_1963_02.wav,16000,10.0,LibriSpeech/train-clean-100/1963/142393/1963-142393-0002.flac
+english,1963,3,english/1963/english_1963_03.wav,16000,10.0,LibriSpeech/train-clean-100/1963/142393/1963-142393-0003.flac
+english,1970,1,english/1970/english_1970_01.wav,16000,10.0,LibriSpeech/train-clean-100/1970/10594/1970-10594-0000.flac
+english,1970,2,english/1970/english_1970_02.wav,16000,10.0,LibriSpeech/train-clean-100/1970/10594/1970-10594-0001.flac
+english,1970,3,english/1970/english_1970_03.wav,16000,10.0,LibriSpeech/train-clean-100/1970/10594/1970-10594-0002.flac
+english,198,1,english/198/english_198_01.wav,16000,10.0,LibriSpeech/train-clean-100/198/126831/198-126831-0000.flac
+english,198,2,english/198/english_198_02.wav,16000,10.0,LibriSpeech/train-clean-100/198/126831/198-126831-0001.flac
+english,198,3,english/198/english_198_03.wav,16000,10.0,LibriSpeech/train-clean-100/198/126831/198-126831-0002.flac
+english,1992,1,english/1992/english_1992_01.wav,16000,10.0,LibriSpeech/train-clean-100/1992/141719/1992-141719-0000.flac
+english,1992,2,english/1992/english_1992_02.wav,16000,10.0,LibriSpeech/train-clean-100/1992/141719/1992-141719-0001.flac
+english,1992,3,english/1992/english_1992_03.wav,16000,10.0,LibriSpeech/train-clean-100/1992/141719/1992-141719-0002.flac | LibriSpeech/train-clean-100/1992/141719/1992-141719-0003.flac
+english,200,1,english/200/english_200_01.wav,16000,10.0,LibriSpeech/train-clean-100/200/124139/200-124139-0000.flac
+english,200,2,english/200/english_200_02.wav,16000,10.0,LibriSpeech/train-clean-100/200/124139/200-124139-0001.flac
+english,200,3,english/200/english_200_03.wav,16000,10.0,LibriSpeech/train-clean-100/200/124139/200-124139-0002.flac
+english,2002,1,english/2002/english_2002_01.wav,16000,10.0,LibriSpeech/train-clean-100/2002/139469/2002-139469-0000.flac
+english,2002,2,english/2002/english_2002_02.wav,16000,10.0,LibriSpeech/train-clean-100/2002/139469/2002-139469-0001.flac
+english,2002,3,english/2002/english_2002_03.wav,16000,10.0,LibriSpeech/train-clean-100/2002/139469/2002-139469-0002.flac
+english,2007,1,english/2007/english_2007_01.wav,16000,10.0,LibriSpeech/train-clean-100/2007/132570/2007-132570-0000.flac
+english,2007,2,english/2007/english_2007_02.wav,16000,10.0,LibriSpeech/train-clean-100/2007/132570/2007-132570-0001.flac
+english,2007,3,english/2007/english_2007_03.wav,16000,10.0,LibriSpeech/train-clean-100/2007/132570/2007-132570-0002.flac
+english,201,1,english/201/english_201_01.wav,16000,10.0,LibriSpeech/train-clean-100/201/122255/201-122255-0000.flac | LibriSpeech/train-clean-100/201/122255/201-122255-0001.flac
+english,201,2,english/201/english_201_02.wav,16000,10.0,LibriSpeech/train-clean-100/201/122255/201-122255-0002.flac
+english,201,3,english/201/english_201_03.wav,16000,10.0,LibriSpeech/train-clean-100/201/122255/201-122255-0003.flac | LibriSpeech/train-clean-100/201/122255/201-122255-0004.flac
+english,2092,1,english/2092/english_2092_01.wav,16000,10.0,LibriSpeech/train-clean-100/2092/145706/2092-145706-0000.flac
+english,2092,2,english/2092/english_2092_02.wav,16000,10.0,LibriSpeech/train-clean-100/2092/145706/2092-145706-0001.flac
+english,2092,3,english/2092/english_2092_03.wav,16000,10.0,LibriSpeech/train-clean-100/2092/145706/2092-145706-0002.flac
+english,211,1,english/211/english_211_01.wav,16000,10.0,LibriSpeech/train-clean-100/211/122425/211-122425-0000.flac | LibriSpeech/train-clean-100/211/122425/211-122425-0001.flac
+english,211,2,english/211/english_211_02.wav,16000,10.0,LibriSpeech/train-clean-100/211/122425/211-122425-0002.flac | LibriSpeech/train-clean-100/211/122425/211-122425-0003.flac
+english,211,3,english/211/english_211_03.wav,16000,10.0,LibriSpeech/train-clean-100/211/122425/211-122425-0004.flac
+english,2136,1,english/2136/english_2136_01.wav,16000,10.0,LibriSpeech/train-clean-100/2136/5140/2136-5140-0000.flac
+english,2136,2,english/2136/english_2136_02.wav,16000,10.0,LibriSpeech/train-clean-100/2136/5140/2136-5140-0001.flac
+english,2136,3,english/2136/english_2136_03.wav,16000,10.0,LibriSpeech/train-clean-100/2136/5140/2136-5140-0002.flac
+english,2159,1,english/2159/english_2159_01.wav,16000,10.0,LibriSpeech/train-clean-100/2159/179154/2159-179154-0000.flac
+english,2159,2,english/2159/english_2159_02.wav,16000,10.0,LibriSpeech/train-clean-100/2159/179154/2159-179154-0001.flac
+english,2159,3,english/2159/english_2159_03.wav,16000,10.0,LibriSpeech/train-clean-100/2159/179154/2159-179154-0002.flac
+english,2182,1,english/2182/english_2182_01.wav,16000,10.0,LibriSpeech/train-clean-100/2182/150130/2182-150130-0000.flac
+english,2182,2,english/2182/english_2182_02.wav,16000,10.0,LibriSpeech/train-clean-100/2182/150130/2182-150130-0001.flac
+english,2182,3,english/2182/english_2182_03.wav,16000,10.0,LibriSpeech/train-clean-100/2182/150130/2182-150130-0002.flac
+english,2196,1,english/2196/english_2196_01.wav,16000,10.0,LibriSpeech/train-clean-100/2196/170151/2196-170151-0000.flac
+english,2196,2,english/2196/english_2196_02.wav,16000,10.0,LibriSpeech/train-clean-100/2196/170151/2196-170151-0001.flac
+english,2196,3,english/2196/english_2196_03.wav,16000,10.0,LibriSpeech/train-clean-100/2196/170151/2196-170151-0002.flac
+english,226,1,english/226/english_226_01.wav,16000,10.0,LibriSpeech/train-clean-100/226/122538/226-122538-0000.flac
+english,226,2,english/226/english_226_02.wav,16000,10.0,LibriSpeech/train-clean-100/226/122538/226-122538-0001.flac
+english,226,3,english/226/english_226_03.wav,16000,10.0,LibriSpeech/train-clean-100/226/122538/226-122538-0002.flac
+chinese,SSB0005,1,chinese/SSB0005/chinese_SSB0005_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0005/SSB00050001.wav | AISHELL-3/train/wav/SSB0005/SSB00050002.wav
+chinese,SSB0005,2,chinese/SSB0005/chinese_SSB0005_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0005/SSB00050003.wav | AISHELL-3/train/wav/SSB0005/SSB00050004.wav | AISHELL-3/train/wav/SSB0005/SSB00050005.wav
+chinese,SSB0005,3,chinese/SSB0005/chinese_SSB0005_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0005/SSB00050006.wav | AISHELL-3/train/wav/SSB0005/SSB00050007.wav
+chinese,SSB0009,1,chinese/SSB0009/chinese_SSB0009_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0009/SSB00090001.wav | AISHELL-3/train/wav/SSB0009/SSB00090002.wav | AISHELL-3/train/wav/SSB0009/SSB00090003.wav | AISHELL-3/train/wav/SSB0009/SSB00090005.wav | AISHELL-3/train/wav/SSB0009/SSB00090006.wav
+chinese,SSB0009,2,chinese/SSB0009/chinese_SSB0009_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0009/SSB00090007.wav | AISHELL-3/train/wav/SSB0009/SSB00090009.wav | AISHELL-3/train/wav/SSB0009/SSB00090011.wav | AISHELL-3/train/wav/SSB0009/SSB00090012.wav | AISHELL-3/train/wav/SSB0009/SSB00090013.wav
+chinese,SSB0009,3,chinese/SSB0009/chinese_SSB0009_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0009/SSB00090014.wav | AISHELL-3/train/wav/SSB0009/SSB00090015.wav | AISHELL-3/train/wav/SSB0009/SSB00090016.wav
+chinese,SSB0011,1,chinese/SSB0011/chinese_SSB0011_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0011/SSB00110001.wav | AISHELL-3/train/wav/SSB0011/SSB00110002.wav | AISHELL-3/train/wav/SSB0011/SSB00110003.wav
+chinese,SSB0011,2,chinese/SSB0011/chinese_SSB0011_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0011/SSB00110004.wav | AISHELL-3/train/wav/SSB0011/SSB00110005.wav | AISHELL-3/train/wav/SSB0011/SSB00110007.wav
+chinese,SSB0011,3,chinese/SSB0011/chinese_SSB0011_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0011/SSB00110008.wav | AISHELL-3/train/wav/SSB0011/SSB00110009.wav | AISHELL-3/train/wav/SSB0011/SSB00110010.wav
+chinese,SSB0012,1,chinese/SSB0012/chinese_SSB0012_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0012/SSB00120001.wav | AISHELL-3/train/wav/SSB0012/SSB00120002.wav | AISHELL-3/train/wav/SSB0012/SSB00120003.wav
+chinese,SSB0012,2,chinese/SSB0012/chinese_SSB0012_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0012/SSB00120004.wav | AISHELL-3/train/wav/SSB0012/SSB00120005.wav | AISHELL-3/train/wav/SSB0012/SSB00120006.wav
+chinese,SSB0012,3,chinese/SSB0012/chinese_SSB0012_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0012/SSB00120007.wav | AISHELL-3/train/wav/SSB0012/SSB00120008.wav | AISHELL-3/train/wav/SSB0012/SSB00120009.wav
+chinese,SSB0016,1,chinese/SSB0016/chinese_SSB0016_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0016/SSB00160001.wav | AISHELL-3/train/wav/SSB0016/SSB00160002.wav | AISHELL-3/train/wav/SSB0016/SSB00160003.wav | AISHELL-3/train/wav/SSB0016/SSB00160004.wav | AISHELL-3/train/wav/SSB0016/SSB00160005.wav
+chinese,SSB0016,2,chinese/SSB0016/chinese_SSB0016_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0016/SSB00160006.wav | AISHELL-3/train/wav/SSB0016/SSB00160007.wav | AISHELL-3/train/wav/SSB0016/SSB00160008.wav | AISHELL-3/train/wav/SSB0016/SSB00160009.wav
+chinese,SSB0016,3,chinese/SSB0016/chinese_SSB0016_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0016/SSB00160010.wav | AISHELL-3/train/wav/SSB0016/SSB00160011.wav | AISHELL-3/train/wav/SSB0016/SSB00160012.wav | AISHELL-3/train/wav/SSB0016/SSB00160014.wav
+chinese,SSB0018,1,chinese/SSB0018/chinese_SSB0018_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0018/SSB00180001.wav | AISHELL-3/train/wav/SSB0018/SSB00180002.wav | AISHELL-3/train/wav/SSB0018/SSB00180004.wav | AISHELL-3/train/wav/SSB0018/SSB00180005.wav
+chinese,SSB0018,2,chinese/SSB0018/chinese_SSB0018_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0018/SSB00180006.wav | AISHELL-3/train/wav/SSB0018/SSB00180007.wav | AISHELL-3/train/wav/SSB0018/SSB00180008.wav | AISHELL-3/train/wav/SSB0018/SSB00180009.wav | AISHELL-3/train/wav/SSB0018/SSB00180010.wav
+chinese,SSB0018,3,chinese/SSB0018/chinese_SSB0018_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0018/SSB00180011.wav | AISHELL-3/train/wav/SSB0018/SSB00180012.wav | AISHELL-3/train/wav/SSB0018/SSB00180013.wav | AISHELL-3/train/wav/SSB0018/SSB00180014.wav | AISHELL-3/train/wav/SSB0018/SSB00180015.wav
+chinese,SSB0033,1,chinese/SSB0033/chinese_SSB0033_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0033/SSB00330001.wav | AISHELL-3/train/wav/SSB0033/SSB00330002.wav | AISHELL-3/train/wav/SSB0033/SSB00330003.wav | AISHELL-3/train/wav/SSB0033/SSB00330004.wav
+chinese,SSB0033,2,chinese/SSB0033/chinese_SSB0033_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0033/SSB00330005.wav | AISHELL-3/train/wav/SSB0033/SSB00330006.wav | AISHELL-3/train/wav/SSB0033/SSB00330007.wav | AISHELL-3/train/wav/SSB0033/SSB00330008.wav
+chinese,SSB0033,3,chinese/SSB0033/chinese_SSB0033_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0033/SSB00330009.wav | AISHELL-3/train/wav/SSB0033/SSB00330010.wav | AISHELL-3/train/wav/SSB0033/SSB00330011.wav
+chinese,SSB0038,1,chinese/SSB0038/chinese_SSB0038_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0038/SSB00380001.wav | AISHELL-3/train/wav/SSB0038/SSB00380002.wav | AISHELL-3/train/wav/SSB0038/SSB00380003.wav
+chinese,SSB0038,2,chinese/SSB0038/chinese_SSB0038_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0038/SSB00380004.wav | AISHELL-3/train/wav/SSB0038/SSB00380005.wav | AISHELL-3/train/wav/SSB0038/SSB00380006.wav
+chinese,SSB0038,3,chinese/SSB0038/chinese_SSB0038_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0038/SSB00380007.wav | AISHELL-3/train/wav/SSB0038/SSB00380008.wav | AISHELL-3/train/wav/SSB0038/SSB00380009.wav
+chinese,SSB0043,1,chinese/SSB0043/chinese_SSB0043_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0043/SSB00430001.wav | AISHELL-3/train/wav/SSB0043/SSB00430002.wav | AISHELL-3/train/wav/SSB0043/SSB00430003.wav | AISHELL-3/train/wav/SSB0043/SSB00430004.wav | AISHELL-3/train/wav/SSB0043/SSB00430005.wav
+chinese,SSB0043,2,chinese/SSB0043/chinese_SSB0043_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0043/SSB00430006.wav | AISHELL-3/train/wav/SSB0043/SSB00430007.wav | AISHELL-3/train/wav/SSB0043/SSB00430008.wav | AISHELL-3/train/wav/SSB0043/SSB00430009.wav
+chinese,SSB0043,3,chinese/SSB0043/chinese_SSB0043_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0043/SSB00430012.wav | AISHELL-3/train/wav/SSB0043/SSB00430013.wav | AISHELL-3/train/wav/SSB0043/SSB00430014.wav | AISHELL-3/train/wav/SSB0043/SSB00430016.wav | AISHELL-3/train/wav/SSB0043/SSB00430017.wav
+chinese,SSB0057,1,chinese/SSB0057/chinese_SSB0057_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0057/SSB00570002.wav | AISHELL-3/train/wav/SSB0057/SSB00570003.wav | AISHELL-3/train/wav/SSB0057/SSB00570004.wav
+chinese,SSB0057,2,chinese/SSB0057/chinese_SSB0057_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0057/SSB00570005.wav | AISHELL-3/train/wav/SSB0057/SSB00570006.wav
+chinese,SSB0057,3,chinese/SSB0057/chinese_SSB0057_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0057/SSB00570007.wav | AISHELL-3/train/wav/SSB0057/SSB00570009.wav | AISHELL-3/train/wav/SSB0057/SSB00570010.wav
+chinese,SSB0073,1,chinese/SSB0073/chinese_SSB0073_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0073/SSB00730001.wav | AISHELL-3/train/wav/SSB0073/SSB00730002.wav | AISHELL-3/train/wav/SSB0073/SSB00730003.wav | AISHELL-3/train/wav/SSB0073/SSB00730004.wav
+chinese,SSB0073,2,chinese/SSB0073/chinese_SSB0073_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0073/SSB00730005.wav | AISHELL-3/train/wav/SSB0073/SSB00730006.wav | AISHELL-3/train/wav/SSB0073/SSB00730007.wav
+chinese,SSB0073,3,chinese/SSB0073/chinese_SSB0073_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0073/SSB00730008.wav | AISHELL-3/train/wav/SSB0073/SSB00730009.wav | AISHELL-3/train/wav/SSB0073/SSB00730010.wav | AISHELL-3/train/wav/SSB0073/SSB00730011.wav
+chinese,SSB0080,1,chinese/SSB0080/chinese_SSB0080_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0080/SSB00800001.wav | AISHELL-3/train/wav/SSB0080/SSB00800002.wav | AISHELL-3/train/wav/SSB0080/SSB00800003.wav
+chinese,SSB0080,2,chinese/SSB0080/chinese_SSB0080_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0080/SSB00800004.wav | AISHELL-3/train/wav/SSB0080/SSB00800005.wav | AISHELL-3/train/wav/SSB0080/SSB00800006.wav | AISHELL-3/train/wav/SSB0080/SSB00800007.wav
+chinese,SSB0080,3,chinese/SSB0080/chinese_SSB0080_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0080/SSB00800008.wav | AISHELL-3/train/wav/SSB0080/SSB00800009.wav | AISHELL-3/train/wav/SSB0080/SSB00800010.wav | AISHELL-3/train/wav/SSB0080/SSB00800011.wav
+chinese,SSB0112,1,chinese/SSB0112/chinese_SSB0112_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0112/SSB01120001.wav | AISHELL-3/train/wav/SSB0112/SSB01120002.wav | AISHELL-3/train/wav/SSB0112/SSB01120003.wav | AISHELL-3/train/wav/SSB0112/SSB01120004.wav
+chinese,SSB0112,2,chinese/SSB0112/chinese_SSB0112_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0112/SSB01120006.wav | AISHELL-3/train/wav/SSB0112/SSB01120007.wav | AISHELL-3/train/wav/SSB0112/SSB01120008.wav | AISHELL-3/train/wav/SSB0112/SSB01120009.wav
+chinese,SSB0112,3,chinese/SSB0112/chinese_SSB0112_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0112/SSB01120010.wav | AISHELL-3/train/wav/SSB0112/SSB01120011.wav | AISHELL-3/train/wav/SSB0112/SSB01120012.wav | AISHELL-3/train/wav/SSB0112/SSB01120013.wav
+chinese,SSB0122,1,chinese/SSB0122/chinese_SSB0122_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0122/SSB01220001.wav | AISHELL-3/train/wav/SSB0122/SSB01220002.wav | AISHELL-3/train/wav/SSB0122/SSB01220003.wav
+chinese,SSB0122,2,chinese/SSB0122/chinese_SSB0122_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0122/SSB01220004.wav | AISHELL-3/train/wav/SSB0122/SSB01220005.wav | AISHELL-3/train/wav/SSB0122/SSB01220006.wav
+chinese,SSB0122,3,chinese/SSB0122/chinese_SSB0122_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0122/SSB01220007.wav | AISHELL-3/train/wav/SSB0122/SSB01220008.wav
+chinese,SSB0133,1,chinese/SSB0133/chinese_SSB0133_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0133/SSB01330001.wav | AISHELL-3/train/wav/SSB0133/SSB01330002.wav | AISHELL-3/train/wav/SSB0133/SSB01330003.wav
+chinese,SSB0133,2,chinese/SSB0133/chinese_SSB0133_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0133/SSB01330004.wav | AISHELL-3/train/wav/SSB0133/SSB01330005.wav | AISHELL-3/train/wav/SSB0133/SSB01330006.wav
+chinese,SSB0133,3,chinese/SSB0133/chinese_SSB0133_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0133/SSB01330007.wav | AISHELL-3/train/wav/SSB0133/SSB01330008.wav | AISHELL-3/train/wav/SSB0133/SSB01330009.wav
+chinese,SSB0139,1,chinese/SSB0139/chinese_SSB0139_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0139/SSB01390001.wav | AISHELL-3/train/wav/SSB0139/SSB01390002.wav | AISHELL-3/train/wav/SSB0139/SSB01390003.wav | AISHELL-3/train/wav/SSB0139/SSB01390004.wav
+chinese,SSB0139,2,chinese/SSB0139/chinese_SSB0139_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0139/SSB01390005.wav | AISHELL-3/train/wav/SSB0139/SSB01390006.wav | AISHELL-3/train/wav/SSB0139/SSB01390007.wav | AISHELL-3/train/wav/SSB0139/SSB01390008.wav
+chinese,SSB0139,3,chinese/SSB0139/chinese_SSB0139_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0139/SSB01390009.wav | AISHELL-3/train/wav/SSB0139/SSB01390010.wav | AISHELL-3/train/wav/SSB0139/SSB01390011.wav | AISHELL-3/train/wav/SSB0139/SSB01390012.wav
+chinese,SSB0145,1,chinese/SSB0145/chinese_SSB0145_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0145/SSB01450001.wav | AISHELL-3/train/wav/SSB0145/SSB01450002.wav | AISHELL-3/train/wav/SSB0145/SSB01450003.wav
+chinese,SSB0145,2,chinese/SSB0145/chinese_SSB0145_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0145/SSB01450004.wav | AISHELL-3/train/wav/SSB0145/SSB01450005.wav | AISHELL-3/train/wav/SSB0145/SSB01450006.wav
+chinese,SSB0145,3,chinese/SSB0145/chinese_SSB0145_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0145/SSB01450007.wav | AISHELL-3/train/wav/SSB0145/SSB01450008.wav | AISHELL-3/train/wav/SSB0145/SSB01450009.wav
+chinese,SSB0149,1,chinese/SSB0149/chinese_SSB0149_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0149/SSB01490001.wav | AISHELL-3/train/wav/SSB0149/SSB01490002.wav | AISHELL-3/train/wav/SSB0149/SSB01490003.wav
+chinese,SSB0149,2,chinese/SSB0149/chinese_SSB0149_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0149/SSB01490004.wav | AISHELL-3/train/wav/SSB0149/SSB01490005.wav | AISHELL-3/train/wav/SSB0149/SSB01490006.wav
+chinese,SSB0149,3,chinese/SSB0149/chinese_SSB0149_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0149/SSB01490007.wav | AISHELL-3/train/wav/SSB0149/SSB01490008.wav
+chinese,SSB0193,1,chinese/SSB0193/chinese_SSB0193_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0193/SSB01930003.wav | AISHELL-3/train/wav/SSB0193/SSB01930004.wav | AISHELL-3/train/wav/SSB0193/SSB01930005.wav | AISHELL-3/train/wav/SSB0193/SSB01930007.wav | AISHELL-3/train/wav/SSB0193/SSB01930008.wav | AISHELL-3/train/wav/SSB0193/SSB01930009.wav
+chinese,SSB0193,2,chinese/SSB0193/chinese_SSB0193_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0193/SSB01930010.wav | AISHELL-3/train/wav/SSB0193/SSB01930011.wav | AISHELL-3/train/wav/SSB0193/SSB01930012.wav | AISHELL-3/train/wav/SSB0193/SSB01930013.wav
+chinese,SSB0193,3,chinese/SSB0193/chinese_SSB0193_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0193/SSB01930014.wav | AISHELL-3/train/wav/SSB0193/SSB01930015.wav | AISHELL-3/train/wav/SSB0193/SSB01930016.wav | AISHELL-3/train/wav/SSB0193/SSB01930017.wav | AISHELL-3/train/wav/SSB0193/SSB01930018.wav
+chinese,SSB0197,1,chinese/SSB0197/chinese_SSB0197_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0197/SSB01970001.wav | AISHELL-3/train/wav/SSB0197/SSB01970002.wav | AISHELL-3/train/wav/SSB0197/SSB01970003.wav
+chinese,SSB0197,2,chinese/SSB0197/chinese_SSB0197_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0197/SSB01970004.wav | AISHELL-3/train/wav/SSB0197/SSB01970005.wav | AISHELL-3/train/wav/SSB0197/SSB01970006.wav
+chinese,SSB0197,3,chinese/SSB0197/chinese_SSB0197_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0197/SSB01970007.wav | AISHELL-3/train/wav/SSB0197/SSB01970008.wav | AISHELL-3/train/wav/SSB0197/SSB01970009.wav
+chinese,SSB0200,1,chinese/SSB0200/chinese_SSB0200_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0200/SSB02000001.wav | AISHELL-3/train/wav/SSB0200/SSB02000002.wav | AISHELL-3/train/wav/SSB0200/SSB02000003.wav
+chinese,SSB0200,2,chinese/SSB0200/chinese_SSB0200_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0200/SSB02000004.wav | AISHELL-3/train/wav/SSB0200/SSB02000005.wav | AISHELL-3/train/wav/SSB0200/SSB02000007.wav
+chinese,SSB0200,3,chinese/SSB0200/chinese_SSB0200_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0200/SSB02000008.wav | AISHELL-3/train/wav/SSB0200/SSB02000009.wav | AISHELL-3/train/wav/SSB0200/SSB02000010.wav
+chinese,SSB0241,1,chinese/SSB0241/chinese_SSB0241_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0241/SSB02410001.wav | AISHELL-3/train/wav/SSB0241/SSB02410002.wav | AISHELL-3/train/wav/SSB0241/SSB02410003.wav
+chinese,SSB0241,2,chinese/SSB0241/chinese_SSB0241_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0241/SSB02410004.wav | AISHELL-3/train/wav/SSB0241/SSB02410005.wav
+chinese,SSB0241,3,chinese/SSB0241/chinese_SSB0241_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0241/SSB02410006.wav | AISHELL-3/train/wav/SSB0241/SSB02410007.wav | AISHELL-3/train/wav/SSB0241/SSB02410009.wav | AISHELL-3/train/wav/SSB0241/SSB02410010.wav
+chinese,SSB0246,1,chinese/SSB0246/chinese_SSB0246_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0246/SSB02460001.wav | AISHELL-3/train/wav/SSB0246/SSB02460003.wav | AISHELL-3/train/wav/SSB0246/SSB02460005.wav
+chinese,SSB0246,2,chinese/SSB0246/chinese_SSB0246_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0246/SSB02460006.wav | AISHELL-3/train/wav/SSB0246/SSB02460007.wav | AISHELL-3/train/wav/SSB0246/SSB02460009.wav
+chinese,SSB0246,3,chinese/SSB0246/chinese_SSB0246_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0246/SSB02460010.wav | AISHELL-3/train/wav/SSB0246/SSB02460011.wav | AISHELL-3/train/wav/SSB0246/SSB02460012.wav
+chinese,SSB0261,1,chinese/SSB0261/chinese_SSB0261_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0261/SSB02610001.wav | AISHELL-3/train/wav/SSB0261/SSB02610002.wav | AISHELL-3/train/wav/SSB0261/SSB02610003.wav | AISHELL-3/train/wav/SSB0261/SSB02610004.wav
+chinese,SSB0261,2,chinese/SSB0261/chinese_SSB0261_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0261/SSB02610005.wav | AISHELL-3/train/wav/SSB0261/SSB02610006.wav | AISHELL-3/train/wav/SSB0261/SSB02610007.wav | AISHELL-3/train/wav/SSB0261/SSB02610008.wav
+chinese,SSB0261,3,chinese/SSB0261/chinese_SSB0261_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0261/SSB02610009.wav | AISHELL-3/train/wav/SSB0261/SSB02610010.wav | AISHELL-3/train/wav/SSB0261/SSB02610011.wav | AISHELL-3/train/wav/SSB0261/SSB02610012.wav
+chinese,SSB0267,1,chinese/SSB0267/chinese_SSB0267_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0267/SSB02670001.wav | AISHELL-3/train/wav/SSB0267/SSB02670002.wav | AISHELL-3/train/wav/SSB0267/SSB02670003.wav
+chinese,SSB0267,2,chinese/SSB0267/chinese_SSB0267_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0267/SSB02670004.wav | AISHELL-3/train/wav/SSB0267/SSB02670005.wav | AISHELL-3/train/wav/SSB0267/SSB02670006.wav | AISHELL-3/train/wav/SSB0267/SSB02670007.wav
+chinese,SSB0267,3,chinese/SSB0267/chinese_SSB0267_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0267/SSB02670008.wav | AISHELL-3/train/wav/SSB0267/SSB02670009.wav | AISHELL-3/train/wav/SSB0267/SSB02670010.wav | AISHELL-3/train/wav/SSB0267/SSB02670013.wav | AISHELL-3/train/wav/SSB0267/SSB02670014.wav
+chinese,SSB0273,1,chinese/SSB0273/chinese_SSB0273_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0273/SSB02730001.wav | AISHELL-3/train/wav/SSB0273/SSB02730002.wav | AISHELL-3/train/wav/SSB0273/SSB02730003.wav
+chinese,SSB0273,2,chinese/SSB0273/chinese_SSB0273_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0273/SSB02730004.wav | AISHELL-3/train/wav/SSB0273/SSB02730005.wav
+chinese,SSB0273,3,chinese/SSB0273/chinese_SSB0273_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0273/SSB02730006.wav | AISHELL-3/train/wav/SSB0273/SSB02730007.wav | AISHELL-3/train/wav/SSB0273/SSB02730008.wav
+chinese,SSB0287,1,chinese/SSB0287/chinese_SSB0287_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0287/SSB02870001.wav | AISHELL-3/train/wav/SSB0287/SSB02870002.wav | AISHELL-3/train/wav/SSB0287/SSB02870003.wav
+chinese,SSB0287,2,chinese/SSB0287/chinese_SSB0287_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0287/SSB02870004.wav | AISHELL-3/train/wav/SSB0287/SSB02870005.wav | AISHELL-3/train/wav/SSB0287/SSB02870006.wav
+chinese,SSB0287,3,chinese/SSB0287/chinese_SSB0287_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0287/SSB02870007.wav | AISHELL-3/train/wav/SSB0287/SSB02870008.wav | AISHELL-3/train/wav/SSB0287/SSB02870009.wav | AISHELL-3/train/wav/SSB0287/SSB02870010.wav
+chinese,SSB0288,1,chinese/SSB0288/chinese_SSB0288_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0288/SSB02880001.wav | AISHELL-3/train/wav/SSB0288/SSB02880002.wav | AISHELL-3/train/wav/SSB0288/SSB02880003.wav | AISHELL-3/train/wav/SSB0288/SSB02880004.wav | AISHELL-3/train/wav/SSB0288/SSB02880005.wav
+chinese,SSB0288,2,chinese/SSB0288/chinese_SSB0288_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0288/SSB02880006.wav | AISHELL-3/train/wav/SSB0288/SSB02880007.wav | AISHELL-3/train/wav/SSB0288/SSB02880008.wav
+chinese,SSB0288,3,chinese/SSB0288/chinese_SSB0288_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0288/SSB02880010.wav | AISHELL-3/train/wav/SSB0288/SSB02880011.wav | AISHELL-3/train/wav/SSB0288/SSB02880012.wav
+chinese,SSB0299,1,chinese/SSB0299/chinese_SSB0299_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0299/SSB02990001.wav | AISHELL-3/train/wav/SSB0299/SSB02990002.wav | AISHELL-3/train/wav/SSB0299/SSB02990003.wav | AISHELL-3/train/wav/SSB0299/SSB02990004.wav
+chinese,SSB0299,2,chinese/SSB0299/chinese_SSB0299_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0299/SSB02990005.wav | AISHELL-3/train/wav/SSB0299/SSB02990007.wav | AISHELL-3/train/wav/SSB0299/SSB02990008.wav | AISHELL-3/train/wav/SSB0299/SSB02990009.wav
+chinese,SSB0299,3,chinese/SSB0299/chinese_SSB0299_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0299/SSB02990010.wav | AISHELL-3/train/wav/SSB0299/SSB02990011.wav | AISHELL-3/train/wav/SSB0299/SSB02990012.wav | AISHELL-3/train/wav/SSB0299/SSB02990013.wav
+chinese,SSB0307,1,chinese/SSB0307/chinese_SSB0307_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0307/SSB03070001.wav | AISHELL-3/train/wav/SSB0307/SSB03070002.wav | AISHELL-3/train/wav/SSB0307/SSB03070003.wav
+chinese,SSB0307,2,chinese/SSB0307/chinese_SSB0307_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0307/SSB03070004.wav | AISHELL-3/train/wav/SSB0307/SSB03070005.wav | AISHELL-3/train/wav/SSB0307/SSB03070006.wav
+chinese,SSB0307,3,chinese/SSB0307/chinese_SSB0307_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0307/SSB03070007.wav | AISHELL-3/train/wav/SSB0307/SSB03070008.wav | AISHELL-3/train/wav/SSB0307/SSB03070009.wav | AISHELL-3/train/wav/SSB0307/SSB03070010.wav
+chinese,SSB0309,1,chinese/SSB0309/chinese_SSB0309_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0309/SSB03090001.wav | AISHELL-3/train/wav/SSB0309/SSB03090002.wav | AISHELL-3/train/wav/SSB0309/SSB03090003.wav
+chinese,SSB0309,2,chinese/SSB0309/chinese_SSB0309_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0309/SSB03090004.wav | AISHELL-3/train/wav/SSB0309/SSB03090005.wav | AISHELL-3/train/wav/SSB0309/SSB03090006.wav
+chinese,SSB0309,3,chinese/SSB0309/chinese_SSB0309_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0309/SSB03090007.wav | AISHELL-3/train/wav/SSB0309/SSB03090008.wav
+chinese,SSB0315,1,chinese/SSB0315/chinese_SSB0315_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0315/SSB03150001.wav | AISHELL-3/train/wav/SSB0315/SSB03150002.wav | AISHELL-3/train/wav/SSB0315/SSB03150003.wav | AISHELL-3/train/wav/SSB0315/SSB03150004.wav
+chinese,SSB0315,2,chinese/SSB0315/chinese_SSB0315_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0315/SSB03150005.wav | AISHELL-3/train/wav/SSB0315/SSB03150006.wav | AISHELL-3/train/wav/SSB0315/SSB03150007.wav
+chinese,SSB0315,3,chinese/SSB0315/chinese_SSB0315_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0315/SSB03150008.wav | AISHELL-3/train/wav/SSB0315/SSB03150009.wav | AISHELL-3/train/wav/SSB0315/SSB03150010.wav
+chinese,SSB0316,1,chinese/SSB0316/chinese_SSB0316_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0316/SSB03160001.wav | AISHELL-3/train/wav/SSB0316/SSB03160002.wav | AISHELL-3/train/wav/SSB0316/SSB03160003.wav | AISHELL-3/train/wav/SSB0316/SSB03160004.wav
+chinese,SSB0316,2,chinese/SSB0316/chinese_SSB0316_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0316/SSB03160005.wav | AISHELL-3/train/wav/SSB0316/SSB03160006.wav | AISHELL-3/train/wav/SSB0316/SSB03160007.wav | AISHELL-3/train/wav/SSB0316/SSB03160008.wav | AISHELL-3/train/wav/SSB0316/SSB03160009.wav
+chinese,SSB0316,3,chinese/SSB0316/chinese_SSB0316_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0316/SSB03160010.wav | AISHELL-3/train/wav/SSB0316/SSB03160011.wav | AISHELL-3/train/wav/SSB0316/SSB03160012.wav | AISHELL-3/train/wav/SSB0316/SSB03160013.wav | AISHELL-3/train/wav/SSB0316/SSB03160014.wav
+chinese,SSB0323,1,chinese/SSB0323/chinese_SSB0323_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0323/SSB03230001.wav | AISHELL-3/train/wav/SSB0323/SSB03230002.wav
+chinese,SSB0323,2,chinese/SSB0323/chinese_SSB0323_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0323/SSB03230004.wav | AISHELL-3/train/wav/SSB0323/SSB03230005.wav | AISHELL-3/train/wav/SSB0323/SSB03230006.wav
+chinese,SSB0323,3,chinese/SSB0323/chinese_SSB0323_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0323/SSB03230007.wav | AISHELL-3/train/wav/SSB0323/SSB03230008.wav
+chinese,SSB0338,1,chinese/SSB0338/chinese_SSB0338_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0338/SSB03380001.wav | AISHELL-3/train/wav/SSB0338/SSB03380002.wav | AISHELL-3/train/wav/SSB0338/SSB03380003.wav | AISHELL-3/train/wav/SSB0338/SSB03380004.wav
+chinese,SSB0338,2,chinese/SSB0338/chinese_SSB0338_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0338/SSB03380005.wav | AISHELL-3/train/wav/SSB0338/SSB03380006.wav | AISHELL-3/train/wav/SSB0338/SSB03380007.wav | AISHELL-3/train/wav/SSB0338/SSB03380008.wav
+chinese,SSB0338,3,chinese/SSB0338/chinese_SSB0338_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0338/SSB03380009.wav | AISHELL-3/train/wav/SSB0338/SSB03380010.wav | AISHELL-3/train/wav/SSB0338/SSB03380011.wav | AISHELL-3/train/wav/SSB0338/SSB03380012.wav | AISHELL-3/train/wav/SSB0338/SSB03380014.wav
+chinese,SSB0339,1,chinese/SSB0339/chinese_SSB0339_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0339/SSB03390001.wav | AISHELL-3/train/wav/SSB0339/SSB03390002.wav | AISHELL-3/train/wav/SSB0339/SSB03390003.wav | AISHELL-3/train/wav/SSB0339/SSB03390004.wav | AISHELL-3/train/wav/SSB0339/SSB03390005.wav
+chinese,SSB0339,2,chinese/SSB0339/chinese_SSB0339_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0339/SSB03390006.wav | AISHELL-3/train/wav/SSB0339/SSB03390007.wav | AISHELL-3/train/wav/SSB0339/SSB03390008.wav | AISHELL-3/train/wav/SSB0339/SSB03390009.wav | AISHELL-3/train/wav/SSB0339/SSB03390010.wav
+chinese,SSB0339,3,chinese/SSB0339/chinese_SSB0339_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0339/SSB03390011.wav | AISHELL-3/train/wav/SSB0339/SSB03390012.wav | AISHELL-3/train/wav/SSB0339/SSB03390013.wav | AISHELL-3/train/wav/SSB0339/SSB03390014.wav
+chinese,SSB0341,1,chinese/SSB0341/chinese_SSB0341_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0341/SSB03410001.wav | AISHELL-3/train/wav/SSB0341/SSB03410002.wav | AISHELL-3/train/wav/SSB0341/SSB03410003.wav
+chinese,SSB0341,2,chinese/SSB0341/chinese_SSB0341_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0341/SSB03410004.wav | AISHELL-3/train/wav/SSB0341/SSB03410005.wav | AISHELL-3/train/wav/SSB0341/SSB03410006.wav | AISHELL-3/train/wav/SSB0341/SSB03410008.wav
+chinese,SSB0341,3,chinese/SSB0341/chinese_SSB0341_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0341/SSB03410009.wav | AISHELL-3/train/wav/SSB0341/SSB03410010.wav | AISHELL-3/train/wav/SSB0341/SSB03410011.wav | AISHELL-3/train/wav/SSB0341/SSB03410012.wav
+chinese,SSB0342,1,chinese/SSB0342/chinese_SSB0342_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0342/SSB03420001.wav | AISHELL-3/train/wav/SSB0342/SSB03420002.wav | AISHELL-3/train/wav/SSB0342/SSB03420003.wav | AISHELL-3/train/wav/SSB0342/SSB03420004.wav
+chinese,SSB0342,2,chinese/SSB0342/chinese_SSB0342_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0342/SSB03420005.wav | AISHELL-3/train/wav/SSB0342/SSB03420006.wav | AISHELL-3/train/wav/SSB0342/SSB03420007.wav | AISHELL-3/train/wav/SSB0342/SSB03420008.wav
+chinese,SSB0342,3,chinese/SSB0342/chinese_SSB0342_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0342/SSB03420009.wav | AISHELL-3/train/wav/SSB0342/SSB03420010.wav
+chinese,SSB0354,1,chinese/SSB0354/chinese_SSB0354_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0354/SSB03540001.wav | AISHELL-3/train/wav/SSB0354/SSB03540002.wav | AISHELL-3/train/wav/SSB0354/SSB03540003.wav
+chinese,SSB0354,2,chinese/SSB0354/chinese_SSB0354_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0354/SSB03540004.wav | AISHELL-3/train/wav/SSB0354/SSB03540007.wav | AISHELL-3/train/wav/SSB0354/SSB03540008.wav | AISHELL-3/train/wav/SSB0354/SSB03540009.wav
+chinese,SSB0354,3,chinese/SSB0354/chinese_SSB0354_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0354/SSB03540010.wav | AISHELL-3/train/wav/SSB0354/SSB03540011.wav | AISHELL-3/train/wav/SSB0354/SSB03540012.wav
+chinese,SSB0366,1,chinese/SSB0366/chinese_SSB0366_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0366/SSB03660001.wav | AISHELL-3/train/wav/SSB0366/SSB03660002.wav | AISHELL-3/train/wav/SSB0366/SSB03660003.wav | AISHELL-3/train/wav/SSB0366/SSB03660004.wav | AISHELL-3/train/wav/SSB0366/SSB03660005.wav
+chinese,SSB0366,2,chinese/SSB0366/chinese_SSB0366_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0366/SSB03660006.wav | AISHELL-3/train/wav/SSB0366/SSB03660007.wav | AISHELL-3/train/wav/SSB0366/SSB03660008.wav | AISHELL-3/train/wav/SSB0366/SSB03660009.wav
+chinese,SSB0366,3,chinese/SSB0366/chinese_SSB0366_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0366/SSB03660010.wav | AISHELL-3/train/wav/SSB0366/SSB03660011.wav | AISHELL-3/train/wav/SSB0366/SSB03660012.wav | AISHELL-3/train/wav/SSB0366/SSB03660013.wav
+chinese,SSB0375,1,chinese/SSB0375/chinese_SSB0375_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0375/SSB03750001.wav | AISHELL-3/train/wav/SSB0375/SSB03750002.wav | AISHELL-3/train/wav/SSB0375/SSB03750003.wav | AISHELL-3/train/wav/SSB0375/SSB03750004.wav
+chinese,SSB0375,2,chinese/SSB0375/chinese_SSB0375_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0375/SSB03750005.wav | AISHELL-3/train/wav/SSB0375/SSB03750006.wav | AISHELL-3/train/wav/SSB0375/SSB03750007.wav | AISHELL-3/train/wav/SSB0375/SSB03750008.wav
+chinese,SSB0375,3,chinese/SSB0375/chinese_SSB0375_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0375/SSB03750009.wav | AISHELL-3/train/wav/SSB0375/SSB03750010.wav | AISHELL-3/train/wav/SSB0375/SSB03750011.wav
+chinese,SSB0379,1,chinese/SSB0379/chinese_SSB0379_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0379/SSB03790002.wav | AISHELL-3/train/wav/SSB0379/SSB03790003.wav | AISHELL-3/train/wav/SSB0379/SSB03790004.wav | AISHELL-3/train/wav/SSB0379/SSB03790005.wav | AISHELL-3/train/wav/SSB0379/SSB03790006.wav
+chinese,SSB0379,2,chinese/SSB0379/chinese_SSB0379_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0379/SSB03790007.wav | AISHELL-3/train/wav/SSB0379/SSB03790008.wav | AISHELL-3/train/wav/SSB0379/SSB03790009.wav | AISHELL-3/train/wav/SSB0379/SSB03790010.wav | AISHELL-3/train/wav/SSB0379/SSB03790011.wav
+chinese,SSB0379,3,chinese/SSB0379/chinese_SSB0379_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0379/SSB03790012.wav | AISHELL-3/train/wav/SSB0379/SSB03790013.wav | AISHELL-3/train/wav/SSB0379/SSB03790014.wav
+chinese,SSB0380,1,chinese/SSB0380/chinese_SSB0380_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0380/SSB03800001.wav | AISHELL-3/train/wav/SSB0380/SSB03800002.wav | AISHELL-3/train/wav/SSB0380/SSB03800003.wav
+chinese,SSB0380,2,chinese/SSB0380/chinese_SSB0380_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0380/SSB03800004.wav | AISHELL-3/train/wav/SSB0380/SSB03800005.wav | AISHELL-3/train/wav/SSB0380/SSB03800006.wav | AISHELL-3/train/wav/SSB0380/SSB03800007.wav
+chinese,SSB0380,3,chinese/SSB0380/chinese_SSB0380_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0380/SSB03800008.wav | AISHELL-3/train/wav/SSB0380/SSB03800009.wav | AISHELL-3/train/wav/SSB0380/SSB03800010.wav | AISHELL-3/train/wav/SSB0380/SSB03800012.wav
+chinese,SSB0382,1,chinese/SSB0382/chinese_SSB0382_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0382/SSB03820001.wav | AISHELL-3/train/wav/SSB0382/SSB03820002.wav
+chinese,SSB0382,2,chinese/SSB0382/chinese_SSB0382_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0382/SSB03820003.wav | AISHELL-3/train/wav/SSB0382/SSB03820004.wav | AISHELL-3/train/wav/SSB0382/SSB03820005.wav
+chinese,SSB0382,3,chinese/SSB0382/chinese_SSB0382_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0382/SSB03820006.wav | AISHELL-3/train/wav/SSB0382/SSB03820007.wav | AISHELL-3/train/wav/SSB0382/SSB03820008.wav
+chinese,SSB0385,1,chinese/SSB0385/chinese_SSB0385_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0385/SSB03850001.wav | AISHELL-3/train/wav/SSB0385/SSB03850002.wav | AISHELL-3/train/wav/SSB0385/SSB03850003.wav
+chinese,SSB0385,2,chinese/SSB0385/chinese_SSB0385_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0385/SSB03850004.wav | AISHELL-3/train/wav/SSB0385/SSB03850005.wav | AISHELL-3/train/wav/SSB0385/SSB03850006.wav
+chinese,SSB0385,3,chinese/SSB0385/chinese_SSB0385_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0385/SSB03850007.wav | AISHELL-3/train/wav/SSB0385/SSB03850008.wav | AISHELL-3/train/wav/SSB0385/SSB03850009.wav
+chinese,SSB0393,1,chinese/SSB0393/chinese_SSB0393_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0393/SSB03930001.wav | AISHELL-3/train/wav/SSB0393/SSB03930002.wav | AISHELL-3/train/wav/SSB0393/SSB03930003.wav
+chinese,SSB0393,2,chinese/SSB0393/chinese_SSB0393_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0393/SSB03930004.wav | AISHELL-3/train/wav/SSB0393/SSB03930005.wav | AISHELL-3/train/wav/SSB0393/SSB03930007.wav
+chinese,SSB0393,3,chinese/SSB0393/chinese_SSB0393_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0393/SSB03930008.wav | AISHELL-3/train/wav/SSB0393/SSB03930009.wav | AISHELL-3/train/wav/SSB0393/SSB03930010.wav
+chinese,SSB0394,1,chinese/SSB0394/chinese_SSB0394_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0394/SSB03940002.wav | AISHELL-3/train/wav/SSB0394/SSB03940003.wav | AISHELL-3/train/wav/SSB0394/SSB03940004.wav
+chinese,SSB0394,2,chinese/SSB0394/chinese_SSB0394_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0394/SSB03940005.wav | AISHELL-3/train/wav/SSB0394/SSB03940006.wav | AISHELL-3/train/wav/SSB0394/SSB03940007.wav | AISHELL-3/train/wav/SSB0394/SSB03940008.wav | AISHELL-3/train/wav/SSB0394/SSB03940009.wav
+chinese,SSB0394,3,chinese/SSB0394/chinese_SSB0394_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0394/SSB03940010.wav | AISHELL-3/train/wav/SSB0394/SSB03940011.wav | AISHELL-3/train/wav/SSB0394/SSB03940012.wav | AISHELL-3/train/wav/SSB0394/SSB03940013.wav
+chinese,SSB0395,1,chinese/SSB0395/chinese_SSB0395_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0395/SSB03950001.wav | AISHELL-3/train/wav/SSB0395/SSB03950002.wav | AISHELL-3/train/wav/SSB0395/SSB03950003.wav | AISHELL-3/train/wav/SSB0395/SSB03950004.wav
+chinese,SSB0395,2,chinese/SSB0395/chinese_SSB0395_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0395/SSB03950005.wav | AISHELL-3/train/wav/SSB0395/SSB03950006.wav | AISHELL-3/train/wav/SSB0395/SSB03950007.wav | AISHELL-3/train/wav/SSB0395/SSB03950008.wav
+chinese,SSB0395,3,chinese/SSB0395/chinese_SSB0395_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0395/SSB03950009.wav | AISHELL-3/train/wav/SSB0395/SSB03950010.wav | AISHELL-3/train/wav/SSB0395/SSB03950011.wav
+chinese,SSB0407,1,chinese/SSB0407/chinese_SSB0407_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0407/SSB04070001.wav | AISHELL-3/train/wav/SSB0407/SSB04070002.wav | AISHELL-3/train/wav/SSB0407/SSB04070003.wav | AISHELL-3/train/wav/SSB0407/SSB04070004.wav | AISHELL-3/train/wav/SSB0407/SSB04070005.wav
+chinese,SSB0407,2,chinese/SSB0407/chinese_SSB0407_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0407/SSB04070006.wav | AISHELL-3/train/wav/SSB0407/SSB04070007.wav | AISHELL-3/train/wav/SSB0407/SSB04070008.wav | AISHELL-3/train/wav/SSB0407/SSB04070009.wav
+chinese,SSB0407,3,chinese/SSB0407/chinese_SSB0407_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0407/SSB04070010.wav | AISHELL-3/train/wav/SSB0407/SSB04070011.wav | AISHELL-3/train/wav/SSB0407/SSB04070012.wav | AISHELL-3/train/wav/SSB0407/SSB04070013.wav | AISHELL-3/train/wav/SSB0407/SSB04070014.wav
+chinese,SSB0415,1,chinese/SSB0415/chinese_SSB0415_01.wav,16000,10.0,AISHELL-3/train/wav/SSB0415/SSB04150001.wav | AISHELL-3/train/wav/SSB0415/SSB04150002.wav | AISHELL-3/train/wav/SSB0415/SSB04150003.wav
+chinese,SSB0415,2,chinese/SSB0415/chinese_SSB0415_02.wav,16000,10.0,AISHELL-3/train/wav/SSB0415/SSB04150004.wav | AISHELL-3/train/wav/SSB0415/SSB04150005.wav | AISHELL-3/train/wav/SSB0415/SSB04150006.wav | AISHELL-3/train/wav/SSB0415/SSB04150007.wav
+chinese,SSB0415,3,chinese/SSB0415/chinese_SSB0415_03.wav,16000,10.0,AISHELL-3/train/wav/SSB0415/SSB04150008.wav | AISHELL-3/train/wav/SSB0415/SSB04150009.wav | AISHELL-3/train/wav/SSB0415/SSB04150010.wav

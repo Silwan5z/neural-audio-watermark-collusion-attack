@@ -24,11 +24,11 @@ LABELS = {
     "voicemark": "VoiceMark",
     "wmcodec": "WMCodec",
 }
-CONDITIONS = ["benign_copy", "uniform_collusion", "successful_mrc"]
+CONDITIONS = ["single", "average", "targeted"]
 STYLE = {
-    "benign_copy": ("Valid", "#176C9C", "o", 0.20),
-    "uniform_collusion": ("Uniform", "#7C8790", "s", 0.00),
-    "successful_mrc": ("MRC", "#D9822B", "D", -0.20),
+    "single": ("Single", "#176C9C", "o", 0.20),
+    "average": ("Average", "#7C8790", "s", 0.00),
+    "targeted": ("Targeted", "#D9822B", "D", -0.20),
 }
 
 mpl.rcParams.update({
@@ -53,7 +53,7 @@ def main() -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
     frames = []
     for model in MODELS:
-        path = ANALYSIS / f"min_bit_confidence_k8_{model}.csv"
+        path = ANALYSIS / f"{model}.csv"
         data = pd.read_csv(path)
         if set(data["model"]) != {model}:
             raise RuntimeError(f"unexpected model values in {path}")
@@ -65,20 +65,21 @@ def main() -> None:
         for condition in CONDITIONS:
             values = data.loc[
                 data.model.eq(model) & data.condition.eq(condition),
-                "min_bit_confidence",
+                "minimum_confidence",
             ].to_numpy(float)
             if len(values) == 0:
                 continue
-            q05, q25, q50, q75, q95 = np.quantile(values, [.05, .25, .50, .75, .95])
+            q05, q25, q50, q75, q95 = np.quantile(
+                values, [0.05, 0.25, 0.50, 0.75, 0.95])
             summary_rows.append({
                 "model": model,
                 "condition": condition,
-                "n": len(values),
-                "q05": f"{q05:.6f}",
-                "q25": f"{q25:.6f}",
+                "samples": len(values),
+                "p05": f"{q05:.6f}",
+                "p25": f"{q25:.6f}",
                 "median": f"{q50:.6f}",
-                "q75": f"{q75:.6f}",
-                "q95": f"{q95:.6f}",
+                "p75": f"{q75:.6f}",
+                "p95": f"{q95:.6f}",
             })
 
     summary_path = SUMMARY / "confidence_summary.csv"
@@ -106,15 +107,16 @@ def main() -> None:
             row = summary[(summary.model == model) & (summary.condition == condition)].iloc[0]
             y = center + offset
             q05, q25, q50, q75, q95 = [
-                float(row[key]) for key in ("q05", "q25", "median", "q75", "q95")
+                float(row[key])
+                for key in ("p05", "p25", "median", "p75", "p95")
             ]
             ax.hlines(y, q05, q95, color=color, lw=0.9, alpha=0.75, zorder=2)
             ax.hlines(y, q25, q75, color=color, lw=3.5, zorder=3)
             ax.plot(q50, y, marker=marker, ms=4.5, color=color, markeredgecolor="white",
                     markeredgewidth=0.55, linestyle="none", zorder=4,
                     label=label if first else None)
-            if condition == "successful_mrc" and model in {"voicemark", "wmcodec"}:
-                ax.text(0.985, y + 0.105, f"{int(row['n'])} trials",
+            if condition == "targeted" and model in {"voicemark", "wmcodec"}:
+                ax.text(0.985, y + 0.105, f"{int(row['samples'])} trials",
                         ha="right", va="center", fontsize=7.2, color=color)
             first = False
 

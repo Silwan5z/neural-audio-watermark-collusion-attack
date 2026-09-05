@@ -1,17 +1,21 @@
-# 数据集目录
+# Evaluation audio
 
-此目录存放实验用原始音频，**不随仓库分发**（已 .gitignore）。
+The study uses `collusion_300/manifest.csv`: 100 speakers with three distinct
+10-second, 16 kHz mono utterances per speaker. The English half is derived from
+LibriSpeech train-clean-100; the Mandarin half is derived from AISHELL-3. The
+manifest fixes the speaker, clip, and source-audio schedule used by every
+experiment.
 
-## 生成 libritts16k
+Audio is not redistributed. Place each prepared WAV at the relative `path`
+listed in the manifest:
 
-```bash
-python tools/prepare_libritts16k.py \
-    --libritts /path/to/LibriTTS/test-clean \
-    --out dataset/libritts16k
+```text
+dataset/collusion_300/<language>/<speaker>/<language>_<speaker>_<clip>.wav
 ```
 
-- 输入：LibriTTS test-clean（[OpenSLR 60](https://www.openslr.org/60)），24kHz，目录结构 `{spk}/{book}/{spk}_{book}_{utt}_{seg}.wav`。
-- 输出：`dataset/libritts16k/` 下 115 个 16kHz 单声道 wav，命名 `{spk}_{book}_{spk}_{book}_{utt}_{seg}.wav`。
-- 脚本只处理清单列出的 115 个文件，输出与论文实验使用的音频完全一致。
+Each WAV must be mono, 16 kHz, and exactly 10 seconds. `src/registry.py`
+validates that all 100 speakers have clip indices 1, 2, and 3 before running an
+experiment. The `sources` column records the upstream utterance or utterances
+used to construct each fixed-length clip.
 
-加载约定见 `src/registry.py` 的 `clean_path_v19`：同一说话人下取时长最长的文件。
+Users must obtain LibriSpeech and AISHELL-3 under their original dataset terms.

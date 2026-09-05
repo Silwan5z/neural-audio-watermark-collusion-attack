@@ -12,7 +12,7 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "data" / "summary" / "path_representatives.csv"
+DATA = ROOT / "data" / "summary" / "one_bit_examples.csv"
 OUT = ROOT / "outputs" / "figures"
 
 INK = "#20262B"
@@ -54,31 +54,32 @@ def clean_axis(ax: plt.Axes, grid_axis: str | None = "y") -> None:
 
 def path_panel(ax: plt.Axes, data: pd.DataFrame, model: str, title: str,
                letter: str) -> None:
-    z = data[data.model == model].sort_values("lambda").copy()
+    z = data[data.model == model].sort_values("flipped_copy_weight").copy()
     if z.empty:
         raise RuntimeError(f"no representative path for {model}")
-    lam = z["lambda"].to_numpy(float)
-    response = z.response.to_numpy(float)
-    decoded = z.decoded_identity.to_numpy(int)
+    flipped_weight = z["flipped_copy_weight"].to_numpy(float)
+    bit_score = z.bit_score.to_numpy(float)
+    decoded = z.decoded_payload.to_numpy(int)
     payload_a = int(z.iloc[0].base_payload)
     payload_b = int(z.iloc[0].flipped_payload)
     state = np.where(decoded == payload_a, 0, np.where(decoded == payload_b, 2, 1))
 
     ax.axhline(0.5, color="#9EA6AC", lw=0.58, ls=(0, (3, 2)), zorder=1)
-    ax.plot(lam, response, color=BLUE, marker="o", ms=3.4, lw=1.55,
+    ax.plot(flipped_weight, bit_score, color=BLUE, marker="o", ms=3.4, lw=1.55,
             mfc="white", mec=BLUE, mew=0.9, zorder=3)
 
     # The thin strip reports the decoded complete payload; the curve reports
     # only the one bit on which the valid endpoints differ.
-    for lo, hi, value in zip(lam[:-1], lam[1:], state[:-1]):
+    for lo, hi, value in zip(
+            flipped_weight[:-1], flipped_weight[1:], state[:-1]):
         ax.axvspan(lo, hi, ymin=0.015, ymax=0.095,
                    color=STATE_COLORS[int(value)], lw=0, zorder=0)
     run_start = 0
     names = {0: "A", 1: "Other", 2: "B"}
     for index in range(1, len(state) + 1):
         if index == len(state) or state[index] != state[run_start]:
-            left = lam[run_start]
-            right = lam[index] if index < len(lam) else 1.0
+            left = flipped_weight[run_start]
+            right = flipped_weight[index] if index < len(flipped_weight) else 1.0
             if right - left >= 0.13:
                 ax.text((left + right) / 2, 0.047, names[int(state[run_start])],
                         ha="center", va="center", fontsize=8.0, color=INK)
@@ -106,8 +107,8 @@ def main() -> None:
     path_panel(ax_a, data, "audioseal", "AudioSeal", "a")
     path_panel(ax_b, data, "voicemark", "VoiceMark", "b")
     ax_a.tick_params(labelbottom=False)
-    ax_b.set_xlabel(r"Weight on copy B, $\lambda$")
-    fig.text(0.004, 0.53, "B-bit support",
+    ax_b.set_xlabel("Weight on flipped copy")
+    fig.text(0.004, 0.53, "Flipped-bit score",
              ha="center", va="center", rotation=90, fontsize=9.0, color=INK)
     fig.subplots_adjust(left=0.075, right=0.998, bottom=0.14, top=0.95)
     for extension in ("pdf", "svg"):
