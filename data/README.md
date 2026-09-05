@@ -1,40 +1,17 @@
-# Published experiment data
+# Paper data
 
-Generated from completed runtime outputs at 2026-08-20 22:04:55 CST.
+Only data used by the current manuscript are tracked here.
 
-`data/` is the canonical, version-controlled result tree. Runtime checkpoints and logs
-remain under the ignored local `results/` directory. Audio datasets, caches, and model
-weights are not included.
+| Directory | Contents | Expected size |
+|---|---|---:|
+| `main/` | Uniform-average trial records for K=2, 3, and 5 | 15 files × 300 trials |
+| `k8/raw/` | Source-correct K=8 trial records | 5 systems × 300 trials |
+| `coalitions/` | Shared 16-bit coalitions and cached PM/MRC selections | 300 trials at K=5 and K=8 |
+| `targeted/` | Merged PM/MRC target attempts | 20 files × 3,000 attempts |
+| `one_bit/` | Valid endpoint pairs and a 600-trial path summary | 300 trials per system |
+| `confidence/` | Per-trial minimum-bit-confidence records used by Fig. 4 | 5 files |
+| `summary/` | Compact table and figure inputs | small CSV files |
 
-Matched `N=1024` experiments retain native payload bits and restrict only the independently
-sampled active candidate registry; they do not truncate 16-bit payloads.
+The four 16-bit systems use the same K=5 and K=8 coalitions. TimbreWM uses separately validated coalitions because its payload has 10 bits. Absolute source paths are retained as provenance; audio and marked-copy caches are not distributed.
 
-## Categories
-
-- `attack/`: 20 CSV files
-- `baselines/`: 20 CSV files
-- `bdb/`: 20 CSV files
-- `codec_sensitivity/`: 5 CSV files
-- `detector_oracle/`: 4 CSV files
-- `dm/`: 20 CSV files
-- `dm_restart_stability/`: 20 CSV files
-- `ecc/`: 20 CSV files
-- `eep/`: 20 CSV files
-- `evidence_chain/`: 20 CSV files
-- `framing_hull/`: 20 CSV files
-- `mechanism_diag/`: 1 CSV files
-- `pgr/`: 20 CSV files
-- `pilot/`: 10 CSV files
-- `pulse_noise/`: 20 CSV files
-- `quality_presence/`: 20 CSV files
-- `registry_control/`: 20 CSV files
-- `rp/`: 20 CSV files
-- `tamper/`: 20 CSV files
-- `tamper_arbitrary/`: 20 CSV files
-- `tamper_arbitrary_detail/`: 5 CSV files
-- `tamper_arbitrary_matched_n1024/`: 20 CSV files
-- `temporal_sensitivity/`: 5 CSV files
-
-Total: 370 completed CSV files.
-
-See `INDEX.csv` for row counts, schemas, byte sizes, runtime source paths, and SHA-256 checksums.
+Run `python scripts/verify_paper_data.py` from the repository root to check counts, schemas, key manuscript aggregates, and `MANIFEST.csv` checksums.

@@ -1,0 +1,8 @@
+/data/**/*.csv text eol=lf
+/data/**/*.json text eol=lf
+/paper/**/*.tex text eol=lf
+/paper/**/*.bib text eol=lf
+/paper/**/*.sty text eol=lf
+/paper/**/*.svg binary
+/paper/**/*.pdf binary
+/paper/**/*.pptx binary

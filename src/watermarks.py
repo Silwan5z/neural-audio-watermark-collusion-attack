@@ -265,7 +265,7 @@ def detect_wavmark(m, wm16k, codebook_bits):
     return detect_wavmark_many(m, [wm16k], codebook_bits)[0]
 
 
-def detect_wavmark_many(m, signals, codebook_bits, window_batch_size=400):
+def detect_wavmark_many(m, signals, codebook_bits, window_batch_size=None):
     """Decode multiple WavMark signals by batching their sliding windows.
 
     This mirrors ``wavmark.decode_watermark`` exactly: 1 s windows, 50 ms
@@ -274,6 +274,11 @@ def detect_wavmark_many(m, signals, codebook_bits, window_batch_size=400):
     """
     import torch
     from wavmark.utils import wm_add_util
+
+    if window_batch_size is None:
+        window_batch_size = int(os.environ.get("WAVMARK_WINDOW_BATCH_SIZE", "400"))
+    if window_batch_size < 1:
+        raise ValueError("WAVMARK_WINDOW_BATCH_SIZE must be positive")
 
     start_bit = np.asarray(wm_add_util.fix_pattern[:16], dtype=np.int8)
     window, step = 16000, 800

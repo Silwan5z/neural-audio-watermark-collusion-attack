@@ -23,18 +23,47 @@ from watermarks import load_audio, embed, detect, pesq_wb, stoi, si_sdr  # noqa:
 
 REAL_ANALYSIS = Path(__file__).resolve().parent.parent / "dataset"
 CACHE_DIR = Path(__file__).resolve().parent.parent / "cache"
+CLIP_CACHE_DIR = Path(__file__).resolve().parent.parent / "cache_clip_indexed_v20"
 NBITS = {"audioseal": 16, "timbrewm": 10, "wavmark": 16, "voicemark": 16, "wmcodec": 16}
 CAP = 0.5
 
 MANIFEST = REAL_ANALYSIS / "collusion_300" / "manifest.csv"
 
+_MANIFEST_BY_SPEAKER = None
+
+
+def _manifest_by_speaker():
+    """Load and validate the three-utterance-per-speaker manifest once."""
+    global _MANIFEST_BY_SPEAKER
+    if _MANIFEST_BY_SPEAKER is not None:
+        return _MANIFEST_BY_SPEAKER
+    if not MANIFEST.exists():
+        raise FileNotFoundError(f"missing dataset manifest: {MANIFEST}")
+    grouped = {}
+    with MANIFEST.open(encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            spk = f"{row['language']}:{row['speaker_id']}"
+            item = dict(row)
+            item["clip_index"] = int(item["clip_index"])
+            item["path"] = str((MANIFEST.parent / item["path"]).resolve())
+            grouped.setdefault(spk, []).append(item)
+    for spk, rows in grouped.items():
+        rows.sort(key=lambda r: r["clip_index"])
+        indices = [r["clip_index"] for r in rows]
+        if indices != [1, 2, 3]:
+            raise ValueError(f"{spk}: expected clip indices [1, 2, 3], got {indices}")
+        for row in rows:
+            if not Path(row["path"]).is_file():
+                raise FileNotFoundError(row["path"])
+    if len(grouped) != 100:
+        raise ValueError(f"expected 100 speakers, found {len(grouped)}")
+    _MANIFEST_BY_SPEAKER = grouped
+    return grouped
+
 
 def speakers():
     """Return the 100 bilingual speakers from the generated manifest."""
-    if not MANIFEST.exists():
-        raise FileNotFoundError(f"missing dataset manifest: {MANIFEST}")
-    with MANIFEST.open(encoding="utf-8", newline="") as f:
-        return sorted({f"{r['language']}:{r['speaker_id']}" for r in csv.DictReader(f)})
+    return sorted(_manifest_by_speaker())
 
 
 def trials_per_speaker_plan(n_total=300, n_spk=38):
@@ -66,20 +95,32 @@ def coalition_seed(spk, K, local_t):
     return (h * 100000 + K * 1000 + local_t + 42) % (2 ** 31)
 
 
-def clean_path_v19(spk):
-    """clean 路径：libritts16k 目录里该说话人时长最长的文件（不是排序后第一个）。
-    发现说话人 61 唯一的候选文件只有 0.81s，短于 wavmark 嵌入所需的最小 chunk 长度（约2s），
-    必须选最长文件而不是任意/首个文件，否则 wavmark embed 会断言失败。"""
-    language, speaker_id = spk.split(":", 1)
-    cands = sorted((REAL_ANALYSIS / "collusion_300" / language / speaker_id).glob("*.wav"))
-    if not cands:
-        raise FileNotFoundError(f"未找到说话人 {spk} 的 clean 音频")
-    durs = [(sf.info(str(p)).frames / sf.info(str(p)).samplerate, p) for p in cands]
-    return max(durs, key=lambda x: x[0])[1]
+def source_record(spk, local_t=0):
+    """Return the manifest row selected by a speaker-local trial index.
+
+    In the 300-trial paper schedule, local_t=0,1,2 maps to the speaker's three
+    distinct utterances. Larger schedules cycle over those utterances while
+    retaining a distinct local_t for payload seeding.
+    """
+    rows = _manifest_by_speaker().get(spk)
+    if rows is None:
+        raise KeyError(f"unknown speaker: {spk}")
+    return rows[int(local_t) % len(rows)]
 
 
-def load_clean(spk, sr=16000):
-    return load_audio(clean_path_v19(spk), sr)
+def clean_path_v19(spk, local_t=0):
+    """Return the scheduled clean utterance (legacy function name retained)."""
+    return Path(source_record(spk, local_t)["path"])
+
+
+def load_clean(spk, local_t=0, sr=16000):
+    return load_audio(clean_path_v19(spk, local_t), sr)
+
+
+def cache_path_for(model, spk, local_t, codeword_int):
+    """Clip-indexed cache path isolated from the legacy speaker-only cache."""
+    clip_index = int(source_record(spk, local_t)["clip_index"])
+    return CLIP_CACHE_DIR / model / spk / f"clip_{clip_index:02d}" / f"{codeword_int}.wav"
 
 
 def full_registry_size(model):
@@ -96,10 +137,10 @@ def int_to_bits(v, d):
     return np.array([(v >> i) & 1 for i in range(d)], dtype=np.int8)
 
 
-def get_or_embed(model, spk, codeword_int):
+def get_or_embed(model, spk, codeword_int, local_t=0):
     """按需嵌入并缓存，返回 wav（float32, 16k）。"""
     d = NBITS[model]
-    cache_path = CACHE_DIR / model / spk / f"{codeword_int}.wav"
+    cache_path = cache_path_for(model, spk, local_t, codeword_int)
     if cache_path.exists():
         # Several GPU workers can request a shared payload simultaneously.
         # Only accept a complete, finite cache file; otherwise regenerate it.
@@ -110,7 +151,7 @@ def get_or_embed(model, spk, codeword_int):
         except RuntimeError:
             pass
     cache_path.parent.mkdir(parents=True, exist_ok=True)
-    clean = load_clean(spk)
+    clean = load_clean(spk, local_t)
     bits = int_to_bits(codeword_int, d).tolist()
     wm = embed(model, clean, bits)
     # Publish atomically: readers observe either an existing valid WAV or the

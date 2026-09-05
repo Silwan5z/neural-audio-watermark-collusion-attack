@@ -21,6 +21,55 @@ results/
 cache/
 *.wav
 
+# 本机实验历史与代理缓存（不属于论文发布）
+.art/
+.cache/
+.claude/
+.claude.json
+.config/
+.local/
+.nv/
+node_modules/
+logs/
+runs/
+reports/
+checkpoints/
+paper_v*/
+final_submission*/
+paper_rewriting*/
+paper/main.aux
+paper/main.bbl
+paper/main.blg
+paper/main.log
+paper/main.pdf
+paper/figures/*.png
+docs/
+experiments/
+package.json
+package-lock.json
+run_claude.sh
+src/attacks.py
+*.zip
+
+# data/ 采用白名单：只发布当前论文依赖
+data/*
+!data/README.md
+!data/MANIFEST.csv
+!data/main/
+!data/main/**
+!data/k8/
+!data/k8/**
+!data/coalitions/
+!data/coalitions/**
+!data/targeted/
+!data/targeted/**
+!data/one_bit/
+!data/one_bit/**
+!data/confidence/
+!data/confidence/**
+!data/summary/
+!data/summary/**
+
 # 编辑器
 .idea/
 .vscode/
