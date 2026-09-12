@@ -21,10 +21,12 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from registry import (NBITS, get_or_embed,
-                      int_to_bits, load_clean, source_record)  # noqa: E402
+sys.path.insert(0, str(ROOT / "scripts"))
+from registry import NBITS, int_to_bits, source_record  # noqa: E402
 from watermarks import pesq_wb, resample_to, stoi  # noqa: E402
-from native_audio import NATIVE_SAMPLE_RATE, bits_to_int, decode_native, embed_native  # noqa: E402
+from native_audio import (  # noqa: E402
+    NATIVE_SAMPLE_RATE, bits_to_int, decode_native, get_or_embed_native,
+)
 
 SOURCE = ROOT / "results" / "average" / "k8_candidates"
 DEST = ROOT / "results" / "average" / "k8"
@@ -78,20 +80,16 @@ def main():
         clip_slot = int(row["clip_index"]) - 1
         source_key = (speaker, clip_slot); pool = pools[source_key]
         rng = np.random.default_rng(seed_for(model, speaker, clip_slot, int(row["trial_id"])))
-        clean16 = np.asarray(load_clean(speaker, clip_slot), dtype=np.float32)
-
         # Nine verified payloads provide multiple distinct eight-member
         # coalitions for speakers whose original valid pool was very small.
         while len(pool) < 9:
             payload = int(rng.integers(0, 2 ** d))
             if payload in pool:
                 continue
-            bits = int_to_bits(payload, d)
-            if sr == 16000:
-                wav = np.asarray(get_or_embed(model, speaker, payload, clip_slot), dtype=np.float32)
-            else:
-                wav, got_sr = embed_native(model, clean16, bits.tolist())
-                if got_sr != sr: raise ValueError((got_sr, sr))
+            wav, got_sr = get_or_embed_native(
+                model, speaker, payload, clip_slot)
+            if got_sr != sr:
+                raise ValueError((got_sr, sr))
             hard, _, presence, extra = decode_native(model, wav, sr)
             decoded = None if hard is None else bits_to_int(hard)
             if decoded == payload:
@@ -114,12 +112,11 @@ def main():
 
         payload_bits = np.asarray([int_to_bits(v, d) for v in payloads], dtype=np.int8)
         members = []
-        for bits, payload in zip(payload_bits, payloads):
-            if sr == 16000:
-                wav = np.asarray(get_or_embed(model, speaker, payload, clip_slot), dtype=np.float32)
-            else:
-                wav, got_sr = embed_native(model, clean16, bits.tolist())
-                if got_sr != sr: raise ValueError((got_sr, sr))
+        for payload in payloads:
+            wav, got_sr = get_or_embed_native(
+                model, speaker, payload, clip_slot)
+            if got_sr != sr:
+                raise ValueError((got_sr, sr))
             members.append(wav)
         n = min(map(len, members)); members = [wav[:n] for wav in members]
         mixed = np.mean(np.stack(members), axis=0, dtype=np.float64).astype(np.float32)

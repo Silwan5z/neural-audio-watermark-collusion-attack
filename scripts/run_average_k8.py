@@ -18,12 +18,12 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from registry import (NBITS, coalition_seed, full_registry_bits, get_or_embed,
-                      int_to_bits, load_clean, sample_coalition, source_record,
+from registry import (NBITS, coalition_seed, full_registry_bits,
+                      int_to_bits, sample_coalition, source_record,
                       trial_schedule)  # noqa: E402
 from watermarks import get_wavmark, pesq_wb, resample_to, stoi  # noqa: E402
 from native_audio import (  # noqa: E402
-    NATIVE_SAMPLE_RATE, bits_to_int, decode_native, embed_native)
+    NATIVE_SAMPLE_RATE, bits_to_int, decode_native, get_or_embed_native)
 
 
 def parse_args():
@@ -88,14 +88,12 @@ def main():
         payloads = sample_coalition(rng, model, 8)
         payload_bits = np.asarray([int_to_bits(v, d) for v in payloads], dtype=np.int8)
         manifest_source = source_record(speaker, clip_slot)
-        clean16 = np.asarray(load_clean(speaker, clip_slot), dtype=np.float32)
         members = []
-        for row, payload in zip(payload_bits, payloads):
-            if sr == 16000:
-                wav = np.asarray(get_or_embed(model, speaker, payload, clip_slot), dtype=np.float32)
-            else:
-                wav, got_sr = embed_native(model, clean16, row.tolist())
-                if got_sr != sr: raise ValueError((model, got_sr, sr))
+        for payload in payloads:
+            wav, got_sr = get_or_embed_native(
+                model, speaker, payload, clip_slot)
+            if got_sr != sr:
+                raise ValueError((model, got_sr, sr))
             members.append(wav)
         n = min(map(len, members)); members = [w[:n] for w in members]
         mixed = np.mean(np.stack(members), axis=0, dtype=np.float64).astype(np.float32)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge and validate the final Payload Match and Bit Margin shards."""
+"""Merge and validate the final Payload Match and Target-Bit Margin shards."""
 from __future__ import annotations
 
 import argparse

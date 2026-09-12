@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Evaluate Payload Match and Bit Margin on ten nonmember targets per trial.
+"""Evaluate Payload Match and Target-Bit Margin on ten nonmembers per trial.
 
 The two methods preserve the definitions used by the corrected paper analysis:
 
 Payload Match selects the ten nonmember payloads closest to the coalition's
-convex payload region. Bit Margin selects the ten nonmember payloads whose
+convex payload region. Target-Bit Margin selects the ten nonmember payloads whose
 weakest target bit can receive the largest margin. Both methods optimize valid
 mixture weights and count exact full-payload matches.
 
@@ -37,10 +37,13 @@ from payload_match import (  # noqa: E402
 )
 from registry import (  # noqa: E402
     NBITS, CAP, coalition_seed, full_registry_bits, full_registry_size,
-    get_or_embed, int_to_bits, source_record, trial_schedule,
+    int_to_bits, source_record, trial_schedule,
 )
 from bit_margin import score_target_task  # noqa: E402
-from watermarks import detect_many, pesq_wb, si_sdr, stoi  # noqa: E402
+from native_audio import (  # noqa: E402
+    NATIVE_SAMPLE_RATE, detect_many_native, get_or_embed_native,
+)
+from watermarks import pesq_wb, resample_to, si_sdr, stoi  # noqa: E402
 
 
 MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
@@ -120,9 +123,9 @@ def score_target_block_task(task):
 
 
 def valid_coalition(model: str, speaker: str, clip_slot: int, k: int,
-                             registry_bits: np.ndarray,
-                             max_attempts: int = 2000
-                             ) -> tuple[list[int], list[np.ndarray], int]:
+                    registry_bits: np.ndarray, sample_rate: int,
+                    max_attempts: int = 2000
+                    ) -> tuple[list[int], list[np.ndarray], int]:
     """Deterministically draw k distinct payloads that decode exactly."""
     rng = np.random.default_rng(coalition_seed(speaker, k, clip_slot))
     selected: list[int] = []
@@ -137,9 +140,11 @@ def valid_coalition(model: str, speaker: str, clip_slot: int, k: int,
             if payload not in selected and payload not in candidates:
                 candidates.append(payload)
         candidate_waveforms = [
-            get_or_embed(model, speaker, payload, clip_slot) for payload in candidates
+            get_or_embed_native(model, speaker, payload, clip_slot)[0]
+            for payload in candidates
         ]
-        decoded = detect_many(model, candidate_waveforms, registry_bits)
+        decoded = detect_many_native(
+            model, candidate_waveforms, sample_rate, registry_bits)
         attempts += len(candidates)
         for payload, waveform, (_, _, hard) in zip(
                 candidates, candidate_waveforms, decoded):
@@ -184,7 +189,7 @@ def bit_margin_targets(coalition_bits: np.ndarray, coalition: list[int], model: 
     selected = scored[:TARGET_COUNT]
     failed = [(target, score) for score, target, _, success, _ in selected if not success]
     if failed:
-        raise RuntimeError(f"Bit Margin solver failure(s): {failed[:3]}")
+        raise RuntimeError(f"Target-Bit Margin solver failure(s): {failed[:3]}")
     return selected
 
 
@@ -288,9 +293,9 @@ def main() -> None:
         "--output-dir", type=Path,
         default=ROOT / "results" / "targeted")
     parser.add_argument(
-        "--coalition-dir", type=Path, default=ROOT / "data" / "coalitions")
+        "--coalition-dir", type=Path, default=ROOT / "results" / "coalitions")
     parser.add_argument(
-        "--target-dir", type=Path, default=ROOT / "data" / "targets")
+        "--target-dir", type=Path, default=ROOT / "results" / "targets")
     args = parser.parse_args()
     if not 0 <= args.shard_id < args.num_shards:
         parser.error("require 0 <= shard-id < num-shards")
@@ -314,6 +319,7 @@ def main() -> None:
     )
 
     registry_bits = full_registry_bits(args.model)
+    sample_rate = NATIVE_SAMPLE_RATE[args.model]
     native_ids = np.arange(full_registry_size(args.model), dtype=np.int64)
     target_pool = None
     if args.method == "bit_margin" and args.target_workers > 1:
@@ -335,12 +341,12 @@ def main() -> None:
                 raise RuntimeError(f"shared coalition schedule mismatch trial={trial_id}")
             coalition = [int(value) for value in shared_record["coalition_payloads"]]
             waveforms = [
-                np.asarray(get_or_embed(
-                    args.model, speaker, payload, clip_slot),
-                           dtype=np.float32)
+                np.asarray(get_or_embed_native(
+                    args.model, speaker, payload, clip_slot)[0], dtype=np.float32)
                 for payload in coalition
             ]
-            source_decoded = detect_many(args.model, waveforms, registry_bits)
+            source_decoded = detect_many_native(
+                args.model, waveforms, sample_rate, registry_bits)
             valid_copy_count = sum(
                 decoded_payload(hard) == payload
                 for payload, (_, _, hard) in zip(coalition, source_decoded)
@@ -352,7 +358,8 @@ def main() -> None:
             payloads_tested = int(shared_record["payloads_tested"])
         else:
             coalition, waveforms, payloads_tested = valid_coalition(
-                args.model, speaker, clip_slot, args.k, registry_bits)
+                args.model, speaker, clip_slot, args.k, registry_bits,
+                sample_rate)
         length = min(map(len, waveforms))
         waveforms = [waveform[:length] for waveform in waveforms]
         coalition_bits = np.stack([
@@ -387,8 +394,11 @@ def main() -> None:
                            for member in range(args.k)), dtype=np.float32)
             for _, _, weights, _, _ in selected
         ]
-        decoded = detect_many(args.model, attacked_waveforms, registry_bits)
+        decoded = detect_many_native(
+            args.model, attacked_waveforms, sample_rate, registry_bits)
         reference = waveforms[0]
+        reference_16 = (reference if sample_rate == 16000 else
+                        resample_to(reference, sample_rate, 16000))
         trial_rows: list[dict] = []
         decoded_records = []
         for selected_item, attacked, decoded_item in zip(
@@ -419,6 +429,8 @@ def main() -> None:
             target_accuracy = (float("nan") if hard_array is None else
                                float(np.mean(hard_array == target_bits)))
             effective_k = 1.0 / float(np.sum(weights ** 2))
+            attacked_16 = (attacked if sample_rate == 16000 else
+                           resample_to(attacked, sample_rate, 16000))
             trial_rows.append({
                 "dataset": (shared_record["dataset"]
                             if shared_record is not None else DATASET_TAG),
@@ -447,9 +459,9 @@ def main() -> None:
                                  json.dumps(hard_array.astype(int).tolist())),
                 "target_bit_accuracy": fmt(target_accuracy),
                 "quality_reference": "first_coalition_copy",
-                "pesq": fmt(float(pesq_wb(reference, attacked)), 4),
-                "stoi": fmt(float(stoi(reference, attacked)), 4),
-                "si_sdr": fmt(float(si_sdr(reference, attacked)), 2),
+                "pesq": fmt(float(pesq_wb(reference_16, attacked_16)), 4),
+                "stoi": fmt(float(stoi(reference_16, attacked_16)), 4),
+                "si_sdr": fmt(float(si_sdr(reference_16, attacked_16)), 2),
             })
         elapsed = time.time() - trial_started
         rows.extend(trial_rows)

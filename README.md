@@ -29,13 +29,15 @@ manuscript drafts are excluded from Git.
 | Uniform average, K=2, 3, 5, 8 | `data/average/` | `scripts/run_average.py`, `scripts/run_average_k8.py` |
 | Targeted mixtures | `data/targeted/` | `scripts/run_targeted.py` |
 | One-bit mixture paths | `data/one_bit/` | `scripts/run_one_bit_pairs.py` |
-| K=8 bit confidence | `data/confidence/` | `scripts/collect_confidence.py` |
+| K=8 confidence distributions | `data/confidence/` | `scripts/collect_confidence.py` |
+| K=8 confidence screening | `data/summary/confidence_screening.csv` | `scripts/collect_confidence_full.py`, `scripts/screen_confidence.py` |
 
-Payload Match and Bit Margin are the two target-selection methods. Payload
-Match selects nonmember payloads nearest to the coalition's convex payload
-region. Bit Margin selects nonmember payloads for which the weakest target bit
-can receive the largest margin. Each method evaluates ten targets and reports
-the mean number of exact full-payload hits out of ten.
+Target-Bit Margin is the selected-target method reported in the manuscript.
+For each trial it optimizes mixture weights for every nonmember payload, ranks
+the candidates by the optimized weakest-bit margin, and evaluates the ten
+highest-ranked targets. The release also includes Payload Match as an auxiliary
+comparison. Its display label in the released CSV is `Bit Margin`, while the
+method value and implementation path remain `bit_margin` for compatibility.
 
 `data/coalitions/` stores coalitions whose source copies all decode correctly.
 AudioSeal, WavMark, VoiceMark, and WMCodec use the same K=5 and K=8 coalition
@@ -53,7 +55,7 @@ row count, and SHA-256 checksum of every released result file.
 - A **targeted hit** requires the decoded payload to equal a selected nonmember
   target exactly.
 - **Single**, **Average**, and **Targeted** denote a valid single copy, a K=8
-  uniform average, and a successful Bit Margin output, respectively.
+  uniform average, and a successful Target-Bit Margin output, respectively.
 
 ## Setup and verification
 
@@ -70,6 +72,7 @@ inference:
 
 ```bash
 python scripts/verify_release.py
+python -m unittest discover -s tests -v
 ```
 
 Regenerate the three data-driven figures:
@@ -81,6 +84,9 @@ python scripts/figures/build_confidence.py
 ```
 
 Generated figures are written to the ignored `outputs/figures/` directory.
+Exact experiment parameters, native-rate processing, and commands for the
+targeted and confidence analyses are documented in
+[`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
 
 ## Maintenance
 

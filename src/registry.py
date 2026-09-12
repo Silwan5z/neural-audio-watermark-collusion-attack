@@ -140,7 +140,7 @@ def get_or_embed(model, speaker, payload, clip_slot=0):
         # Several GPU workers can request a shared payload simultaneously.
         # Only accept a complete, finite cache file; otherwise regenerate it.
         try:
-            cached, sr = sf.read(cache_path, dtype="float32")
+            cached, sr = sf.read(str(cache_path), dtype="float32")
             if sr == 16000 and len(cached) >= 16000 and np.isfinite(cached).all():
                 return cached
         except RuntimeError:
@@ -152,7 +152,7 @@ def get_or_embed(model, speaker, payload, clip_slot=0):
     # Publish atomically: readers observe either an existing valid WAV or the
     # fully written replacement, never a partial header/body.
     tmp_path = cache_path.parent / f".{payload}.{uuid.uuid4().hex}.wav"
-    sf.write(tmp_path, wm, 16000, subtype="FLOAT")
+    sf.write(str(tmp_path), wm, 16000, subtype="FLOAT")
     os.replace(tmp_path, cache_path)
     return wm
 

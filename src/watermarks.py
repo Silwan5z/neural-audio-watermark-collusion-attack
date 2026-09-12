@@ -25,7 +25,7 @@ _models = {}
 def load_audio(path: Path, sr: int = SR16) -> np.ndarray:
     import librosa
     import soundfile as sf
-    w, s = sf.read(path, dtype="float32")
+    w, s = sf.read(str(path), dtype="float32")
     if w.ndim > 1:
         w = w.mean(axis=1)
     if s != sr:

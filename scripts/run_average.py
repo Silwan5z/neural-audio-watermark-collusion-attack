@@ -12,15 +12,20 @@ from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 
 from registry import (  # noqa: E402
-    NBITS, get_or_embed, full_registry_bits,
+    NBITS, full_registry_bits,
     trial_schedule, coalition_seed, source_record,
 )
-from watermarks import detect, detect_many, pesq_wb, stoi, si_sdr  # noqa: E402
+from native_audio import (  # noqa: E402
+    NATIVE_SAMPLE_RATE, detect_many_native, get_or_embed_native,
+)
+from watermarks import pesq_wb, resample_to, stoi, si_sdr  # noqa: E402
 
-RESULTS = Path(__file__).resolve().parent.parent / "results" / "average"
+RESULTS = ROOT / "results" / "average"
 
 FIELDS = [
     "model", "k", "trial_id", "speaker", "clip_index", "source_path",
@@ -64,8 +69,9 @@ def load_checkpoint(path: Path, model: str, k: int) -> tuple[list[dict], set[int
 def metrics_of(model, waveform, coalition, registry_bits, payload_length,
                decoded=None):
     """Return the escape outcome and closest-member bit agreement."""
-    scores, _, hard = (decoded if decoded is not None else
-                       detect(model, waveform.astype(np.float32), registry_bits))
+    if decoded is None:
+        raise ValueError("native-rate metrics require a decoded result")
+    scores, _, hard = decoded
     rank = np.argsort(scores)[::-1]
     coalition_set = set(coalition)
 
@@ -94,6 +100,7 @@ def _rows_to_ints(row_idx, registry_bits):
 
 
 def valid_coalition(model, speaker, clip_slot, k, rng, registry_bits,
+                    sample_rate,
                     max_attempts=1000):
     """Draw k distinct payloads whose individual copies decode exactly."""
     selected, wavs, attempts = [], [], 0
@@ -105,8 +112,12 @@ def valid_coalition(model, speaker, clip_slot, k, rng, registry_bits,
             payload = int(rng.integers(0, limit))
             if payload not in selected and payload not in candidates:
                 candidates.append(payload)
-        candidate_wavs = [get_or_embed(model, speaker, p, clip_slot) for p in candidates]
-        decoded = detect_many(model, candidate_wavs, registry_bits)
+        candidate_wavs = [
+            get_or_embed_native(model, speaker, payload, clip_slot)[0]
+            for payload in candidates
+        ]
+        decoded = detect_many_native(
+            model, candidate_wavs, sample_rate, registry_bits)
         attempts += len(candidates)
         for payload, wav, (_, _, hard) in zip(candidates, candidate_wavs, decoded):
             if hard is None:
@@ -141,6 +152,7 @@ def main():
     model = args.model
     k = args.k
     d = NBITS[model]
+    sample_rate = NATIVE_SAMPLE_RATE[model]
 
     registry_bits = full_registry_bits(model)
     trial_idx = trial_schedule(n_total=args.n_trials)
@@ -175,7 +187,7 @@ def main():
         rng = np.random.default_rng(coalition_seed(speaker, k, clip_slot))
         source = source_record(speaker, clip_slot)
         coll_ints, wavs, payloads_tested = valid_coalition(
-            model, speaker, clip_slot, k, rng, registry_bits)
+            model, speaker, clip_slot, k, rng, registry_bits, sample_rate)
         n = min(len(w) for w in wavs)
         wavs = [w[:n] for w in wavs]
 
@@ -186,7 +198,8 @@ def main():
         output = sum(
             average_weights[index] * wavs[index] for index in range(k)
         ).astype(np.float32)
-        decoded = detect_many(model, [output], registry_bits)[0]
+        decoded = detect_many_native(
+            model, [output], sample_rate, registry_bits)[0]
         escaped, agreement = metrics_of(
             model, output, coll_ints, registry_bits, d, decoded)
         rows.append({
@@ -198,9 +211,16 @@ def main():
             "closest_member_bits": "" if agreement is None else agreement,
             "closest_member_bit_accuracy": (
                 "" if agreement is None else f"{agreement/d:.4f}"),
-            "pesq": f"{pesq_wb(reference, output):.4f}",
-            "stoi": f"{stoi(reference, output):.4f}",
-            "si_sdr": f"{si_sdr(reference, output):.2f}",
+            "pesq": "", "stoi": "", "si_sdr": "",
+        })
+        reference_16 = (reference if sample_rate == 16000 else
+                        resample_to(reference, sample_rate, 16000))
+        output_16 = (output if sample_rate == 16000 else
+                     resample_to(output, sample_rate, 16000))
+        rows[-1].update({
+            "pesq": f"{pesq_wb(reference_16, output_16):.4f}",
+            "stoi": f"{stoi(reference_16, output_16):.4f}",
+            "si_sdr": f"{si_sdr(reference_16, output_16):.2f}",
         })
         complete.add(gi)
         if len(complete) % 10 == 0:

@@ -19,12 +19,15 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 
 from registry import (  # noqa: E402
-    coalition_seed, full_registry_bits, get_or_embed, source_record,
+    coalition_seed, full_registry_bits, source_record,
     trial_schedule,
 )
-from watermarks import detect_many  # noqa: E402
+from native_audio import (  # noqa: E402
+    NATIVE_SAMPLE_RATE, detect_many_native, get_or_embed_native,
+)
 
 
 MODELS = ("audioseal", "wavmark", "voicemark", "wmcodec")
@@ -73,6 +76,7 @@ def expansion_request_path(out: Path, k: int, trial_id: int) -> Path:
 
 def validate_model(args, schedule) -> None:
     registry = full_registry_bits(args.model)
+    sample_rate = NATIVE_SAMPLE_RATE[args.model]
     done = 0
     for trial_id, (speaker, clip_slot) in enumerate(schedule):
         if trial_id % args.num_shards != args.shard_id:
@@ -103,9 +107,12 @@ def validate_model(args, schedule) -> None:
             if pool_matches and payloads_match:
                 done += 1
                 continue
-        waveforms = [get_or_embed(args.model, speaker, payload, clip_slot)
-                     for payload in payloads]
-        decoded = detect_many(args.model, waveforms, registry)
+        waveforms = [
+            get_or_embed_native(args.model, speaker, payload, clip_slot)[0]
+            for payload in payloads
+        ]
+        decoded = detect_many_native(
+            args.model, waveforms, sample_rate, registry)
         results = []
         for payload, (_, watermark_score, hard) in zip(payloads, decoded):
             got = payload_from_hard(hard)

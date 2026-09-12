@@ -1,8 +1,9 @@
-"""Native-rate embedding and decoding helpers for K=8 experiments."""
+"""Native-rate embedding, caching, and decoding helpers."""
 from __future__ import annotations
 
 import os
 import sys
+import uuid
 from pathlib import Path
 
 import numpy as np
@@ -10,9 +11,15 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from registry import full_registry_bits  # noqa: E402
+from registry import (  # noqa: E402
+    NBITS, full_registry_bits, get_or_embed, int_to_bits, load_clean,
+    source_record,
+)
 from watermarks import (  # noqa: E402
     _chunk_logits_to_bit_evidence,
+    _loglik_bits,
+    _loglik_chunks,
+    detect,
     detect_many,
     embed,
     extract_evidence,
@@ -29,6 +36,7 @@ NATIVE_SAMPLE_RATE = {
     "voicemark": 16000,
     "wmcodec": 24000,
 }
+NATIVE_CACHE_DIR = ROOT / "cache" / "marked_native"
 
 
 def bits_to_int(bits: np.ndarray) -> int:
@@ -67,6 +75,47 @@ def embed_native(model: str, clean_16khz: np.ndarray,
         quantized, _, _ = loaded["quant"](encoded_audio)
         marked = loaded["gen"](quantized)
     return marked[0, 0].cpu().numpy().astype(np.float32), 24000
+
+
+def native_cache_path(model: str, speaker: str, clip_slot: int,
+                      payload: int) -> Path:
+    clip_index = int(source_record(speaker, clip_slot)["clip_index"])
+    return (NATIVE_CACHE_DIR / model / speaker / f"clip_{clip_index:02d}" /
+            f"{payload}.wav")
+
+
+def get_or_embed_native(model: str, speaker: str, payload: int,
+                        clip_slot: int = 0) -> tuple[np.ndarray, int]:
+    """Load or create a marked copy without a post-embedding rate conversion."""
+    sample_rate = NATIVE_SAMPLE_RATE[model]
+    if sample_rate == 16000:
+        return (np.asarray(
+            get_or_embed(model, speaker, payload, clip_slot), dtype=np.float32),
+            sample_rate)
+
+    import soundfile as sf
+
+    path = native_cache_path(model, speaker, clip_slot, payload)
+    if path.exists():
+        try:
+            cached, observed_rate = sf.read(str(path), dtype="float32")
+            if (observed_rate == sample_rate and len(cached) >= sample_rate
+                    and np.isfinite(cached).all()):
+                return np.asarray(cached, dtype=np.float32), sample_rate
+        except RuntimeError:
+            pass
+
+    clean = np.asarray(load_clean(speaker, clip_slot), dtype=np.float32)
+    bits = int_to_bits(payload, NBITS[model]).astype(int).tolist()
+    waveform, observed_rate = embed_native(model, clean, bits)
+    if observed_rate != sample_rate:
+        raise RuntimeError(
+            f"{model}: expected {sample_rate} Hz embedding, got {observed_rate} Hz")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.parent / f".{payload}.{uuid.uuid4().hex}.wav"
+    sf.write(str(temporary), waveform, sample_rate, subtype="FLOAT")
+    os.replace(temporary, path)
+    return waveform, sample_rate
 
 
 def wavmark_vote_probability(waveform: np.ndarray) -> tuple[np.ndarray, int, int]:
@@ -163,3 +212,50 @@ def decode_native(model: str, waveform: np.ndarray, sample_rate: int):
         ) / 2.0
     return (np.asarray(hard, dtype=np.int8),
             np.asarray(probability, dtype=float), presence, details)
+
+
+def detect_native(model: str, waveform: np.ndarray, sample_rate: int,
+                  registry_bits: np.ndarray | None = None):
+    """Return registry scores, presence, and hard bits at the native rate."""
+    registry = (full_registry_bits(model)
+                if registry_bits is None else registry_bits)
+    if sample_rate == 16000:
+        return detect(model, np.asarray(waveform, dtype=np.float32), registry)
+
+    hard, probability, presence, details = decode_native(
+        model, np.asarray(waveform, dtype=np.float32), sample_rate)
+    if hard is None or probability is None:
+        return np.zeros(len(registry)), presence, None
+    if model == "timbrewm":
+        scores = _loglik_bits(np.asarray(probability), registry)
+    elif model == "wmcodec":
+        scores = _loglik_chunks(
+            np.asarray(details["digit_probabilities"]), registry,
+            nchunk=4, bit_order="msb")
+    else:
+        raise RuntimeError(f"unsupported non-16-kHz model: {model}")
+    return scores, presence, hard
+
+
+def detect_many_native(model: str, waveforms: list[np.ndarray],
+                       sample_rate: int,
+                       registry_bits: np.ndarray | None = None):
+    """Decode a waveform batch without converting away from the native rate."""
+    registry = (full_registry_bits(model)
+                if registry_bits is None else registry_bits)
+    if sample_rate == 16000:
+        return detect_many(model, waveforms, registry)
+    return [detect_native(model, waveform, sample_rate, registry)
+            for waveform in waveforms]
+
+
+def bit_probabilities_native(model: str, waveform: np.ndarray,
+                             sample_rate: int) -> tuple[np.ndarray, str]:
+    """Return decoded-one probabilities used by confidence screening."""
+    _, probability, _, _ = decode_native(
+        model, np.asarray(waveform, dtype=np.float32), sample_rate)
+    if probability is None:
+        raise RuntimeError(f"missing soft evidence for {model}")
+    source = ("valid-window vote fraction" if model == "wavmark"
+              else "native decoder bit marginal")
+    return np.clip(np.asarray(probability, dtype=np.float64), 0.0, 1.0), source

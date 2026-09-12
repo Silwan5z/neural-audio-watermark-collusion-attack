@@ -374,6 +374,12 @@ def verify_summaries() -> None:
              "p75", "p95"],
             15,
         ),
+        "confidence_screening.csv": (
+            ["model", "k", "speakers", "trials", "single_acceptance_pct",
+             "average_rejection_pct", "target_success_before_pct",
+             "target_success_after_pct"],
+            5,
+        ),
         "ideal_tracing_failure.csv": (
             ["bit_count", "k", "mean_pct", "lower_pct", "upper_pct"],
             8,
@@ -389,7 +395,22 @@ def verify_summaries() -> None:
         require(header(path) == expected_header, f"unexpected schema: {path}")
         require(len(read_csv(path)) == expected_rows,
                 f"{path}: expected {expected_rows} rows")
-    print("PASS summaries: six documented tables have fixed schemas")
+    screening = read_csv(DATA / "summary" / "confidence_screening.csv")
+    targeted = {
+        row["model"]: 10.0 * float(row["mean_hits_out_of_10"])
+        for row in read_csv(DATA / "summary" / "targeted_hits.csv")
+        if int(row["k"]) == 8 and row["method"] == "Bit Margin"
+    }
+    require({row["model"] for row in screening} == set(MODELS),
+            "confidence-screening summary must cover all five systems")
+    for row in screening:
+        require(int(row["k"]) == 8 and int(row["speakers"]) == 100
+                and int(row["trials"]) == 300,
+                f"bad confidence-screening scope for {row['model']}")
+        require(abs(float(row["target_success_before_pct"])
+                    - targeted[row["model"]]) < 0.051,
+                f"confidence-screening target rate mismatch for {row['model']}")
+    print("PASS summaries: seven documented tables have fixed schemas")
 
 
 def json_keys(value):

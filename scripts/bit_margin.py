@@ -1,4 +1,4 @@
-"""Weight optimization used by the Bit Margin target-selection experiment."""
+"""Weight optimization used by the Target-Bit Margin experiment."""
 from __future__ import annotations
 
 import sys

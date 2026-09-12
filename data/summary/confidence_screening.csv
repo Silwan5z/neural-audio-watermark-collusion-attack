@@ -1,0 +1,6 @@
+model,k,speakers,trials,single_acceptance_pct,average_rejection_pct,target_success_before_pct,target_success_after_pct
+audioseal,8,100,300,94.0,100.0,43.6,2.4
+wavmark,8,100,300,94.7,100.0,54.4,4.5
+timbrewm,8,100,300,95.0,100.0,92.3,0.0
+voicemark,8,100,300,94.0,75.3,0.6,0.4
+wmcodec,8,100,300,94.3,87.0,1.3,0.7
