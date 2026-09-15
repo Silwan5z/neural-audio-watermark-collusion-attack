@@ -1,0 +1,37 @@
+{
+  "audioseal": {
+    "n_checked": 900,
+    "mean_abs_si_sdr_error_db": 0.0024983544444444443,
+    "median_abs_si_sdr_error_db": 0.0024545,
+    "max_abs_si_sdr_error_db": 0.004999,
+    "fraction_within_0_05_db": 1.0
+  },
+  "timbrewm": {
+    "n_checked": 900,
+    "mean_abs_si_sdr_error_db": 0.0025025466666666663,
+    "median_abs_si_sdr_error_db": 0.0024985,
+    "max_abs_si_sdr_error_db": 0.004993,
+    "fraction_within_0_05_db": 1.0
+  },
+  "voicemark": {
+    "n_checked": 900,
+    "mean_abs_si_sdr_error_db": 0.002448648888888889,
+    "median_abs_si_sdr_error_db": 0.0025085000000000003,
+    "max_abs_si_sdr_error_db": 0.004994,
+    "fraction_within_0_05_db": 1.0
+  },
+  "wavmark": {
+    "n_checked": 900,
+    "mean_abs_si_sdr_error_db": 0.002505098888888889,
+    "median_abs_si_sdr_error_db": 0.002465,
+    "max_abs_si_sdr_error_db": 0.004996,
+    "fraction_within_0_05_db": 1.0
+  },
+  "wmcodec": {
+    "n_checked": 900,
+    "mean_abs_si_sdr_error_db": 0.4629530088888889,
+    "median_abs_si_sdr_error_db": 0.3403355,
+    "max_abs_si_sdr_error_db": 2.676914,
+    "fraction_within_0_05_db": 0.18777777777777777
+  }
+}

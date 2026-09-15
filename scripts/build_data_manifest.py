@@ -28,7 +28,7 @@ def main() -> None:
     output = data / "manifest.csv"
     active = (
         "average", "coalitions", "targets", "targeted", "one_bit",
-        "confidence", "summary",
+        "confidence", "summary", "supplementary",
     )
     files = [path for name in active for path in sorted((data / name).rglob("*"))
              if path.is_file()]

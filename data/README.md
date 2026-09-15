@@ -11,6 +11,7 @@ Only records used by the current study are tracked here.
 | `one_bit/` | Valid one-bit pairs and path results | 300 pairs per system |
 | `confidence/` | K=8 bit-confidence records | 5 files |
 | `summary/` | Compact table and figure inputs | 7 CSV files |
+| `supplementary/` | Quality, temporal-misalignment, and registry analyses | 11 files |
 
 The four 16-bit systems use the same coalition in each K=5 and K=8 trial.
 TimbreWM uses a separately validated 10-bit coalition. Source paths are stored

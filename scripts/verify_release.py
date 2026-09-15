@@ -20,7 +20,7 @@ METHODS = ("payload_match", "bit_margin")
 METHOD_LABELS = {"Payload Match": "payload_match", "Bit Margin": "bit_margin"}
 ACTIVE_DATA = (
     "average", "coalitions", "targets", "targeted", "one_bit", "confidence",
-    "summary",
+    "summary", "supplementary",
 )
 
 
@@ -413,6 +413,91 @@ def verify_summaries() -> None:
     print("PASS summaries: seven documented tables have fixed schemas")
 
 
+def verify_supplementary() -> None:
+    base = DATA / "supplementary"
+    expected = {
+        "quality/table2_quality_means.csv": (
+            ["model", "n", "pesq_avg", "stoi_avg", "si_sdr_avg", "snr_avg"],
+            5,
+        ),
+        "quality/summary_by_system_k.csv": (
+            ["model", "k", "n", "pesq", "stoi", "si_sdr", "snr",
+             "mean_si_sdr_reproduction_error",
+             "max_si_sdr_reproduction_error"],
+            20,
+        ),
+        "alignment/summary_cross_system.csv": (
+            ["condition", "system_count", "tf_pct", "attribution_margin",
+             "pesq", "stoi", "si_sdr", "snr", "tf_delta_pp_vs_aligned",
+             "pesq_delta_vs_aligned", "stoi_delta_vs_aligned",
+             "si_sdr_delta_vs_aligned", "snr_delta_vs_aligned"],
+            4,
+        ),
+        "alignment/summary_direction_averaged.csv": (
+            ["model", "condition", "n", "tf_pct", "attribution_margin",
+             "pesq", "stoi", "si_sdr", "snr"],
+            20,
+        ),
+        "alignment/summary_by_system_shift.csv": (
+            ["model", "shift_ms", "n", "tf_pct", "attribution_margin",
+             "pesq", "stoi", "si_sdr", "snr"],
+            35,
+        ),
+        "registry_occupancy/registry_occupancy_by_system_k.csv": (
+            ["model", "k", "bit_count", "n_trials", "native_escape_pct",
+             "ideal_native_escape_pct", "occupancy_pct", "registry_size",
+             "coalition_trace_pct", "registered_nonmember_pct",
+             "unassigned_pct", "escape_pct", "ideal_coalition_trace_pct",
+             "ideal_registered_nonmember_pct", "ideal_unassigned_pct",
+             "ideal_escape_pct"],
+            80,
+        ),
+        "registry_occupancy/registry_occupancy_all_k_average.csv": (
+            ["occupancy_pct", "cells", "coalition_trace_pct",
+             "registered_nonmember_pct", "unassigned_pct", "escape_pct",
+             "ideal_coalition_trace_pct", "ideal_registered_nonmember_pct",
+             "ideal_unassigned_pct", "ideal_escape_pct"],
+            4,
+        ),
+        "registry_occupancy/registry_occupancy_k2_average.csv": (
+            ["occupancy_pct", "systems", "coalition_trace_pct",
+             "registered_nonmember_pct", "unassigned_pct", "escape_pct",
+             "ideal_coalition_trace_pct", "ideal_registered_nonmember_pct",
+             "ideal_unassigned_pct", "ideal_escape_pct"],
+            4,
+        ),
+    }
+    for relative, (expected_header, expected_rows) in expected.items():
+        path = base / relative
+        require(header(path) == expected_header, f"unexpected schema: {path}")
+        require(len(read_csv(path)) == expected_rows,
+                f"{path}: expected {expected_rows} rows")
+
+    quality = read_csv(base / "quality" / "all_trials.csv")
+    require(len(quality) == 6000,
+            "supplementary quality data must contain 6000 rows")
+    require(Counter(row["model"] for row in quality)
+            == Counter({model: 1200 for model in MODELS}),
+            "supplementary quality model counts mismatch")
+
+    alignment = read_csv(base / "alignment" / "all_trials.csv")
+    require(len(alignment) == 10500,
+            "supplementary alignment data must contain 10500 rows")
+    require(Counter(int(row["shift_ms"]) for row in alignment)
+            == Counter({shift: 1500 for shift in (0, -10, 10, -20, 20, -50, 50)}),
+            "supplementary alignment shift counts mismatch")
+
+    occupancy = read_csv(
+        base / "registry_occupancy" /
+        "registry_occupancy_by_system_k.csv")
+    for row in occupancy:
+        require(abs(float(row["registered_nonmember_pct"])
+                    + float(row["unassigned_pct"])
+                    - float(row["escape_pct"])) < 1e-8,
+                "registry outcomes do not sum to escape rate")
+    print("PASS supplementary: quality, alignment, and registry analyses")
+
+
 def json_keys(value):
     if isinstance(value, dict):
         for key, child in value.items():
@@ -506,6 +591,7 @@ def main() -> None:
     verify_one_bit()
     verify_confidence()
     verify_summaries()
+    verify_supplementary()
     verify_names()
     verify_manifest()
     print("ALL RELEASE CHECKS PASSED")

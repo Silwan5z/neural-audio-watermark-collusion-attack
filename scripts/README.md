@@ -18,6 +18,16 @@
   Average, and every exact Target-Bit Margin hit at K=8.
 - `screen_confidence.py`: performs speaker-disjoint five-fold calibration of
   the minimum, mean, and log-variance confidence screen from the full records.
+- `compute_uniform_quality.py`: reconstructs uniform mixtures and computes
+  SI-SDR and SNR using the first valid personalized copy as reference.
+- `summarize_uniform_quality.py`: merges checkpoints and produces per-system
+  and per-coalition-size quality summaries.
+- `run_alignment_current.py`: tests K=5 averaging after shifting one rotating
+  coalition member by 10, 20, or 50 ms in either direction.
+- `summarize_alignment_current.py`: verifies and summarizes all alignment
+  cells, including paired zero-shift controls.
+- `analyze_registry_occupancy.py`: analytically splits observed escape into
+  registered-nonmember and unassigned outcomes under exact random registries.
 
 `payload_match.py`, `bit_margin.py`, and `native_audio.py` contain shared helper
 functions used by these entry points.

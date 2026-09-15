@@ -31,6 +31,9 @@ manuscript drafts are excluded from Git.
 | One-bit mixture paths | `data/one_bit/` | `scripts/run_one_bit_pairs.py` |
 | K=8 confidence distributions | `data/confidence/` | `scripts/collect_confidence.py` |
 | K=8 confidence screening | `data/summary/confidence_screening.csv` | `scripts/collect_confidence_full.py`, `scripts/screen_confidence.py` |
+| Uniform-mixture quality audit | `data/supplementary/quality/` | `scripts/compute_uniform_quality.py`, `scripts/summarize_uniform_quality.py` |
+| K=5 temporal misalignment | `data/supplementary/alignment/` | `scripts/run_alignment_current.py`, `scripts/summarize_alignment_current.py` |
+| Partial registry occupancy | `data/supplementary/registry_occupancy/` | `scripts/analyze_registry_occupancy.py` |
 
 Target-Bit Margin is the selected-target method reported in the manuscript.
 For each trial it optimizes mixture weights for every nonmember payload, ranks
@@ -87,6 +90,8 @@ Generated figures are written to the ignored `outputs/figures/` directory.
 Exact experiment parameters, native-rate processing, and commands for the
 targeted and confidence analyses are documented in
 [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
+The added quality, temporal-misalignment, and registry analyses are documented
+in [`SUPPLEMENTARY.md`](SUPPLEMENTARY.md), including interpretation limits.
 
 ## Maintenance
 

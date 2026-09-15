@@ -69,6 +69,8 @@ data/*
 !data/confidence/**
 !data/summary/
 !data/summary/**
+!data/supplementary/
+!data/supplementary/**
 
 # Editors and operating-system files
 .idea/
