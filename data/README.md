@@ -6,8 +6,8 @@ Only records used by the current study are tracked here.
 |---|---|---:|
 | `average/` | Uniform averages at K=2, 3, 5, and 8 | 20 system/K cells x 300 trials |
 | `coalitions/` | Valid K=5 and K=8 coalitions | 600 trials |
-| `targets/` | Ten Payload Match and Target-Bit Margin targets per trial | 1,200 files |
-| `targeted/` | Exact-match evaluation for both target methods | 20 files x 3,000 attempts |
+| `targets/` | Ten Target-Bit Margin targets per K=5/K=8 trial | 600 files |
+| `targeted/` | Exact-match evaluation of Target-Bit Margin | 10 files x 3,000 attempts |
 | `one_bit/` | Valid one-bit pairs and path results | 300 pairs per system |
 | `confidence/` | K=8 bit-confidence records | 5 files |
 | `summary/` | Compact table and figure inputs | 7 CSV files |
@@ -37,18 +37,17 @@ The file list and checksums are stored in `manifest.csv`.
 
 Public names follow one rule across paths, code, and data:
 
-- Human-readable method names are **Payload Match** and **Target-Bit Margin**.
-  The released summary retains the earlier `Bit Margin` display label; file
-  values are `payload_match` and `bit_margin`.
+- The human-readable method name is **Target-Bit Margin**; paths and CSV values
+  use `target_bit_margin`.
 - `k` is the coalition size. `clip_index` is the 1-based utterance number for
   one speaker. No second public field names the same utterance.
 - `escaped` is a trial outcome. `tracing_failure_pct` is the percentage of
   escaped trials.
 - `target_hit` means that the complete decoded payload equals
   `target_payload`. `hits_out_of_10` counts those hits among the ten targets.
-- `selection_score` ranks targets within one method; it is not compared across
-  Payload Match and Target-Bit Margin. `target_margin` describes the decoded
-  output, not the Target-Bit Margin selection score.
+- `selection_score` ranks candidate targets by their optimized weakest-bit
+  margin. `target_margin` describes the decoded output, not the target-selection
+  score.
 - `valid_copy_count` counts coalition copies that decode to their assigned
   payload before mixing. `payloads_tested` counts payloads checked while
   constructing a valid coalition.
@@ -64,4 +63,4 @@ are intentionally treated as regenerable runtime artifacts; use
 
 Metric columns use lowercase names (`pesq`, `stoi`, `visqol`, `si_sdr`, and
 `snr`). Paths use the order `experiment/k/method/system` when all four levels
-are present; for example, `targeted/k8/bit_margin/audioseal.csv`.
+are present; for example, `targeted/k8/target_bit_margin/audioseal.csv`.

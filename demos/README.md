@@ -26,5 +26,5 @@ STOI, and SI-SDR values for both model examples.
 
 The demos illustrate listening quality only; one example cannot establish an
 aggregate attack rate. Aggregate TF and quality results are reported in
-[`PAPER_RESULTS.md`](../PAPER_RESULTS.md), and the exact trial records are in
+[`RESULTS.md`](../RESULTS.md), and the exact trial records are in
 [`data/average/k2/`](../data/average/k2/).

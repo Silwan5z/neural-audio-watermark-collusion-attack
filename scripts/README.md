@@ -7,8 +7,8 @@
 - `run_average_k8.py`: K=8 native-rate uniform averaging and decoder evidence.
 - `validate_average_k8.py`: validates or replaces invalid K=8 source copies.
 - `prepare_coalitions.py`: builds valid K=5 and K=8 coalitions.
-- `run_targeted.py`: evaluates Payload Match and Target-Bit Margin on ten
-  selected nonmember targets.
+- `run_targeted.py`: evaluates Target-Bit Margin on ten selected nonmember
+  targets.
 - `run_one_bit_pairs.py`: constructs valid payload pairs that differ by one bit.
 - `run_one_bit_paths.py`: evaluates mixtures between each valid one-bit pair.
 - `collect_confidence.py`: records the minimum bit confidence for Single,
@@ -35,8 +35,8 @@
 - `analyze_registry_occupancy.py`: analytically splits observed escape into
   registered-nonmember and unassigned outcomes under exact random registries.
 
-`payload_match.py`, `bit_margin.py`, and `native_audio.py` contain shared helper
-functions used by these entry points.
+`target_bit_margin.py` and `native_audio.py` contain shared helper functions
+used by these entry points.
 
 All experiment entry points embed, mix, and decode at the model's native rate:
 16 kHz for AudioSeal, WavMark, and VoiceMark; 22.05 kHz for TimbreWM; and

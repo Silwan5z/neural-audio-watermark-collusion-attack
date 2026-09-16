@@ -51,12 +51,12 @@ def atomic_csv(path: Path, rows: list[dict]) -> None:
 
 
 def load_targeted_rows(root: Path, model: str) -> dict[int, list[dict]]:
-    merged = root / "k8" / "bit_margin" / f"{model}.csv"
+    merged = root / "k8" / "target_bit_margin" / f"{model}.csv"
     if merged.exists():
         paths = [merged]
     else:
         paths = sorted(
-            path for path in (root / "k8" / "bit_margin" / "shards").glob(
+            path for path in (root / "k8" / "target_bit_margin" / "shards").glob(
                 f"{model}.shard*of*.csv")
             if not path.name.endswith(".partial.csv")
         )

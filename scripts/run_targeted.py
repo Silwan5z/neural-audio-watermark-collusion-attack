@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-"""Evaluate Payload Match and Target-Bit Margin on ten nonmembers per trial.
+"""Evaluate Target-Bit Margin on ten nonmembers per trial.
 
-The two methods preserve the definitions used by the corrected paper analysis:
-
-Payload Match selects the ten nonmember payloads closest to the coalition's
-convex payload region. Target-Bit Margin selects the ten nonmember payloads whose
-weakest target bit can receive the largest margin. Both methods optimize valid
-mixture weights and count exact full-payload matches.
+Target-Bit Margin selects the ten nonmember payloads whose weakest target bit
+can receive the largest margin. The method optimizes valid mixture weights and
+counts exact full-payload matches.
 
 Every coalition member is first required to decode exactly to its assigned
 payload.  The schedule is the clip-indexed manifest: 100 speakers x 3 distinct
@@ -32,14 +29,13 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from payload_match import (  # noqa: E402
-    decoded_payload_and_margin, payload_distances, payload_match_weights,
-)
 from registry import (  # noqa: E402
-    NBITS, CAP, coalition_seed, full_registry_bits, full_registry_size,
+    NBITS, coalition_seed, full_registry_bits, full_registry_size,
     int_to_bits, source_record, trial_schedule,
 )
-from bit_margin import score_target_task  # noqa: E402
+from target_bit_margin import (  # noqa: E402
+    decoded_payload_and_margin, score_target_task,
+)
 from native_audio import (  # noqa: E402
     NATIVE_SAMPLE_RATE, detect_many_native, get_or_embed_native,
 )
@@ -48,7 +44,7 @@ from watermarks import pesq_wb, resample_to, si_sdr, stoi  # noqa: E402
 
 MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
 KS = (5, 8)
-METHODS = ("payload_match", "bit_margin")
+METHOD = "target_bit_margin"
 TARGET_COUNT = 10
 BIT_MARGIN_BETA = 8.0
 BIT_MARGIN_ENTROPY = 0.05
@@ -158,9 +154,12 @@ def valid_coalition(model: str, speaker: str, clip_slot: int, k: int,
     return selected, waveforms, attempts
 
 
-def bit_margin_targets(coalition_bits: np.ndarray, coalition: list[int], model: str,
-                       pool: ProcessPoolExecutor | None
-                       ) -> list[tuple[float, int, np.ndarray, bool, float]]:
+def target_bit_margin_targets(
+    coalition_bits: np.ndarray,
+    coalition: list[int],
+    model: str,
+    pool: ProcessPoolExecutor | None,
+) -> list[tuple[float, int, np.ndarray, bool, float]]:
     full_size = full_registry_size(model)
     candidates = np.arange(full_size, dtype=np.int64)
     candidates = candidates[
@@ -190,31 +189,6 @@ def bit_margin_targets(coalition_bits: np.ndarray, coalition: list[int], model: 
     failed = [(target, score) for score, target, _, success, _ in selected if not success]
     if failed:
         raise RuntimeError(f"Target-Bit Margin solver failure(s): {failed[:3]}")
-    return selected
-
-
-def payload_match_targets(coalition_bits: np.ndarray, coalition: list[int], model: str,
-                          registry_bits: np.ndarray
-                          ) -> list[tuple[float, int, np.ndarray, bool, float]]:
-    full_size = full_registry_size(model)
-    candidates = np.arange(full_size, dtype=np.int64)
-    candidates = candidates[
-        ~np.isin(candidates, np.asarray(coalition, dtype=np.int64))]
-    distances = payload_distances(coalition_bits, registry_bits[candidates])
-    order = np.lexsort((candidates, distances))[:TARGET_COUNT]
-    selected = []
-    for index in order:
-        target = int(candidates[index])
-        distance = float(distances[index])
-        weights = payload_match_weights(
-            coalition_bits, int_to_bits(target, NBITS[model]), CAP)
-        valid = (abs(float(weights.sum()) - 1.0) <= 1e-7
-                 and float(weights.min()) >= -1e-9
-                 and float(weights.max()) <= CAP + 1e-7)
-        if not valid:
-            raise RuntimeError(
-                f"Payload Match constraint failure target={target} weights={weights.tolist()}")
-        selected.append((-distance, target, weights, True, distance))
     return selected
 
 
@@ -282,7 +256,7 @@ def write_shared_selection(path: Path, method: str, k: int,
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--method", choices=METHODS, required=True)
+    parser.add_argument("--method", choices=(METHOD,), default=METHOD)
     parser.add_argument("--model", choices=MODELS, required=True)
     parser.add_argument("--k", choices=KS, type=int, required=True)
     parser.add_argument("--n-trials", type=int, default=300)
@@ -300,7 +274,7 @@ def main() -> None:
     if not 0 <= args.shard_id < args.num_shards:
         parser.error("require 0 <= shard-id < num-shards")
     if args.n_trials != 300:
-        parser.error("this corrected dataset runner requires exactly 300 trials")
+        parser.error("the fixed paper protocol requires exactly 300 trials")
 
     schedule = trial_schedule(n_total=args.n_trials)
     assigned_list = [trial for trial in range(args.n_trials)
@@ -322,7 +296,7 @@ def main() -> None:
     sample_rate = NATIVE_SAMPLE_RATE[args.model]
     native_ids = np.arange(full_registry_size(args.model), dtype=np.int64)
     target_pool = None
-    if args.method == "bit_margin" and args.target_workers > 1:
+    if args.target_workers > 1:
         target_pool = ProcessPoolExecutor(
             max_workers=args.target_workers, mp_context=get_context("spawn"))
     started = time.time()
@@ -373,18 +347,11 @@ def main() -> None:
                 args.target_dir, args.method, args.k, trial_id)
             selected = load_shared_selection(
                 cache_path, args.method, args.k, coalition)
-        if args.method == "bit_margin":
-            if selected is None:
-                selected = bit_margin_targets(
-                    coalition_bits, coalition, args.model, target_pool)
-            selection_policy = "largest_minimum_bit_margin"
-            selection_n = full_registry_size(args.model) - args.k
-        else:
-            if selected is None:
-                selected = payload_match_targets(
-                    coalition_bits, coalition, args.model, registry_bits)
-            selection_policy = "nearest_nonmember_payloads"
-            selection_n = full_registry_size(args.model) - args.k
+        if selected is None:
+            selected = target_bit_margin_targets(
+                coalition_bits, coalition, args.model, target_pool)
+        selection_policy = "largest_minimum_target_bit_margin"
+        selection_n = full_registry_size(args.model) - args.k
         if cache_path is not None and not cache_path.exists():
             write_shared_selection(
                 cache_path, args.method, args.k, coalition, selected)

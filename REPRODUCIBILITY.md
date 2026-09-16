@@ -61,7 +61,7 @@ The implementation uses these fixed settings:
   to optimize the weights.
 
 The constants are defined in `scripts/run_targeted.py`, and the optimizer is in
-`scripts/bit_margin.py`. Runtime shards are merged with
+`scripts/target_bit_margin.py`. Runtime shards are merged with
 `scripts/merge_targeted.py`.
 
 For the four 16-bit systems, first construct coalitions that decode exactly in
@@ -89,7 +89,7 @@ done
 
 ```bash
 for shard in 0 1 2 3 4 5 6; do
-  python scripts/run_targeted.py --method bit_margin --model timbrewm \
+  python scripts/run_targeted.py --method target_bit_margin --model timbrewm \
     --k 8 --shard-id "$shard" --num-shards 7
 done
 python scripts/merge_targeted.py

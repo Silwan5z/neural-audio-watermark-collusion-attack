@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge and validate the final Payload Match and Target-Bit Margin shards."""
+"""Merge and validate the final Target-Bit Margin shards."""
 from __future__ import annotations
 
 import argparse
@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
-METHODS = ("payload_match", "bit_margin")
+METHOD = "target_bit_margin"
 KS = (5, 8)
 
 
@@ -67,11 +67,10 @@ def main() -> None:
 
     for model in MODELS:
         for k in KS:
-            for method in METHODS:
-                merge_one(
-                    args.input_dir,
-                    args.output_dir / f"k{k}" / method / f"{model}.csv",
-                    model, method, k, args.num_shards)
+            merge_one(
+                args.input_dir,
+                args.output_dir / f"k{k}" / METHOD / f"{model}.csv",
+                model, METHOD, k, args.num_shards)
 
 
 if __name__ == "__main__":

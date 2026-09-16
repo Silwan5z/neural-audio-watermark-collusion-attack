@@ -8,35 +8,30 @@ utterances from 100 speakers.
 The manuscript draft is not distributed here. Bibliographic records and
 background papers used by the project are under `references/`.
 
-**Start here:** [paper tables and headline results](PAPER_RESULTS.md) ·
-[audio demos](demos/README.md) ·
-[supplementary evaluations](SUPPLEMENTARY.md) ·
-[reproducibility](REPRODUCIBILITY.md)
+## Results and data
+
+| What you need | Open this first | What it contains |
+|---|---|---|
+| Main paper results | **[RESULTS.md](RESULTS.md)** | All four manuscript tables plus the complete TF, PESQ, STOI, ViSQOL, SI-SDR, and SNR table |
+| Complete released data | **[data/README.md](data/README.md)** | Trial-level records, compact summaries, schemas, and checksums |
+| Additional evaluations | **[SUPPLEMENTARY.md](SUPPLEMENTARY.md)** | Temporal offsets, MP3/Opus, registry occupancy, and interpretation limits |
+| Audio examples | **[demos/README.md](demos/README.md)** | Valid personalized copies and their colluded outputs |
+| Reproduction guide | **[REPRODUCIBILITY.md](REPRODUCIBILITY.md)** | Protocol, commands, native sample rates, and fixed parameters |
 
 ## Headline findings
 
 | Question | Result | Evidence |
 |---|---|---|
-| Can two valid copies evade tracing? | K=2 TF is 86.3–99.3% across the five systems | [Full uniform-averaging table](PAPER_RESULTS.md#paper-table-1-uniform-averaging-with-the-complete-quality-audit) |
-| Can the output be steered to a selected nonmember? | Target-Bit Margin reaches 92.3% on TimbreWM at K=8 | [Targeted table](PAPER_RESULTS.md#paper-table-3-target-bit-margin) |
-| Does lossy coding remove the effect? | Mean K=5 TF is 96.67% without coding, 96.87% after MP3, and 96.47% after Opus | [Codec table](PAPER_RESULTS.md#independent-lossy-coding-at-k5) |
-| Is confidence screening a complete defense? | No; it is a preliminary, non-adaptive screen | [Screening table and scope](PAPER_RESULTS.md#paper-table-4-confidence-screening-at-k8) |
-
-## Find what you need
-
-| Goal | Start with |
-|---|---|
-| Read every main-paper number in one place | [`PAPER_RESULTS.md`](PAPER_RESULTS.md) |
-| Inspect complete per-trial records | [`data/README.md`](data/README.md) |
-| Listen to personalized members and their average | [`demos/README.md`](demos/README.md) |
-| Reproduce an experiment | [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) and [`scripts/README.md`](scripts/README.md) |
-| Check counts, schemas, aggregates, and hashes | `python scripts/verify_release.py` |
+| Can two valid copies evade tracing? | K=2 TF is 86.3–99.3% across the five systems | [Full uniform-averaging table](RESULTS.md#paper-table-1-uniform-averaging-with-the-complete-quality-audit) |
+| Can the output be steered to a selected nonmember? | Target-Bit Margin reaches 92.3% on TimbreWM at K=8 | [Targeted table](RESULTS.md#paper-table-3-target-bit-margin) |
+| Does lossy coding remove the effect? | Mean K=5 TF is 96.67% without coding, 96.87% after MP3, and 96.47% after Opus | [Codec table](RESULTS.md#independent-lossy-coding-at-k5) |
+| Is confidence screening a complete defense? | No; it is a preliminary, non-adaptive screen | [Screening table and scope](RESULTS.md#paper-table-4-confidence-screening-at-k8) |
 
 ## Repository layout
 
 ```text
 data/        Verified experiment records and compact table/figure inputs
-PAPER_RESULTS.md  All principal manuscript tables in one visible page
+RESULTS.md   All principal manuscript and supplementary result tables
 demos/       Small listenable examples of members and averaged outputs
 dataset/     Dataset manifest and preparation notes; audio is not distributed
 scripts/     Experiment, aggregation, plotting, and verification programs
@@ -66,9 +61,7 @@ documented examples under `demos/` are distributed as audio.
 Target-Bit Margin is the selected-target method reported in the manuscript.
 For each trial it optimizes mixture weights for every nonmember payload, ranks
 the candidates by the optimized weakest-bit margin, and evaluates the ten
-highest-ranked targets. The release also includes Payload Match as an auxiliary
-comparison. Its display label in the released CSV is `Bit Margin`, while the
-method value and implementation path remain `bit_margin` for compatibility.
+highest-ranked targets.
 
 `data/coalitions/` stores coalitions whose source copies all decode correctly.
 AudioSeal, WavMark, VoiceMark, and WMCodec use the same K=5 and K=8 coalition

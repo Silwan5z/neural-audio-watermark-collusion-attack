@@ -17,8 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
 MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
 SHARED_MODELS = ("audioseal", "wavmark", "voicemark", "wmcodec")
-METHODS = ("payload_match", "bit_margin")
-METHOD_LABELS = {"Payload Match": "payload_match", "Bit Margin": "bit_margin"}
+METHODS = ("target_bit_margin",)
+METHOD_LABELS = {"Target-Bit Margin": "target_bit_margin"}
 ACTIVE_DATA = (
     "average", "coalitions", "targets", "targeted", "one_bit", "confidence",
     "summary", "supplementary",
@@ -194,7 +194,7 @@ def verify_coalitions() -> dict[tuple[int, int], list[int]]:
                             f"{path}: invalid weights")
                     require(bool(item["weights_valid"]),
                             f"{path}: invalid weight optimization")
-    print("PASS coalitions: shared coalitions and ten targets per method")
+    print("PASS coalitions: shared coalitions and ten Target-Bit Margin targets")
     return coalitions
 
 
@@ -205,7 +205,7 @@ def verify_targeted(coalitions: dict[tuple[int, int], list[int]]) -> None:
         float(row["mean_hits_out_of_10"])
         for row in summary
     }
-    require(len(expected) == 20, "targeted summary must contain 20 rows")
+    require(len(expected) == 10, "targeted summary must contain 10 rows")
     expected_header = [
         "dataset", "model", "k", "method", "trial_id", "speaker",
         "clip_index", "source_path", "coalition_payloads", "valid_copy_count",
@@ -217,10 +217,7 @@ def verify_targeted(coalitions: dict[tuple[int, int], list[int]]) -> None:
         "watermark_score", "decoded_bits", "target_bit_accuracy",
         "quality_reference", "pesq", "stoi", "si_sdr",
     ]
-    rules = {
-        "payload_match": "nearest_nonmember_payloads",
-        "bit_margin": "largest_minimum_bit_margin",
-    }
+    rules = {"target_bit_margin": "largest_minimum_target_bit_margin"}
     for model in MODELS:
         for k in (5, 8):
             for method in METHODS:
@@ -273,7 +270,7 @@ def verify_targeted(coalitions: dict[tuple[int, int], list[int]]) -> None:
                 target = expected[(model, k, method)]
                 require(abs(value - target) < 1e-5,
                         f"{path}: hits {value} != summary {target}")
-    print("PASS targeted: 20 files, 300 trials x ten selected targets")
+    print("PASS targeted: 10 files, 300 trials x ten selected targets")
 
 
 def verify_one_bit() -> None:
@@ -363,7 +360,7 @@ def verify_summaries() -> None:
             ["model", "k", "method", "trials", "targets_per_trial",
              "valid_copy_count", "mean_hits_out_of_10", "mean_pesq",
              "mean_stoi"],
-            20,
+            10,
         ),
         "bit_composition.csv": (
             ["model", "ones_in_coalition", "samples", "decoded_one_rate",
@@ -400,7 +397,7 @@ def verify_summaries() -> None:
     targeted = {
         row["model"]: 10.0 * float(row["mean_hits_out_of_10"])
         for row in read_csv(DATA / "summary" / "targeted_hits.csv")
-        if int(row["k"]) == 8 and row["method"] == "Bit Margin"
+        if int(row["k"]) == 8 and row["method"] == "Target-Bit Margin"
     }
     require({row["model"] for row in screening} == set(MODELS),
             "confidence-screening summary must cover all five systems")
