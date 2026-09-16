@@ -24,7 +24,7 @@ pandas>=2.0.0
 tqdm>=4.65.0
 
 # TimbreWM dependencies
-julius>=0.2.8
+julius>=0.2.7
 audiomentations>=0.28.0
 kornia>=0.8.3
 

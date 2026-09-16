@@ -20,12 +20,18 @@
   the minimum, mean, and log-variance confidence screen from the full records.
 - `compute_uniform_quality.py`: reconstructs uniform mixtures and computes
   SI-SDR and SNR using the first valid personalized copy as reference.
+- `compute_uniform_visqol.py`: invokes the official ViSQOL binary in speech
+  mode on 16 kHz PCM copies of the same reference-mixture pairs.
 - `summarize_uniform_quality.py`: merges checkpoints and produces per-system
   and per-coalition-size quality summaries.
-- `run_alignment_current.py`: tests K=5 averaging after shifting one rotating
+- `run_alignment_stress_test.py`: tests K=5 averaging after shifting one rotating
   coalition member by 10, 20, or 50 ms in either direction.
-- `summarize_alignment_current.py`: verifies and summarizes all alignment
+- `summarize_alignment_stress_test.py`: verifies and summarizes all alignment
   cells, including paired zero-shift controls.
+- `run_codec_stress_test.py`: independently round-trips every K=5 personalized
+  copy through MP3 or Opus before native-rate uniform averaging and decoding.
+- `summarize_codec_stress_test.py`: verifies and summarizes the paired no-codec,
+  MP3 128 kbps, and Opus 64 kbps conditions.
 - `analyze_registry_occupancy.py`: analytically splits observed escape into
   registered-nonmember and unassigned outcomes under exact random registries.
 
@@ -34,8 +40,8 @@ functions used by these entry points.
 
 All experiment entry points embed, mix, and decode at the model's native rate:
 16 kHz for AudioSeal, WavMark, and VoiceMark; 22.05 kHz for TimbreWM; and
-24 kHz for WMCodec. PESQ, STOI, and SI-SDR receive 16 kHz copies made only
-after the native-rate decoder evaluation.
+24 kHz for WMCodec. PESQ, STOI, SI-SDR, and ViSQOL receive 16 kHz copies made
+only after the native-rate decoder evaluation.
 
 ## Release tools
 

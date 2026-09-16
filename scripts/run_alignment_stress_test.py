@@ -106,7 +106,7 @@ def main() -> None:
     parser.add_argument("--num-shards", type=int, default=1)
     parser.add_argument("--min-trial-id", type=int, default=0)
     parser.add_argument("--output-dir", type=Path,
-                        default=ROOT / "results" / "alignment_current")
+                        default=ROOT / "results" / "alignment_stress_test")
     args = parser.parse_args()
 
     if args.num_shards < 1 or not 0 <= args.shard_id < args.num_shards:

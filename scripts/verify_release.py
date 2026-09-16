@@ -6,6 +6,7 @@ import csv
 import hashlib
 import json
 import re
+import wave
 from collections import Counter
 from pathlib import Path
 
@@ -417,11 +418,12 @@ def verify_supplementary() -> None:
     base = DATA / "supplementary"
     expected = {
         "quality/table2_quality_means.csv": (
-            ["model", "n", "pesq_avg", "stoi_avg", "si_sdr_avg", "snr_avg"],
+            ["model", "n", "pesq_avg", "stoi_avg", "visqol_avg",
+             "si_sdr_avg", "snr_avg"],
             5,
         ),
         "quality/summary_by_system_k.csv": (
-            ["model", "k", "n", "pesq", "stoi", "si_sdr", "snr",
+            ["model", "k", "n", "pesq", "stoi", "visqol", "si_sdr", "snr",
              "mean_si_sdr_reproduction_error",
              "max_si_sdr_reproduction_error"],
             20,
@@ -442,6 +444,19 @@ def verify_supplementary() -> None:
             ["model", "shift_ms", "n", "tf_pct", "attribution_margin",
              "pesq", "stoi", "si_sdr", "snr"],
             35,
+        ),
+        "codec/summary_by_system_codec.csv": (
+            ["model", "codec", "n", "tf_pct", "attribution_margin",
+             "pesq", "stoi", "si_sdr", "snr"],
+            15,
+        ),
+        "codec/summary_cross_system.csv": (
+            ["codec", "system_count", "tf_pct", "attribution_margin",
+             "pesq", "stoi", "si_sdr", "snr",
+             "tf_pct_delta_vs_none", "pesq_delta_vs_none",
+             "stoi_delta_vs_none", "si_sdr_delta_vs_none",
+             "snr_delta_vs_none"],
+            3,
         ),
         "registry_occupancy/registry_occupancy_by_system_k.csv": (
             ["model", "k", "bit_count", "n_trials", "native_escape_pct",
@@ -479,6 +494,10 @@ def verify_supplementary() -> None:
     require(Counter(row["model"] for row in quality)
             == Counter({model: 1200 for model in MODELS}),
             "supplementary quality model counts mismatch")
+    require("visqol" in header(base / "quality" / "all_trials.csv"),
+            "supplementary quality data must include ViSQOL")
+    require(all(1.0 <= float(row["visqol"]) <= 5.0 for row in quality),
+            "supplementary ViSQOL scores must be in [1, 5]")
 
     alignment = read_csv(base / "alignment" / "all_trials.csv")
     require(len(alignment) == 10500,
@@ -486,6 +505,23 @@ def verify_supplementary() -> None:
     require(Counter(int(row["shift_ms"]) for row in alignment)
             == Counter({shift: 1500 for shift in (0, -10, 10, -20, 20, -50, 50)}),
             "supplementary alignment shift counts mismatch")
+
+    codec = read_csv(base / "codec" / "all_trials.csv")
+    require(len(codec) == 4500,
+            "supplementary codec data must contain 4500 rows")
+    require(Counter(row["model"] for row in codec)
+            == Counter({model: 900 for model in MODELS}),
+            "supplementary codec model counts mismatch")
+    require(Counter(row["codec"] for row in codec)
+            == Counter({condition: 1500 for condition in
+                        ("none", "mp3_128k", "opus_64k")}),
+            "supplementary codec condition counts mismatch")
+    for model in MODELS:
+        model_rows = [row for row in codec if row["model"] == model]
+        require(len({row["source_path"] for row in model_rows}) == 300,
+                f"supplementary codec {model}: expected 300 recordings")
+        require({int(row["k"]) for row in model_rows} == {5},
+                f"supplementary codec {model}: expected K=5")
 
     occupancy = read_csv(
         base / "registry_occupancy" /
@@ -495,7 +531,45 @@ def verify_supplementary() -> None:
                     + float(row["unassigned_pct"])
                     - float(row["escape_pct"])) < 1e-8,
                 "registry outcomes do not sum to escape rate")
-    print("PASS supplementary: quality, alignment, and registry analyses")
+    print("PASS supplementary: quality, alignment, codec, and registry analyses")
+
+
+def read_demo_pcm16(path: Path) -> np.ndarray:
+    with wave.open(str(path), "rb") as handle:
+        require(handle.getnchannels() == 1, f"demo must be mono: {path}")
+        require(handle.getsampwidth() == 2, f"demo must be PCM-16: {path}")
+        require(handle.getframerate() == 16000,
+                f"demo must be 16 kHz: {path}")
+        require(handle.getnframes() == 160000,
+                f"demo must contain ten seconds: {path}")
+        return np.frombuffer(handle.readframes(160000), dtype="<i2").astype(np.int32)
+
+
+def verify_demos() -> None:
+    demos = ROOT / "demos"
+    source = read_demo_pcm16(demos / "source_reference.wav")
+    require(len(source) == 160000, "invalid demo source")
+    metadata = read_csv(demos / "metadata.csv")
+    require(len(metadata) == 2, "demo metadata must contain two systems")
+    expected_decoded = {"audioseal": 23648, "voicemark": 60600}
+    require({row["system"] for row in metadata} == set(expected_decoded),
+            "demo metadata must cover AudioSeal and VoiceMark")
+    for row in metadata:
+        model = row["system"]
+        payload_a = int(row["payload_a"])
+        payload_b = int(row["payload_b"])
+        member_a = read_demo_pcm16(
+            demos / model / f"member_{payload_a}.wav")
+        member_b = read_demo_pcm16(
+            demos / model / f"member_{payload_b}.wav")
+        mixture = read_demo_pcm16(demos / model / "uniform_average.wav")
+        expected = (member_a + member_b) / 2.0
+        require(float(np.max(np.abs(mixture - expected))) <= 1.0,
+                f"demo is not a sample-wise average: {model}")
+        require(int(row["decoded_average_payload"]) == expected_decoded[model]
+                and int(row["escaped"]) == 1,
+                f"unexpected demo attribution metadata: {model}")
+    print("PASS demos: two valid-member pairs and sample-wise averages")
 
 
 def json_keys(value):
@@ -592,6 +666,7 @@ def main() -> None:
     verify_confidence()
     verify_summaries()
     verify_supplementary()
+    verify_demos()
     verify_names()
     verify_manifest()
     print("ALL RELEASE CHECKS PASSED")

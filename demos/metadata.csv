@@ -1,0 +1,3 @@
+system,trial_id,speaker,clip_index,payload_a,payload_b,decoded_average_payload,escaped,pesq,stoi,si_sdr_db,source_manifest_entry
+audioseal,150,english:103,1,24199,31849,23648,1,4.6129,0.9981,34.65,LibriSpeech/train-clean-100/103/1240/103-1240-0000.flac
+voicemark,150,english:103,1,24199,31849,60600,1,3.5749,0.9778,14.33,LibriSpeech/train-clean-100/103/1240/103-1240-0000.flac

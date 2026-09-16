@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge and summarize the current-protocol K=5 alignment experiment."""
+"""Merge and summarize the K=5 temporal-alignment stress test."""
 from __future__ import annotations
 
 import argparse
@@ -45,7 +45,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-dir", type=Path,
-        default=ROOT / "results" / "alignment_current")
+        default=ROOT / "results" / "alignment_stress_test")
     args = parser.parse_args()
     directory = args.input_dir
 

@@ -143,6 +143,26 @@ and fold allocation were not part of the first public data snapshot, so a fresh
 model rerun should be reported as a reproduction rather than silently replacing
 the released aggregate.
 
+## Quality and deployment stress tests
+
+The additional quality and robustness analyses reuse validated coalitions from
+the uniform-average experiment:
+
+| Analysis | Experiment entry point | Summarizer or analyzer |
+|---|---|---|
+| SI-SDR and SNR | `scripts/compute_uniform_quality.py` | `scripts/summarize_uniform_quality.py` |
+| ViSQOL | `scripts/compute_uniform_visqol.py` | `scripts/summarize_uniform_quality.py` |
+| Temporal offsets | `scripts/run_alignment_stress_test.py` | `scripts/summarize_alignment_stress_test.py` |
+| MP3 and Opus | `scripts/run_codec_stress_test.py` | `scripts/summarize_codec_stress_test.py` |
+| Registry occupancy | no model inference | `scripts/analyze_registry_occupancy.py` |
+
+Alignment and codec experiments use K=5 and 300 recordings per
+system/condition. Codec processing is independent for every personalized copy
+before averaging. Registry occupancy is an analytic split of native outcomes
+under exact random-registry lookup, not an additional inference experiment.
+Exact conditions, complete tables, and interpretation limits are documented in
+[`SUPPLEMENTARY.md`](SUPPLEMENTARY.md).
+
 ## Release checks
 
 After changing tracked data, rebuild the checksum manifest and verify all

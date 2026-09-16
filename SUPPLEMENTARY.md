@@ -1,26 +1,30 @@
 # Supplementary evaluations
 
-This release adds three compact analyses requested during manuscript review.
+This release adds four compact analyses requested during manuscript review.
 They use the same five watermarking systems and the released 300-recording
 evaluation set.  The complete trial records are included so that aggregate
 values can be checked without model inference.
 
 ## Uniform-mixture quality
 
-`data/supplementary/quality/` adds SI-SDR and SNR to the existing PESQ and
-STOI measurements for K=2, 3, 5, and 8.  All waveform metrics compare the
-uniform mixture with the first valid personalized coalition copy.  Native-rate
-signals are converted to 16 kHz only for metric computation.
+`data/supplementary/quality/` adds ViSQOL, SI-SDR, and SNR to the existing
+PESQ and STOI measurements for K=2, 3, 5, and 8.  All waveform metrics compare
+the uniform mixture with the first valid personalized coalition copy.
+Native-rate signals are converted to 16 kHz only for metric computation.
+ViSQOL uses the official v3.1.0 implementation (conformance version 310) in
+speech mode; its short-lived command-line inputs are written as 16 kHz PCM-16
+WAV files.  Scores should be interpreted as aggregate treatment-level quality,
+not as judgments about individual clips.
 
 The per-system means across 1,200 trials are:
 
-| System | PESQ | STOI | SI-SDR (dB) | SNR (dB) |
-|---|---:|---:|---:|---:|
-| AudioSeal | 4.5895 | 0.9989 | 35.1857 | 35.2803 |
-| WavMark | 4.5462 | 0.9985 | 42.6571 | 42.7508 |
-| TimbreWM | 4.5501 | 0.9972 | 32.0119 | 32.1078 |
-| VoiceMark | 4.1334 | 0.9765 | 15.2801 | 15.3494 |
-| WMCodec | 4.2959 | 0.9856 | 14.7852 | 15.0505 |
+| System | PESQ | STOI | ViSQOL | SI-SDR (dB) | SNR (dB) |
+|---|---:|---:|---:|---:|---:|
+| AudioSeal | 4.5895 | 0.9989 | 4.9373 | 35.1857 | 35.2803 |
+| WavMark | 4.5462 | 0.9985 | 4.8563 | 42.6571 | 42.7508 |
+| TimbreWM | 4.5501 | 0.9972 | 4.7090 | 32.0119 | 32.1078 |
+| VoiceMark | 4.1334 | 0.9765 | 3.3548 | 15.2801 | 15.3494 |
+| WMCodec | 4.2959 | 0.9856 | 4.6223 | 14.7852 | 15.0505 |
 
 For K=2, 3, and 5, the released SI-SDR is retained in the table aggregate;
 K=8 SI-SDR and all SNR values are reconstructed.  Four systems reproduce the
@@ -30,10 +34,14 @@ coalition reconstruction can select replacements.  The WMCodec SNR therefore
 describes a fresh valid-coalition reconstruction rather than the exact earlier
 waveforms.  Full diagnostics are in `reproduction_audit.json`.
 
-To regenerate runtime records and summaries:
+To regenerate runtime records and summaries (after building the official
+ViSQOL command-line program):
 
 ```bash
 python scripts/compute_uniform_quality.py --model audioseal
+python scripts/compute_uniform_visqol.py --model audioseal \
+  --visqol-bin /path/to/visqol/bazel-bin/visqol \
+  --visqol-root /path/to/visqol
 python scripts/summarize_uniform_quality.py
 ```
 
@@ -62,8 +70,43 @@ The experiment requires the quality reconstruction records because it reuses
 their validated K=5 coalitions:
 
 ```bash
-python scripts/run_alignment_current.py --model audioseal
-python scripts/summarize_alignment_current.py
+python scripts/run_alignment_stress_test.py --model audioseal
+python scripts/summarize_alignment_stress_test.py
+```
+
+## Independent lossy coding
+
+For each K=5 trial, every personalized coalition copy is independently
+round-tripped through MP3 at 128 kbps or Opus at 64 kbps before native-rate
+uniform averaging and decoding. The paired `none` condition uses the same
+validated coalition and recording. Each table cell contains 300 trials.
+
+| System | Codec | TF (%) | PESQ | STOI | SI-SDR (dB) | SNR (dB) |
+|---|---|---:|---:|---:|---:|---:|
+| AudioSeal | None | 98.33 | 4.5856 | 0.9988 | 34.5778 | 34.6725 |
+| AudioSeal | MP3 128 kbps | 98.00 | 4.4134 | 0.9988 | 27.5270 | 23.1204 |
+| AudioSeal | Opus 64 kbps | 97.33 | 4.5573 | 0.9982 | 27.4187 | 26.2248 |
+| WavMark | None | 98.00 | 4.5391 | 0.9983 | 42.0948 | 42.1885 |
+| WavMark | MP3 128 kbps | 99.00 | 4.3617 | 0.9983 | 29.2096 | 23.5058 |
+| WavMark | Opus 64 kbps | 98.00 | 4.5193 | 0.9977 | 28.6748 | 27.5676 |
+| TimbreWM | None | 88.00 | 4.5468 | 0.9970 | 31.4402 | 31.5365 |
+| TimbreWM | MP3 128 kbps | 88.00 | 4.5477 | 0.9970 | 31.4194 | 24.7660 |
+| TimbreWM | Opus 64 kbps | 88.00 | 4.5048 | 0.9962 | 25.8671 | 24.8898 |
+| VoiceMark | None | 99.33 | 4.1134 | 0.9741 | 14.5980 | 14.6775 |
+| VoiceMark | MP3 128 kbps | 99.33 | 3.9083 | 0.9741 | 14.1834 | 13.9984 |
+| VoiceMark | Opus 64 kbps | 99.00 | 4.1090 | 0.9738 | 14.3613 | 13.8872 |
+| WMCodec | None | 99.67 | 4.2563 | 0.9838 | 14.1443 | 14.4608 |
+| WMCodec | MP3 128 kbps | 100.00 | 4.2547 | 0.9838 | 14.1379 | 14.0946 |
+| WMCodec | Opus 64 kbps | 100.00 | 4.2407 | 0.9833 | 13.9410 | 13.7422 |
+
+Across systems, mean TF is 96.67% without coding, 96.87% after MP3, and
+96.47% after Opus. Lossy coding therefore changes mean TF by only +0.20 and
+-0.20 percentage points in this paired test, while predictably reducing some
+signal-level quality metrics.
+
+```bash
+python scripts/run_codec_stress_test.py --model audioseal
+python scripts/summarize_codec_stress_test.py
 ```
 
 ## Partial registry occupancy
@@ -101,5 +144,7 @@ python scripts/analyze_registry_occupancy.py
 - `summary_by_system_k.csv` and `summary_by_system_shift.csv` retain the full
   per-system breakdown.
 - `summary_direction_averaged.csv` averages positive and negative offsets.
+- Codec files compare paired no-codec, MP3 128 kbps, and Opus 64 kbps
+  conditions after independently processing every coalition copy.
 - Registry files contain both observed and bit-space ideal-reference splits.
 - Runtime shards and superseded checkpoints remain excluded from Git.

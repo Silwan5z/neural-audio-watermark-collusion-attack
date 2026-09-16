@@ -33,7 +33,29 @@ def load_model(model: str) -> pd.DataFrame:
     if observed != expected:
         missing = sorted(expected - observed)[:10]
         raise RuntimeError(f"{model}: incomplete quality records; missing={missing}")
-    return combined
+    visqol_paths = []
+    visqol_base = QUALITY / f"visqol_{model}.csv"
+    if visqol_base.exists():
+        visqol_paths.append(visqol_base)
+    visqol_paths.extend(sorted(QUALITY.glob(f"visqol_{model}.shard*of*.csv")))
+    if not visqol_paths:
+        raise FileNotFoundError(visqol_base)
+    visqol = pd.concat(
+        [pd.read_csv(path) for path in visqol_paths], ignore_index=True)
+    visqol = visqol.drop_duplicates(
+        ["model", "k", "trial_id"], keep="last")
+    if len(visqol) != 1200:
+        raise RuntimeError(f"{model}: expected 1200 ViSQOL records")
+    visqol_observed = set(zip(visqol["k"].astype(int),
+                              visqol["trial_id"].astype(int)))
+    if visqol_observed != expected:
+        missing = sorted(expected - visqol_observed)[:10]
+        raise RuntimeError(f"{model}: incomplete ViSQOL records; missing={missing}")
+    if not visqol["visqol"].between(1.0, 5.0).all():
+        raise RuntimeError(f"{model}: ViSQOL scores must be in [1, 5]")
+    return combined.merge(
+        visqol[["model", "k", "trial_id", "visqol"]],
+        on=["model", "k", "trial_id"], how="left", validate="one_to_one")
 
 
 def main() -> None:
@@ -47,6 +69,7 @@ def main() -> None:
             .agg(n=("trial_id", "size"),
                  pesq=("published_pesq", "mean"),
                  stoi=("published_stoi", "mean"),
+                 visqol=("visqol", "mean"),
                  si_sdr=("si_sdr_for_table", "mean"),
                  snr=("snr", "mean"),
                  mean_si_sdr_reproduction_error=("si_sdr_abs_error", "mean"),
@@ -58,6 +81,7 @@ def main() -> None:
              .agg(n=("trial_id", "size"),
                   pesq_avg=("published_pesq", "mean"),
                   stoi_avg=("published_stoi", "mean"),
+                  visqol_avg=("visqol", "mean"),
                   si_sdr_avg=("si_sdr_for_table", "mean"),
                   snr_avg=("snr", "mean"))
              .reset_index())

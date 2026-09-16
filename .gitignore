@@ -24,6 +24,10 @@ results/
 cache/
 *.wav
 
+# Small, documented listening examples are intentionally released
+!demos/
+!demos/**
+
 # Local experiment history, manuscript drafts, and tool caches
 .art/
 .cache/

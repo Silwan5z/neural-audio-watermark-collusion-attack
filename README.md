@@ -8,10 +8,36 @@ utterances from 100 speakers.
 The manuscript draft is not distributed here. Bibliographic records and
 background papers used by the project are under `references/`.
 
+**Start here:** [paper tables and headline results](PAPER_RESULTS.md) ·
+[audio demos](demos/README.md) ·
+[supplementary evaluations](SUPPLEMENTARY.md) ·
+[reproducibility](REPRODUCIBILITY.md)
+
+## Headline findings
+
+| Question | Result | Evidence |
+|---|---|---|
+| Can two valid copies evade tracing? | K=2 TF is 86.3–99.3% across the five systems | [Full uniform-averaging table](PAPER_RESULTS.md#paper-table-1-uniform-averaging-with-the-complete-quality-audit) |
+| Can the output be steered to a selected nonmember? | Target-Bit Margin reaches 92.3% on TimbreWM at K=8 | [Targeted table](PAPER_RESULTS.md#paper-table-3-target-bit-margin) |
+| Does lossy coding remove the effect? | Mean K=5 TF is 96.67% without coding, 96.87% after MP3, and 96.47% after Opus | [Codec table](PAPER_RESULTS.md#independent-lossy-coding-at-k5) |
+| Is confidence screening a complete defense? | No; it is a preliminary, non-adaptive screen | [Screening table and scope](PAPER_RESULTS.md#paper-table-4-confidence-screening-at-k8) |
+
+## Find what you need
+
+| Goal | Start with |
+|---|---|
+| Read every main-paper number in one place | [`PAPER_RESULTS.md`](PAPER_RESULTS.md) |
+| Inspect complete per-trial records | [`data/README.md`](data/README.md) |
+| Listen to personalized members and their average | [`demos/README.md`](demos/README.md) |
+| Reproduce an experiment | [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) and [`scripts/README.md`](scripts/README.md) |
+| Check counts, schemas, aggregates, and hashes | `python scripts/verify_release.py` |
+
 ## Repository layout
 
 ```text
 data/        Verified experiment records and compact table/figure inputs
+PAPER_RESULTS.md  All principal manuscript tables in one visible page
+demos/       Small listenable examples of members and averaged outputs
 dataset/     Dataset manifest and preparation notes; audio is not distributed
 scripts/     Experiment, aggregation, plotting, and verification programs
 src/         Shared watermark, dataset, and payload-registry interfaces
@@ -19,8 +45,9 @@ third_party/ Model adapters and configuration required by the experiments
 references/  Bibliography and background papers
 ```
 
-Model weights, speech files, caches, logs, checkpoints, generated plots, and
-manuscript drafts are excluded from Git.
+Model weights, the full speech corpus, caches, logs, checkpoints, generated
+plots, and manuscript drafts are excluded from Git. Only the explicitly
+documented examples under `demos/` are distributed as audio.
 
 ## Released experiments
 
@@ -31,8 +58,9 @@ manuscript drafts are excluded from Git.
 | One-bit mixture paths | `data/one_bit/` | `scripts/run_one_bit_pairs.py` |
 | K=8 confidence distributions | `data/confidence/` | `scripts/collect_confidence.py` |
 | K=8 confidence screening | `data/summary/confidence_screening.csv` | `scripts/collect_confidence_full.py`, `scripts/screen_confidence.py` |
-| Uniform-mixture quality audit | `data/supplementary/quality/` | `scripts/compute_uniform_quality.py`, `scripts/summarize_uniform_quality.py` |
-| K=5 temporal misalignment | `data/supplementary/alignment/` | `scripts/run_alignment_current.py`, `scripts/summarize_alignment_current.py` |
+| Uniform-mixture quality audit | `data/supplementary/quality/` | `scripts/compute_uniform_quality.py`, `scripts/compute_uniform_visqol.py`, `scripts/summarize_uniform_quality.py` |
+| K=5 temporal misalignment | `data/supplementary/alignment/` | `scripts/run_alignment_stress_test.py`, `scripts/summarize_alignment_stress_test.py` |
+| K=5 independent codec processing | `data/supplementary/codec/` | `scripts/run_codec_stress_test.py`, `scripts/summarize_codec_stress_test.py` |
 | Partial registry occupancy | `data/supplementary/registry_occupancy/` | `scripts/analyze_registry_occupancy.py` |
 
 Target-Bit Margin is the selected-target method reported in the manuscript.
@@ -90,7 +118,7 @@ Generated figures are written to the ignored `outputs/figures/` directory.
 Exact experiment parameters, native-rate processing, and commands for the
 targeted and confidence analyses are documented in
 [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
-The added quality, temporal-misalignment, and registry analyses are documented
+The added quality, temporal-misalignment, codec, and registry analyses are documented
 in [`SUPPLEMENTARY.md`](SUPPLEMENTARY.md), including interpretation limits.
 
 ## Maintenance

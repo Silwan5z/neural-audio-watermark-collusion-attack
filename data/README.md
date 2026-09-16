@@ -11,11 +11,23 @@ Only records used by the current study are tracked here.
 | `one_bit/` | Valid one-bit pairs and path results | 300 pairs per system |
 | `confidence/` | K=8 bit-confidence records | 5 files |
 | `summary/` | Compact table and figure inputs | 7 CSV files |
-| `supplementary/` | Quality, temporal-misalignment, and registry analyses | 11 files |
+| `supplementary/` | Quality, temporal-misalignment, lossy-codec, and registry analyses | 14 files |
 
 The four 16-bit systems use the same coalition in each K=5 and K=8 trial.
 TimbreWM uses a separately validated 10-bit coalition. Source paths are stored
 relative to the repository; speech and marked-copy caches are not distributed.
+
+## Quick table inputs
+
+| Result | Compact file | Full records |
+|---|---|---|
+| Uniform averaging | `summary/average_results.csv` | `average/` |
+| Target-Bit Margin | `summary/targeted_hits.csv` | `targeted/` |
+| Confidence screening | `summary/confidence_screening.csv` | `confidence/` plus regenerated full vectors |
+| PESQ/STOI/ViSQOL/SI-SDR/SNR | `supplementary/quality/summary_by_system_k.csv` | `supplementary/quality/all_trials.csv` |
+| Temporal offsets | `supplementary/alignment/summary_direction_averaged.csv` | `supplementary/alignment/all_trials.csv` |
+| MP3 and Opus | `supplementary/codec/summary_by_system_codec.csv` | `supplementary/codec/all_trials.csv` |
+| Registry occupancy | `supplementary/registry_occupancy/registry_occupancy_k2_average.csv` | `supplementary/registry_occupancy/registry_occupancy_by_system_k.csv` |
 
 Run `python scripts/verify_release.py` from the repository root to check all
 counts, schemas, key aggregates, shared-coalition constraints, and checksums.
@@ -50,6 +62,6 @@ are intentionally treated as regenerable runtime artifacts; use
 `collect_confidence_full.py` and `screen_confidence.py` to create them under
 `results/`.
 
-Metric columns use lowercase names (`pesq`, `stoi`, and `si_sdr`). Paths use
-the order `experiment/k/method/system` when all four levels are present; for
-example, `targeted/k8/bit_margin/audioseal.csv`.
+Metric columns use lowercase names (`pesq`, `stoi`, `visqol`, `si_sdr`, and
+`snr`). Paths use the order `experiment/k/method/system` when all four levels
+are present; for example, `targeted/k8/bit_margin/audioseal.csv`.
