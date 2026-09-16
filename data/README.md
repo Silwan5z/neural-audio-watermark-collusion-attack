@@ -1,66 +1,108 @@
-# Released data
+# Released data guide
 
-Only records used by the current study are tracked here.
+[Back to the overview](../README.md) ·
+[Read the result tables](../RESULTS.md) ·
+[Reproduce the evaluation](../REPRODUCIBILITY.md)
 
-| Directory | Contents | Expected records |
+Only records used by the current paper and its documented additional analyses
+are tracked here. Start with a compact CSV if you want a table value; use the
+corresponding full-record link when you need trial-level evidence.
+
+## Start with these files
+
+| Result | Compact table | Complete records |
+|---|---|---|
+| Uniform averaging | [`summary/average_results.csv`](summary/average_results.csv) | [`average/`](average/) |
+| Target-Bit Margin | [`summary/targeted_hits.csv`](summary/targeted_hits.csv) | [`targeted/`](targeted/) |
+| Majority/bit composition | [`summary/bit_composition.csv`](summary/bit_composition.csv) | [`average/k8/`](average/k8/) |
+| One-bit mixture paths | [`one_bit/paths.csv`](one_bit/paths.csv) | [`one_bit/pairs/`](one_bit/pairs/) and [`summary/one_bit_examples.csv`](summary/one_bit_examples.csv) |
+| Confidence screening | [`summary/confidence_screening.csv`](summary/confidence_screening.csv) | [`confidence/`](confidence/) plus regenerated full vectors |
+| PESQ/STOI/ViSQOL/SI-SDR/SNR | [`supplementary/quality/summary_by_system_k.csv`](supplementary/quality/summary_by_system_k.csv) | [`supplementary/quality/all_trials.csv`](supplementary/quality/all_trials.csv) |
+| Temporal offsets | [`supplementary/alignment/summary_direction_averaged.csv`](supplementary/alignment/summary_direction_averaged.csv) | [`supplementary/alignment/all_trials.csv`](supplementary/alignment/all_trials.csv) |
+| MP3 and Opus | [`supplementary/codec/summary_by_system_codec.csv`](supplementary/codec/summary_by_system_codec.csv) | [`supplementary/codec/all_trials.csv`](supplementary/codec/all_trials.csv) |
+| Registry occupancy | [`supplementary/registry_occupancy/registry_occupancy_k2_average.csv`](supplementary/registry_occupancy/registry_occupancy_k2_average.csv) | [`supplementary/registry_occupancy/registry_occupancy_by_system_k.csv`](supplementary/registry_occupancy/registry_occupancy_by_system_k.csv) |
+
+## Directory structure
+
+| Directory | Purpose | Released scope |
 |---|---|---:|
-| `average/` | Uniform averages at K=2, 3, 5, and 8 | 20 system/K cells x 300 trials |
-| `coalitions/` | Valid K=5 and K=8 coalitions | 600 trials |
-| `targets/` | Ten Target-Bit Margin targets per K=5/K=8 trial | 600 files |
-| `targeted/` | Exact-match evaluation of Target-Bit Margin | 10 files x 3,000 attempts |
-| `one_bit/` | Valid one-bit pairs and path results | 300 pairs per system |
-| `confidence/` | K=8 bit-confidence records | 5 files |
-| `summary/` | Compact table and figure inputs | 7 CSV files |
-| `supplementary/` | Quality, temporal-misalignment, lossy-codec, and registry analyses | 14 files |
+| [`average/`](average/) | Uniform averaging outcomes | 5 systems × 4 K values × 300 trials |
+| [`coalitions/`](coalitions/) | Shared valid K=5 and K=8 coalitions | 600 trials |
+| [`targets/`](targets/) | Ten selected Target-Bit Margin targets | 600 trial files |
+| [`targeted/`](targeted/) | Exact target attempts | 10 files × 3,000 attempts |
+| [`one_bit/`](one_bit/) | Valid endpoint pairs and per-trial path summaries | 300 pairs per evaluated system |
+| [`confidence/`](confidence/) | Compact K=8 minimum-confidence records | 5 system files |
+| [`summary/`](summary/) | Small inputs for manuscript tables and figures | 7 CSV files |
+| [`supplementary/`](supplementary/) | Quality, offset, codec, and registry evidence | 14 files |
+| [`manifest.csv`](manifest.csv) | Size, row count, and SHA-256 for every released result | 2,754 entries |
 
 The four 16-bit systems use the same coalition in each K=5 and K=8 trial.
-TimbreWM uses a separately validated 10-bit coalition. Source paths are stored
-relative to the repository; speech and marked-copy caches are not distributed.
+TimbreWM uses separately validated 10-bit coalitions. Source paths are relative
+to the repository; source speech and personalized-copy caches are not
+distributed.
 
-## Quick table inputs
+## Record hierarchy
 
-| Result | Compact file | Full records |
-|---|---|---|
-| Uniform averaging | `summary/average_results.csv` | `average/` |
-| Target-Bit Margin | `summary/targeted_hits.csv` | `targeted/` |
-| Confidence screening | `summary/confidence_screening.csv` | `confidence/` plus regenerated full vectors |
-| PESQ/STOI/ViSQOL/SI-SDR/SNR | `supplementary/quality/summary_by_system_k.csv` | `supplementary/quality/all_trials.csv` |
-| Temporal offsets | `supplementary/alignment/summary_direction_averaged.csv` | `supplementary/alignment/all_trials.csv` |
-| MP3 and Opus | `supplementary/codec/summary_by_system_codec.csv` | `supplementary/codec/all_trials.csv` |
-| Registry occupancy | `supplementary/registry_occupancy/registry_occupancy_k2_average.csv` | `supplementary/registry_occupancy/registry_occupancy_by_system_k.csv` |
+```text
+summary CSV
+    └── compact number used by a paper table or figure
+trial-level CSV or JSON
+    ├── source recording and coalition payloads
+    ├── source-copy validity
+    ├── attack condition and decoded outcome
+    └── quality and decoder evidence, when applicable
+manifest.csv
+    └── checksum and row count for every released data file
+```
 
-Run `python scripts/verify_release.py` from the repository root to check all
-counts, schemas, key aggregates, shared-coalition constraints, and checksums.
-The file list and checksums are stored in `manifest.csv`.
+## Core field definitions
 
-## Naming
+| Field | Meaning |
+|---|---|
+| `k` | Coalition size |
+| `clip_index` | One-based utterance number for a speaker |
+| `valid_copy_count` | Coalition copies that decoded to their assigned payload before mixing |
+| `payloads_tested` | Candidate payloads checked while constructing a valid coalition |
+| `escaped` | Decoded payload matches no coalition member |
+| `tracing_failure_pct` | Percentage of trials with `escaped = 1` |
+| `target_hit` | Complete decoded payload equals `target_payload` |
+| `hits_out_of_10` | Exact hits among the ten selected targets in one trial |
+| `selection_score` | Optimized weakest-bit score used to rank target candidates |
+| `target_margin` | Decoder margin of the evaluated output, not the target-selection score |
 
-Public names follow one rule across paths, code, and data:
+The public method name is **Target-Bit Margin**. Paths and CSV values use
+`target_bit_margin`. Display conditions use **Single**, **Average**, and
+**Targeted**; CSV values use `single`, `average`, and `targeted`.
 
-- The human-readable method name is **Target-Bit Margin**; paths and CSV values
-  use `target_bit_margin`.
-- `k` is the coalition size. `clip_index` is the 1-based utterance number for
-  one speaker. No second public field names the same utterance.
-- `escaped` is a trial outcome. `tracing_failure_pct` is the percentage of
-  escaped trials.
-- `target_hit` means that the complete decoded payload equals
-  `target_payload`. `hits_out_of_10` counts those hits among the ten targets.
-- `selection_score` ranks candidate targets by their optimized weakest-bit
-  margin. `target_margin` describes the decoded output, not the target-selection
-  score.
-- `valid_copy_count` counts coalition copies that decode to their assigned
-  payload before mixing. `payloads_tested` counts payloads checked while
-  constructing a valid coalition.
-- `Single`, `Average`, and `Targeted` are display labels. CSV condition values
-  use `single`, `average`, and `targeted`.
+Metric columns use lowercase names: `pesq`, `stoi`, `visqol`, `si_sdr`, and
+`snr`. Quality metrics compare the mixture with the first valid personalized
+copy, not with the unwatermarked source.
 
-`confidence/` contains the compact minimum-confidence records used for the
-distribution figure. `summary/confidence_screening.csv` contains the five rows
-reported for the three-statistic screen. Full per-bit vectors and fold outputs
-are intentionally treated as regenerable runtime artifacts; use
-`collect_confidence_full.py` and `screen_confidence.py` to create them under
-`results/`.
+## Confidence-data boundary
 
-Metric columns use lowercase names (`pesq`, `stoi`, `visqol`, `si_sdr`, and
-`snr`). Paths use the order `experiment/k/method/system` when all four levels
-are present; for example, `targeted/k8/target_bit_margin/audioseal.csv`.
+[`confidence/`](confidence/) contains the compact minimum-confidence records
+used by the distribution figure. The five-row paper result is
+[`summary/confidence_screening.csv`](summary/confidence_screening.csv). Full
+per-bit vectors and fold-specific thresholds are regenerable runtime artifacts;
+the reproduction guide explains how to create them under `results/`.
+
+## One-bit-data boundary
+
+[`one_bit/paths.csv`](one_bit/paths.csv) records whether each complete path
+stays on the two endpoint payloads and how many distinct outputs appear.
+[`summary/one_bit_examples.csv`](summary/one_bit_examples.csv) contains every
+point used by the manuscript figure. Full per-weight decoder vectors for all
+600 paths are not included in this snapshot; the exact commands for
+regenerating them under `results/` are in the
+[reproduction guide](../REPRODUCIBILITY.md#7-one-bit-paths-and-confidence-screening).
+
+## Verify every record
+
+From the repository root:
+
+```bash
+python scripts/verify_release.py
+```
+
+The validator checks counts, schemas, aggregates, shared-coalition constraints,
+public naming, demos, and all hashes in [`manifest.csv`](manifest.csv).

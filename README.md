@@ -1,128 +1,122 @@
-# Neural Audio Watermark Collusion
+# Averaging Collusion Breaks Traceability in Personalized Neural Audio Watermarking
 
-Code and verified records for evaluating recipient tracing after multiple
-watermarked copies of the same utterance are averaged. The release covers
-AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec on 300 ten-second
-utterances from 100 speakers.
+> Two valid personalized copies can be enough to evade recipient tracing:
+> sample-wise averaging causes **86.3–99.3% tracing failure at K=2** across five
+> evaluated neural audio watermarking systems.
 
-The manuscript draft is not distributed here. Bibliographic records and
-background papers used by the project are under `references/`.
+This repository is the public code, data, and reproducibility companion for the
+paper. It contains the released evaluation records, complete result tables,
+audio examples, and the scripts used to run and verify the experiments.
 
-## Results and data
+**[Results and complete tables](RESULTS.md)** ·
+**[Released data](data/README.md)** ·
+**[Audio demos](demos/README.md)** ·
+**[Reproduce the evaluation](REPRODUCIBILITY.md)**
 
-| What you need | Open this first | What it contains |
+The manuscript PDF is not distributed in this repository. The tables below
+and in [`RESULTS.md`](RESULTS.md) are the public numerical companion to the
+current submission; citation metadata will be added when an archival version
+is available.
+
+## Attack overview
+
+The attacker obtains multiple valid copies of the same recording, each carrying
+a different recipient payload. Uniform averaging requires no clean reference,
+model parameters, gradients, or decoder queries.
+
+```mermaid
+flowchart LR
+    X[Same recording] --> A[Copy for user A]
+    X --> B[Copy for user B]
+    A --> M[Sample-wise average]
+    B --> M
+    M --> D[Native watermark decoder]
+    D --> O[Payload outside the coalition]
+```
+
+The shared audio remains aligned while the payload-dependent watermark signals
+are combined. If the decoded payload matches neither contributor, the coalition
+has escaped tracing. A stronger, payload-aware experiment called
+**Target-Bit Margin** adjusts mixture weights toward a selected nonmember.
+
+## Key findings
+
+| Question | Main result | Evidence |
 |---|---|---|
-| Main paper results | **[RESULTS.md](RESULTS.md)** | All four manuscript tables plus the complete TF, PESQ, STOI, ViSQOL, SI-SDR, and SNR table |
-| Complete released data | **[data/README.md](data/README.md)** | Trial-level records, compact summaries, schemas, and checksums |
-| Additional evaluations | **[SUPPLEMENTARY.md](SUPPLEMENTARY.md)** | Temporal offsets, MP3/Opus, registry occupancy, and interpretation limits |
-| Audio examples | **[demos/README.md](demos/README.md)** | Valid personalized copies and their colluded outputs |
-| Reproduction guide | **[REPRODUCIBILITY.md](REPRODUCIBILITY.md)** | Protocol, commands, native sample rates, and fixed parameters |
+| Can two valid copies evade tracing? | K=2 tracing failure is **86.3–99.3%** across the five systems | [Uniform averaging](RESULTS.md#uniform-averaging) |
+| Is the effect limited to perfect alignment? | Mean K=5 TF stays **96.7–97.7%** for aligned and tested ±10/20/50 ms conditions | [Temporal offsets](RESULTS.md#temporal-offsets) |
+| Does lossy coding remove the attack? | Mean K=5 TF is **96.67% / 96.87% / 96.47%** for none / MP3 / Opus | [Lossy coding](RESULTS.md#independent-lossy-coding) |
+| Do decoder families follow the same mixture path? | **99.7%** of AudioSeal paths remain on their endpoints versus **37.7%** for VoiceMark | [One-bit paths](RESULTS.md#one-bit-mixture-paths) |
+| Can an attacker select the wrong identity? | Target-Bit Margin reaches **92.3%** target success on TimbreWM at K=8 | [Targeted control](RESULTS.md#target-bit-margin) |
+| Is confidence screening a complete defense? | No. It reduces the evaluated attacks but is preliminary and non-adaptive | [Confidence screening](RESULTS.md#confidence-screening) |
 
-## Headline findings
+## Evaluation at a glance
 
-| Question | Result | Evidence |
-|---|---|---|
-| Can two valid copies evade tracing? | K=2 TF is 86.3–99.3% across the five systems | [Full uniform-averaging table](RESULTS.md#paper-table-1-uniform-averaging-with-the-complete-quality-audit) |
-| Can the output be steered to a selected nonmember? | Target-Bit Margin reaches 92.3% on TimbreWM at K=8 | [Targeted table](RESULTS.md#paper-table-3-target-bit-margin) |
-| Does lossy coding remove the effect? | Mean K=5 TF is 96.67% without coding, 96.87% after MP3, and 96.47% after Opus | [Codec table](RESULTS.md#independent-lossy-coding-at-k5) |
-| Is confidence screening a complete defense? | No; it is a preliminary, non-adaptive screen | [Screening table and scope](RESULTS.md#paper-table-4-confidence-screening-at-k8) |
+| Scope | Setting |
+|---|---|
+| Systems | AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec |
+| Decoder families | Three bit-based and two latent-based systems |
+| Data | 300 ten-second speech recordings from 100 AISHELL-3 and LibriSpeech speakers |
+| Coalition sizes | K = 2, 3, 5, and 8 |
+| Source validity | Every personalized copy must decode correctly before mixing |
+| Processing | Embedding, mixing, and decoding at each system's native sample rate |
+| Released evidence | Trial-level records, summaries, checksums, and listenable examples |
 
-## Repository layout
+## Repository guide
 
 ```text
-data/        Verified experiment records and compact table/figure inputs
-RESULTS.md   All principal manuscript and supplementary result tables
-demos/       Small listenable examples of members and averaged outputs
-dataset/     Dataset manifest and preparation notes; audio is not distributed
-scripts/     Experiment, aggregation, plotting, and verification programs
-src/         Shared watermark, dataset, and payload-registry interfaces
-third_party/ Model adapters and configuration required by the experiments
-references/  Bibliography and background papers
+README.md             Project overview and the shortest path into the release
+RESULTS.md            Main-paper tables and all additional evaluation results
+REPRODUCIBILITY.md    Protocol definitions, commands, and interpretation limits
+data/                 Verified records, compact summaries, schemas, and hashes
+demos/                Clickable personalized copies and colluded audio examples
+scripts/              Experiment runners, summarizers, figures, and validators
+src/                  Shared dataset, registry, and watermark interfaces
+dataset/              Fixed 300-recording evaluation manifest
+third_party/          Model adapters and configurations used by the evaluation
+references/           Bibliography and background papers
+tests/                Release and confidence-screening tests
 ```
 
-Model weights, the full speech corpus, caches, logs, checkpoints, generated
-plots, and manuscript drafts are excluded from Git. Only the explicitly
-documented examples under `demos/` are distributed as audio.
+The full speech corpus, model weights, embedding caches, runtime shards,
+generated figures, logs, and manuscript drafts are intentionally excluded from
+Git. Fresh experiment outputs are written under the ignored `results/`
+directory; released records under `data/` are never silently overwritten.
 
-## Released experiments
+## Verify the release
 
-| Experiment | Released records | Entry point |
-|---|---|---|
-| Uniform average, K=2, 3, 5, 8 | `data/average/` | `scripts/run_average.py`, `scripts/run_average_k8.py` |
-| Targeted mixtures | `data/targeted/` | `scripts/run_targeted.py` |
-| One-bit mixture paths | `data/one_bit/` | `scripts/run_one_bit_pairs.py` |
-| K=8 confidence distributions | `data/confidence/` | `scripts/collect_confidence.py` |
-| K=8 confidence screening | `data/summary/confidence_screening.csv` | `scripts/collect_confidence_full.py`, `scripts/screen_confidence.py` |
-| Uniform-mixture quality audit | `data/supplementary/quality/` | `scripts/compute_uniform_quality.py`, `scripts/compute_uniform_visqol.py`, `scripts/summarize_uniform_quality.py` |
-| K=5 temporal misalignment | `data/supplementary/alignment/` | `scripts/run_alignment_stress_test.py`, `scripts/summarize_alignment_stress_test.py` |
-| K=5 independent codec processing | `data/supplementary/codec/` | `scripts/run_codec_stress_test.py`, `scripts/summarize_codec_stress_test.py` |
-| Partial registry occupancy | `data/supplementary/registry_occupancy/` | `scripts/analyze_registry_occupancy.py` |
-
-Target-Bit Margin is the selected-target method reported in the manuscript.
-For each trial it optimizes mixture weights for every nonmember payload, ranks
-the candidates by the optimized weakest-bit margin, and evaluates the ten
-highest-ranked targets.
-
-`data/coalitions/` stores coalitions whose source copies all decode correctly.
-AudioSeal, WavMark, VoiceMark, and WMCodec use the same K=5 and K=8 coalition
-in each trial; TimbreWM uses a separately validated coalition because it has a
-10-bit payload.
-`data/targets/` stores the ten selected targets. Compact inputs for
-tables and figures are in `data/summary/`. `data/manifest.csv` records the size,
-row count, and SHA-256 checksum of every released result file.
-
-## Definitions
-
-- A mixture **escapes** when its decoded payload matches no coalition member.
-- **Tracing failure (TF)** is the percentage of trials that escape. A
-  trial-level record therefore uses `escaped`; only an aggregate uses TF.
-- A **targeted hit** requires the decoded payload to equal a selected nonmember
-  target exactly.
-- **Single**, **Average**, and **Targeted** denote a valid single copy, a K=8
-  uniform average, and a successful Target-Bit Margin output, respectively.
-
-## Setup and verification
-
-Install a CUDA-compatible PyTorch build, then install the remaining packages:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-Verify all released counts, schemas, aggregates, and checksums without model
-inference:
+Verifying the published records does not require model weights or a GPU:
 
 ```bash
 python scripts/verify_release.py
 python -m unittest discover -s tests -v
 ```
 
-Regenerate the three data-driven figures:
+The verifier checks record counts, schemas, source-copy validity, shared
+coalitions, aggregate values, demo consistency, naming, and every checksum in
+[`data/manifest.csv`](data/manifest.csv).
 
-```bash
-python scripts/figures/build_composition.py
-python scripts/figures/build_paths.py
-python scripts/figures/build_confidence.py
-```
+For a full model rerun, start with [REPRODUCIBILITY.md](REPRODUCIBILITY.md) and
+the experiment map in [scripts/README.md](scripts/README.md).
 
-Generated figures are written to the ignored `outputs/figures/` directory.
-Exact experiment parameters, native-rate processing, and commands for the
-targeted and confidence analyses are documented in
-[`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
-The added quality, temporal-misalignment, codec, and registry analyses are documented
-in [`SUPPLEMENTARY.md`](SUPPLEMENTARY.md), including interpretation limits.
+## How to interpret the claims
 
-## Maintenance
-
-- Put incomplete shards and runtime outputs under ignored `results/`.
-- Copy only verified final records into the documented `data/` directories.
-- Run `python scripts/build_data_manifest.py` after changing released data.
-- Run `python scripts/verify_release.py` before committing.
-- Keep manuscript drafts under ignored `paper/`.
+- **Tracing failure means coalition escape.** It does not always mean that a
+  deployed registry assigns the output to a real innocent user. Sparse-registry
+  outcomes are separated into registered-nonmember and unassigned outputs in
+  the [registry analysis](RESULTS.md#partial-registry-occupancy).
+- **Uniform averaging is the practical black-box attack.** Target-Bit Margin is
+  a stronger payload-aware setting and should be interpreted separately.
+- **Confidence screening is preliminary.** The reported evaluation is
+  non-adaptive and does not establish a collusion-resistant defense.
+- **The empirical scope is speech.** Music, environmental audio, and
+  heterogeneous content have not been evaluated here.
 
 ## License
 
-Project code is released under the MIT License. Third-party code, checkpoints,
-and background papers remain subject to their respective upstream terms.
+The original project code is released under the [MIT License](LICENSE).
+Bundled third-party components, model weights, datasets, and reference papers
+remain under their original terms; see
+[`third_party/README.md`](third_party/README.md),
+[`dataset/README.md`](dataset/README.md), and
+[`references/README.md`](references/README.md).

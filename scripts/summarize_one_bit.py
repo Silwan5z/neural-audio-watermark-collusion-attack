@@ -54,7 +54,7 @@ def main() -> None:
         "voicemark.shard0of1.csv")
     parser.add_argument(
         "--output", type=Path,
-        default=root / "data" / "one_bit" / "paths.csv")
+        default=root / "results" / "one_bit" / "paths.csv")
     args = parser.parse_args()
 
     rows = summarize(args.audioseal, "audioseal") + summarize(args.voicemark, "voicemark")

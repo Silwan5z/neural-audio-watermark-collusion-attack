@@ -1,16 +1,41 @@
-# Results at a glance
+# Results and complete tables
 
-This page collects the principal tables from the five-page manuscript in one
-place. Values in the four **paper tables** below were cross-checked against the
-released trial records rather than copied from runtime logs. The supplementary
-tables then expose additional quality, alignment, codec, and registry analyses.
+[Back to the project overview](README.md) ·
+[Inspect the released data](data/README.md) ·
+[Listen to examples](demos/README.md) ·
+[Reproduce the experiments](REPRODUCIBILITY.md)
 
-All empirical cells use 300 distinct ten-second recordings from 100 speakers.
-Every personalized input copy is decoded correctly before it is admitted to a
-coalition. TF denotes tracing failure: the decoded native payload matches none
-of the coalition members.
+This is the single numerical-results page for the repository. The first section
+reproduces the four principal manuscript tables; the second contains the
+additional quality, temporal-offset, codec, and registry analyses. Values are
+derived from the released records rather than copied from runtime logs.
 
-## Evaluation scope
+**Main paper:** [Uniform averaging](#uniform-averaging) ·
+[Coalition-bit behavior](#coalition-bit-behavior-at-k8) ·
+[One-bit mixture paths](#one-bit-mixture-paths) ·
+[Target-Bit Margin](#target-bit-margin) ·
+[Confidence screening](#confidence-screening)
+
+**Additional evidence:** [Temporal offsets](#temporal-offsets) ·
+[MP3 and Opus](#independent-lossy-coding) ·
+[Registry occupancy](#partial-registry-occupancy) ·
+[Result-to-data map](#result-to-data-map)
+
+## How to read the results
+
+All empirical cells use 300 distinct ten-second recordings from 100 speakers,
+unless explicitly identified as an analytic calculation. Every personalized
+input copy is decoded correctly before it is admitted to a coalition.
+
+- **TF (tracing failure):** the decoded native payload matches no coalition
+  member. It measures coalition escape, not necessarily assignment to a real
+  registered innocent user.
+- **Target success:** the complete decoded payload equals the selected
+  nonmember payload.
+- **Quality reference:** the first valid personalized copy in the coalition,
+  evaluated at 16 kHz after native-rate decoding.
+
+### Evaluation scope
 
 | System | Payload bits | Decoder type | Native sample rate |
 |---|---:|---|---:|
@@ -20,11 +45,13 @@ of the coalition members.
 | VoiceMark | 16 | Latent-based | 16 kHz |
 | WMCodec | 16 | Latent-based | 24 kHz |
 
-The evaluation set contains 300 speech recordings: three clips from each of
-100 speakers, evenly split between AISHELL-3 and LibriSpeech. Embedding,
-mixing, and decoding remain at each model's native sample rate.
+The evaluation set contains three clips from each speaker, evenly split between
+AISHELL-3 and LibriSpeech. Embedding, mixing, and decoding remain at each
+model's native sample rate.
 
-## Paper Table 1: uniform averaging, with the complete quality audit
+## Main-paper results
+
+### Uniform averaging
 
 The manuscript table contains TF, PESQ, and STOI. ViSQOL, SI-SDR, and SNR are
 included here at the same per-system/per-K granularity so that the public table
@@ -66,7 +93,11 @@ and [`ideal_tracing_failure.csv`](data/summary/ideal_tracing_failure.csv).
 Complete trial-level records are under [`data/average/`](data/average/) and
 [`data/supplementary/quality/`](data/supplementary/quality/).
 
-## Paper Table 2: majority agreement at K=8
+**Takeaway.** At K=2, only two valid personalized copies produce 86.3–99.3%
+tracing failure. The additional metrics show that this is not obtained by
+simply destroying the speech signal.
+
+### Coalition-bit behavior at K=8
 
 | System | Bit agreement (%) | Trial agreement (%) |
 |---|---:|---:|
@@ -81,7 +112,31 @@ averaged over the 300 trials. Trial agreement requires every non-tied position
 in that trial to follow the coalition majority. The values are reproducible
 from the K=8 JSON records under [`data/average/k8/`](data/average/k8/).
 
-## Paper Table 3: Target-Bit Margin
+**Takeaway.** TimbreWM follows the coalition majority at every non-tied bit in
+every trial, yet its complete payload still escapes in 92.0% of K=8 trials.
+Bit-wise regularity therefore does not imply user traceability.
+
+### One-bit mixture paths
+
+Each valid pair differs at exactly one payload position. A path is **direct**
+when every evaluated mixture weight decodes to one of the two endpoint
+payloads; **Other** means at least one weight decodes to neither endpoint.
+
+| System | Direct paths | Paths containing Other |
+|---|---:|---:|
+| AudioSeal | 299/300 (99.7%) | 1/300 (0.3%) |
+| VoiceMark | 113/300 (37.7%) | 187/300 (62.3%) |
+
+Source: [`paths.csv`](data/one_bit/paths.csv). Endpoint construction records
+are under [`data/one_bit/pairs/`](data/one_bit/pairs/), and the plotted path
+points are in [`one_bit_examples.csv`](data/summary/one_bit_examples.csv).
+
+**Takeaway.** The dominant AudioSeal response stays on the two endpoints,
+whereas VoiceMark frequently changes bits shared by both endpoints and produces
+another payload. The current released regeneration contains one AudioSeal
+outlier, so its aggregate should be cited as 299/300 rather than 300/300.
+
+### Target-Bit Margin
 
 | System | K=5 target success (%) | K=8 target success (%) | PESQ | STOI |
 |---|---:|---:|---:|---:|
@@ -95,7 +150,12 @@ Each trial evaluates ten nonmember targets, so every system/K cell contains
 3,000 attempts. Source: [`targeted_hits.csv`](data/summary/targeted_hits.csv),
 with all attempts under [`data/targeted/`](data/targeted/).
 
-## Paper Table 4: confidence screening at K=8
+**Takeaway.** The bit-based systems are substantially more controllable by this
+bit-level attack. The low rates for VoiceMark and WMCodec apply to Target-Bit
+Margin specifically and do not prove inherent resistance to latent-aware
+targeted attacks.
+
+### Confidence screening
 
 | System | Single accepted (%) | Uniform average rejected (%) | Target success before -> after (%) |
 |---|---:|---:|---:|
@@ -109,7 +169,13 @@ Source: [`confidence_screening.csv`](data/summary/confidence_screening.csv).
 This is a non-adaptive, preliminary screening result rather than a complete
 collusion-resistant defense.
 
-## Temporal misalignment at K=5
+**Takeaway.** Screening detects a strong distribution shift for the evaluated
+attacks, but an adaptive attacker that also optimizes acceptance confidence was
+not tested.
+
+## Additional evaluations
+
+### Temporal offsets
 
 One coalition copy is shifted before averaging; positive and negative shift
 directions are pooled. Values are cross-system means.
@@ -123,7 +189,11 @@ directions are pooled. Values are cross-system means.
 
 Source: [`summary_cross_system.csv`](data/supplementary/alignment/summary_cross_system.csv).
 
-## Independent lossy coding at K=5
+**Takeaway.** Mean TF changes by at most 1.07 percentage points relative to the
+paired aligned condition. Audio quality already falls at 10 ms, so these data
+do not support the claim that degradation begins only at 50 ms.
+
+### Independent lossy coding
 
 Each coalition copy is independently coded before averaging. Every
 system/condition cell contains the same 300 recordings and validated
@@ -150,7 +220,11 @@ coalitions as its paired no-codec control.
 Source: [`summary_by_system_codec.csv`](data/supplementary/codec/summary_by_system_codec.csv),
 with all 4,500 rows in [`all_trials.csv`](data/supplementary/codec/all_trials.csv).
 
-## Partial registry occupancy at K=2
+**Takeaway.** Mean TF is 96.67% without coding, 96.87% after MP3, and 96.47%
+after Opus. Independent lossy coding therefore does not remove the observed
+attack effect under these settings.
+
+### Partial registry occupancy
 
 This is an analytic split of native decoder outcomes under uniform random
 registry occupancy and exact payload lookup; it is not a second watermark
@@ -168,9 +242,28 @@ Sparse registries reduce attribution to a registered nonmember but mainly
 convert those outcomes into unassigned outputs; they do not restore coalition
 traceability.
 
-## Additional resources
+## Important interpretation limits
 
-- [Audio demos](demos/README.md)
-- [Supplementary methods and interpretation limits](SUPPLEMENTARY.md)
-- [Reproducibility instructions](REPRODUCIBILITY.md)
-- [Released-data schema](data/README.md)
+- Temporal-offset results shift one rotating K=5 member and pool the two shift
+  directions; they do not model arbitrary asynchronous copies.
+- Registry occupancy is an analytic exact-lookup split of existing native
+  outcomes, not a second watermark inference experiment.
+- Uniform-quality SI-SDR and SNR use reconstructed valid coalitions. Earlier
+  K=2/3/5 SI-SDR values are retained where available; see the reproduction
+  notes for the WMCodec reconstruction caveat.
+- The confidence screen is non-adaptive, and the empirical corpus contains
+  speech only.
+
+## Result-to-data map
+
+| Result | Compact source | Detailed or supporting evidence |
+|---|---|---|
+| Uniform averaging | [`average_results.csv`](data/summary/average_results.csv) | [`data/average/`](data/average/) |
+| Coalition-bit behavior | [`bit_composition.csv`](data/summary/bit_composition.csv) | [`data/average/k8/`](data/average/k8/) |
+| One-bit mixture paths | [`paths.csv`](data/one_bit/paths.csv) | [`data/one_bit/pairs/`](data/one_bit/pairs/) and [`one_bit_examples.csv`](data/summary/one_bit_examples.csv) |
+| Target-Bit Margin | [`targeted_hits.csv`](data/summary/targeted_hits.csv) | [`data/targeted/`](data/targeted/) |
+| Confidence screening | [`confidence_screening.csv`](data/summary/confidence_screening.csv) | [`data/confidence/`](data/confidence/) plus regenerated full vectors |
+| Complete quality audit | [`summary_by_system_k.csv`](data/supplementary/quality/summary_by_system_k.csv) | [`all_trials.csv`](data/supplementary/quality/all_trials.csv) |
+| Temporal offsets | [`summary_direction_averaged.csv`](data/supplementary/alignment/summary_direction_averaged.csv) | [`all_trials.csv`](data/supplementary/alignment/all_trials.csv) |
+| MP3 and Opus | [`summary_by_system_codec.csv`](data/supplementary/codec/summary_by_system_codec.csv) | [`all_trials.csv`](data/supplementary/codec/all_trials.csv) |
+| Registry occupancy | [`registry_occupancy_k2_average.csv`](data/supplementary/registry_occupancy/registry_occupancy_k2_average.csv) | [`registry_occupancy_by_system_k.csv`](data/supplementary/registry_occupancy/registry_occupancy_by_system_k.csv) |

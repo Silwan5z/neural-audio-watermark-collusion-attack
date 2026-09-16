@@ -1,73 +1,67 @@
-# Scripts
+# Script map
 
-## Experiments
+[Back to the overview](../README.md) ·
+[Full reproduction guide](../REPRODUCIBILITY.md) ·
+[Released-data guide](../data/README.md)
 
-- `run_average.py`: native-rate uniform averaging with valid copies at K=2,
-  3, or 5.
-- `run_average_k8.py`: K=8 native-rate uniform averaging and decoder evidence.
-- `validate_average_k8.py`: validates or replaces invalid K=8 source copies.
-- `prepare_coalitions.py`: builds valid K=5 and K=8 coalitions.
-- `run_targeted.py`: evaluates Target-Bit Margin on ten selected nonmember
-  targets.
-- `run_one_bit_pairs.py`: constructs valid payload pairs that differ by one bit.
-- `run_one_bit_paths.py`: evaluates mixtures between each valid one-bit pair.
-- `collect_confidence.py`: records the minimum bit confidence for Single,
-  Average, and at most one successful Targeted output per trial. These compact
-  records are the input to the confidence-distribution figure.
-- `collect_confidence_full.py`: records full bit-confidence vectors for Single,
-  Average, and every exact Target-Bit Margin hit at K=8.
-- `screen_confidence.py`: performs speaker-disjoint five-fold calibration of
-  the minimum, mean, and log-variance confidence screen from the full records.
-- `compute_uniform_quality.py`: reconstructs uniform mixtures and computes
-  SI-SDR and SNR using the first valid personalized copy as reference.
-- `compute_uniform_visqol.py`: invokes the official ViSQOL binary in speech
-  mode on 16 kHz PCM copies of the same reference-mixture pairs.
-- `summarize_uniform_quality.py`: merges checkpoints and produces per-system
-  and per-coalition-size quality summaries.
-- `run_alignment_stress_test.py`: tests K=5 averaging after shifting one rotating
-  coalition member by 10, 20, or 50 ms in either direction.
-- `summarize_alignment_stress_test.py`: verifies and summarizes all alignment
-  cells, including paired zero-shift controls.
-- `run_codec_stress_test.py`: independently round-trips every K=5 personalized
-  copy through MP3 or Opus before native-rate uniform averaging and decoding.
-- `summarize_codec_stress_test.py`: verifies and summarizes the paired no-codec,
-  MP3 128 kbps, and Opus 64 kbps conditions.
-- `analyze_registry_occupancy.py`: analytically splits observed escape into
-  registered-nonmember and unassigned outcomes under exact random registries.
+Scripts are grouped by the question they answer. Experiment runners write to
+ignored `results/`; only validated, fixed release records belong under `data/`.
 
-`target_bit_margin.py` and `native_audio.py` contain shared helper functions
-used by these entry points.
+## Main evaluation pipeline
 
-All experiment entry points embed, mix, and decode at the model's native rate:
-16 kHz for AudioSeal, WavMark, and VoiceMark; 22.05 kHz for TimbreWM; and
-24 kHz for WMCodec. PESQ, STOI, SI-SDR, and ViSQOL receive 16 kHz copies made
-only after the native-rate decoder evaluation.
+| Stage | Entry point | Purpose |
+|---|---|---|
+| Uniform averaging | `run_average.py` | K=2, 3, and 5 native-rate averaging with valid source copies |
+| K=8 evidence | `run_average_k8.py` | K=8 averaging plus native bit/latent evidence |
+| K=8 source audit | `validate_average_k8.py` | Validate or replace invalid source copies |
+| Target coalitions | `prepare_coalitions.py` | Build shared valid K=5/K=8 coalitions |
+| Targeted attack | `run_targeted.py` | Evaluate ten Target-Bit Margin nonmembers per trial |
+| Targeted merge | `merge_targeted.py` | Merge shards and verify 300 complete trials |
 
-## Release tools
+`native_audio.py` contains the shared native-rate embedding/decoding path.
+`target_bit_margin.py` contains the mixture-weight optimizer.
 
-- `merge_targeted.py`: merges final targeted shards and verifies 300 trials with
-  ten targets per trial.
-- `summarize_one_bit.py`: reduces full one-bit paths to released results.
-- `verify_release.py`: checks schemas, counts, aggregates, and checksums.
-- `build_data_manifest.py`: rebuilds `data/manifest.csv`.
-- `figures/`: builds the three data-driven figures in `outputs/figures/`.
+## Mechanism and defense analyses
 
-Runtime output belongs under ignored `results/`. The directory layout follows
-`experiment/k/method/system` wherever those levels apply. Only verified
-records belong under `data/`.
+| Analysis | Entry point | Output role |
+|---|---|---|
+| One-bit pairs | `run_one_bit_pairs.py` | Construct valid AudioSeal/VoiceMark payload pairs differing by one bit |
+| One-bit paths | `run_one_bit_paths.py` | Sweep mixture weights between each pair |
+| One-bit summary | `summarize_one_bit.py` | Produce the compact path records |
+| Compact confidence | `collect_confidence.py` | Minimum confidence for Single, Average, and selected Targeted outputs |
+| Full confidence | `collect_confidence_full.py` | Complete per-bit vectors for screening |
+| Confidence screen | `screen_confidence.py` | Speaker-disjoint five-fold calibration and evaluation |
 
-The full confidence workflow can be sharded independently of the targeted
-experiment. For example:
+## Additional evaluations
 
-```bash
-for shard in 0 1 2 3 4 5 6; do
-  python scripts/collect_confidence_full.py \
-    --model timbrewm --shard-id "$shard" --num-shards 7 &
-done
-wait
-python scripts/screen_confidence.py --model timbrewm
-```
+| Analysis | Runner | Summarizer |
+|---|---|---|
+| SI-SDR and SNR | `compute_uniform_quality.py` | `summarize_uniform_quality.py` |
+| ViSQOL | `compute_uniform_visqol.py` | `summarize_uniform_quality.py` |
+| Temporal offsets | `run_alignment_stress_test.py` | `summarize_alignment_stress_test.py` |
+| MP3 and Opus | `run_codec_stress_test.py` | `summarize_codec_stress_test.py` |
+| Registry occupancy | — | `analyze_registry_occupancy.py` |
 
-The collector resumes complete trials from its `.partial.csv` file. The screen
-writes fold thresholds, aggregate metrics, and the exact speaker allocation to
-`results/confidence_screening/`.
+All model inference stays at the backend's native rate: 16 kHz for AudioSeal,
+WavMark, and VoiceMark; 22.05 kHz for TimbreWM; and 24 kHz for WMCodec.
+Quality metrics receive 16 kHz copies only after native-rate decoding.
+
+## Figures and release tools
+
+| Tool | Purpose |
+|---|---|
+| `figures/build_composition.py` | Coalition bit-support response figure |
+| `figures/build_paths.py` | One-bit mixture-path figure |
+| `figures/build_confidence.py` | Minimum-confidence distribution figure |
+| `build_data_manifest.py` | Rebuild sizes, row counts, and SHA-256 hashes |
+| `verify_release.py` | Validate the entire public release without model inference |
+
+## Sharding convention
+
+Long runners accept `--shard-id` and `--num-shards`. A typical seven-way launch
+uses shard IDs 0 through 6; each shard resumes from its own checkpoint. Merge or
+summary scripts should run only after every shard has completed.
+
+The full commands, fixed seeds, optimization settings, data preparation, and
+interpretation limits are documented in
+[`REPRODUCIBILITY.md`](../REPRODUCIBILITY.md).

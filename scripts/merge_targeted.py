@@ -61,7 +61,9 @@ def main() -> None:
     parser.add_argument(
         "--input-dir", type=Path,
         default=root / "results" / "targeted")
-    parser.add_argument("--output-dir", type=Path, default=root / "data" / "targeted")
+    parser.add_argument(
+        "--output-dir", type=Path,
+        default=root / "results" / "targeted")
     parser.add_argument("--num-shards", type=int, default=7)
     args = parser.parse_args()
 

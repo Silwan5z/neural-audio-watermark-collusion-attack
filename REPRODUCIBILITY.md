@@ -1,72 +1,129 @@
-# Reproducing the reported experiments
+# Reproduce the evaluation
 
-This document records the paper protocol implemented by the current experiment
-entry points. Generated audio, model weights, and runtime outputs are excluded
-from Git. Tracked records are a fixed release snapshot and are never overwritten
-by these commands; fresh outputs are written under `results/`.
+[Back to the overview](README.md) ·
+[Read the results](RESULTS.md) ·
+[Inspect the released data](data/README.md) ·
+[Browse the scripts](scripts/README.md)
 
-## Fixed evaluation set
+This page separates three tasks that require very different resources:
 
-All reported experiments use 300 ten-second utterances: three clips from each
-of 100 speakers. The fixed order is stored in
-`dataset/collusion_300/manifest.csv`. Payload integers are converted to
-LSB-first bit vectors. AudioSeal, WavMark, VoiceMark, and WMCodec use 16-bit
-payloads; TimbreWM uses 10 bits. Each source copy must decode exactly to its
-assigned payload before it can enter a coalition.
+| Goal | Model weights | Evaluation audio | GPU |
+|---|---:|---:|---:|
+| Verify the published records and checksums | No | No | No |
+| Recompute tables from released records | No | No | No |
+| Rerun watermark embedding and decoding | Yes | Yes | Recommended |
 
-The registry is the complete native payload space. A decoded payload therefore
-always maps to an identity. An escape occurs when it matches no coalition
-member, and TF is the percentage of escaped trials.
+Tracked files under `data/` are a fixed release snapshot. Experiment commands
+write fresh outputs under the ignored `results/` directory and never silently
+replace the published records.
 
-## Uniform averaging
+## 1. Verify the published release
 
-Coalition sizes are 2, 3, 5, and 8. Mixtures use equal sample-wise weights.
-`run_average.py` produces the K=2, 3, and 5 records; `run_average_k8.py`
-produces the K=8 records and saves native decoder evidence.
+From the repository root:
 
-Embedding, mixing, and decoding stay at each backend's native rate: 16 kHz for
-AudioSeal, WavMark, and VoiceMark; 22.05 kHz for TimbreWM; and 24 kHz for
-WMCodec. The source corpus is loaded at 16 kHz and resampled once before native
-embedding when required. PESQ, STOI, and SI-SDR receive 16 kHz evaluation
-copies made only after native-rate decoding. `scripts/native_audio.py` provides
-the shared embedding cache and decoder path used by all averaging, targeted,
-coalition-validation, and confidence entry points.
-
-## Target-Bit Margin
-
-For coalition bits `b_ij`, target bits `t_j`, and mixture weights `a_i`, the
-per-bit signed support is
-
-```text
-gamma_j = (2 t_j - 1) (sum_i a_i b_ij - 0.5).
+```bash
+python scripts/verify_release.py
+python -m unittest discover -s tests -v
 ```
 
-The implementation uses these fixed settings:
+The first command checks all released schemas, trial counts, source-copy
+validity, shared coalitions, aggregate numbers, demo files, public naming, and
+SHA-256 entries in [`data/manifest.csv`](data/manifest.csv). This is the fastest
+way to audit the repository without installing watermark models.
+
+## 2. Prepare a full rerun
+
+Create an environment with a CUDA-compatible PyTorch build and install the
+remaining Python dependencies:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Then prepare the two external inputs:
+
+1. Follow [`dataset/README.md`](dataset/README.md) to place the 300 fixed
+   ten-second WAV files at the paths in the manifest.
+2. Follow [`third_party/README.md`](third_party/README.md) to obtain the
+   TimbreWM, VoiceMark, and WMCodec weights. AudioSeal and WavMark retrieve
+   published weights through their Python packages.
+
+Model weights and source audio are intentionally not redistributed.
+
+## 3. Fixed paper protocol
+
+| Item | Fixed setting |
+|---|---|
+| Evaluation schedule | 100 speakers × 3 distinct recordings = 300 trials |
+| Languages | Mandarin speech from AISHELL-3 and English speech from LibriSpeech |
+| Duration | 10 seconds per recording |
+| Payload order | Integer payloads converted to LSB-first bit vectors |
+| Payload size | 16 bits except TimbreWM, which uses 10 bits |
+| Validity gate | Every personalized source copy must decode exactly before mixing |
+| Coalition sizes | K = 2, 3, 5, and 8 for uniform averaging |
+| Native rates | 16 kHz AudioSeal/WavMark/VoiceMark; 22.05 kHz TimbreWM; 24 kHz WMCodec |
+| Quality reference | First valid personalized copy in the coalition |
+
+The registry in the principal experiments is the complete native payload space.
+An output **escapes** when its decoded payload matches no coalition member;
+tracing failure is the percentage of trials that escape.
+
+## 4. Experiment map
+
+| Paper question | Runner | Released evidence |
+|---|---|---|
+| Uniform averaging | `run_average.py`, `run_average_k8.py` | [`data/average/`](data/average/) |
+| Coalition-bit response | `run_average_k8.py` | [`data/average/k8/`](data/average/k8/) |
+| One-bit mixture paths | `run_one_bit_pairs.py`, `run_one_bit_paths.py` | [`data/one_bit/`](data/one_bit/) |
+| Target-Bit Margin | `prepare_coalitions.py`, `run_targeted.py` | [`data/targeted/`](data/targeted/) |
+| Confidence screening | `collect_confidence_full.py`, `screen_confidence.py` | [`data/summary/confidence_screening.csv`](data/summary/confidence_screening.csv) |
+| Complete quality audit | `compute_uniform_quality.py`, `compute_uniform_visqol.py` | [`data/supplementary/quality/`](data/supplementary/quality/) |
+| Temporal offsets | `run_alignment_stress_test.py` | [`data/supplementary/alignment/`](data/supplementary/alignment/) |
+| MP3 and Opus | `run_codec_stress_test.py` | [`data/supplementary/codec/`](data/supplementary/codec/) |
+| Registry occupancy | `analyze_registry_occupancy.py` | [`data/supplementary/registry_occupancy/`](data/supplementary/registry_occupancy/) |
+
+All entry points, outputs, and summarizers are indexed in
+[`scripts/README.md`](scripts/README.md).
+
+## 5. Uniform averaging
+
+Mixtures use equal sample-wise weights. K=2, 3, and 5 use
+`run_average.py`; K=8 additionally retains native decoder evidence for the
+mechanism analysis.
+
+```bash
+python scripts/run_average.py --model audioseal --k 2
+python scripts/run_average.py --model audioseal --k 5
+python scripts/run_average_k8.py --model audioseal
+```
+
+The runners support `--shard-id` and `--num-shards`. Embedding, mixing, and
+decoding stay at the backend's native sample rate. PESQ, STOI, and SI-SDR
+receive 16 kHz evaluation copies only after decoding.
+
+## 6. Target-Bit Margin
+
+Target-Bit Margin is a stronger payload-aware experiment. It knows the
+coalition and candidate target payloads but does not use a clean reference,
+model parameters, gradients, or iterative decoder queries. For each nonmember,
+it optimizes mixture weights to increase the weakest target-bit support, then
+decodes the ten highest-ranked candidates once each.
+
+Fixed settings:
 
 - K is 5 or 8, with 300 trials and ten evaluated targets per trial.
-- Every payload outside the coalition is a candidate: `2^d - K` candidates for
-  a `d`-bit system.
-- Weights are nonnegative and sum to one.
-- Effective coalition size is `1 / sum_i a_i^2 >= 0.6 K`.
-- The weakest-bit margin is approximated by a soft minimum with `beta = 8.0`.
-- An entropy term with weight `0.05` stabilizes weight optimization. It is not
-  included in the score used to rank candidate targets.
-- SLSQP starts from uniform weights, uses bounds `[0, 1]`, and runs with
-  `maxiter=300`, `ftol=1e-14`. A failed solve is retried with
-  `maxiter=1000`, `ftol=1e-10`.
-- Candidates are ordered by decreasing optimized soft-minimum margin; payload
-  integer breaks an exact score tie. The first ten are decoded once each.
+- Weights are nonnegative, sum to one, and have effective coalition size of at
+  least 0.6K.
+- The soft-minimum inverse temperature is 8 and entropy weight is 0.05.
+- SLSQP starts from uniform weights with `maxiter=300` and `ftol=1e-14`; a
+  failed solve is retried with `maxiter=1000` and `ftol=1e-10`.
 - Success requires an exact complete-payload match to the selected nonmember.
-  No clean reference, model parameters, or iterative decoder queries are used
-  to optimize the weights.
 
-The constants are defined in `scripts/run_targeted.py`, and the optimizer is in
-`scripts/target_bit_margin.py`. Runtime shards are merged with
-`scripts/merge_targeted.py`.
-
-For the four 16-bit systems, first construct coalitions that decode exactly in
-all four systems under the native-rate protocol. TimbreWM draws and validates
-its 10-bit coalitions inside the targeted runner.
+The four 16-bit systems share validated coalitions. TimbreWM draws separate
+10-bit coalitions. Construct the shared coalitions before launching targeted
+shards:
 
 ```bash
 for k in 5 8; do
@@ -87,45 +144,43 @@ for k in 5 8; do
 done
 ```
 
+Run and merge one model/K condition as follows:
+
 ```bash
 for shard in 0 1 2 3 4 5 6; do
-  python scripts/run_targeted.py --method target_bit_margin --model timbrewm \
-    --k 8 --shard-id "$shard" --num-shards 7
+  python scripts/run_targeted.py --method target_bit_margin \
+    --model timbrewm --k 8 --shard-id "$shard" --num-shards 7
 done
 python scripts/merge_targeted.py
 ```
 
 Small differences of one or two exact hits can occur across SciPy, BLAS, CUDA,
 or checkpoint environments when optimized candidates lie close to a decision
-boundary. Released CSVs, rather than rounded table entries, are the reference
-records.
+boundary. The released CSVs, rather than rounded table entries, are the
+reference records.
 
-## Confidence distributions and screening
+## 7. One-bit paths and confidence screening
 
-Bit confidence is the support assigned to the selected bit. AudioSeal and
-TimbreWM use native bit probabilities; WavMark uses the fraction of valid
-windows voting for one; VoiceMark and WMCodec sum class probabilities
-consistent with each bit.
+The one-bit experiment constructs 300 valid AudioSeal and VoiceMark payload
+pairs that differ at exactly one position, then sweeps the mixture weight. It
+tests whether mixing changes only the disputed bit or also changes bits on
+which the two users agree.
 
-Two collectors have intentionally different roles:
+```bash
+python scripts/run_one_bit_pairs.py --model audioseal
+python scripts/run_one_bit_pairs.py --model voicemark
+python scripts/run_one_bit_paths.py --model audioseal \
+  --shard-id 0 --num-shards 1
+python scripts/run_one_bit_paths.py --model voicemark \
+  --shard-id 0 --num-shards 1
+python scripts/summarize_one_bit.py
+```
 
-- `collect_confidence.py` saves the minimum confidence and at most one targeted
-  hit per trial. It reproduces the compact distribution input in
-  `data/confidence/`.
-- `collect_confidence_full.py` saves the complete probability and confidence
-  vectors for one Single output, one Average output, and every exact
-  Target-Bit Margin hit in each K=8 trial. These records are required for the
-  three-statistic screen.
-
-`screen_confidence.py` groups all three clips from a speaker in the same fold.
-Five speaker-disjoint folds use 80 speakers for calibration and 20 for testing.
-Thresholds use training Single outputs only. A common one-sided Gaussian
-boundary `z` defines a lower mean threshold, an upper log-variance threshold,
-and the matching empirical lower-tail quantile for minimum confidence. The
-smallest `z` on a 0.001 grid that jointly accepts at least 95% of training
-Single outputs is selected. Variance is the population variance across bits and
-is transformed as `log(variance + 1e-12)`. A test output is accepted only when
-all three thresholds pass.
+Confidence screening uses complete per-bit evidence for one Single output, one
+K=8 uniform Average, and every exact Target-Bit Margin hit. Five
+speaker-disjoint folds use 80 speakers for calibration and 20 for testing.
+Thresholds are fitted only on valid Single outputs, and an output is accepted
+only when its minimum, mean, and log-variance confidence statistics all pass.
 
 ```bash
 for shard in 0 1 2 3 4 5 6; do
@@ -136,39 +191,79 @@ python scripts/screen_confidence.py --model timbrewm \
   --seed 20260905 --folds 5 --retention 0.95 --z-step 0.001
 ```
 
-The screen writes the exact fold membership and thresholds alongside its
-summary. The paper-level aggregate is released as
-`data/summary/confidence_screening.csv`. The original full confidence vectors
-and fold allocation were not part of the first public data snapshot, so a fresh
-model rerun should be reported as a reproduction rather than silently replacing
-the released aggregate.
+The published screening result is non-adaptive. An attacker that jointly
+optimizes target identity and acceptance confidence was not evaluated.
 
-## Quality and deployment stress tests
+## 8. Additional evaluations
 
-The additional quality and robustness analyses reuse validated coalitions from
-the uniform-average experiment:
+### Quality metrics
 
-| Analysis | Experiment entry point | Summarizer or analyzer |
-|---|---|---|
-| SI-SDR and SNR | `scripts/compute_uniform_quality.py` | `scripts/summarize_uniform_quality.py` |
-| ViSQOL | `scripts/compute_uniform_visqol.py` | `scripts/summarize_uniform_quality.py` |
-| Temporal offsets | `scripts/run_alignment_stress_test.py` | `scripts/summarize_alignment_stress_test.py` |
-| MP3 and Opus | `scripts/run_codec_stress_test.py` | `scripts/summarize_codec_stress_test.py` |
-| Registry occupancy | no model inference | `scripts/analyze_registry_occupancy.py` |
+`compute_uniform_quality.py` reconstructs uniform mixtures and adds SI-SDR and
+SNR. `compute_uniform_visqol.py` uses the official ViSQOL v3.1.0 binary in
+speech mode on temporary 16 kHz PCM-16 files.
 
-Alignment and codec experiments use K=5 and 300 recordings per
-system/condition. Codec processing is independent for every personalized copy
-before averaging. Registry occupancy is an analytic split of native outcomes
-under exact random-registry lookup, not an additional inference experiment.
-Exact conditions, complete tables, and interpretation limits are documented in
-[`SUPPLEMENTARY.md`](SUPPLEMENTARY.md).
+```bash
+python scripts/compute_uniform_quality.py --model audioseal
+python scripts/compute_uniform_visqol.py --model audioseal \
+  --visqol-bin /path/to/visqol/bazel-bin/visqol \
+  --visqol-root /path/to/visqol
+python scripts/summarize_uniform_quality.py
+```
 
-## Release checks
+For K=2, 3, and 5, released SI-SDR values are retained; K=8 SI-SDR and all SNR
+values are reconstructed. Four systems reproduce SI-SDR within 0.005 dB.
+WMCodec differs by 0.463 dB on average because earlier files did not retain the
+coalition payloads and valid reconstruction can select replacements. Its SNR
+therefore describes a fresh valid-coalition reconstruction rather than the
+exact earlier waveforms. Full diagnostics are released in
+[`reproduction_audit.json`](data/supplementary/quality/reproduction_audit.json).
 
-After changing tracked data, rebuild the checksum manifest and verify all
-released schemas and aggregates:
+### Temporal offsets
+
+At K=5, one rotating coalition member is shifted by ±10, ±20, or ±50 ms
+before averaging. The paired zero-shift condition uses the same reconstructed
+coalition and recording.
+
+```bash
+python scripts/run_alignment_stress_test.py --model audioseal
+python scripts/summarize_alignment_stress_test.py
+```
+
+This is a one-member stress test, not a complete model of arbitrary independent
+misalignment. Quality already degrades at 10 ms.
+
+### Independent lossy coding
+
+At K=5, every personalized copy is independently round-tripped through MP3 at
+128 kbps or Opus at 64 kbps before averaging. The paired `none` condition uses
+the same validated coalition and recording.
+
+```bash
+python scripts/run_codec_stress_test.py --model audioseal
+python scripts/summarize_codec_stress_test.py
+```
+
+### Partial registry occupancy
+
+This analysis performs no new model inference. It analytically divides each
+observed native escape into registered-nonmember and unassigned outcomes under
+uniform random registry occupancy and exact payload lookup.
+
+```bash
+python scripts/analyze_registry_occupancy.py
+```
+
+The result should not be generalized to structured fingerprinting codebooks or
+nearest-neighbor attribution rules, which require separate experiments.
+
+## 9. Release maintenance
+
+After changing any tracked result file:
 
 ```bash
 python scripts/build_data_manifest.py
 python scripts/verify_release.py
 ```
+
+Only verified final records belong under `data/`. Runtime shards, checkpoints,
+logs, and regenerated confidence vectors belong under ignored `results/`.
