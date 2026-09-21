@@ -640,6 +640,8 @@ def verify_demos() -> None:
     demos = ROOT / "demos"
     source = read_demo_pcm16(demos / "source_reference.wav")
     require(len(source) == 160000, "invalid demo source")
+    page = (demos / "index.html").read_text(encoding="utf-8")
+    expected_sources = {"source_reference.wav"}
     metadata = read_csv(demos / "metadata.csv")
     require(len(metadata) == 2, "demo metadata must contain two systems")
     expected_decoded = {"audioseal": 23648, "voicemark": 60600}
@@ -654,13 +656,25 @@ def verify_demos() -> None:
         member_b = read_demo_pcm16(
             demos / model / f"member_{payload_b}.wav")
         mixture = read_demo_pcm16(demos / model / "uniform_average.wav")
+        expected_sources.update({
+            f"{model}/member_{payload_a}.wav",
+            f"{model}/member_{payload_b}.wav",
+            f"{model}/uniform_average.wav",
+        })
         expected = (member_a + member_b) / 2.0
         require(float(np.max(np.abs(mixture - expected))) <= 1.0,
                 f"demo is not a sample-wise average: {model}")
         require(int(row["decoded_average_payload"]) == expected_decoded[model]
                 and int(row["escaped"]) == 1,
                 f"unexpected demo attribution metadata: {model}")
-    print("PASS demos: two valid-member pairs and sample-wise averages")
+        require(str(expected_decoded[model]) in page,
+                f"demo page omits decoded payload: {model}")
+    for relative in expected_sources:
+        require(page.count(f'src="{relative}"') == 1,
+                f"demo page must reference audio exactly once: {relative}")
+    require("86.3–99.3%" in page,
+            "demo page omits the released K=2 tracing-failure range")
+    print("PASS demos: audio, metadata, averages, and interactive page")
 
 
 def json_keys(value):

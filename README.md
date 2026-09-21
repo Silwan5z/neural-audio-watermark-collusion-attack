@@ -8,9 +8,16 @@ This repository is the public code, data, and reproducibility companion for the
 paper. It contains the released evaluation records, complete result tables,
 audio examples, and the scripts used to run and verify the experiments.
 
+## 🎧 [Open the interactive audio demo](https://silwan5z.github.io/neural-audio-watermark-collusion-attack/)
+
+Compare the source recording, two valid personalized copies, and their 50/50
+average directly in the browser. The page shows decoded payloads and quality
+metrics for concrete AudioSeal and VoiceMark tracing failures.
+
+**[Interactive audio demo](https://silwan5z.github.io/neural-audio-watermark-collusion-attack/)** ·
 **[Results and complete tables](RESULTS.md)** ·
 **[Released data](data/README.md)** ·
-**[Audio demos](demos/README.md)** ·
+**[Demo provenance](demos/README.md)** ·
 **[Reproduce the evaluation](REPRODUCIBILITY.md)**
 
 The manuscript PDF is not distributed in this repository. The tables below

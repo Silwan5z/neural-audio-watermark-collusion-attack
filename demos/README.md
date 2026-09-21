@@ -1,5 +1,6 @@
 # Audio demos
 
+[Open the interactive browser demo](https://silwan5z.github.io/neural-audio-watermark-collusion-attack/) ·
 [Back to the overview](../README.md) ·
 [Read the aggregate results](../RESULTS.md) ·
 [Inspect the trial records](../data/README.md)
