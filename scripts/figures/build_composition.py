@@ -14,7 +14,6 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[2]
-ANALYSIS = ROOT / "data" / "summary"
 FIGURES = ROOT / "outputs" / "figures"
 MODELS = ["audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec"]
 LABELS = {
@@ -81,12 +80,15 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input-dir", type=Path, default=ROOT / "data" / "average" / "k8")
+    parser.add_argument(
+        "--summary-output", type=Path,
+        default=ROOT / "results" / "summary" / "bit_composition.csv")
     args = parser.parse_args()
 
-    ANALYSIS.mkdir(parents=True, exist_ok=True)
+    args.summary_output.parent.mkdir(parents=True, exist_ok=True)
     FIGURES.mkdir(parents=True, exist_ok=True)
     rows = [row for model in MODELS for row in summarize_model(args.input_dir, model)]
-    summary_path = ANALYSIS / "bit_composition.csv"
+    summary_path = args.summary_output
     with summary_path.open("w", newline="") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=rows[0].keys(), lineterminator="\n")

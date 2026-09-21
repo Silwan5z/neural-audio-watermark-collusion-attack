@@ -97,6 +97,7 @@ def passes(row: dict, thresholds: tuple[float, float, float]) -> bool:
 
 def calibrate(train: list[dict], retention: float, z_step: float
               ) -> tuple[float, tuple[float, float, float], float]:
+    """Calibrate one system/fold so the three-rule screen jointly retains data."""
     minimum = np.asarray([float(row["minimum_confidence"]) for row in train])
     mean = np.asarray([float(row["mean_confidence"]) for row in train])
     log_variance = np.asarray([
@@ -244,6 +245,7 @@ def main() -> None:
         "retention": args.retention,
         "z_step": args.z_step,
         "variance_transform": "log(population variance + 1e-12)",
+        "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
         "mean_rule": "training mean minus z times population standard deviation",
         "log_variance_rule": "training mean plus z times population standard deviation",
         "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",

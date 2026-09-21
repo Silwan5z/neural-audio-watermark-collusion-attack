@@ -12,8 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from registry import (  # noqa: E402
-    NBITS, full_registry_bits, get_or_embed, int_to_bits, load_clean,
-    source_record,
+    NBITS, cache_metadata_matches, expected_cache_metadata,
+    full_registry_bits, get_or_embed, int_to_bits, load_clean, source_record,
+    write_cache_metadata,
 )
 from watermarks import (  # noqa: E402
     _chunk_logits_to_bit_evidence,
@@ -96,7 +97,9 @@ def get_or_embed_native(model: str, speaker: str, payload: int,
     import soundfile as sf
 
     path = native_cache_path(model, speaker, clip_slot, payload)
-    if path.exists():
+    metadata = expected_cache_metadata(
+        model, speaker, clip_slot, payload, sample_rate)
+    if path.exists() and cache_metadata_matches(path, metadata):
         try:
             cached, observed_rate = sf.read(str(path), dtype="float32")
             if (observed_rate == sample_rate and len(cached) >= sample_rate
@@ -115,6 +118,7 @@ def get_or_embed_native(model: str, speaker: str, payload: int,
     temporary = path.parent / f".{payload}.{uuid.uuid4().hex}.wav"
     sf.write(str(temporary), waveform, sample_rate, subtype="FLOAT")
     os.replace(temporary, path)
+    write_cache_metadata(path, metadata)
     return waveform, sample_rate
 
 

@@ -43,19 +43,19 @@ def resample_to(w, sr_from, sr_to):
 def pesq_wb(ref, deg):
     from pesq import pesq as pesq_fn
     n = min(len(ref), len(deg))
-    try:
-        return float(pesq_fn(16000, ref[:n], deg[:n], "wb"))
-    except Exception:
-        return float("nan")
+    value = float(pesq_fn(16000, ref[:n], deg[:n], "wb"))
+    if not np.isfinite(value):
+        raise RuntimeError("PESQ returned a non-finite value")
+    return value
 
 
 def stoi(ref, deg):
     from pystoi import stoi as stoi_fn
     n = min(len(ref), len(deg))
-    try:
-        return float(stoi_fn(ref[:n], deg[:n], 16000, extended=False))
-    except Exception:
-        return float("nan")
+    value = float(stoi_fn(ref[:n], deg[:n], 16000, extended=False))
+    if not np.isfinite(value):
+        raise RuntimeError("STOI returned a non-finite value")
+    return value
 
 
 def si_sdr(ref, deg):

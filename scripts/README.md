@@ -12,6 +12,7 @@ ignored `results/`; only validated, fixed release records belong under `data/`.
 | Stage | Entry point | Purpose |
 |---|---|---|
 | Uniform averaging | `run_average.py` | K=2, 3, and 5 native-rate averaging with valid source copies |
+| Uniform merge | `merge_average.py` | Merge shards and require 300 unique trials per model/K |
 | K=8 evidence | `run_average_k8.py` | K=8 averaging plus native bit/latent evidence |
 | K=8 source audit | `validate_average_k8.py` | Validate or replace invalid source copies |
 | Target coalitions | `prepare_coalitions.py` | Build shared valid K=5/K=8 coalitions |
@@ -31,6 +32,7 @@ ignored `results/`; only validated, fixed release records belong under `data/`.
 | Compact confidence | `collect_confidence.py` | Minimum confidence for Single, Average, and selected Targeted outputs |
 | Full confidence | `collect_confidence_full.py` | Complete per-bit vectors for screening |
 | Confidence screen | `screen_confidence.py` | Speaker-disjoint five-fold calibration and evaluation |
+| Confidence merge | `merge_confidence_screening.py` | Build the five-row paper screening table |
 
 ## Additional evaluations
 
@@ -41,6 +43,11 @@ ignored `results/`; only validated, fixed release records belong under `data/`.
 | Temporal offsets | `run_alignment_stress_test.py` | `summarize_alignment_stress_test.py` |
 | MP3 and Opus | `run_codec_stress_test.py` | `summarize_codec_stress_test.py` |
 | Registry occupancy | — | `analyze_registry_occupancy.py` |
+
+The core paper tables can be regenerated without model inference using
+`summarize_average.py` and `summarize_targeted.py`. Their default outputs are
+under `results/summary/`; tracked release files are never overwritten by
+default.
 
 All model inference stays at the backend's native rate: 16 kHz for AudioSeal,
 WavMark, and VoiceMark; 22.05 kHz for TimbreWM; and 24 kHz for WMCodec.

@@ -14,7 +14,6 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 ANALYSIS = ROOT / "data" / "confidence"
-SUMMARY = ROOT / "data" / "summary"
 FIGURES = ROOT / "outputs" / "figures"
 MODELS = ["audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec"]
 LABELS = {
@@ -49,11 +48,19 @@ mpl.rcParams.update({
 
 
 def main() -> None:
-    SUMMARY.mkdir(parents=True, exist_ok=True)
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--input-dir", type=Path, default=ANALYSIS)
+    parser.add_argument(
+        "--summary-output", type=Path,
+        default=ROOT / "results" / "summary" / "confidence_summary.csv")
+    args = parser.parse_args()
+    args.summary_output.parent.mkdir(parents=True, exist_ok=True)
     FIGURES.mkdir(parents=True, exist_ok=True)
     frames = []
     for model in MODELS:
-        path = ANALYSIS / f"{model}.csv"
+        path = args.input_dir / f"{model}.csv"
         data = pd.read_csv(path)
         if set(data["model"]) != {model}:
             raise RuntimeError(f"unexpected model values in {path}")
@@ -82,7 +89,7 @@ def main() -> None:
                 "p95": f"{q95:.6f}",
             })
 
-    summary_path = SUMMARY / "confidence_summary.csv"
+    summary_path = args.summary_output
     with summary_path.open("w", newline="") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=summary_rows[0].keys(), lineterminator="\n")

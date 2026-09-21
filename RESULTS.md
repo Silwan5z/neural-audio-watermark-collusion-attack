@@ -159,13 +159,15 @@ targeted attacks.
 
 | System | Single accepted (%) | Uniform average rejected (%) | Target success before -> after (%) |
 |---|---:|---:|---:|
-| AudioSeal | 94.0 | 100.0 | 43.6 -> 2.4 |
-| WavMark | 94.7 | 100.0 | 54.4 -> 4.5 |
+| AudioSeal | 94.7 | 100.0 | 43.6 -> 2.4 |
+| WavMark | 94.7 | 100.0 | 54.4 -> 4.4 |
 | TimbreWM | 95.0 | 100.0 | 92.3 -> 0.0 |
-| VoiceMark | 94.0 | 75.3 | 0.6 -> 0.4 |
-| WMCodec | 94.3 | 87.0 | 1.3 -> 0.7 |
+| VoiceMark | 94.3 | 77.7 | 0.6 -> 0.3 |
+| WMCodec | 95.0 | 88.0 | 1.3 -> 0.7 |
 
 Source: [`confidence_screening.csv`](data/summary/confidence_screening.csv).
+Each system/fold receives its own threshold set, calibrated so the conjunction
+of all three conditions retains at least 95% of calibration Single outputs.
 This is a non-adaptive, preliminary screening result rather than a complete
 collusion-resistant defense.
 

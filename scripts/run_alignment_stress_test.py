@@ -84,8 +84,7 @@ def atomic_csv(path: Path, rows: list[dict]) -> None:
     os.replace(temporary, path)
 
 
-def coalitions_for(model: str) -> dict[int, list[int]]:
-    path = ROOT / "results" / "quality" / "all_trials.csv"
+def coalitions_for(model: str, path: Path) -> dict[int, list[int]]:
     frame = pd.read_csv(path)
     frame = frame[(frame["model"] == model) & (frame["k"] == K)]
     if len(frame) != 300:
@@ -107,6 +106,12 @@ def main() -> None:
     parser.add_argument("--min-trial-id", type=int, default=0)
     parser.add_argument("--output-dir", type=Path,
                         default=ROOT / "results" / "alignment_stress_test")
+    parser.add_argument(
+        "--coalition-file", type=Path,
+        default=ROOT / "data" / "supplementary" / "quality" /
+        "all_trials.csv",
+        help="validated uniform-trial records supplying the K=5 coalitions",
+    )
     args = parser.parse_args()
 
     if args.num_shards < 1 or not 0 <= args.shard_id < args.num_shards:
@@ -115,7 +120,7 @@ def main() -> None:
     model = args.model
     sample_rate = NATIVE_SAMPLE_RATE[model]
     registry = full_registry_bits(model)
-    coalitions = coalitions_for(model)
+    coalitions = coalitions_for(model, args.coalition_file)
     suffix = ("" if args.num_shards == 1 else
               f".shard{args.shard_id}of{args.num_shards}")
     out_path = args.output_dir / f"{model}{suffix}.csv"
@@ -168,6 +173,10 @@ def main() -> None:
                         resample_to(reference, sample_rate, 16000))
         for shift_ms, signal, (score, _, _) in zip(
                 SHIFTS_MS, signals, decoded):
+            if not np.isfinite(score).all() or not np.any(score):
+                raise RuntimeError(
+                    f"{model} trial={trial_id} shift={shift_ms}: "
+                    "decoder returned no usable payload scores")
             escaped, margin = attack_metrics(score, coalition)
             signal_16 = (signal if sample_rate == 16000 else
                          resample_to(signal, sample_rate, 16000))

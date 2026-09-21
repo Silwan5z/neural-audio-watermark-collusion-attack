@@ -72,19 +72,19 @@ def metrics_of(model, waveform, coalition, registry_bits, payload_length,
     if decoded is None:
         raise ValueError("native-rate metrics require a decoded result")
     scores, _, hard = decoded
+    if hard is None:
+        raise RuntimeError(
+            f"{model}: decoder returned no payload for a uniform mixture")
     rank = np.argsort(scores)[::-1]
     coalition_set = set(coalition)
 
     top1_ints = _rows_to_ints(rank[:1], registry_bits)
     escaped = int(len(set(top1_ints) & coalition_set) == 0)
 
-    if hard is None:
-        acc_near = None
-    else:
-        coalition_bits = np.array([
-            _int_to_bits_row(payload, payload_length) for payload in coalition
-        ])
-        acc_near = int((coalition_bits == hard[None, :]).sum(axis=1).max())
+    coalition_bits = np.array([
+        _int_to_bits_row(payload, payload_length) for payload in coalition
+    ])
+    acc_near = int((coalition_bits == hard[None, :]).sum(axis=1).max())
 
     return escaped, acc_near
 

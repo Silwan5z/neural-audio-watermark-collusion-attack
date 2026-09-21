@@ -50,6 +50,7 @@ BIT_MARGIN_BETA = 8.0
 BIT_MARGIN_ENTROPY = 0.05
 BIT_MARGIN_EFFECTIVE_K_FRACTION = 0.6
 DATASET_TAG = "collusion_300"
+CACHE_SCHEMA = 2
 SHARED_MODELS = {"audioseal", "wavmark", "voicemark", "wmcodec"}
 FIELDS = [
     "dataset", "model", "k", "method", "trial_id", "speaker", "clip_index",
@@ -213,9 +214,36 @@ def selection_cache_path(root: Path, method: str, k: int,
     return root / method / f"k{k}" / f"trial_{trial_id:03d}.json"
 
 
+def optimizer_metadata() -> dict:
+    return {
+        "cache_schema": CACHE_SCHEMA,
+        "beta": BIT_MARGIN_BETA,
+        "entropy_weight": BIT_MARGIN_ENTROPY,
+        "effective_k_fraction": BIT_MARGIN_EFFECTIVE_K_FRACTION,
+        "solver": "SLSQP",
+        "primary_maxiter": 300,
+        "primary_ftol": 1e-14,
+        "retry_maxiter": 1000,
+        "retry_ftol": 1e-10,
+    }
+
+
+def optimizer_metadata_matches(path: Path) -> bool:
+    metadata_path = path.parent / "optimizer.json"
+    if not metadata_path.exists():
+        return False
+    try:
+        observed = json.loads(metadata_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    return observed == optimizer_metadata()
+
+
 def load_shared_selection(path: Path, method: str, k: int,
                           coalition: list[int]) -> list | None:
     if not path.exists():
+        return None
+    if not optimizer_metadata_matches(path):
         return None
     record = json.loads(path.read_text(encoding="utf-8"))
     if (record.get("method") != method or int(record.get("k", -1)) != k
@@ -238,6 +266,8 @@ def load_shared_selection(path: Path, method: str, k: int,
 
 def write_shared_selection(path: Path, method: str, k: int,
                            coalition: list[int], selected: list) -> None:
+    metadata_path = path.parent / "optimizer.json"
+    atomic_json(metadata_path, optimizer_metadata())
     atomic_json(path, {
         "dataset": DATASET_TAG, "method": method, "k": k,
         "coalition_payloads": coalition,
@@ -342,17 +372,19 @@ def main() -> None:
 
         cache_path = None
         selected = None
+        selection_from_cache = False
         if shared_record is not None:
             cache_path = selection_cache_path(
                 args.target_dir, args.method, args.k, trial_id)
             selected = load_shared_selection(
                 cache_path, args.method, args.k, coalition)
+            selection_from_cache = selected is not None
         if selected is None:
             selected = target_bit_margin_targets(
                 coalition_bits, coalition, args.model, target_pool)
         selection_policy = "largest_minimum_target_bit_margin"
         selection_n = full_registry_size(args.model) - args.k
-        if cache_path is not None and not cache_path.exists():
+        if cache_path is not None and not selection_from_cache:
             write_shared_selection(
                 cache_path, args.method, args.k, coalition, selected)
 
@@ -372,6 +404,10 @@ def main() -> None:
                 selected, attacked_waveforms, decoded):
             score, target, weights, success, hull_distance = selected_item
             native_scores, presence, hard = decoded_item
+            if hard is None:
+                raise RuntimeError(
+                    f"decoder returned no payload for {args.model} "
+                    f"k={args.k} trial={trial_id} target={target}")
             decoded_payload, margin = decoded_payload_and_margin(
                 native_scores, native_ids, target)
             decoded_records.append((

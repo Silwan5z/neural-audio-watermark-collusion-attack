@@ -84,6 +84,45 @@ class ConfidenceScreeningTest(unittest.TestCase):
                 float(summary["average_rejection_pct"]), 99.0)
             self.assertLessEqual(
                 float(summary["target_success_after_pct"]), 10.0)
+            for fold in folds:
+                self.assertGreaterEqual(
+                    float(fold["train_single_acceptance_pct"]), 95.0)
+
+    def test_three_rule_screen_is_calibrated_jointly(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            input_dir = root / "input"
+            output_dir = root / "output"
+            input_dir.mkdir()
+            rows = []
+            for trial in range(300):
+                # Put low values for the three statistics on different trials.
+                # Calibration must loosen the system-specific threshold set
+                # until their conjunction retains at least 95%.
+                minimum = 0.90 if trial % 20 else 0.40
+                mean = 0.95 if trial % 20 != 1 else 0.50
+                log_variance = -8.0 if trial % 20 != 2 else -1.0
+                rows.append(record(
+                    trial, "single", minimum, mean, log_variance))
+                rows.append(record(trial, "average", 0.35, 0.45, -0.5))
+            with (input_dir / "timbrewm.csv").open(
+                    "w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=FIELDS)
+                writer.writeheader()
+                writer.writerows(rows)
+
+            subprocess.run([
+                sys.executable, str(ROOT / "scripts" / "screen_confidence.py"),
+                "--model", "timbrewm", "--input-dir", str(input_dir),
+                "--output-dir", str(output_dir),
+            ], check=True, capture_output=True, text=True)
+
+            with (output_dir / "timbrewm_folds.csv").open(
+                    newline="", encoding="utf-8") as handle:
+                folds = list(csv.DictReader(handle))
+            for fold in folds:
+                self.assertGreaterEqual(
+                    float(fold["train_single_acceptance_pct"]), 95.0)
 
 
 if __name__ == "__main__":

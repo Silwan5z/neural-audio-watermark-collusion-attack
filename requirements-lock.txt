@@ -1,0 +1,20 @@
+# Tested Python: 3.12.6. CUDA runners used PyTorch 2.4.1 + CUDA 12.4.
+# Install a platform-appropriate PyTorch build first when CUDA is required.
+numpy==1.26.4
+scipy==1.12.0
+pandas==2.2.3
+soundfile==0.14.0
+librosa==0.10.2.post1
+torch==2.4.1
+torchaudio==2.4.1
+audioseal==0.2.0
+wavmark==0.0.3
+pesq==0.0.4
+pystoi==0.4.1
+PyYAML==6.0.2
+tqdm==4.66.5
+julius==0.2.7
+audiomentations==0.36.0
+kornia==0.8.3
+einops==0.8.2
+matplotlib==3.9.2

@@ -16,15 +16,8 @@ METRICS = ("pesq", "stoi", "si_sdr", "snr")
 
 def load_model(directory: Path, model: str) -> pd.DataFrame:
     direct = directory / f"{model}.csv"
-    if direct.exists() and model != "wavmark":
-        paths = [direct]
-    elif model == "wavmark":
-        paths = sorted(directory.glob("wavmark.shard*of3.csv"))
-        paths += sorted(directory.glob("wavmark.shard*of7.csv"))
-        if direct.exists():
-            paths.append(direct)
-    else:
-        raise FileNotFoundError(direct)
+    paths = [direct] if direct.exists() else []
+    paths.extend(sorted(directory.glob(f"{model}.shard*of*.csv")))
     if not paths:
         raise FileNotFoundError(f"no inputs found for {model}")
     frame = pd.concat([pd.read_csv(path) for path in paths], ignore_index=True)
@@ -52,8 +45,7 @@ def main() -> None:
     frames = []
     for model in MODELS:
         frame = load_model(directory, model)
-        if model == "wavmark":
-            frame.to_csv(directory / "wavmark.csv", index=False)
+        frame.to_csv(directory / f"{model}.csv", index=False)
         frames.append(frame)
     all_trials = pd.concat(frames, ignore_index=True)
     all_trials.to_csv(directory / "all_trials.csv", index=False)

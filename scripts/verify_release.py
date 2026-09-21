@@ -30,6 +30,36 @@ def require(condition: bool, message: str) -> None:
         raise RuntimeError(message)
 
 
+def int_to_bits(value: int, length: int) -> np.ndarray:
+    return np.asarray([(value >> index) & 1 for index in range(length)],
+                      dtype=np.int8)
+
+
+def bits_to_int(bits) -> int:
+    return int(sum(int(value) << index for index, value in enumerate(bits)))
+
+
+def require_close(observed: float, expected: float, message: str,
+                  tolerance: float = 1e-5) -> None:
+    require(abs(observed - expected) <= tolerance,
+            f"{message}: {observed} != {expected}")
+
+
+def target_selection_score(coalition: list[int], target: int,
+                           weights: np.ndarray, bit_count: int,
+                           beta: float = 8.0) -> float:
+    coalition_bits = np.stack([
+        int_to_bits(payload, bit_count) for payload in coalition
+    ]).astype(np.float64)
+    target_bits = int_to_bits(target, bit_count).astype(np.float64)
+    sign = 2.0 * target_bits - 1.0
+    margins = (coalition_bits * sign[None, :]).T @ weights - 0.5 * sign
+    values = -beta * margins
+    maximum = float(values.max())
+    logsumexp = maximum + float(np.log(np.exp(values - maximum).sum()))
+    return -logsumexp / beta
+
+
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8") as handle:
         return list(csv.DictReader(handle))
@@ -80,9 +110,15 @@ def verify_average() -> None:
             require({int(row["valid_copy_count"]) for row in rows} == {k},
                     f"{path}: invalid source copy")
             value = 100.0 * sum(int(row["escaped"]) for row in rows) / 300
-            target = float(expected[(model, k)]["tracing_failure_pct"])
-            require(abs(value - target) < 1e-5,
-                    f"{path}: TF {value} != summary {target}")
+            target = expected[(model, k)]
+            require_close(value, float(target["tracing_failure_pct"]),
+                          f"{path}: tracing failure")
+            require_close(
+                float(np.mean([float(row["pesq"]) for row in rows])),
+                float(target["mean_pesq"]), f"{path}: mean PESQ")
+            require_close(
+                float(np.mean([float(row["stoi"]) for row in rows])),
+                float(target["mean_stoi"]), f"{path}: mean STOI")
 
     required = {
         "condition", "model", "k", "trial_id", "speaker", "clip_index",
@@ -125,11 +161,36 @@ def verify_average() -> None:
             require(all(set(copy) == {
                         "assigned_payload", "decoded_payload", "valid",
                         "watermark_score"} for copy in row["source_copies"]),
-                    f"{model} trial {row['trial_id']}: bad source-copy schema")
+                        f"{model} trial {row['trial_id']}: bad source-copy schema")
+            decoded_bits = np.asarray(row["decoded_bits"], dtype=np.int8)
+            coalition = [int(value) for value in row["coalition_payloads"]]
+            coalition_bits = np.asarray(row["coalition_bits"], dtype=np.int8)
+            require(bits_to_int(decoded_bits) == int(row["decoded_payload"]),
+                    f"{model} trial {row['trial_id']}: payload/bit mismatch")
+            require(np.array_equal(
+                coalition_bits,
+                np.stack([int_to_bits(payload, bit_count)
+                          for payload in coalition])),
+                f"{model} trial {row['trial_id']}: coalition bit mismatch")
+            ones = coalition_bits.sum(axis=0)
+            require(np.array_equal(ones, np.asarray(row["ones_in_coalition"])),
+                    f"{model} trial {row['trial_id']}: bit-support mismatch")
+            closest = int((coalition_bits == decoded_bits[None, :]).sum(axis=1).max())
+            require(closest == int(row["closest_member_bits"]),
+                    f"{model} trial {row['trial_id']}: closest-member mismatch")
+            require_close(
+                closest / bit_count, float(row["closest_member_bit_accuracy"]),
+                f"{model} trial {row['trial_id']}: closest-member accuracy")
+            require(int(row["escaped"]) == int(int(row["decoded_payload"]) not in coalition),
+                    f"{model} trial {row['trial_id']}: escape mismatch")
         value = 100.0 * sum(int(row["escaped"]) for row in records) / 300
-        target = float(expected[(model, 8)]["tracing_failure_pct"])
-        require(abs(value - target) < 1e-5,
-                f"{model} k=8: TF {value} != summary {target}")
+        target = expected[(model, 8)]
+        require_close(value, float(target["tracing_failure_pct"]),
+                      f"{model} k=8: tracing failure")
+        require_close(float(np.mean([float(row["pesq"]) for row in records])),
+                      float(target["mean_pesq"]), f"{model} k=8: mean PESQ")
+        require_close(float(np.mean([float(row["stoi"]) for row in records])),
+                      float(target["mean_stoi"]), f"{model} k=8: mean STOI")
     print("PASS average: 20 model/k cells with 300 valid trials each")
 
 
@@ -201,8 +262,7 @@ def verify_coalitions() -> dict[tuple[int, int], list[int]]:
 def verify_targeted(coalitions: dict[tuple[int, int], list[int]]) -> None:
     summary = read_csv(DATA / "summary" / "targeted_hits.csv")
     expected = {
-        (row["model"], int(row["k"]), METHOD_LABELS[row["method"]]):
-        float(row["mean_hits_out_of_10"])
+        (row["model"], int(row["k"]), METHOD_LABELS[row["method"]]): row
         for row in summary
     }
     require(len(expected) == 10, "targeted summary must contain 10 rows")
@@ -262,14 +322,48 @@ def verify_targeted(coalitions: dict[tuple[int, int], list[int]]) -> None:
                     for row in group:
                         decoded = int(row["decoded_payload"])
                         target = int(row["target_payload"])
+                        bit_count = 10 if model == "timbrewm" else 16
+                        weights = np.asarray(json.loads(row["weights"]), dtype=float)
+                        require(len(weights) == k and np.all(weights >= -1e-12),
+                                f"{path}: invalid weight vector")
+                        require_close(float(weights.sum()), 1.0,
+                                      f"{path}: weights do not sum to one",
+                                      tolerance=1e-6)
+                        effective = 1.0 / float(np.sum(weights ** 2))
+                        require(effective + 1e-6 >= 0.6 * k,
+                                f"{path}: effective coalition constraint failed")
+                        require_close(effective, float(row["effective_members"]),
+                                      f"{path}: effective-members mismatch",
+                                      tolerance=1e-6)
+                        require_close(float(weights.max()), float(row["max_weight"]),
+                                      f"{path}: max-weight mismatch",
+                                      tolerance=1e-6)
+                        selection_score = target_selection_score(
+                            coalition, target, weights, bit_count)
+                        require_close(selection_score, float(row["selection_score"]),
+                                      f"{path}: selection-score mismatch",
+                                      tolerance=2e-7)
+                        decoded_bits = json.loads(row["decoded_bits"])
+                        require(bits_to_int(decoded_bits) == decoded,
+                                f"{path}: decoded payload/bit mismatch")
+                        target_accuracy = np.mean(
+                            np.asarray(decoded_bits) == int_to_bits(target, bit_count))
+                        require_close(target_accuracy,
+                                      float(row["target_bit_accuracy"]),
+                                      f"{path}: target-bit accuracy mismatch",
+                                      tolerance=1e-7)
                         require(int(row["target_hit"]) == int(decoded == target),
                                 f"{path}: target-hit flag mismatch")
                         require(int(row["escaped"]) == int(decoded not in coalition),
                                 f"{path}: escape flag mismatch")
                 value = sum(int(row["target_hit"]) for row in rows) / 300.0
                 target = expected[(model, k, method)]
-                require(abs(value - target) < 1e-5,
-                        f"{path}: hits {value} != summary {target}")
+                require_close(value, float(target["mean_hits_out_of_10"]),
+                              f"{path}: mean hits")
+                require_close(float(np.mean([float(row["pesq"]) for row in rows])),
+                              float(target["mean_pesq"]), f"{path}: mean PESQ")
+                require_close(float(np.mean([float(row["stoi"]) for row in rows])),
+                              float(target["mean_stoi"]), f"{path}: mean STOI")
     print("PASS targeted: 10 files, 300 trials x ten selected targets")
 
 

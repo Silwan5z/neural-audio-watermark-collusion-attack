@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Build valid K=5 payload pairs that differ by exactly one bit.
 
-Each system receives the same 300-trial schedule: speaker/content, base payload,
-and flipped bit are identical.  A trial compares two independently embedded
-copies whose payloads differ by exactly one bit.  Results are checkpointed
-atomically and can be resumed without overwriting existing paper data.
+The systems share the same 300-trial speaker/content schedule, coalition-member
+index, and flipped-bit schedule. Payloads can differ when a model resamples an
+endpoint to obtain a pair whose two personalized copies both decode exactly.
+A trial compares two independently embedded copies whose payloads differ by
+exactly one bit. Results are checkpointed atomically and can be resumed without
+overwriting existing paper data.
 """
 from __future__ import annotations
 

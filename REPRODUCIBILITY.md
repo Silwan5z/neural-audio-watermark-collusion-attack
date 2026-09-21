@@ -39,7 +39,7 @@ remaining Python dependencies:
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements-lock.txt
 ```
 
 Then prepare the two external inputs:
@@ -97,11 +97,23 @@ mechanism analysis.
 python scripts/run_average.py --model audioseal --k 2
 python scripts/run_average.py --model audioseal --k 5
 python scripts/run_average_k8.py --model audioseal
+python scripts/validate_average_k8.py --model audioseal
 ```
 
 The runners support `--shard-id` and `--num-shards`. Embedding, mixing, and
 decoding stay at the backend's native sample rate. PESQ, STOI, and SI-SDR
 receive 16 kHz evaluation copies only after decoding.
+
+After every shard of a K=2, K=3, or K=5 run completes, merge and validate the
+300 unique trials with:
+
+```bash
+python scripts/merge_average.py --model audioseal --k 5
+```
+
+For K=8, `run_average_k8.py` writes candidate records. Run
+`validate_average_k8.py` only after all 300 candidates for a model are present;
+the validated directory, not the candidate directory, is the paper input.
 
 ## 6. Target-Bit Margin
 
@@ -179,8 +191,12 @@ python scripts/summarize_one_bit.py
 Confidence screening uses complete per-bit evidence for one Single output, one
 K=8 uniform Average, and every exact Target-Bit Margin hit. Five
 speaker-disjoint folds use 80 speakers for calibration and 20 for testing.
-Thresholds are fitted only on valid Single outputs, and an output is accepted
-only when its minimum, mean, and log-variance confidence statistics all pass.
+Thresholds are fitted only on valid Single outputs, separately for each system
+and fold. A shared Gaussian tail parameter sets the empirical minimum-confidence
+quantile, the Gaussian lower boundary for mean confidence, and the Gaussian upper
+boundary for log variance. The strictest threshold set whose three-rule
+conjunction retains at least 95% of the calibration Single outputs is selected.
+An output is accepted only when all three conditions pass.
 
 ```bash
 for shard in 0 1 2 3 4 5 6; do
@@ -189,6 +205,7 @@ for shard in 0 1 2 3 4 5 6; do
 done
 python scripts/screen_confidence.py --model timbrewm \
   --seed 20260905 --folds 5 --retention 0.95 --z-step 0.001
+python scripts/merge_confidence_screening.py
 ```
 
 The published screening result is non-adaptive. An attacker that jointly
@@ -229,6 +246,10 @@ python scripts/run_alignment_stress_test.py --model audioseal
 python scripts/summarize_alignment_stress_test.py
 ```
 
+By default, the runner reads the released validated K=5 coalitions from
+`data/supplementary/quality/all_trials.csv`. Use `--coalition-file` only when
+testing a newly reconstructed quality run.
+
 This is a one-member stress test, not a complete model of arbitrary independent
 misalignment. Quality already degrades at 10 ms.
 
@@ -242,6 +263,9 @@ the same validated coalition and recording.
 python scripts/run_codec_stress_test.py --model audioseal
 python scripts/summarize_codec_stress_test.py
 ```
+
+The codec runner uses the same released coalition file by default and also
+accepts `--coalition-file` for a new reconstruction.
 
 ### Partial registry occupancy
 

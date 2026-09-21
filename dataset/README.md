@@ -14,7 +14,8 @@ dataset/collusion_300/<language>/<speaker>/<language>_<speaker>_<clip>.wav
 ```
 
 Each WAV must be mono, 16 kHz, and exactly 10 seconds. `src/registry.py`
-validates that all 100 speakers have clip indices 1, 2, and 3 before running an
+validates the manifest declarations, 300 unique paths, the 100-by-3 schedule,
+and the actual channel count, sample rate, and 160,000-frame length before an
 experiment. The `sources` column records the upstream utterance or utterances
 used to construct each fixed-length clip.
 
