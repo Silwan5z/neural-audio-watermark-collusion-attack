@@ -641,6 +641,13 @@ def verify_demos() -> None:
     source = read_demo_pcm16(demos / "source_reference.wav")
     require(len(source) == 160000, "invalid demo source")
     page = (demos / "index.html").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    public_url = (
+        "https://silwan5z.github.io/"
+        "neural-audio-watermark-collusion-attack/index.html")
+    require(readme.count(public_url) == 1
+            and readme.count("silwan5z.github.io/neural-audio-watermark-collusion-attack") == 1,
+            "README must contain exactly one explicit public demo entry")
     expected_sources = {"source_reference.wav", "source_reference.mp3"}
     metadata = read_csv(demos / "metadata.csv")
     expected_models = {
@@ -713,6 +720,8 @@ def verify_demos() -> None:
             "demo page omits the released K=2 tracing-failure range")
     require(page.count("<audio ") == 16,
             "demo page must expose one source and fifteen comparison players")
+    require(page.count('class="system-card"') == 5,
+            "demo page must contain exactly five visible system cards")
     require(all(f'id="{model}"' in page for model in expected_models),
             "demo page must expose all five system comparisons without tabs")
     print("PASS demos: five visible systems, 16 dual-format players, and averages")

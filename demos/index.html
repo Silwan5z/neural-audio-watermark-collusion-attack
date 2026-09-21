@@ -34,7 +34,7 @@
 <body>
   <a class="skip" href="#demo">Skip to listening comparison</a>
   <header class="hero"><div class="wrap">
-    <nav class="topbar" aria-label="Project navigation"><div class="brand"><span class="brand-mark" aria-hidden="true"></span> Collusion Audio Lab</div><div class="toplinks"><a href="#demo">Listen</a><a href="#results">Results</a><a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">GitHub</a></div></nav>
+    <nav class="topbar" aria-label="Project navigation"><div class="brand"><span class="brand-mark" aria-hidden="true"></span> Collusion Audio Lab</div><div class="toplinks"><a href="#results">Results</a><a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">GitHub</a></div></nav>
     <div class="hero-grid"><div><div class="eyebrow">Interactive five-system demo</div><h1>Two valid copies. One simple average. Tracing fails.</h1><p class="hero-copy">Hear two correctly decoded copies and their 50/50 average across AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec.</p><div class="cta-row"><a class="button primary" href="#demo">Play the comparisons ↓</a></div></div>
       <aside class="signal-card" aria-label="Attack summary"><div class="signal-label">K = 2 uniform averaging</div><div class="signal-row"><div class="signal-node"><b>Member A</b><span>valid identity</span></div><div class="signal-plus">+</div><div class="signal-node"><b>Member B</b><span>valid identity</span></div></div><div class="signal-result"><b>→ decoded as a nonmember</b>0 model access · 0 decoder queries · 50/50 sample mean</div><div class="signal-stat"><strong>86.3–99.3%</strong><span>tracing failure across systems</span></div></aside>
     </div>
@@ -75,7 +75,7 @@
       <tr><td>AudioSeal</td><td class="rate">99.0%</td><td>4.6040</td><td>0.9992</td><td>36.67 dB</td></tr><tr><td>WavMark</td><td class="rate">96.7%</td><td>4.5716</td><td>0.9990</td><td>44.15 dB</td></tr><tr><td>TimbreWM</td><td class="rate">86.3%</td><td>4.5638</td><td>0.9981</td><td>33.53 dB</td></tr><tr><td>VoiceMark</td><td class="rate">93.7%</td><td>4.2036</td><td>0.9827</td><td>16.58 dB</td></tr><tr><td>WMCodec</td><td class="rate">99.3%</td><td>4.3673</td><td>0.9894</td><td>16.29 dB</td></tr>
     </tbody></table></div><p class="note">Tracing failure means the decoded payload differs from both coalition payloads. It does not imply that every output maps to a registered innocent recipient.</p></div></section>
   </main>
-  <footer><div class="wrap"><span>Neural audio watermark collusion · interactive evidence</span><span><a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">Repository</a> · <a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack/blob/main/RESULTS.md">Full results</a></span></div></footer>
+  <footer><div class="wrap"><span>Neural audio watermark collusion · interactive evidence</span><a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack/blob/main/RESULTS.md">Full results</a></div></footer>
   <script>document.querySelectorAll('audio').forEach(player=>player.addEventListener('play',()=>document.querySelectorAll('audio').forEach(other=>{if(other!==player)other.pause()})))</script>
 </body>
 </html>
