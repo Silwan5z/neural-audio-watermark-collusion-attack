@@ -9,7 +9,7 @@ return a different ID—while the recording still sounds almost unchanged.
 
 <br>
 
-<a href="https://silwan5z.github.io/neural-audio-watermark-collusion-attack/index.html"><strong>▶ Open the interactive audio lab</strong></a>
+<a href="https://silwan5z.github.io/neural-audio-watermark-collusion-attack/index.html?v=2"><strong>▶ Open the interactive audio lab</strong></a>
 
 <sub>Clean and watermarked copies · five systems · K = 2/3/5/8 · timing offsets · MP3 and Opus · quality metrics</sub>
 

@@ -644,7 +644,7 @@ def verify_demos() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     public_url = (
         "https://silwan5z.github.io/"
-        "neural-audio-watermark-collusion-attack/index.html")
+        "neural-audio-watermark-collusion-attack/index.html?v=2")
     require(readme.count(public_url) == 1
             and readme.count(
                 "silwan5z.github.io/neural-audio-watermark-collusion-attack")
@@ -841,14 +841,14 @@ def verify_demos() -> None:
     require('src="demo-data.js"' in page,
             "demo page does not load the complete data bundle")
     require(page.count(
-                '<audio controls preload="none" src="source_reference.mp3" '
-                'data-fallback="source_reference.wav" '
+                '<audio controls preload="none" src="source_reference.mp3?v=2" '
+                'data-fallback="source_reference.wav?v=2" '
                 'aria-label="Clean source reference">') == 1,
             "overview must contain one clean reference player")
     require('system[category[view]].map' in page,
             "comparison players must be rendered by the switchable view")
-    require('controls preload="none" src="${escape(item.audio)}.mp3" '
-            'data-fallback="${escape(item.audio)}.wav"' in page,
+    require('controls preload="none" src="${escape(item.audio)}.mp3?v=2" '
+            'data-fallback="${escape(item.audio)}.wav?v=2"' in page,
             "dynamic players must load MP3 on demand with WAV fallback")
     require('player.addEventListener("error"' in page
             and 'player.src=player.dataset.fallback' in page,
