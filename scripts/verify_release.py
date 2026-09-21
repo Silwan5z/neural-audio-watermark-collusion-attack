@@ -643,14 +643,37 @@ def verify_demos() -> None:
     page = (demos / "index.html").read_text(encoding="utf-8")
     expected_sources = {"source_reference.wav"}
     metadata = read_csv(demos / "metadata.csv")
-    require(len(metadata) == 2, "demo metadata must contain two systems")
+    expected_models = {
+        "audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec",
+    }
+    require(len(metadata) == 5, "demo metadata must contain five systems")
     expected_decoded = {"audioseal": 23648, "voicemark": 60600}
-    require({row["system"] for row in metadata} == set(expected_decoded),
-            "demo metadata must cover AudioSeal and VoiceMark")
+    require({row["system"] for row in metadata} == expected_models,
+            "demo metadata must cover all five evaluated systems")
+    quality_rows = read_csv(DATA / "supplementary" / "quality" / "all_trials.csv")
     for row in metadata:
         model = row["system"]
         payload_a = int(row["payload_a"])
         payload_b = int(row["payload_b"])
+        quality = next(
+            item for item in quality_rows
+            if item["model"] == model and int(item["k"]) == 2
+            and int(item["trial_id"]) == 150)
+        require(json.loads(quality["coalition_payloads"])
+                == [payload_a, payload_b],
+                f"demo coalition mismatch: {model}")
+        trial = next(
+            item for item in read_csv(DATA / "average" / "k2" / f"{model}.csv")
+            if int(item["trial_id"]) == 150)
+        require(trial["speaker"] == row["speaker"]
+                and int(trial["clip_index"]) == int(row["clip_index"]),
+                f"demo trial identity mismatch: {model}")
+        require(int(trial["escaped"]) == int(row["escaped"]),
+                f"demo escape outcome mismatch: {model}")
+        for trial_key, demo_key in (
+                ("pesq", "pesq"), ("stoi", "stoi"), ("si_sdr", "si_sdr_db")):
+            require_close(float(trial[trial_key]), float(row[demo_key]),
+                          f"demo {trial_key} mismatch: {model}")
         member_a = read_demo_pcm16(
             demos / model / f"member_{payload_a}.wav")
         member_b = read_demo_pcm16(
@@ -664,17 +687,26 @@ def verify_demos() -> None:
         expected = (member_a + member_b) / 2.0
         require(float(np.max(np.abs(mixture - expected))) <= 1.0,
                 f"demo is not a sample-wise average: {model}")
-        require(int(row["decoded_average_payload"]) == expected_decoded[model]
-                and int(row["escaped"]) == 1,
+        require(int(row["escaped"]) == 1,
                 f"unexpected demo attribution metadata: {model}")
-        require(str(expected_decoded[model]) in page,
-                f"demo page omits decoded payload: {model}")
+        if model in expected_decoded:
+            require(int(row["decoded_average_payload"]) == expected_decoded[model],
+                    f"unexpected decoded demo payload: {model}")
+            require(str(expected_decoded[model]) in page,
+                    f"demo page omits decoded payload: {model}")
+        else:
+            require(row["decoded_average_payload"] == "",
+                    f"unverified decoded payload recorded for demo: {model}")
     for relative in expected_sources:
         require(page.count(f'src="{relative}"') == 1,
                 f"demo page must reference audio exactly once: {relative}")
     require("86.3–99.3%" in page,
             "demo page omits the released K=2 tracing-failure range")
-    print("PASS demos: audio, metadata, averages, and interactive page")
+    require(page.count("<audio ") == 16,
+            "demo page must expose one source and fifteen comparison players")
+    require(page.count('<button class="tab"') == 5,
+            "demo page must expose all five system comparisons")
+    print("PASS demos: five systems, 16 players, metadata, and averages")
 
 
 def json_keys(value):

@@ -28,11 +28,14 @@ jobs:
       - uses: actions/configure-pages@v5
       - name: Prepare static demo
         run: |
-          mkdir -p _site/audioseal _site/voicemark
+          mkdir -p _site/audioseal _site/wavmark _site/timbrewm _site/voicemark _site/wmcodec
           cp demos/index.html _site/index.html
           cp demos/source_reference.wav _site/source_reference.wav
           cp demos/audioseal/*.wav _site/audioseal/
+          cp demos/wavmark/*.wav _site/wavmark/
+          cp demos/timbrewm/*.wav _site/timbrewm/
           cp demos/voicemark/*.wav _site/voicemark/
+          cp demos/wmcodec/*.wav _site/wmcodec/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

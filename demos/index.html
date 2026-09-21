@@ -189,9 +189,9 @@
       <div class="eyebrow">Interactive listening demo</div>
       <h1>Averaging Collusion Breaks Personalized Audio-Watermark Traceability</h1>
       <p class="lead">
-        Listen to two valid personalized copies and their sample-wise average.
-        The speech remains close to the marked copies, but the native decoder assigns
-        the mixture to a payload outside the contributing coalition.
+        Compare two valid personalized copies with their sample-wise average across
+        all five evaluated watermarking systems. The speech remains close to the marked
+        copies, but the native decoder assigns each mixture outside its coalition.
       </p>
       <nav class="actions" aria-label="Project links">
         <a class="button primary" href="#demo">Listen now</a>
@@ -201,8 +201,8 @@
       </nav>
       <div class="stats" aria-label="Evaluation highlights">
         <div class="stat"><strong>86.3–99.3%</strong><span>K=2 tracing-failure range across five evaluated systems.</span></div>
-        <div class="stat"><strong>5 systems</strong><span>Three bit-based and two latent-based watermark decoders.</span></div>
-        <div class="stat"><strong>300 clips</strong><span>Ten-second speech recordings from 100 speakers.</span></div>
+        <div class="stat"><strong>5 systems</strong><span>Every evaluated system is included in the listening comparison.</span></div>
+        <div class="stat"><strong>15 clips</strong><span>Two valid copies and one 50/50 average for each system.</span></div>
         <div class="stat"><strong>0 queries</strong><span>Uniform averaging needs no clean reference, model, or decoder access.</span></div>
       </div>
     </div>
@@ -228,7 +228,7 @@
     <section class="alt" id="demo">
       <div class="wrap">
         <h2>Listen to a concrete tracing failure</h2>
-        <p class="section-lead">All clips below use trial 150: the same ten-second LibriSpeech-derived recording and the same payload pair. Use headphones if available.</p>
+        <p class="section-lead">All clips below use the same ten-second LibriSpeech-derived recording from trial 150. The four 16-bit systems share payloads 24199 and 31849; TimbreWM uses its native 10-bit payloads 378 and 497. Use headphones if available.</p>
         <div class="listen-guide">
           <div class="guide-step"><b>1.</b> Play the source to establish the reference.</div>
           <div class="guide-step"><b>2.</b> Compare the two valid personalized copies.</div>
@@ -244,7 +244,10 @@
 
         <div class="tabs" role="tablist" aria-label="Watermark system">
           <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="audioseal-panel" id="audioseal-tab" data-panel="audioseal-panel">AudioSeal</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="wavmark-panel" id="wavmark-tab" data-panel="wavmark-panel">WavMark</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="timbrewm-panel" id="timbrewm-tab" data-panel="timbrewm-panel">TimbreWM</button>
           <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="voicemark-panel" id="voicemark-tab" data-panel="voicemark-panel">VoiceMark</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="wmcodec-panel" id="wmcodec-tab" data-panel="wmcodec-panel">WMCodec</button>
         </div>
 
         <article class="demo-panel" id="audioseal-panel" role="tabpanel" aria-labelledby="audioseal-tab">
@@ -265,6 +268,42 @@
           </div>
         </article>
 
+        <article class="demo-panel" id="wavmark-panel" role="tabpanel" aria-labelledby="wavmark-tab" hidden>
+          <div class="panel-head">
+            <div><h3>WavMark</h3><p>Both personalized copies decode correctly. The released K=2 record verifies that their equal-weight average decodes outside the contributing pair.</p></div>
+            <div class="badge">Coalition escape</div>
+          </div>
+          <div class="audio-grid">
+            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 24199.</p><audio controls preload="none"><source src="wavmark/member_24199.wav" type="audio/wav"></audio><span class="payload">decoded: 24199 ✓</span></div>
+            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 31849.</p><audio controls preload="none"><source src="wavmark/member_31849.wav" type="audio/wav"></audio><span class="payload">decoded: 31849 ✓</span></div>
+            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="wavmark/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: nonmember — coalition escape</span></div>
+          </div>
+          <div class="outcome-row">
+            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
+            <div class="outcome-cell"><span>PESQ</span><strong>4.6223</strong></div>
+            <div class="outcome-cell"><span>STOI</span><strong>0.9989</strong></div>
+            <div class="outcome-cell"><span>SI-SDR</span><strong>41.20 dB</strong></div>
+          </div>
+        </article>
+
+        <article class="demo-panel" id="timbrewm-panel" role="tabpanel" aria-labelledby="timbrewm-tab" hidden>
+          <div class="panel-head">
+            <div><h3>TimbreWM</h3><p>TimbreWM uses a native 10-bit payload space. Its two valid copies carry payloads 378 and 497, and their equal-weight average decodes outside that pair.</p></div>
+            <div class="badge">Coalition escape</div>
+          </div>
+          <div class="audio-grid">
+            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 378.</p><audio controls preload="none"><source src="timbrewm/member_378.wav" type="audio/wav"></audio><span class="payload">decoded: 378 ✓</span></div>
+            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 497.</p><audio controls preload="none"><source src="timbrewm/member_497.wav" type="audio/wav"></audio><span class="payload">decoded: 497 ✓</span></div>
+            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="timbrewm/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: nonmember — coalition escape</span></div>
+          </div>
+          <div class="outcome-row">
+            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
+            <div class="outcome-cell"><span>PESQ</span><strong>4.5638</strong></div>
+            <div class="outcome-cell"><span>STOI</span><strong>0.9954</strong></div>
+            <div class="outcome-cell"><span>SI-SDR</span><strong>29.58 dB</strong></div>
+          </div>
+        </article>
+
         <article class="demo-panel" id="voicemark-panel" role="tabpanel" aria-labelledby="voicemark-tab" hidden>
           <div class="panel-head">
             <div><h3>VoiceMark</h3><p>The same payload pair is embedded with VoiceMark. The equal-weight average decodes to nonmember payload 60600.</p></div>
@@ -280,6 +319,24 @@
             <div class="outcome-cell"><span>PESQ</span><strong>3.5749</strong></div>
             <div class="outcome-cell"><span>STOI</span><strong>0.9778</strong></div>
             <div class="outcome-cell"><span>SI-SDR</span><strong>14.33 dB</strong></div>
+          </div>
+        </article>
+
+        <article class="demo-panel" id="wmcodec-panel" role="tabpanel" aria-labelledby="wmcodec-tab" hidden>
+          <div class="panel-head">
+            <div><h3>WMCodec</h3><p>Both personalized copies decode correctly. The released K=2 record verifies that their equal-weight average decodes outside the contributing pair.</p></div>
+            <div class="badge">Coalition escape</div>
+          </div>
+          <div class="audio-grid">
+            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 24199.</p><audio controls preload="none"><source src="wmcodec/member_24199.wav" type="audio/wav"></audio><span class="payload">decoded: 24199 ✓</span></div>
+            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 31849.</p><audio controls preload="none"><source src="wmcodec/member_31849.wav" type="audio/wav"></audio><span class="payload">decoded: 31849 ✓</span></div>
+            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="wmcodec/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: nonmember — coalition escape</span></div>
+          </div>
+          <div class="outcome-row">
+            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
+            <div class="outcome-cell"><span>PESQ</span><strong>4.4311</strong></div>
+            <div class="outcome-cell"><span>STOI</span><strong>0.9861</strong></div>
+            <div class="outcome-cell"><span>SI-SDR</span><strong>12.49 dB</strong></div>
           </div>
         </article>
       </div>
