@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -45,6 +46,14 @@ def write_demo(path: Path, audio: np.ndarray) -> None:
     sf.write(path, audio, 16000, subtype="PCM_16")
 
 
+def write_mp3(wav_path: Path) -> None:
+    subprocess.run([
+        "ffmpeg", "-y", "-loglevel", "error", "-i", str(wav_path),
+        "-codec:a", "libmp3lame", "-b:a", "192k",
+        str(wav_path.with_suffix(".mp3")),
+    ], check=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache-root", type=Path, default=ROOT / "cache")
@@ -54,6 +63,7 @@ def main() -> None:
     source = ROOT / "dataset" / "collusion_300" / "english" / "103" / \
         "english_103_01.wav"
     shutil.copyfile(source, args.output / "source_reference.wav")
+    write_mp3(args.output / "source_reference.wav")
 
     for model, (rate, payload_a, payload_b, cache_name) in EXAMPLES.items():
         cache_dir = args.cache_root / cache_name / model / "english:103" / "clip_01"
@@ -70,6 +80,9 @@ def main() -> None:
         write_demo(directory / f"member_{payload_a}.wav", member_a)
         write_demo(directory / f"member_{payload_b}.wav", member_b)
         write_demo(directory / "uniform_average.wav", average)
+        write_mp3(directory / f"member_{payload_a}.wav")
+        write_mp3(directory / f"member_{payload_b}.wav")
+        write_mp3(directory / "uniform_average.wav")
         print(f"exported {model}: {payload_a} + {payload_b}")
 
 

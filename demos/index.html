@@ -3,398 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive audio examples for averaging collusion attacks against personalized neural audio watermarking.">
-  <title>Audio Demo | Averaging Collusion and Neural Audio Watermarking</title>
+  <meta name="description" content="Listen to five neural audio watermarking systems before and after a two-copy averaging collusion attack.">
+  <title>Five-System Audio Demo | Averaging Collusion</title>
   <style>
-    :root {
-      color-scheme: light;
-      --ink: #13202d;
-      --muted: #5b6875;
-      --line: #d9e1e7;
-      --paper: #ffffff;
-      --soft: #f3f7f8;
-      --navy: #12324a;
-      --teal: #087b79;
-      --teal-soft: #e4f4f2;
-      --coral: #bc5038;
-      --coral-soft: #fff0eb;
-      --shadow: 0 18px 50px rgba(18, 50, 74, 0.10);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: #fbfcfd;
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      line-height: 1.58;
-    }
-    a { color: var(--teal); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    button, audio { font: inherit; }
-    .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
-    .skip-link {
-      position: fixed; left: 16px; top: -80px; z-index: 20;
-      padding: 10px 14px; border-radius: 6px; background: var(--navy); color: white;
-    }
-    .skip-link:focus { top: 16px; }
-
-    .hero {
-      border-bottom: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 82% 18%, rgba(8, 123, 121, .18), transparent 25%),
-        linear-gradient(135deg, #ffffff 0%, #edf5f5 100%);
-    }
-    .hero-inner { padding: 48px 0 38px; }
-    .eyebrow {
-      color: var(--coral); font-size: .82rem; font-weight: 800;
-      letter-spacing: .08em; text-transform: uppercase;
-    }
-    h1 {
-      max-width: 920px; margin: 10px 0 14px;
-      font-size: clamp(2.05rem, 5vw, 4.15rem); line-height: 1.06;
-      letter-spacing: -.035em;
-    }
-    .lead { max-width: 850px; margin: 0; color: #344554; font-size: 1.08rem; }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-    .button {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-height: 42px; padding: 9px 16px; border: 1px solid var(--line);
-      border-radius: 7px; background: var(--paper); color: var(--ink);
-      font-weight: 720; box-shadow: 0 3px 10px rgba(18, 50, 74, .05);
-    }
-    .button.primary { border-color: var(--teal); background: var(--teal); color: white; }
-    .button:hover { transform: translateY(-1px); text-decoration: none; }
-    .stats {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px; margin-top: 30px;
-    }
-    .stat {
-      min-height: 112px; padding: 17px; border: 1px solid rgba(18, 50, 74, .12);
-      border-radius: 10px; background: rgba(255, 255, 255, .78);
-    }
-    .stat strong { display: block; color: var(--teal); font-size: 1.75rem; line-height: 1.1; }
-    .stat span { display: block; margin-top: 8px; color: var(--muted); font-size: .9rem; }
-
-    section { padding: 42px 0; }
-    section.alt { border-block: 1px solid var(--line); background: var(--soft); }
-    h2 { margin: 0 0 12px; font-size: clamp(1.55rem, 3vw, 2.05rem); letter-spacing: -.02em; }
-    h3 { margin: 0 0 7px; font-size: 1.05rem; }
-    .section-lead { max-width: 790px; margin: 0 0 22px; color: var(--muted); }
-
-    .attack-flow {
-      display: grid; grid-template-columns: 1fr auto 1fr auto 1.15fr auto 1.1fr;
-      gap: 10px; align-items: center; margin-top: 24px;
-    }
-    .flow-card {
-      min-height: 122px; padding: 17px; border: 1px solid var(--line);
-      border-radius: 10px; background: var(--paper); box-shadow: 0 8px 25px rgba(18, 50, 74, .05);
-    }
-    .flow-card.attack { border-color: #efc4b8; background: var(--coral-soft); }
-    .flow-card.outcome { border-color: #a8d8d4; background: var(--teal-soft); }
-    .flow-card p { margin: 5px 0 0; color: var(--muted); font-size: .9rem; }
-    .arrow { color: var(--teal); font-size: 1.35rem; font-weight: 800; }
-
-    .listen-guide {
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px; margin: 20px 0 26px;
-    }
-    .guide-step { padding: 15px; border-left: 3px solid var(--teal); background: var(--soft); }
-    .guide-step b { color: var(--teal); }
-
-    .source-card, .demo-panel {
-      border: 1px solid var(--line); border-radius: 12px;
-      background: var(--paper); box-shadow: var(--shadow);
-    }
-    .source-card {
-      display: grid; grid-template-columns: 1fr minmax(260px, 420px);
-      gap: 24px; align-items: center; padding: 20px; margin-bottom: 20px;
-    }
-    .source-card p { margin: 4px 0 0; color: var(--muted); }
-    audio { width: 100%; min-width: 0; }
-    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-    .tab {
-      min-height: 40px; padding: 8px 15px; border: 1px solid var(--line);
-      border-radius: 7px; background: var(--paper); color: var(--ink);
-      cursor: pointer; font-weight: 720;
-    }
-    .tab[aria-selected="true"] { border-color: var(--teal); background: var(--teal-soft); color: #075d5c; }
-    .demo-panel { overflow: hidden; }
-    .demo-panel[hidden] { display: none; }
-    .panel-head {
-      display: flex; justify-content: space-between; gap: 20px; align-items: flex-start;
-      padding: 20px; border-bottom: 1px solid var(--line); background: #f9fbfb;
-    }
-    .panel-head p { max-width: 660px; margin: 4px 0 0; color: var(--muted); }
-    .badge {
-      flex: 0 0 auto; padding: 6px 10px; border-radius: 999px;
-      background: var(--coral-soft); color: #913d2a; font-size: .82rem; font-weight: 800;
-    }
-    .audio-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .audio-card { padding: 20px; border-right: 1px solid var(--line); }
-    .audio-card:last-child { border-right: 0; }
-    .audio-card p { min-height: 44px; margin: 4px 0 14px; color: var(--muted); font-size: .9rem; }
-    .audio-card.average { background: #fffaf8; }
-    .payload { display: inline-block; margin-top: 12px; color: var(--navy); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .84rem; }
-    .outcome-row {
-      display: grid; grid-template-columns: 1.4fr repeat(3, 1fr);
-      border-top: 1px solid var(--line); background: var(--soft);
-    }
-    .outcome-cell { padding: 15px 20px; border-right: 1px solid var(--line); }
-    .outcome-cell:last-child { border-right: 0; }
-    .outcome-cell span { display: block; color: var(--muted); font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
-    .outcome-cell strong { display: block; margin-top: 3px; font-size: 1rem; }
-    .escaped { color: var(--coral); }
-
-    .results-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: white; }
-    table { width: 100%; border-collapse: collapse; min-width: 680px; }
-    th, td { padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: right; }
-    th { background: #edf4f4; color: #2a3d4c; font-size: .86rem; }
-    th:first-child, td:first-child { text-align: left; }
-    tr:last-child td { border-bottom: 0; }
-    .note { margin-top: 14px; color: var(--muted); font-size: .9rem; }
-
-    .scope-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .scope-card { padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: white; }
-    .scope-card p { margin: 5px 0 0; color: var(--muted); font-size: .9rem; }
-    footer { padding: 28px 0 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
-
-    @media (max-width: 900px) {
-      .stats, .scope-grid { grid-template-columns: repeat(2, 1fr); }
-      .attack-flow { grid-template-columns: 1fr; }
-      .arrow { transform: rotate(90deg); text-align: center; }
-      .source-card { grid-template-columns: 1fr; }
-      .audio-grid { grid-template-columns: 1fr; }
-      .audio-card { border-right: 0; border-bottom: 1px solid var(--line); }
-      .audio-card:last-child { border-bottom: 0; }
-      .outcome-row { grid-template-columns: repeat(2, 1fr); }
-      .outcome-cell:nth-child(2) { border-right: 0; }
-      .outcome-cell:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-    }
-    @media (max-width: 620px) {
-      .wrap { width: min(100% - 24px, 1180px); }
-      .hero-inner { padding-top: 34px; }
-      .stats, .listen-guide, .scope-grid, .outcome-row { grid-template-columns: 1fr; }
-      .outcome-cell { border-right: 0; border-bottom: 1px solid var(--line); }
-      .panel-head { flex-direction: column; }
-    }
+    :root{color-scheme:light;--night:#0b1320;--night2:#122033;--ink:#142032;--muted:#657083;--line:#dce3e9;--paper:#fff;--canvas:#f4f7f8;--mint:#35cdb7;--mint-dark:#087d71;--mint-soft:#e6f8f4;--orange:#f07150;--orange-soft:#fff0ea;--shadow:0 18px 55px rgba(12,27,45,.1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}a{color:inherit}audio{width:100%;min-width:0;height:40px}.wrap{width:min(1160px,calc(100% - 40px));margin:0 auto}.skip{position:fixed;left:14px;top:-80px;z-index:20;padding:10px 14px;background:#fff;color:var(--night);border-radius:8px}.skip:focus{top:14px}
+    .hero{position:relative;overflow:hidden;background:var(--night);color:#fff}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,rgba(53,205,183,.24),transparent 29%),linear-gradient(120deg,transparent 30%,rgba(255,255,255,.035));pointer-events:none}.topbar{position:relative;display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.12)}.brand{display:flex;align-items:center;gap:10px;font-weight:800}.brand-mark{width:27px;height:27px;border:7px solid var(--mint);border-radius:50%;box-shadow:0 0 0 4px rgba(53,205,183,.16)}.toplinks{display:flex;gap:20px;color:#c8d3df;font-size:.9rem}.toplinks a{text-decoration:none}.toplinks a:hover{color:#fff}.hero-grid{position:relative;display:grid;grid-template-columns:1.35fr .8fr;gap:58px;align-items:center;padding:70px 0 82px}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:#91eee0;font-size:.78rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:"";width:25px;height:2px;background:var(--mint)}h1{max-width:760px;margin:14px 0 20px;font-size:clamp(2.45rem,5.8vw,5rem);line-height:.99;letter-spacing:-.052em}.hero-copy{max-width:680px;margin:0;color:#c5d0dc;font-size:1.08rem}.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}.button{display:inline-flex;justify-content:center;align-items:center;min-height:46px;padding:10px 17px;border:1px solid rgba(255,255,255,.2);border-radius:9px;color:#fff;text-decoration:none;font-weight:760}.button.primary{border-color:var(--mint);background:var(--mint);color:#062c2a}.button:hover{transform:translateY(-1px);border-color:#fff}
+    .signal-card{padding:25px;border:1px solid rgba(255,255,255,.15);border-radius:18px;background:rgba(255,255,255,.075);box-shadow:0 24px 70px rgba(0,0,0,.22);backdrop-filter:blur(10px)}.signal-label{color:#98a7b8;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.signal-row{display:grid;grid-template-columns:1fr auto 1fr;gap:9px;align-items:center;margin:14px 0}.signal-node{padding:13px 10px;border:1px solid rgba(255,255,255,.12);border-radius:10px;background:rgba(255,255,255,.06);text-align:center}.signal-node b{display:block}.signal-node span{color:#9eacba;font-size:.76rem}.signal-plus{color:var(--mint);font-size:1.4rem}.signal-result{margin-top:10px;padding:14px;border:1px solid rgba(240,113,80,.45);border-radius:10px;background:rgba(240,113,80,.12);color:#ffd7cc}.signal-result b{display:block;color:#fff;font-size:1.1rem}.signal-stat{display:flex;align-items:baseline;gap:8px;margin-top:15px;color:#9eacba;font-size:.78rem}.signal-stat strong{color:#91eee0;font-size:1.35rem}
+    section{padding:64px 0}.demo{position:relative;margin-top:-30px;padding-top:0}.demo-shell{position:relative;z-index:2;padding:34px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow)}.section-kicker{color:var(--mint-dark);font-size:.75rem;font-weight:850;letter-spacing:.11em;text-transform:uppercase}h2{margin:7px 0 9px;font-size:clamp(1.8rem,3.7vw,3rem);line-height:1.08;letter-spacing:-.035em}.section-copy{max-width:790px;margin:0;color:var(--muted)}.demo-count{display:inline-flex;margin-top:15px;padding:6px 10px;border-radius:999px;background:var(--mint-soft);color:var(--mint-dark);font-size:.8rem;font-weight:800}.jump-nav{position:sticky;top:0;z-index:10;display:flex;gap:8px;margin:27px -34px 24px;padding:13px 34px;overflow-x:auto;border-block:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(12px)}.jump-nav a{flex:0 0 auto;padding:8px 13px;border:1px solid var(--line);border-radius:999px;color:#465266;text-decoration:none;font-size:.84rem;font-weight:750}.jump-nav a:hover{border-color:var(--mint);background:var(--mint-soft);color:var(--mint-dark)}.source{display:grid;grid-template-columns:1fr minmax(270px,440px);gap:25px;align-items:center;padding:19px 21px;border-radius:13px;background:var(--night2);color:#fff}.source h3{margin:0 0 3px}.source p{margin:0;color:#aebbc8;font-size:.88rem}
+    .systems{display:grid;gap:22px;margin-top:22px}.system-card{overflow:hidden;scroll-margin-top:72px;border:1px solid var(--line);border-radius:15px;background:#fff}.system-head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:20px 22px;background:#f8fafb;border-bottom:1px solid var(--line)}.system-title{display:flex;gap:13px;align-items:center}.system-number{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--night);color:#fff;font-size:.78rem;font-weight:850}.system-title h3{margin:0;font-size:1.18rem}.system-title p{margin:1px 0 0;color:var(--muted);font-size:.82rem}.escape-pill{padding:7px 11px;border-radius:999px;background:var(--orange-soft);color:#a33e28;font-size:.78rem;font-weight:850}.tracks{display:grid;grid-template-columns:repeat(3,1fr)}.track{min-width:0;padding:20px 21px 18px;border-right:1px solid var(--line)}.track:last-child{border-right:0}.track.average{background:#fffaf8}.track-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:5px}.track h4{margin:0;font-size:.98rem}.track-index{color:#a0a9b5;font-family:ui-monospace,monospace;font-size:.76rem}.track p{min-height:39px;margin:0 0 12px;color:var(--muted);font-size:.84rem}.decode{display:flex;align-items:center;gap:7px;margin-top:10px;color:#334155;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.78rem}.decode:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--mint)}.decode.failure{color:#a33e28}.decode.failure:before{background:var(--orange)}.metrics{display:grid;grid-template-columns:1.45fr repeat(3,1fr);border-top:1px solid var(--line);background:#f7f9fa}.metric{padding:13px 20px;border-right:1px solid var(--line)}.metric:last-child{border-right:0}.metric span{display:block;color:#8893a2;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.metric b{display:block;margin-top:2px;font-size:.94rem}.metric .failure{color:#a33e28}
+    .evidence{background:var(--night);color:#fff}.evidence .section-kicker{color:#87e9da}.evidence .section-copy{color:#aebbc8}.table-wrap{margin-top:25px;overflow-x:auto;border:1px solid rgba(255,255,255,.14);border-radius:13px}table{width:100%;min-width:680px;border-collapse:collapse}th,td{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.11);text-align:right}th{color:#8f9dad;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase}th:first-child,td:first-child{text-align:left}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:rgba(255,255,255,.035)}.rate{color:#8ff1e2;font-weight:850}.note{margin:14px 0 0;color:#93a2b2;font-size:.84rem}.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:26px}.method-card{padding:18px;border:1px solid var(--line);border-radius:12px;background:#fff}.method-card b{display:block;margin-bottom:5px}.method-card p{margin:0;color:var(--muted);font-size:.86rem}footer{padding:30px 0 45px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}footer .wrap{display:flex;justify-content:space-between;gap:20px}footer a{color:var(--mint-dark)}
+    @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:36px}.signal-card{max-width:560px}.tracks{grid-template-columns:1fr}.track{border-right:0;border-bottom:1px solid var(--line)}.track:last-child{border-bottom:0}.track p{min-height:0}.metrics,.method-grid{grid-template-columns:repeat(2,1fr)}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+    @media(max-width:620px){.wrap{width:min(100% - 24px,1160px)}.toplinks{display:none}.hero-grid{padding:48px 0 65px}.demo-shell{padding:22px 14px;border-radius:14px}.jump-nav{margin-inline:-14px;padding-inline:14px}.source,.system-head{grid-template-columns:1fr}.escape-pill{justify-self:start}.metrics,.method-grid{grid-template-columns:1fr}.metric{border-right:0;border-bottom:1px solid var(--line)}.metric:last-child{border-bottom:0}footer .wrap{display:block}}
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#demo">Skip to audio examples</a>
-  <header class="hero">
-    <div class="wrap hero-inner">
-      <div class="eyebrow">Interactive listening demo</div>
-      <h1>Averaging Collusion Breaks Personalized Audio-Watermark Traceability</h1>
-      <p class="lead">
-        Compare two valid personalized copies with their sample-wise average across
-        all five evaluated watermarking systems. The speech remains close to the marked
-        copies, but the native decoder assigns each mixture outside its coalition.
-      </p>
-      <nav class="actions" aria-label="Project links">
-        <a class="button primary" href="#demo">Listen now</a>
-        <a class="button" href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">Code and data</a>
-        <a class="button" href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack/blob/main/RESULTS.md">Complete results</a>
-        <a class="button" href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack/blob/main/REPRODUCIBILITY.md">Reproduce</a>
-      </nav>
-      <div class="stats" aria-label="Evaluation highlights">
-        <div class="stat"><strong>86.3–99.3%</strong><span>K=2 tracing-failure range across five evaluated systems.</span></div>
-        <div class="stat"><strong>5 systems</strong><span>Every evaluated system is included in the listening comparison.</span></div>
-        <div class="stat"><strong>15 clips</strong><span>Two valid copies and one 50/50 average for each system.</span></div>
-        <div class="stat"><strong>0 queries</strong><span>Uniform averaging needs no clean reference, model, or decoder access.</span></div>
-      </div>
+  <a class="skip" href="#demo">Skip to listening comparison</a>
+  <header class="hero"><div class="wrap">
+    <nav class="topbar" aria-label="Project navigation"><div class="brand"><span class="brand-mark" aria-hidden="true"></span> Collusion Audio Lab</div><div class="toplinks"><a href="#demo">Listen</a><a href="#results">Results</a><a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">GitHub</a></div></nav>
+    <div class="hero-grid"><div><div class="eyebrow">Interactive five-system demo</div><h1>Two valid copies. One simple average. Tracing fails.</h1><p class="hero-copy">Hear the same ten-second recording under AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec. Every comparison includes two correctly decoded personalized copies and their 50/50 waveform average.</p><div class="cta-row"><a class="button primary" href="#demo">Play the comparisons ↓</a><a class="button" href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">Code, data, and protocol</a></div></div>
+      <aside class="signal-card" aria-label="Attack summary"><div class="signal-label">K = 2 uniform averaging</div><div class="signal-row"><div class="signal-node"><b>Member A</b><span>valid identity</span></div><div class="signal-plus">+</div><div class="signal-node"><b>Member B</b><span>valid identity</span></div></div><div class="signal-result"><b>→ decoded as a nonmember</b>0 model access · 0 decoder queries · 50/50 sample mean</div><div class="signal-stat"><strong>86.3–99.3%</strong><span>tracing failure across systems</span></div></aside>
     </div>
-  </header>
-
+  </div></header>
   <main>
-    <section>
-      <div class="wrap">
-        <h2>What the attack does</h2>
-        <p class="section-lead">The coalition averages aligned personalized copies of the same recording. Only the payload-dependent residuals differ.</p>
-        <div class="attack-flow" aria-label="Averaging attack flow">
-          <div class="flow-card"><h3>Shared recording</h3><p>The same speech content is distributed to multiple recipients.</p></div>
-          <div class="arrow" aria-hidden="true">→</div>
-          <div class="flow-card"><h3>Valid copies A and B</h3><p>Each copy carries a different payload and decodes correctly before mixing.</p></div>
-          <div class="arrow" aria-hidden="true">→</div>
-          <div class="flow-card attack"><h3>50/50 waveform average</h3><p>The attacker combines samples directly, without a clean reference or model access.</p></div>
-          <div class="arrow" aria-hidden="true">→</div>
-          <div class="flow-card outcome"><h3>Coalition escape</h3><p>The decoded payload matches neither contributor, so recipient tracing fails.</p></div>
-        </div>
+    <section class="demo" id="demo"><div class="wrap demo-shell">
+      <div class="section-kicker">Listen and compare</div><h2>Five systems, one controlled trial</h2><p class="section-copy">Start with the clean source, then compare Member A, Member B, and the colluded average within each system. All players provide MP3 first and lossless WAV as a fallback.</p><div class="demo-count">16 players · 5 systems · 1 shared recording</div>
+      <nav class="jump-nav" aria-label="Jump to a system"><a href="#audioseal">01 AudioSeal</a><a href="#wavmark">02 WavMark</a><a href="#timbrewm">03 TimbreWM</a><a href="#voicemark">04 VoiceMark</a><a href="#wmcodec">05 WMCodec</a></nav>
+      <div class="source"><div><h3>Source reference</h3><p>Unwatermarked trial 150 · LibriSpeech-derived · 10 seconds</p></div><audio controls preload="metadata" aria-label="Unwatermarked source reference"><source src="source_reference.mp3" type="audio/mpeg"><source src="source_reference.wav" type="audio/wav">Your browser cannot play this audio.</audio></div>
+      <div class="systems">
+        <article class="system-card" id="audioseal"><header class="system-head"><div class="system-title"><span class="system-number">01</span><div><h3>AudioSeal</h3><p>16-bit · bit-based decoder</p></div></div><span class="escape-pill">Coalition escape</span></header><div class="tracks">
+          <div class="track"><div class="track-top"><h4>Member A</h4><span class="track-index">A</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="AudioSeal member A"><source src="audioseal/member_24199.mp3" type="audio/mpeg"><source src="audioseal/member_24199.wav" type="audio/wav"></audio><div class="decode">decoded 24199 ✓</div></div>
+          <div class="track"><div class="track-top"><h4>Member B</h4><span class="track-index">B</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="AudioSeal member B"><source src="audioseal/member_31849.mp3" type="audio/mpeg"><source src="audioseal/member_31849.wav" type="audio/wav"></audio><div class="decode">decoded 31849 ✓</div></div>
+          <div class="track average"><div class="track-top"><h4>50/50 average</h4><span class="track-index">A+B</span></div><p>Sample-wise mean of the two members.</p><audio controls preload="metadata" aria-label="AudioSeal uniform average"><source src="audioseal/uniform_average.mp3" type="audio/mpeg"><source src="audioseal/uniform_average.wav" type="audio/wav"></audio><div class="decode failure">decoded 23648 — nonmember</div></div></div>
+          <div class="metrics"><div class="metric"><span>Tracing outcome</span><b class="failure">Outside {24199, 31849}</b></div><div class="metric"><span>PESQ</span><b>4.6129</b></div><div class="metric"><span>STOI</span><b>0.9981</b></div><div class="metric"><span>SI-SDR</span><b>34.65 dB</b></div></div></article>
+        <article class="system-card" id="wavmark"><header class="system-head"><div class="system-title"><span class="system-number">02</span><div><h3>WavMark</h3><p>16-bit · bit-based decoder</p></div></div><span class="escape-pill">Coalition escape</span></header><div class="tracks">
+          <div class="track"><div class="track-top"><h4>Member A</h4><span class="track-index">A</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="WavMark member A"><source src="wavmark/member_24199.mp3" type="audio/mpeg"><source src="wavmark/member_24199.wav" type="audio/wav"></audio><div class="decode">decoded 24199 ✓</div></div>
+          <div class="track"><div class="track-top"><h4>Member B</h4><span class="track-index">B</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="WavMark member B"><source src="wavmark/member_31849.mp3" type="audio/mpeg"><source src="wavmark/member_31849.wav" type="audio/wav"></audio><div class="decode">decoded 31849 ✓</div></div>
+          <div class="track average"><div class="track-top"><h4>50/50 average</h4><span class="track-index">A+B</span></div><p>Sample-wise mean of the two members.</p><audio controls preload="metadata" aria-label="WavMark uniform average"><source src="wavmark/uniform_average.mp3" type="audio/mpeg"><source src="wavmark/uniform_average.wav" type="audio/wav"></audio><div class="decode failure">decoded outside coalition</div></div></div>
+          <div class="metrics"><div class="metric"><span>Tracing outcome</span><b class="failure">Outside {24199, 31849}</b></div><div class="metric"><span>PESQ</span><b>4.6223</b></div><div class="metric"><span>STOI</span><b>0.9989</b></div><div class="metric"><span>SI-SDR</span><b>41.20 dB</b></div></div></article>
+        <article class="system-card" id="timbrewm"><header class="system-head"><div class="system-title"><span class="system-number">03</span><div><h3>TimbreWM</h3><p>10-bit · bit-based decoder</p></div></div><span class="escape-pill">Coalition escape</span></header><div class="tracks">
+          <div class="track"><div class="track-top"><h4>Member A</h4><span class="track-index">A</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="TimbreWM member A"><source src="timbrewm/member_378.mp3" type="audio/mpeg"><source src="timbrewm/member_378.wav" type="audio/wav"></audio><div class="decode">decoded 378 ✓</div></div>
+          <div class="track"><div class="track-top"><h4>Member B</h4><span class="track-index">B</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="TimbreWM member B"><source src="timbrewm/member_497.mp3" type="audio/mpeg"><source src="timbrewm/member_497.wav" type="audio/wav"></audio><div class="decode">decoded 497 ✓</div></div>
+          <div class="track average"><div class="track-top"><h4>50/50 average</h4><span class="track-index">A+B</span></div><p>Sample-wise mean of the two members.</p><audio controls preload="metadata" aria-label="TimbreWM uniform average"><source src="timbrewm/uniform_average.mp3" type="audio/mpeg"><source src="timbrewm/uniform_average.wav" type="audio/wav"></audio><div class="decode failure">decoded outside coalition</div></div></div>
+          <div class="metrics"><div class="metric"><span>Tracing outcome</span><b class="failure">Outside {378, 497}</b></div><div class="metric"><span>PESQ</span><b>4.5638</b></div><div class="metric"><span>STOI</span><b>0.9954</b></div><div class="metric"><span>SI-SDR</span><b>29.58 dB</b></div></div></article>
+        <article class="system-card" id="voicemark"><header class="system-head"><div class="system-title"><span class="system-number">04</span><div><h3>VoiceMark</h3><p>16-bit · latent-based decoder</p></div></div><span class="escape-pill">Coalition escape</span></header><div class="tracks">
+          <div class="track"><div class="track-top"><h4>Member A</h4><span class="track-index">A</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="VoiceMark member A"><source src="voicemark/member_24199.mp3" type="audio/mpeg"><source src="voicemark/member_24199.wav" type="audio/wav"></audio><div class="decode">decoded 24199 ✓</div></div>
+          <div class="track"><div class="track-top"><h4>Member B</h4><span class="track-index">B</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="VoiceMark member B"><source src="voicemark/member_31849.mp3" type="audio/mpeg"><source src="voicemark/member_31849.wav" type="audio/wav"></audio><div class="decode">decoded 31849 ✓</div></div>
+          <div class="track average"><div class="track-top"><h4>50/50 average</h4><span class="track-index">A+B</span></div><p>Sample-wise mean of the two members.</p><audio controls preload="metadata" aria-label="VoiceMark uniform average"><source src="voicemark/uniform_average.mp3" type="audio/mpeg"><source src="voicemark/uniform_average.wav" type="audio/wav"></audio><div class="decode failure">decoded 60600 — nonmember</div></div></div>
+          <div class="metrics"><div class="metric"><span>Tracing outcome</span><b class="failure">Outside {24199, 31849}</b></div><div class="metric"><span>PESQ</span><b>3.5749</b></div><div class="metric"><span>STOI</span><b>0.9778</b></div><div class="metric"><span>SI-SDR</span><b>14.33 dB</b></div></div></article>
+        <article class="system-card" id="wmcodec"><header class="system-head"><div class="system-title"><span class="system-number">05</span><div><h3>WMCodec</h3><p>16-bit · latent-based decoder</p></div></div><span class="escape-pill">Coalition escape</span></header><div class="tracks">
+          <div class="track"><div class="track-top"><h4>Member A</h4><span class="track-index">A</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="WMCodec member A"><source src="wmcodec/member_24199.mp3" type="audio/mpeg"><source src="wmcodec/member_24199.wav" type="audio/wav"></audio><div class="decode">decoded 24199 ✓</div></div>
+          <div class="track"><div class="track-top"><h4>Member B</h4><span class="track-index">B</span></div><p>Valid personalized copy.</p><audio controls preload="metadata" aria-label="WMCodec member B"><source src="wmcodec/member_31849.mp3" type="audio/mpeg"><source src="wmcodec/member_31849.wav" type="audio/wav"></audio><div class="decode">decoded 31849 ✓</div></div>
+          <div class="track average"><div class="track-top"><h4>50/50 average</h4><span class="track-index">A+B</span></div><p>Sample-wise mean of the two members.</p><audio controls preload="metadata" aria-label="WMCodec uniform average"><source src="wmcodec/uniform_average.mp3" type="audio/mpeg"><source src="wmcodec/uniform_average.wav" type="audio/wav"></audio><div class="decode failure">decoded outside coalition</div></div></div>
+          <div class="metrics"><div class="metric"><span>Tracing outcome</span><b class="failure">Outside {24199, 31849}</b></div><div class="metric"><span>PESQ</span><b>4.4311</b></div><div class="metric"><span>STOI</span><b>0.9861</b></div><div class="metric"><span>SI-SDR</span><b>12.49 dB</b></div></div></article>
       </div>
-    </section>
-
-    <section class="alt" id="demo">
-      <div class="wrap">
-        <h2>Listen to a concrete tracing failure</h2>
-        <p class="section-lead">All clips below use the same ten-second LibriSpeech-derived recording from trial 150. The four 16-bit systems share payloads 24199 and 31849; TimbreWM uses its native 10-bit payloads 378 and 497. Use headphones if available.</p>
-        <div class="listen-guide">
-          <div class="guide-step"><b>1.</b> Play the source to establish the reference.</div>
-          <div class="guide-step"><b>2.</b> Compare the two valid personalized copies.</div>
-          <div class="guide-step"><b>3.</b> Play the average and inspect its decoded outcome.</div>
-        </div>
-
-        <div class="source-card">
-          <div><h3>Source reference</h3><p>Unwatermarked evaluation source before personalized embedding.</p></div>
-          <audio controls preload="metadata" aria-label="Unwatermarked source reference">
-            <source src="source_reference.wav" type="audio/wav">
-          </audio>
-        </div>
-
-        <div class="tabs" role="tablist" aria-label="Watermark system">
-          <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="audioseal-panel" id="audioseal-tab" data-panel="audioseal-panel">AudioSeal</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="wavmark-panel" id="wavmark-tab" data-panel="wavmark-panel">WavMark</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="timbrewm-panel" id="timbrewm-tab" data-panel="timbrewm-panel">TimbreWM</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="voicemark-panel" id="voicemark-tab" data-panel="voicemark-panel">VoiceMark</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="wmcodec-panel" id="wmcodec-tab" data-panel="wmcodec-panel">WMCodec</button>
-        </div>
-
-        <article class="demo-panel" id="audioseal-panel" role="tabpanel" aria-labelledby="audioseal-tab">
-          <div class="panel-head">
-            <div><h3>AudioSeal</h3><p>Both personalized copies decode to their assigned payload. Their equal-weight average instead decodes to nonmember payload 23648.</p></div>
-            <div class="badge">Coalition escape</div>
-          </div>
-          <div class="audio-grid">
-            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 24199.</p><audio controls preload="none"><source src="audioseal/member_24199.wav" type="audio/wav"></audio><span class="payload">decoded: 24199 ✓</span></div>
-            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 31849.</p><audio controls preload="none"><source src="audioseal/member_31849.wav" type="audio/wav"></audio><span class="payload">decoded: 31849 ✓</span></div>
-            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="audioseal/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: 23648 — nonmember</span></div>
-          </div>
-          <div class="outcome-row">
-            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
-            <div class="outcome-cell"><span>PESQ</span><strong>4.6129</strong></div>
-            <div class="outcome-cell"><span>STOI</span><strong>0.9981</strong></div>
-            <div class="outcome-cell"><span>SI-SDR</span><strong>34.65 dB</strong></div>
-          </div>
-        </article>
-
-        <article class="demo-panel" id="wavmark-panel" role="tabpanel" aria-labelledby="wavmark-tab" hidden>
-          <div class="panel-head">
-            <div><h3>WavMark</h3><p>Both personalized copies decode correctly. The released K=2 record verifies that their equal-weight average decodes outside the contributing pair.</p></div>
-            <div class="badge">Coalition escape</div>
-          </div>
-          <div class="audio-grid">
-            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 24199.</p><audio controls preload="none"><source src="wavmark/member_24199.wav" type="audio/wav"></audio><span class="payload">decoded: 24199 ✓</span></div>
-            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 31849.</p><audio controls preload="none"><source src="wavmark/member_31849.wav" type="audio/wav"></audio><span class="payload">decoded: 31849 ✓</span></div>
-            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="wavmark/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: nonmember — coalition escape</span></div>
-          </div>
-          <div class="outcome-row">
-            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
-            <div class="outcome-cell"><span>PESQ</span><strong>4.6223</strong></div>
-            <div class="outcome-cell"><span>STOI</span><strong>0.9989</strong></div>
-            <div class="outcome-cell"><span>SI-SDR</span><strong>41.20 dB</strong></div>
-          </div>
-        </article>
-
-        <article class="demo-panel" id="timbrewm-panel" role="tabpanel" aria-labelledby="timbrewm-tab" hidden>
-          <div class="panel-head">
-            <div><h3>TimbreWM</h3><p>TimbreWM uses a native 10-bit payload space. Its two valid copies carry payloads 378 and 497, and their equal-weight average decodes outside that pair.</p></div>
-            <div class="badge">Coalition escape</div>
-          </div>
-          <div class="audio-grid">
-            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 378.</p><audio controls preload="none"><source src="timbrewm/member_378.wav" type="audio/wav"></audio><span class="payload">decoded: 378 ✓</span></div>
-            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 497.</p><audio controls preload="none"><source src="timbrewm/member_497.wav" type="audio/wav"></audio><span class="payload">decoded: 497 ✓</span></div>
-            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="timbrewm/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: nonmember — coalition escape</span></div>
-          </div>
-          <div class="outcome-row">
-            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
-            <div class="outcome-cell"><span>PESQ</span><strong>4.5638</strong></div>
-            <div class="outcome-cell"><span>STOI</span><strong>0.9954</strong></div>
-            <div class="outcome-cell"><span>SI-SDR</span><strong>29.58 dB</strong></div>
-          </div>
-        </article>
-
-        <article class="demo-panel" id="voicemark-panel" role="tabpanel" aria-labelledby="voicemark-tab" hidden>
-          <div class="panel-head">
-            <div><h3>VoiceMark</h3><p>The same payload pair is embedded with VoiceMark. The equal-weight average decodes to nonmember payload 60600.</p></div>
-            <div class="badge">Coalition escape</div>
-          </div>
-          <div class="audio-grid">
-            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 24199.</p><audio controls preload="none"><source src="voicemark/member_24199.wav" type="audio/wav"></audio><span class="payload">decoded: 24199 ✓</span></div>
-            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 31849.</p><audio controls preload="none"><source src="voicemark/member_31849.wav" type="audio/wav"></audio><span class="payload">decoded: 31849 ✓</span></div>
-            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="voicemark/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: 60600 — nonmember</span></div>
-          </div>
-          <div class="outcome-row">
-            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
-            <div class="outcome-cell"><span>PESQ</span><strong>3.5749</strong></div>
-            <div class="outcome-cell"><span>STOI</span><strong>0.9778</strong></div>
-            <div class="outcome-cell"><span>SI-SDR</span><strong>14.33 dB</strong></div>
-          </div>
-        </article>
-
-        <article class="demo-panel" id="wmcodec-panel" role="tabpanel" aria-labelledby="wmcodec-tab" hidden>
-          <div class="panel-head">
-            <div><h3>WMCodec</h3><p>Both personalized copies decode correctly. The released K=2 record verifies that their equal-weight average decodes outside the contributing pair.</p></div>
-            <div class="badge">Coalition escape</div>
-          </div>
-          <div class="audio-grid">
-            <div class="audio-card"><h3>Member A</h3><p>Valid personalized copy assigned to payload 24199.</p><audio controls preload="none"><source src="wmcodec/member_24199.wav" type="audio/wav"></audio><span class="payload">decoded: 24199 ✓</span></div>
-            <div class="audio-card"><h3>Member B</h3><p>Valid personalized copy assigned to payload 31849.</p><audio controls preload="none"><source src="wmcodec/member_31849.wav" type="audio/wav"></audio><span class="payload">decoded: 31849 ✓</span></div>
-            <div class="audio-card average"><h3>50/50 average</h3><p>Sample-wise mean of Member A and Member B.</p><audio controls preload="none"><source src="wmcodec/uniform_average.wav" type="audio/wav"></audio><span class="payload escaped">decoded: nonmember — coalition escape</span></div>
-          </div>
-          <div class="outcome-row">
-            <div class="outcome-cell"><span>Tracing outcome</span><strong class="escaped">Failure: outside coalition</strong></div>
-            <div class="outcome-cell"><span>PESQ</span><strong>4.4311</strong></div>
-            <div class="outcome-cell"><span>STOI</span><strong>0.9861</strong></div>
-            <div class="outcome-cell"><span>SI-SDR</span><strong>12.49 dB</strong></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <div class="wrap">
-        <h2>Aggregate K=2 evidence</h2>
-        <p class="section-lead">The listening example illustrates one trial. The paper reports tracing failure over 300 trials per system.</p>
-        <div class="results-table-wrap">
-          <table>
-            <thead><tr><th>System</th><th>Tracing failure</th><th>PESQ</th><th>STOI</th><th>SI-SDR</th></tr></thead>
-            <tbody>
-              <tr><td>AudioSeal</td><td>99.0%</td><td>4.6040</td><td>0.9992</td><td>36.67 dB</td></tr>
-              <tr><td>WavMark</td><td>96.7%</td><td>4.5716</td><td>0.9990</td><td>44.15 dB</td></tr>
-              <tr><td>TimbreWM</td><td>86.3%</td><td>4.5638</td><td>0.9981</td><td>33.53 dB</td></tr>
-              <tr><td>VoiceMark</td><td>93.7%</td><td>4.2036</td><td>0.9827</td><td>16.58 dB</td></tr>
-              <tr><td>WMCodec</td><td>99.3%</td><td>4.3673</td><td>0.9894</td><td>16.29 dB</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="note">Tracing failure means that the decoded payload differs from both coalition payloads. It does not by itself imply that every decoded payload belongs to a registered innocent recipient.</p>
-      </div>
-    </section>
-
-    <section class="alt">
-      <div class="wrap">
-        <h2>Scope and interpretation</h2>
-        <div class="scope-grid">
-          <div class="scope-card"><h3>Valid inputs</h3><p>Every personalized source copy is checked to decode correctly before it enters a mixture.</p></div>
-          <div class="scope-card"><h3>Native processing</h3><p>Embedding, averaging, and decoding run at each watermark system's native sample rate.</p></div>
-          <div class="scope-card"><h3>Speech evaluation</h3><p>The released study covers aligned speech clips; music and environmental audio remain outside its empirical scope.</p></div>
-          <div class="scope-card"><h3>Black-box average</h3><p>Uniform averaging uses no clean audio, gradients, parameters, or decoder queries.</p></div>
-          <div class="scope-card"><h3>Targeted setting</h3><p>Target-Bit Margin is a stronger payload-aware experiment and is reported separately.</p></div>
-          <div class="scope-card"><h3>Preliminary screen</h3><p>Confidence screening is non-adaptive and should not be interpreted as a complete defense.</p></div>
-        </div>
-      </div>
-    </section>
+    </div></section>
+    <section class="evidence" id="results"><div class="wrap"><div class="section-kicker">Beyond the listening example</div><h2>Aggregate K=2 evidence</h2><p class="section-copy">The audio above is one controlled example. The reported attack rates cover 300 trials for every system.</p><div class="table-wrap"><table><thead><tr><th>System</th><th>Tracing failure</th><th>PESQ</th><th>STOI</th><th>SI-SDR</th></tr></thead><tbody>
+      <tr><td>AudioSeal</td><td class="rate">99.0%</td><td>4.6040</td><td>0.9992</td><td>36.67 dB</td></tr><tr><td>WavMark</td><td class="rate">96.7%</td><td>4.5716</td><td>0.9990</td><td>44.15 dB</td></tr><tr><td>TimbreWM</td><td class="rate">86.3%</td><td>4.5638</td><td>0.9981</td><td>33.53 dB</td></tr><tr><td>VoiceMark</td><td class="rate">93.7%</td><td>4.2036</td><td>0.9827</td><td>16.58 dB</td></tr><tr><td>WMCodec</td><td class="rate">99.3%</td><td>4.3673</td><td>0.9894</td><td>16.29 dB</td></tr>
+    </tbody></table></div><p class="note">Tracing failure means the decoded payload differs from both coalition payloads. It does not imply that every output maps to a registered innocent recipient.</p></div></section>
+    <section><div class="wrap"><div class="section-kicker">Controlled comparison</div><h2>What stays fixed</h2><div class="method-grid"><div class="method-card"><b>Same speech</b><p>Every player uses trial 150 and the same ten-second source recording.</p></div><div class="method-card"><b>Valid members</b><p>Each personalized copy decodes correctly before it enters the mixture.</p></div><div class="method-card"><b>Native processing</b><p>Embedding, averaging, and decoding use each system's native sample rate.</p></div><div class="method-card"><b>Black-box attack</b><p>The average uses no clean reference, model parameters, gradients, or queries.</p></div></div></div></section>
   </main>
-
-  <footer>
-    <div class="wrap">Audio files, trial metadata, complete tables, and verification scripts are available in the <a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">project repository</a>.</div>
-  </footer>
-
-  <script>
-    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
-    const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
-    tabs.forEach((tab) => tab.addEventListener('click', () => {
-      tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
-      panels.forEach((panel) => { panel.hidden = panel.id !== tab.dataset.panel; });
-    }));
-    document.querySelectorAll('audio').forEach((player) => {
-      player.addEventListener('play', () => {
-        document.querySelectorAll('audio').forEach((other) => {
-          if (other !== player) other.pause();
-        });
-      });
-    });
-  </script>
+  <footer><div class="wrap"><span>Neural audio watermark collusion · interactive evidence</span><span><a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack">Repository</a> · <a href="https://github.com/Silwan5z/neural-audio-watermark-collusion-attack/blob/main/RESULTS.md">Full results</a></span></div></footer>
+  <script>document.querySelectorAll('audio').forEach(player=>player.addEventListener('play',()=>document.querySelectorAll('audio').forEach(other=>{if(other!==player)other.pause()})))</script>
 </body>
 </html>

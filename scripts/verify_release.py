@@ -641,7 +641,7 @@ def verify_demos() -> None:
     source = read_demo_pcm16(demos / "source_reference.wav")
     require(len(source) == 160000, "invalid demo source")
     page = (demos / "index.html").read_text(encoding="utf-8")
-    expected_sources = {"source_reference.wav"}
+    expected_sources = {"source_reference.wav", "source_reference.mp3"}
     metadata = read_csv(demos / "metadata.csv")
     expected_models = {
         "audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec",
@@ -681,8 +681,11 @@ def verify_demos() -> None:
         mixture = read_demo_pcm16(demos / model / "uniform_average.wav")
         expected_sources.update({
             f"{model}/member_{payload_a}.wav",
+            f"{model}/member_{payload_a}.mp3",
             f"{model}/member_{payload_b}.wav",
+            f"{model}/member_{payload_b}.mp3",
             f"{model}/uniform_average.wav",
+            f"{model}/uniform_average.mp3",
         })
         expected = (member_a + member_b) / 2.0
         require(float(np.max(np.abs(mixture - expected))) <= 1.0,
@@ -698,15 +701,21 @@ def verify_demos() -> None:
             require(row["decoded_average_payload"] == "",
                     f"unverified decoded payload recorded for demo: {model}")
     for relative in expected_sources:
+        path = demos / relative
+        require(path.is_file(), f"demo page references a missing file: {relative}")
+        if path.suffix == ".mp3":
+            require(path.stat().st_size > 100000
+                    and path.read_bytes()[:3] == b"ID3",
+                    f"invalid MP3 browser fallback: {relative}")
         require(page.count(f'src="{relative}"') == 1,
                 f"demo page must reference audio exactly once: {relative}")
     require("86.3–99.3%" in page,
             "demo page omits the released K=2 tracing-failure range")
     require(page.count("<audio ") == 16,
             "demo page must expose one source and fifteen comparison players")
-    require(page.count('<button class="tab"') == 5,
-            "demo page must expose all five system comparisons")
-    print("PASS demos: five systems, 16 players, metadata, and averages")
+    require(all(f'id="{model}"' in page for model in expected_models),
+            "demo page must expose all five system comparisons without tabs")
+    print("PASS demos: five visible systems, 16 dual-format players, and averages")
 
 
 def json_keys(value):

@@ -30,12 +30,12 @@ jobs:
         run: |
           mkdir -p _site/audioseal _site/wavmark _site/timbrewm _site/voicemark _site/wmcodec
           cp demos/index.html _site/index.html
-          cp demos/source_reference.wav _site/source_reference.wav
-          cp demos/audioseal/*.wav _site/audioseal/
-          cp demos/wavmark/*.wav _site/wavmark/
-          cp demos/timbrewm/*.wav _site/timbrewm/
-          cp demos/voicemark/*.wav _site/voicemark/
-          cp demos/wmcodec/*.wav _site/wmcodec/
+          cp demos/source_reference.wav demos/source_reference.mp3 _site/
+          cp demos/audioseal/*.{wav,mp3} _site/audioseal/
+          cp demos/wavmark/*.{wav,mp3} _site/wavmark/
+          cp demos/timbrewm/*.{wav,mp3} _site/timbrewm/
+          cp demos/voicemark/*.{wav,mp3} _site/voicemark/
+          cp demos/wmcodec/*.{wav,mp3} _site/wmcodec/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

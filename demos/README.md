@@ -46,10 +46,11 @@ does not show an inline audio player.
 
 The example is trial 150, speaker 103, clip 1. The source manifest traces it to
 `LibriSpeech/train-clean-100/103/1240/103-1240-0000.flac`. All released demo
-files are mono, 16 kHz, PCM-16 WAV. Embedding, averaging, and decoding use each
-system's native sample rate; the released files are converted to 16 kHz for
-consistent browser playback. The K=2 experiment records verify that every
-member copy is valid and every displayed average is a coalition escape.
+WAV files are mono, 16 kHz, and PCM-16. Matching MP3 files are provided for
+browser compatibility. Embedding, averaging, and decoding use each system's
+native sample rate; the browser copies are converted to 16 kHz for consistent
+playback. The K=2 experiment records verify that every member copy is valid and
+every displayed average is a coalition escape.
 
 [`metadata.csv`](metadata.csv) records the payloads, escape outcome, and PESQ,
 STOI, and SI-SDR values for all five model examples. The original K=2 records
