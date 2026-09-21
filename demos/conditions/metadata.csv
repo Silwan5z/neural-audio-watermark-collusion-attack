@@ -1,71 +1,71 @@
-family,condition,system,k,coalition_payloads,audio_path,evidence_path
-coalition_size,K=2,audioseal,2,"[24199, 31849]",conditions/coalition_size/audioseal/k2.wav,data/average/k2/audioseal.csv
-coalition_size,K=3,audioseal,3,"[52255, 17777, 62914]",conditions/coalition_size/audioseal/k3.wav,data/average/k3/audioseal.csv
-coalition_size,K=5,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/audioseal/k5.wav,data/average/k5/audioseal.csv
-coalition_size,K=8,audioseal,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/audioseal/k8.wav,data/average/k8/audioseal/trial_150.json
-offset,-10,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus10.wav,data/supplementary/alignment/all_trials.csv
-offset,-20,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus20.wav,data/supplementary/alignment/all_trials.csv
-offset,-50,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus50.wav,data/supplementary/alignment/all_trials.csv
-offset,0,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/aligned.wav,data/supplementary/alignment/all_trials.csv
-offset,10,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus10.wav,data/supplementary/alignment/all_trials.csv
-offset,20,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus20.wav,data/supplementary/alignment/all_trials.csv
-offset,50,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus50.wav,data/supplementary/alignment/all_trials.csv
-codec,mp3_128k,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/mp3_128k.wav,data/supplementary/codec/all_trials.csv
-codec,none,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/none.wav,data/supplementary/codec/all_trials.csv
-codec,opus_64k,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/opus_64k.wav,data/supplementary/codec/all_trials.csv
-coalition_size,K=2,wavmark,2,"[24199, 31849]",conditions/coalition_size/wavmark/k2.wav,data/average/k2/wavmark.csv
-coalition_size,K=3,wavmark,3,"[52255, 17777, 62914]",conditions/coalition_size/wavmark/k3.wav,data/average/k3/wavmark.csv
-coalition_size,K=5,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/wavmark/k5.wav,data/average/k5/wavmark.csv
-coalition_size,K=8,wavmark,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/wavmark/k8.wav,data/average/k8/wavmark/trial_150.json
-offset,-10,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus10.wav,data/supplementary/alignment/all_trials.csv
-offset,-20,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus20.wav,data/supplementary/alignment/all_trials.csv
-offset,-50,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus50.wav,data/supplementary/alignment/all_trials.csv
-offset,0,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/aligned.wav,data/supplementary/alignment/all_trials.csv
-offset,10,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus10.wav,data/supplementary/alignment/all_trials.csv
-offset,20,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus20.wav,data/supplementary/alignment/all_trials.csv
-offset,50,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus50.wav,data/supplementary/alignment/all_trials.csv
-codec,mp3_128k,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/mp3_128k.wav,data/supplementary/codec/all_trials.csv
-codec,none,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/none.wav,data/supplementary/codec/all_trials.csv
-codec,opus_64k,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/opus_64k.wav,data/supplementary/codec/all_trials.csv
-coalition_size,K=2,timbrewm,2,"[378, 497]",conditions/coalition_size/timbrewm/k2.wav,data/average/k2/timbrewm.csv
-coalition_size,K=3,timbrewm,3,"[816, 277, 983]",conditions/coalition_size/timbrewm/k3.wav,data/average/k3/timbrewm.csv
-coalition_size,K=5,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/coalition_size/timbrewm/k5.wav,data/average/k5/timbrewm.csv
-coalition_size,K=8,timbrewm,8,"[36, 48, 224, 329, 776, 789, 802, 978]",conditions/coalition_size/timbrewm/k8.wav,data/average/k8/timbrewm/trial_150.json
-offset,-10,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus10.wav,data/supplementary/alignment/all_trials.csv
-offset,-20,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus20.wav,data/supplementary/alignment/all_trials.csv
-offset,-50,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus50.wav,data/supplementary/alignment/all_trials.csv
-offset,0,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/aligned.wav,data/supplementary/alignment/all_trials.csv
-offset,10,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus10.wav,data/supplementary/alignment/all_trials.csv
-offset,20,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus20.wav,data/supplementary/alignment/all_trials.csv
-offset,50,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus50.wav,data/supplementary/alignment/all_trials.csv
-codec,mp3_128k,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/mp3_128k.wav,data/supplementary/codec/all_trials.csv
-codec,none,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/none.wav,data/supplementary/codec/all_trials.csv
-codec,opus_64k,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/opus_64k.wav,data/supplementary/codec/all_trials.csv
-coalition_size,K=2,voicemark,2,"[24199, 31849]",conditions/coalition_size/voicemark/k2.wav,data/average/k2/voicemark.csv
-coalition_size,K=3,voicemark,3,"[52255, 17777, 62914]",conditions/coalition_size/voicemark/k3.wav,data/average/k3/voicemark.csv
-coalition_size,K=5,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/voicemark/k5.wav,data/average/k5/voicemark.csv
-coalition_size,K=8,voicemark,8,"[2322, 3134, 21174, 45243, 50027, 50086, 50834, 51485]",conditions/coalition_size/voicemark/k8.wav,data/average/k8/voicemark/trial_150.json
-offset,-10,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus10.wav,data/supplementary/alignment/all_trials.csv
-offset,-20,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus20.wav,data/supplementary/alignment/all_trials.csv
-offset,-50,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus50.wav,data/supplementary/alignment/all_trials.csv
-offset,0,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/aligned.wav,data/supplementary/alignment/all_trials.csv
-offset,10,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus10.wav,data/supplementary/alignment/all_trials.csv
-offset,20,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus20.wav,data/supplementary/alignment/all_trials.csv
-offset,50,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus50.wav,data/supplementary/alignment/all_trials.csv
-codec,mp3_128k,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/mp3_128k.wav,data/supplementary/codec/all_trials.csv
-codec,none,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/none.wav,data/supplementary/codec/all_trials.csv
-codec,opus_64k,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/opus_64k.wav,data/supplementary/codec/all_trials.csv
-coalition_size,K=2,wmcodec,2,"[24199, 31849]",conditions/coalition_size/wmcodec/k2.wav,data/average/k2/wmcodec.csv
-coalition_size,K=3,wmcodec,3,"[52255, 17777, 62914]",conditions/coalition_size/wmcodec/k3.wav,data/average/k3/wmcodec.csv
-coalition_size,K=5,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/wmcodec/k5.wav,data/average/k5/wmcodec.csv
-coalition_size,K=8,wmcodec,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/wmcodec/k8.wav,data/average/k8/wmcodec/trial_150.json
-offset,-10,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus10.wav,data/supplementary/alignment/all_trials.csv
-offset,-20,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus20.wav,data/supplementary/alignment/all_trials.csv
-offset,-50,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus50.wav,data/supplementary/alignment/all_trials.csv
-offset,0,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/aligned.wav,data/supplementary/alignment/all_trials.csv
-offset,10,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus10.wav,data/supplementary/alignment/all_trials.csv
-offset,20,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus20.wav,data/supplementary/alignment/all_trials.csv
-offset,50,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus50.wav,data/supplementary/alignment/all_trials.csv
-codec,mp3_128k,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/mp3_128k.wav,data/supplementary/codec/all_trials.csv
-codec,none,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/none.wav,data/supplementary/codec/all_trials.csv
-codec,opus_64k,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/opus_64k.wav,data/supplementary/codec/all_trials.csv
+family,condition,system,k,coalition_payloads,audio_path,evidence_path,pesq,stoi,si_sdr_db
+coalition_size,K=2,audioseal,2,"[24199, 31849]",conditions/coalition_size/audioseal/k2.wav,data/average/k2/audioseal.csv,4.612900,0.998100,34.650000
+coalition_size,K=3,audioseal,3,"[52255, 17777, 62914]",conditions/coalition_size/audioseal/k3.wav,data/average/k3/audioseal.csv,4.591300,0.996900,32.590000
+coalition_size,K=5,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/audioseal/k5.wav,data/average/k5/audioseal.csv,4.574800,0.994700,31.820000
+coalition_size,K=8,audioseal,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/audioseal/k8.wav,data/average/k8/audioseal/trial_150.json,4.604280,0.997262,34.361277
+offset,-10,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus10.wav,data/supplementary/alignment/all_trials.csv,3.995631,0.974972,11.909766
+offset,-20,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus20.wav,data/supplementary/alignment/all_trials.csv,2.997746,0.971549,11.952516
+offset,-50,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus50.wav,data/supplementary/alignment/all_trials.csv,2.006263,0.957199,12.021045
+offset,0,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/aligned.wav,data/supplementary/alignment/all_trials.csv,4.574791,0.994706,31.824466
+offset,10,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus10.wav,data/supplementary/alignment/all_trials.csv,4.347022,0.975642,11.908882
+offset,20,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus20.wav,data/supplementary/alignment/all_trials.csv,3.788323,0.972689,11.964505
+offset,50,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus50.wav,data/supplementary/alignment/all_trials.csv,2.759610,0.962001,12.017707
+codec,mp3_128k,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/mp3_128k.wav,data/supplementary/codec/all_trials.csv,4.375913,0.994692,23.017514
+codec,none,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/none.wav,data/supplementary/codec/all_trials.csv,4.574791,0.994706,31.824466
+codec,opus_64k,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/opus_64k.wav,data/supplementary/codec/all_trials.csv,4.525989,0.992094,25.686304
+coalition_size,K=2,wavmark,2,"[24199, 31849]",conditions/coalition_size/wavmark/k2.wav,data/average/k2/wavmark.csv,4.622300,0.998900,41.200000
+coalition_size,K=3,wavmark,3,"[52255, 17777, 62914]",conditions/coalition_size/wavmark/k3.wav,data/average/k3/wavmark.csv,4.600500,0.997500,39.100000
+coalition_size,K=5,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/wavmark/k5.wav,data/average/k5/wavmark.csv,4.581400,0.995800,37.090000
+coalition_size,K=8,wavmark,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/wavmark/k8.wav,data/average/k8/wavmark/trial_150.json,4.464635,0.984629,37.989058
+offset,-10,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus10.wav,data/supplementary/alignment/all_trials.csv,4.005220,0.976474,11.964515
+offset,-20,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus20.wav,data/supplementary/alignment/all_trials.csv,2.948750,0.971522,11.999472
+offset,-50,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus50.wav,data/supplementary/alignment/all_trials.csv,1.930930,0.960522,12.069770
+offset,0,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/aligned.wav,data/supplementary/alignment/all_trials.csv,4.581414,0.995773,37.091039
+offset,10,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus10.wav,data/supplementary/alignment/all_trials.csv,4.357479,0.977457,11.963194
+offset,20,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus20.wav,data/supplementary/alignment/all_trials.csv,3.793016,0.972636,11.999907
+offset,50,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus50.wav,data/supplementary/alignment/all_trials.csv,2.668235,0.963971,12.071367
+codec,mp3_128k,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/mp3_128k.wav,data/supplementary/codec/all_trials.csv,4.372937,0.995762,23.513667
+codec,none,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/none.wav,data/supplementary/codec/all_trials.csv,4.581414,0.995773,37.091039
+codec,opus_64k,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/opus_64k.wav,data/supplementary/codec/all_trials.csv,4.509508,0.992675,26.636019
+coalition_size,K=2,timbrewm,2,"[378, 497]",conditions/coalition_size/timbrewm/k2.wav,data/average/k2/timbrewm.csv,4.563800,0.995400,29.580000
+coalition_size,K=3,timbrewm,3,"[816, 277, 983]",conditions/coalition_size/timbrewm/k3.wav,data/average/k3/timbrewm.csv,4.397900,0.992500,27.480000
+coalition_size,K=5,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/coalition_size/timbrewm/k5.wav,data/average/k5/timbrewm.csv,4.467700,0.993200,26.220000
+coalition_size,K=8,timbrewm,8,"[36, 48, 224, 329, 776, 789, 802, 978]",conditions/coalition_size/timbrewm/k8.wav,data/average/k8/timbrewm/trial_150.json,4.560546,0.994700,28.650566
+offset,-10,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus10.wav,data/supplementary/alignment/all_trials.csv,4.007662,0.973016,11.743667
+offset,-20,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus20.wav,data/supplementary/alignment/all_trials.csv,3.097261,0.966797,11.751111
+offset,-50,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus50.wav,data/supplementary/alignment/all_trials.csv,2.195064,0.956857,11.796238
+offset,0,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/aligned.wav,data/supplementary/alignment/all_trials.csv,4.467663,0.993202,26.215475
+offset,10,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus10.wav,data/supplementary/alignment/all_trials.csv,4.253011,0.973028,11.739361
+offset,20,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus20.wav,data/supplementary/alignment/all_trials.csv,3.693959,0.968436,11.748178
+offset,50,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus50.wav,data/supplementary/alignment/all_trials.csv,2.743588,0.959949,11.809488
+codec,mp3_128k,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/mp3_128k.wav,data/supplementary/codec/all_trials.csv,4.467293,0.993197,26.201390
+codec,none,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/none.wav,data/supplementary/codec/all_trials.csv,4.467663,0.993202,26.215475
+codec,opus_64k,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/opus_64k.wav,data/supplementary/codec/all_trials.csv,4.418082,0.990078,22.591918
+coalition_size,K=2,voicemark,2,"[24199, 31849]",conditions/coalition_size/voicemark/k2.wav,data/average/k2/voicemark.csv,3.574900,0.977800,14.330000
+coalition_size,K=3,voicemark,3,"[52255, 17777, 62914]",conditions/coalition_size/voicemark/k3.wav,data/average/k3/voicemark.csv,4.270500,0.989100,13.360000
+coalition_size,K=5,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/voicemark/k5.wav,data/average/k5/voicemark.csv,3.717000,0.972500,10.340000
+coalition_size,K=8,voicemark,8,"[2322, 3134, 21174, 45243, 50027, 50086, 50834, 51485]",conditions/coalition_size/voicemark/k8.wav,data/average/k8/voicemark/trial_150.json,4.201891,0.980679,12.675495
+offset,-10,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus10.wav,data/supplementary/alignment/all_trials.csv,3.246639,0.944949,6.619261
+offset,-20,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus20.wav,data/supplementary/alignment/all_trials.csv,2.788730,0.937443,6.788801
+offset,-50,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus50.wav,data/supplementary/alignment/all_trials.csv,2.036973,0.926082,6.714892
+offset,0,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/aligned.wav,data/supplementary/alignment/all_trials.csv,3.716968,0.972502,10.342964
+offset,10,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus10.wav,data/supplementary/alignment/all_trials.csv,3.272906,0.944067,6.747082
+offset,20,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus20.wav,data/supplementary/alignment/all_trials.csv,3.075757,0.939987,6.625187
+offset,50,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus50.wav,data/supplementary/alignment/all_trials.csv,2.412462,0.930505,6.718091
+codec,mp3_128k,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/mp3_128k.wav,data/supplementary/codec/all_trials.csv,3.576400,0.972524,10.079962
+codec,none,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/none.wav,data/supplementary/codec/all_trials.csv,3.716968,0.972502,10.342964
+codec,opus_64k,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/opus_64k.wav,data/supplementary/codec/all_trials.csv,3.714983,0.971448,10.280356
+coalition_size,K=2,wmcodec,2,"[24199, 31849]",conditions/coalition_size/wmcodec/k2.wav,data/average/k2/wmcodec.csv,4.431100,0.986100,12.490000
+coalition_size,K=3,wmcodec,3,"[52255, 17777, 62914]",conditions/coalition_size/wmcodec/k3.wav,data/average/k3/wmcodec.csv,4.393800,0.982200,11.020000
+coalition_size,K=5,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/wmcodec/k5.wav,data/average/k5/wmcodec.csv,4.351800,0.980300,9.940000
+coalition_size,K=8,wmcodec,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/wmcodec/k8.wav,data/average/k8/wmcodec/trial_150.json,4.381025,0.978118,10.063621
+offset,-10,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus10.wav,data/supplementary/alignment/all_trials.csv,3.729819,0.956081,5.882637
+offset,-20,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus20.wav,data/supplementary/alignment/all_trials.csv,2.733536,0.947262,5.827905
+offset,-50,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus50.wav,data/supplementary/alignment/all_trials.csv,1.878378,0.934668,5.859868
+offset,0,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/aligned.wav,data/supplementary/alignment/all_trials.csv,4.207767,0.979648,9.483491
+offset,10,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus10.wav,data/supplementary/alignment/all_trials.csv,3.911771,0.955588,5.777582
+offset,20,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus20.wav,data/supplementary/alignment/all_trials.csv,3.440154,0.948097,5.728639
+offset,50,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus50.wav,data/supplementary/alignment/all_trials.csv,2.372247,0.940742,5.891812
+codec,mp3_128k,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/mp3_128k.wav,data/supplementary/codec/all_trials.csv,4.204020,0.979649,9.479539
+codec,none,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/none.wav,data/supplementary/codec/all_trials.csv,4.207767,0.979648,9.483491
+codec,opus_64k,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/opus_64k.wav,data/supplementary/codec/all_trials.csv,4.192534,0.977572,9.387513

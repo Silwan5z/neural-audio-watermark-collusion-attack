@@ -33,6 +33,9 @@ jobs:
           cp demos/demo-data.js _site/demo-data.js
           cp demos/source_reference.wav demos/source_reference.mp3 _site/
           cp -r demos/conditions _site/conditions
+          for model in audioseal wavmark timbrewm voicemark wmcodec; do
+            cp -r "demos/${model}" "_site/${model}"
+          done
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

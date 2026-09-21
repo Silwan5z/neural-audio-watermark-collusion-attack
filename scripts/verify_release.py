@@ -717,6 +717,19 @@ def verify_demos() -> None:
             raise RuntimeError(f"unknown demo family: {family}")
         require(int(decoded not in coalition) == int(evidence["escaped"]),
                 f"demo outcome mismatch: {model}/{family}/{condition}")
+        require_close(float(row["pesq"]), float(evidence["pesq"]),
+                      f"demo PESQ mismatch: {model}/{family}/{condition}",
+                      tolerance=1e-5)
+        require_close(float(row["stoi"]), float(evidence["stoi"]),
+                      f"demo STOI mismatch: {model}/{family}/{condition}",
+                      tolerance=1e-5)
+        if not (family == "coalition_size" and k == 8):
+            require_close(float(row["si_sdr_db"]),
+                          float(evidence["si_sdr"]),
+                          f"demo SI-SDR mismatch: {model}/{family}/{condition}",
+                          tolerance=1e-5)
+        require(np.isfinite(float(row["si_sdr_db"])),
+                f"demo SI-SDR is not finite: {model}/{family}/{condition}")
 
         wav_relative = row["audio_path"]
         mp3_relative = str(Path(wav_relative).with_suffix(".mp3"))
@@ -750,6 +763,8 @@ def verify_demos() -> None:
         + len(system["codecs"]) for system in bundle["systems"])
     require(bundle_conditions == 70,
             "browser bundle must expose all 70 conditions")
+    require(sum(len(system["copies"]) for system in bundle["systems"]) == 20,
+            "browser bundle must expose four source/copy rows per system")
     bundle_audio = {
         f"{item['audio']}{suffix}"
         for system in bundle["systems"]
@@ -760,13 +775,68 @@ def verify_demos() -> None:
     require(bundle_audio == observed_condition_audio,
             "browser bundle does not match released demo audio")
 
+    copy_metadata = {row["system"]: row for row in read_csv(
+        demos / "metadata.csv")}
+    expected_copy_audio: set[str] = set()
+    for model in models:
+        row = copy_metadata[model]
+        for stem in (f"member_{row['payload_a']}",
+                     f"member_{row['payload_b']}", "uniform_average"):
+            for suffix in (".wav", ".mp3"):
+                relative = f"{model}/{stem}{suffix}"
+                expected_copy_audio.add(relative)
+                path = demos / relative
+                require(path.is_file() and path.stat().st_size > 100000,
+                        f"missing watermarked-copy demo audio: {relative}")
+                if suffix == ".wav":
+                    read_demo_pcm16(path)
+                else:
+                    require(path.read_bytes()[:3] == b"ID3",
+                            f"invalid watermarked-copy MP3: {relative}")
+    bundle_copy_audio = {
+        f"{item['audio']}{suffix}"
+        for system in bundle["systems"]
+        for item in system["copies"]
+        if item["audio"] != "source_reference"
+        for suffix in (".wav", ".mp3")
+    }
+    require(bundle_copy_audio == expected_copy_audio,
+            "browser bundle does not match watermarked-copy audio")
+
+    bundle_metrics = {
+        (system["id"], family, item["label"]): item["metrics"]
+        for system in bundle["systems"]
+        for family in ("coalitionSize", "offsets", "codecs")
+        for item in system[family]
+    }
+    require(len(bundle_metrics) == 70 and all(
+                set(value) == {"pesq", "stoi", "siSdr"}
+                for value in bundle_metrics.values()),
+            "browser bundle must expose all three metrics for every condition")
+    metadata_by_audio = {
+        str(Path(row["audio_path"]).with_suffix("")): row for row in metadata
+    }
+    for system in bundle["systems"]:
+        for family in ("coalitionSize", "offsets", "codecs"):
+            for item in system[family]:
+                row = metadata_by_audio[item["audio"]]
+                require_close(float(item["metrics"]["pesq"]),
+                              float(row["pesq"]),
+                              f"browser PESQ mismatch: {item['audio']}")
+                require_close(float(item["metrics"]["stoi"]),
+                              float(row["stoi"]),
+                              f"browser STOI mismatch: {item['audio']}")
+                require_close(float(item["metrics"]["siSdr"]),
+                              float(row["si_sdr_db"]),
+                              f"browser SI-SDR mismatch: {item['audio']}")
+
     require(page.count('class="site-nav"') == 1,
             "demo must contain one primary navigation bar")
-    require(page.count('class="tab-button"') == 4,
-            "demo must expose four switchable primary views")
-    require(page.count("data-view-panel=") == 4,
-            "demo must contain four switchable view panels")
-    require(page.count('<nav class="system-picker" data-system-picker=') == 3,
+    require(page.count('class="tab-button"') == 5,
+            "demo must expose five switchable primary views")
+    require(page.count("data-view-panel=") == 5,
+            "demo must contain five switchable view panels")
+    require(page.count('<nav class="system-picker" data-system-picker=') == 4,
             "each comparison view must have a system selector")
     require('src="demo-data.js"' in page,
             "demo page does not load the complete data bundle")
@@ -774,15 +844,20 @@ def verify_demos() -> None:
                 '<audio controls preload="metadata" '
                 'aria-label="Clean source reference">') == 1,
             "overview must contain one clean reference player")
-    require('grid.innerHTML=items.map' in page,
+    require('system[category[view]].map' in page,
             "comparison players must be rendered by the switchable view")
+    require('<source src="source_reference.wav" type="audio/wav"><source '
+            'src="source_reference.mp3" type="audio/mpeg">' in page,
+            "clean source must prefer WAV with MP3 fallback")
+    require('<span>PESQ</span>' in page and '<span>STOI</span>' in page
+            and '<span>SI-SDR</span>' in page,
+            "demo must label all three quality metrics")
     require("Suggested listening route" not in page,
             "demo must not contain the removed listening-route card")
     require(not any(term in page for term in (
-                "tracing failure", "Tracing failure", "PESQ", "STOI",
-                "SI-SDR", "300-trial", "300 trials")),
+                "tracing failure", "Tracing failure", "300-trial", "300 trials")),
             "demo page must not duplicate paper result statistics")
-    print("PASS demos: 5 systems x 14 conditions, switchable views, 142 audio files")
+    print("PASS demos: 5 systems, 70 conditions, 20 source/copy rows, 172 audio files")
 
 
 def json_keys(value):

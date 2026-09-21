@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import uuid
+import csv
 from pathlib import Path
 
 
@@ -42,6 +43,21 @@ def offset_label(value: int) -> str:
 
 
 def main() -> None:
+    with (ROOT / "demos" / "conditions" / "metadata.csv").open(
+            newline="", encoding="utf-8") as handle:
+        metric_rows = list(csv.DictReader(handle))
+    metrics = {
+        (row["system"], row["family"], row["condition"]): {
+            "pesq": float(row["pesq"]),
+            "stoi": float(row["stoi"]),
+            "siSdr": float(row["si_sdr_db"]),
+        }
+        for row in metric_rows
+    }
+    with (ROOT / "demos" / "metadata.csv").open(
+            newline="", encoding="utf-8") as handle:
+        copy_rows = {row["system"]: row for row in csv.DictReader(handle)}
+
     systems = []
     for model, name in MODELS:
         decoded = json.loads((
@@ -54,6 +70,7 @@ def main() -> None:
             "coalition": coalitions[str(k)],
             "decoded": decoded["coalition_size"][str(k)]["decoded_payload"],
             "audio": f"conditions/coalition_size/{model}/k{k}",
+            "metrics": metrics[(model, "coalition_size", f"K={k}")],
         } for k in K_VALUES]
         offsets = [{
             "label": offset_label(shift),
@@ -62,6 +79,7 @@ def main() -> None:
             "coalition": coalitions["5"],
             "decoded": decoded["offset"][str(shift)]["decoded_payload"],
             "audio": f"conditions/offset/{model}/{offset_slug(shift)}",
+            "metrics": metrics[(model, "offset", str(shift))],
         } for shift in SHIFTS]
         codecs = [{
             "label": label,
@@ -69,10 +87,35 @@ def main() -> None:
             "coalition": coalitions["5"],
             "decoded": decoded["codec"][codec]["decoded_payload"],
             "audio": f"conditions/codec/{model}/{codec}",
+            "metrics": metrics[(model, "codec", codec)],
         } for codec, label, detail in CODECS]
+        copy_row = copy_rows[model]
+        payload_a = int(copy_row["payload_a"])
+        payload_b = int(copy_row["payload_b"])
+        copies = [
+            {"label": "Clean source", "detail": "Unwatermarked",
+             "audio": "source_reference", "assigned": None,
+             "decoded": None, "metrics": None},
+            {"label": "Personalized copy A", "detail": "Valid copy",
+             "audio": f"{model}/member_{payload_a}", "assigned": payload_a,
+             "decoded": payload_a, "metrics": None},
+            {"label": "Personalized copy B", "detail": "Valid copy",
+             "audio": f"{model}/member_{payload_b}", "assigned": payload_b,
+             "decoded": payload_b, "metrics": None},
+            {"label": "50/50 average", "detail": "K = 2",
+             "audio": f"{model}/uniform_average", "assigned": None,
+             "decoded": int(copy_row["decoded_average_payload"]),
+             "coalition": [payload_a, payload_b],
+             "metrics": {
+                 "pesq": float(copy_row["pesq"]),
+                 "stoi": float(copy_row["stoi"]),
+                 "siSdr": float(copy_row["si_sdr_db"]),
+             }},
+        ]
         systems.append({
             "id": model, "name": name,
-            "coalitionSize": sizes, "offsets": offsets, "codecs": codecs,
+            "copies": copies, "coalitionSize": sizes,
+            "offsets": offsets, "codecs": codecs,
         })
 
     value = {"trial": 150, "systems": systems}

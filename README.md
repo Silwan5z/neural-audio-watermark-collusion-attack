@@ -11,7 +11,7 @@ return a different ID—while the recording still sounds almost unchanged.
 
 <a href="https://silwan5z.github.io/neural-audio-watermark-collusion-attack/index.html"><strong>▶ Open the interactive audio lab</strong></a>
 
-<sub>Five systems · K = 2/3/5/8 · timing offsets · MP3 and Opus · exact decoded IDs</sub>
+<sub>Clean and watermarked copies · five systems · K = 2/3/5/8 · timing offsets · MP3 and Opus · quality metrics</sub>
 
 <br><br>
 
@@ -37,9 +37,11 @@ No clean audio is needed. The practical attack uses no model parameters,
 gradients, or decoder queries. At coalition size K=2, this simple operation
 causes **86.3–99.3% tracing failure** across the five evaluated systems.
 
-The audio lab is the best place to begin: it lets you switch among all five
-systems and hear every tested coalition size, synchronization condition, and
-lossy codec setting. Each example shows the decoder's actual output.
+The audio lab is the best place to begin. First compare the clean recording,
+two valid personalized copies, and their average. Then switch among all five
+systems to hear every coalition size, synchronization condition, and codec
+setting shown in the demo. Each row pairs one audio clip with its coalition,
+decoded ID, PESQ, STOI, and SI-SDR values.
 
 ## What should I look at?
 

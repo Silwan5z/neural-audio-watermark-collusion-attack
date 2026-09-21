@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from native_audio import NATIVE_SAMPLE_RATE, get_or_embed_native  # noqa: E402
 from run_alignment_stress_test import SHIFTS_MS, shift_fixed_length  # noqa: E402
 from run_codec_stress_test import CODECS, independently_code  # noqa: E402
-from watermarks import resample_to  # noqa: E402
+from watermarks import resample_to, si_sdr  # noqa: E402
 
 
 MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
@@ -66,7 +66,7 @@ def mean_signal(members: list[np.ndarray]) -> np.ndarray:
                    dtype=np.float64).astype(np.float32)
 
 
-def native_conditions(model: str) -> tuple[dict[int, list[int]], dict]:
+def native_conditions(model: str) -> tuple[dict[int, list[int]], dict, float]:
     """Build every native-rate signal shown for one system."""
     coalitions = coalitions_for(model)
     sizes: dict[int, np.ndarray] = {}
@@ -92,11 +92,41 @@ def native_conditions(model: str) -> tuple[dict[int, list[int]], dict]:
     for codec in CODECS:
         codecs[codec] = mean_signal(independently_code(
             k5_members, NATIVE_SAMPLE_RATE[model], codec))
+    reference_16 = browser_audio(model, members_by_k[8][0])
+    k8_si_sdr = float(si_sdr(reference_16, browser_audio(model, sizes[8])))
     return coalitions, {
         "coalition_size": sizes,
         "offset": offsets,
         "codec": codecs,
-    }
+    }, k8_si_sdr
+
+
+def released_metrics(model: str, family: str, condition: str,
+                     k8_si_sdr: float) -> tuple[float, float, float]:
+    """Read the metrics for the exact released trial shown in the demo."""
+    if family == "coalition_size":
+        k = int(condition.split("=")[1])
+        if k == 8:
+            record = json.loads((
+                ROOT / "data" / "average" / "k8" / model /
+                f"trial_{TRIAL_ID}.json").read_text(encoding="utf-8"))
+            return float(record["pesq"]), float(record["stoi"]), k8_si_sdr
+        path = ROOT / "data" / "average" / f"k{k}" / f"{model}.csv"
+        match = {"trial_id": str(TRIAL_ID)}
+    elif family == "offset":
+        path = ROOT / "data" / "supplementary" / "alignment" / "all_trials.csv"
+        match = {"trial_id": str(TRIAL_ID), "model": model,
+                 "shift_ms": condition}
+    elif family == "codec":
+        path = ROOT / "data" / "supplementary" / "codec" / "all_trials.csv"
+        match = {"trial_id": str(TRIAL_ID), "model": model,
+                 "codec": condition}
+    else:
+        raise ValueError(f"unknown demo family: {family}")
+    with path.open(newline="", encoding="utf-8") as handle:
+        row = next(item for item in csv.DictReader(handle)
+                   if all(item[key] == value for key, value in match.items()))
+    return float(row["pesq"]), float(row["stoi"]), float(row["si_sdr"])
 
 
 def browser_audio(model: str, waveform: np.ndarray) -> np.ndarray:
@@ -140,7 +170,7 @@ def offset_slug(value: int) -> str:
 def atomic_csv(path: Path, rows: list[dict]) -> None:
     fields = (
         "family", "condition", "system", "k", "coalition_payloads",
-        "audio_path", "evidence_path",
+        "audio_path", "evidence_path", "pesq", "stoi", "si_sdr_db",
     )
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
@@ -174,10 +204,12 @@ def main() -> None:
                     if row["system"] not in set(args.models)]
 
     for model in args.models:
-        coalitions, conditions = native_conditions(model)
+        coalitions, conditions, k8_si_sdr = native_conditions(model)
         for k, waveform in conditions["coalition_size"].items():
             relative = Path("conditions") / "coalition_size" / model / f"k{k}.wav"
             write_pair(args.output / relative, browser_audio(model, waveform))
+            metrics = released_metrics(
+                model, "coalition_size", f"K={k}", k8_si_sdr)
             rows.append({
                 "family": "coalition_size", "condition": f"K={k}",
                 "system": model, "k": k,
@@ -186,27 +218,40 @@ def main() -> None:
                 "evidence_path": (
                     f"data/average/k{k}/{model}.csv" if k < 8 else
                     f"data/average/k8/{model}/trial_{TRIAL_ID}.json"),
+                "pesq": f"{metrics[0]:.6f}",
+                "stoi": f"{metrics[1]:.6f}",
+                "si_sdr_db": f"{metrics[2]:.6f}",
             })
         for shift_ms, waveform in conditions["offset"].items():
             relative = Path("conditions") / "offset" / model / \
                 f"{offset_slug(shift_ms)}.wav"
             write_pair(args.output / relative, browser_audio(model, waveform))
+            metrics = released_metrics(
+                model, "offset", str(shift_ms), k8_si_sdr)
             rows.append({
                 "family": "offset", "condition": str(shift_ms),
                 "system": model, "k": 5,
                 "coalition_payloads": json.dumps(coalitions[5]),
                 "audio_path": relative.as_posix(),
                 "evidence_path": "data/supplementary/alignment/all_trials.csv",
+                "pesq": f"{metrics[0]:.6f}",
+                "stoi": f"{metrics[1]:.6f}",
+                "si_sdr_db": f"{metrics[2]:.6f}",
             })
         for codec, waveform in conditions["codec"].items():
             relative = Path("conditions") / "codec" / model / f"{codec}.wav"
             write_pair(args.output / relative, browser_audio(model, waveform))
+            metrics = released_metrics(
+                model, "codec", codec, k8_si_sdr)
             rows.append({
                 "family": "codec", "condition": codec,
                 "system": model, "k": 5,
                 "coalition_payloads": json.dumps(coalitions[5]),
                 "audio_path": relative.as_posix(),
                 "evidence_path": "data/supplementary/codec/all_trials.csv",
+                "pesq": f"{metrics[0]:.6f}",
+                "stoi": f"{metrics[1]:.6f}",
+                "si_sdr_db": f"{metrics[2]:.6f}",
             })
         print(f"exported {model}: 4 coalition sizes, 7 offsets, 3 codecs",
               flush=True)
