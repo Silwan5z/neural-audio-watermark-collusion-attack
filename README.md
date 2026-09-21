@@ -37,10 +37,9 @@ No clean audio is needed. The practical attack uses no model parameters,
 gradients, or decoder queries. At coalition size K=2, this simple operation
 causes **86.3–99.3% tracing failure** across the five evaluated systems.
 
-The audio lab is the best place to begin: it lets you hear the source, valid
-personalized copies, and their average side by side. It also shows the actual
-decoder output for every example, then varies coalition size, synchronization,
-and lossy compression.
+The audio lab is the best place to begin: it lets you switch among all five
+systems and hear every tested coalition size, synchronization condition, and
+lossy codec setting. Each example shows the decoder's actual output.
 
 ## What should I look at?
 

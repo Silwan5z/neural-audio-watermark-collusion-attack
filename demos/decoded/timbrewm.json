@@ -1,4 +1,57 @@
 {
+  "coalition_size": {
+    "2": {
+      "decoded_payload": 504
+    },
+    "3": {
+      "decoded_payload": 789
+    },
+    "5": {
+      "decoded_payload": 839
+    },
+    "8": {
+      "decoded_payload": 256
+    }
+  },
+  "coalitions": {
+    "2": [
+      378,
+      497
+    ],
+    "3": [
+      816,
+      277,
+      983
+    ],
+    "5": [
+      640,
+      789,
+      847,
+      846,
+      631
+    ],
+    "8": [
+      36,
+      48,
+      224,
+      329,
+      776,
+      789,
+      802,
+      978
+    ]
+  },
+  "codec": {
+    "mp3_128k": {
+      "decoded_payload": 839
+    },
+    "none": {
+      "decoded_payload": 839
+    },
+    "opus_64k": {
+      "decoded_payload": 839
+    }
+  },
   "cross_system": {
     "coalition_payloads": [
       378,
@@ -7,5 +60,28 @@
     "decoded_payload": 504
   },
   "model": "timbrewm",
+  "offset": {
+    "-10": {
+      "decoded_payload": 847
+    },
+    "-20": {
+      "decoded_payload": 839
+    },
+    "-50": {
+      "decoded_payload": 839
+    },
+    "0": {
+      "decoded_payload": 839
+    },
+    "10": {
+      "decoded_payload": 847
+    },
+    "20": {
+      "decoded_payload": 847
+    },
+    "50": {
+      "decoded_payload": 839
+    }
+  },
   "trial_id": 150
 }

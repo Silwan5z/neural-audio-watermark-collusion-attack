@@ -60,6 +60,9 @@ Quality metrics receive 16 kHz copies only after native-rate decoding.
 | `figures/build_composition.py` | Coalition bit-support response figure |
 | `figures/build_paths.py` | One-bit mixture-path figure |
 | `figures/build_confidence.py` | Minimum-confidence distribution figure |
+| `export_demo_audio.py` | Export all five systems across K, timing, and codec demo conditions |
+| `decode_demo_audio.py` | Decode all 14 native-rate demo conditions for one system |
+| `build_demo_data.py` | Assemble the five-system browser data bundle from decoded records |
 | `build_data_manifest.py` | Rebuild sizes, row counts, and SHA-256 hashes |
 | `verify_release.py` | Validate the entire public release without model inference |
 

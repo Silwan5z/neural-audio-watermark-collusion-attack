@@ -646,199 +646,143 @@ def verify_demos() -> None:
         "https://silwan5z.github.io/"
         "neural-audio-watermark-collusion-attack/index.html")
     require(readme.count(public_url) == 1
-            and readme.count("silwan5z.github.io/neural-audio-watermark-collusion-attack") == 1,
+            and readme.count(
+                "silwan5z.github.io/neural-audio-watermark-collusion-attack")
+            == 1,
             "README must contain exactly one explicit public demo entry")
-    expected_sources = {"source_reference.wav", "source_reference.mp3"}
-    metadata = read_csv(demos / "metadata.csv")
-    expected_models = {
-        "audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec",
-    }
-    require(len(metadata) == 5, "demo metadata must contain five systems")
-    expected_decoded = {
-        "audioseal": 23648,
-        "wavmark": 32495,
-        "timbrewm": 504,
-        "voicemark": 60600,
-        "wmcodec": 3209,
-    }
-    require({row["system"] for row in metadata} == expected_models,
-            "demo metadata must cover all five evaluated systems")
-    quality_rows = read_csv(DATA / "supplementary" / "quality" / "all_trials.csv")
-    for row in metadata:
-        model = row["system"]
-        payload_a = int(row["payload_a"])
-        payload_b = int(row["payload_b"])
-        quality = next(
-            item for item in quality_rows
-            if item["model"] == model and int(item["k"]) == 2
-            and int(item["trial_id"]) == 150)
-        require(json.loads(quality["coalition_payloads"])
-                == [payload_a, payload_b],
-                f"demo coalition mismatch: {model}")
-        trial = next(
-            item for item in read_csv(DATA / "average" / "k2" / f"{model}.csv")
-            if int(item["trial_id"]) == 150)
-        require(trial["speaker"] == row["speaker"]
-                and int(trial["clip_index"]) == int(row["clip_index"]),
-                f"demo trial identity mismatch: {model}")
-        require(int(trial["escaped"]) == int(row["escaped"]),
-                f"demo escape outcome mismatch: {model}")
-        for trial_key, demo_key in (
-                ("pesq", "pesq"), ("stoi", "stoi"), ("si_sdr", "si_sdr_db")):
-            require_close(float(trial[trial_key]), float(row[demo_key]),
-                          f"demo {trial_key} mismatch: {model}")
-        member_a = read_demo_pcm16(
-            demos / model / f"member_{payload_a}.wav")
-        member_b = read_demo_pcm16(
-            demos / model / f"member_{payload_b}.wav")
-        mixture = read_demo_pcm16(demos / model / "uniform_average.wav")
-        expected_sources.update({
-            f"{model}/member_{payload_a}.wav",
-            f"{model}/member_{payload_a}.mp3",
-            f"{model}/member_{payload_b}.wav",
-            f"{model}/member_{payload_b}.mp3",
-            f"{model}/uniform_average.wav",
-            f"{model}/uniform_average.mp3",
-        })
-        expected = (member_a + member_b) / 2.0
-        require(float(np.max(np.abs(mixture - expected))) <= 1.0,
-                f"demo is not a sample-wise average: {model}")
-        require(int(row["escaped"]) == 1,
-                f"unexpected demo attribution metadata: {model}")
-        require(int(row["decoded_average_payload"]) == expected_decoded[model],
-                f"unexpected decoded demo payload: {model}")
-        require(str(expected_decoded[model]) in page,
-                f"demo page omits decoded payload: {model}")
-        decoded = json.loads(
-            (demos / "decoded" / f"{model}.json").read_text(encoding="utf-8"))
-        require(int(decoded["cross_system"]["decoded_payload"])
-                == expected_decoded[model],
-                f"native demo decode record mismatch: {model}")
 
-    condition_metadata = read_csv(demos / "conditions" / "metadata.csv")
-    require(len(condition_metadata) == 12,
-            "demo must contain 12 controlled condition examples")
-    require({row["family"] for row in condition_metadata}
-            == {"coalition_size", "offset", "codec"},
-            "demo condition families are incomplete")
-    decoded_audioseal = json.loads(
-        (demos / "decoded" / "audioseal.json").read_text(encoding="utf-8"))
-    condition_decoded = {
-        ("coalition_size", "K=2"): decoded_audioseal["coalition_size"]["2"]["decoded_payload"],
-        ("coalition_size", "K=3"): decoded_audioseal["coalition_size"]["3"]["decoded_payload"],
-        ("coalition_size", "K=5"): decoded_audioseal["coalition_size"]["5"]["decoded_payload"],
-        ("coalition_size", "K=8"): decoded_audioseal["coalition_size"]["8"]["decoded_payload"],
-        ("offset", "-50 ms"): decoded_audioseal["offset"]["-50"]["decoded_payload"],
-        ("offset", "-20 ms"): decoded_audioseal["offset"]["-20"]["decoded_payload"],
-        ("offset", "Aligned"): decoded_audioseal["offset"]["0"]["decoded_payload"],
-        ("offset", "+20 ms"): decoded_audioseal["offset"]["20"]["decoded_payload"],
-        ("offset", "+50 ms"): decoded_audioseal["offset"]["50"]["decoded_payload"],
-        ("codec", "None"): decoded_audioseal["codec"]["none"]["decoded_payload"],
-        ("codec", "MP3 128 kbps"): decoded_audioseal["codec"]["mp3_128k"]["decoded_payload"],
-        ("codec", "Opus 64 kbps"): decoded_audioseal["codec"]["opus_64k"]["decoded_payload"],
-    }
+    models = {"audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec"}
+    expected_counts = {"coalition_size": 4, "offset": 7, "codec": 3}
+    metadata = read_csv(demos / "conditions" / "metadata.csv")
+    require(len(metadata) == 70,
+            "complete demo must contain 70 model-condition examples")
+    require({row["system"] for row in metadata} == models,
+            "demo conditions must cover all five systems")
+
     alignment_rows = read_csv(
         DATA / "supplementary" / "alignment" / "all_trials.csv")
     codec_rows = read_csv(
         DATA / "supplementary" / "codec" / "all_trials.csv")
-    offset_value = {
-        "-50 ms": -50, "-20 ms": -20, "Aligned": 0,
-        "+20 ms": 20, "+50 ms": 50,
+    decoded_by_model = {
+        model: json.loads((
+            demos / "decoded" / f"{model}.json").read_text(encoding="utf-8"))
+        for model in models
     }
-    codec_value = {
-        "None": "none", "MP3 128 kbps": "mp3_128k",
-        "Opus 64 kbps": "opus_64k",
+    for model in models:
+        for family, count in expected_counts.items():
+            require(sum(row["system"] == model and row["family"] == family
+                        for row in metadata) == count,
+                    f"incomplete {family} demo coverage: {model}")
+
+    expected_audio: set[str] = {
+        "source_reference.wav", "source_reference.mp3",
     }
-    for row in condition_metadata:
-        key = (row["family"], row["condition"])
-        require(key in condition_decoded,
-                f"unknown demo condition: {key}")
-        require(int(row["decoded_payload"]) == int(condition_decoded[key]),
-                f"condition decode mismatch: {key}")
-        coalition = json.loads(row["coalition_payloads"])
-        if row["family"] == "coalition_size":
-            expected_coalition = decoded_audioseal["coalition_size"][
-                str(int(row["k"]))]["coalition_payloads"]
-        else:
-            expected_coalition = decoded_audioseal["coalition_size"]["5"][
-                "coalition_payloads"]
-        require(coalition == expected_coalition,
-                f"condition coalition metadata mismatch: {key}")
-        require(int(row["decoded_payload"]) not in coalition,
-                f"condition does not escape coalition: {key}")
-        if row["family"] == "coalition_size":
-            k = int(row["k"])
+    for row in metadata:
+        model = row["system"]
+        family = row["family"]
+        condition = row["condition"]
+        k = int(row["k"])
+        coalition = [int(value) for value in
+                     json.loads(row["coalition_payloads"])]
+        decoded_record = decoded_by_model[model]
+        require(coalition == decoded_record["coalitions"][str(k)],
+                f"demo coalition mismatch: {model}/{family}/{condition}")
+
+        if family == "coalition_size":
+            decoded = int(decoded_record[family][str(k)]["decoded_payload"])
             if k < 8:
                 evidence = next(
                     item for item in read_csv(
-                        DATA / "average" / f"k{k}" / "audioseal.csv")
+                        DATA / "average" / f"k{k}" / f"{model}.csv")
                     if int(item["trial_id"]) == 150)
             else:
                 evidence = json.loads((
-                    DATA / "average" / "k8" / "audioseal" /
+                    DATA / "average" / "k8" / model /
                     "trial_150.json").read_text(encoding="utf-8"))
-        elif row["family"] == "offset":
+                require(decoded == int(evidence["decoded_payload"]),
+                        f"K=8 decoded payload mismatch: {model}")
+        elif family == "offset":
+            decoded = int(decoded_record[family][condition]["decoded_payload"])
             evidence = next(
                 item for item in alignment_rows
-                if item["model"] == "audioseal"
-                and int(item["trial_id"]) == 150
-                and int(item["shift_ms"]) == offset_value[row["condition"]])
-        else:
+                if item["model"] == model and int(item["trial_id"]) == 150
+                and int(item["shift_ms"]) == int(condition))
+        elif family == "codec":
+            decoded = int(decoded_record[family][condition]["decoded_payload"])
             evidence = next(
                 item for item in codec_rows
-                if item["model"] == "audioseal"
-                and int(item["trial_id"]) == 150
-                and item["codec"] == codec_value[row["condition"]])
-        require(int(evidence["escaped"]) == int(row["escaped"]),
-                f"condition escape mismatch: {key}")
-        for evidence_key, metadata_key in (
-                ("pesq", "pesq"), ("stoi", "stoi"),
-                ("si_sdr", "si_sdr_db")):
-            if row[metadata_key] and evidence.get(evidence_key) is not None:
-                require_close(
-                    float(evidence[evidence_key]), float(row[metadata_key]),
-                    f"condition {evidence_key} mismatch: {key}",
-                    tolerance=(5.1e-3 if evidence_key == "si_sdr" else 5e-4))
-        if "coalition_payloads" in evidence:
-            observed_coalition = evidence["coalition_payloads"]
-            if isinstance(observed_coalition, str):
-                observed_coalition = json.loads(observed_coalition)
-            require(observed_coalition == coalition,
-                    f"condition coalition mismatch: {key}")
+                if item["model"] == model and int(item["trial_id"]) == 150
+                and item["codec"] == condition)
+        else:
+            raise RuntimeError(f"unknown demo family: {family}")
+        require(int(decoded not in coalition) == int(evidence["escaped"]),
+                f"demo outcome mismatch: {model}/{family}/{condition}")
+
         wav_relative = row["audio_path"]
         mp3_relative = str(Path(wav_relative).with_suffix(".mp3"))
-        expected_sources.update({wav_relative, mp3_relative})
+        expected_audio.update({wav_relative, mp3_relative})
         read_demo_pcm16(demos / wav_relative)
+        mp3 = demos / mp3_relative
+        require(mp3.is_file() and mp3.stat().st_size > 100000
+                and mp3.read_bytes()[:3] == b"ID3",
+                f"invalid browser MP3: {mp3_relative}")
         require((ROOT / row["evidence_path"]).is_file(),
-                f"missing evidence for demo condition: {key}")
-    for relative in expected_sources:
-        path = demos / relative
-        require(path.is_file(), f"demo page references a missing file: {relative}")
-        if path.suffix == ".mp3":
-            require(path.stat().st_size > 100000
-                    and path.read_bytes()[:3] == b"ID3",
-                    f"invalid MP3 browser fallback: {relative}")
-        require(page.count(f'src="{relative}"') == 1,
-                f"demo page must reference audio exactly once: {relative}")
-    require(page.count("<audio ") == 28,
-            "demo page must expose 28 listening comparisons")
-    require(page.count('class="system-card"') == 5,
-            "demo page must contain exactly five visible system cards")
-    require(all(f'id="{model}"' in page for model in expected_models),
-            "demo page must expose all five system comparisons without tabs")
+                f"missing evidence for demo condition: {row}")
+
+    observed_condition_audio = {
+        path.relative_to(demos).as_posix()
+        for path in (demos / "conditions").glob("*/*/*")
+        if path.suffix in {".wav", ".mp3"}
+    }
+    require(observed_condition_audio == expected_audio - {
+                "source_reference.wav", "source_reference.mp3"},
+            "demo contains missing or unreferenced condition audio")
+
+    bundle_text = (demos / "demo-data.js").read_text(encoding="utf-8")
+    prefix = "window.DEMO_DATA = "
+    require(bundle_text.startswith(prefix) and bundle_text.endswith(";\n"),
+            "invalid demo browser data bundle")
+    bundle = json.loads(bundle_text[len(prefix):-2])
+    require(len(bundle["systems"]) == 5,
+            "browser bundle must expose five systems")
+    bundle_conditions = sum(
+        len(system["coalitionSize"]) + len(system["offsets"])
+        + len(system["codecs"]) for system in bundle["systems"])
+    require(bundle_conditions == 70,
+            "browser bundle must expose all 70 conditions")
+    bundle_audio = {
+        f"{item['audio']}{suffix}"
+        for system in bundle["systems"]
+        for family in ("coalitionSize", "offsets", "codecs")
+        for item in system[family]
+        for suffix in (".wav", ".mp3")
+    }
+    require(bundle_audio == observed_condition_audio,
+            "browser bundle does not match released demo audio")
+
     require(page.count('class="site-nav"') == 1,
-            "demo page must contain one primary navigation bar")
-    require(all(f'href="#{section}"' in page for section in (
-                "overview", "systems", "coalition-size", "offsets", "codecs")),
-            "demo navigation must link every listening section")
-    require(all(f'id="{section}"' in page for section in (
-                "overview", "systems", "coalition-size", "offsets", "codecs")),
-            "demo page is missing a listening section")
+            "demo must contain one primary navigation bar")
+    require(page.count('class="tab-button"') == 4,
+            "demo must expose four switchable primary views")
+    require(page.count("data-view-panel=") == 4,
+            "demo must contain four switchable view panels")
+    require(page.count('<nav class="system-picker" data-system-picker=') == 3,
+            "each comparison view must have a system selector")
+    require('src="demo-data.js"' in page,
+            "demo page does not load the complete data bundle")
+    require(page.count(
+                '<audio controls preload="metadata" '
+                'aria-label="Clean source reference">') == 1,
+            "overview must contain one clean reference player")
+    require('grid.innerHTML=items.map' in page,
+            "comparison players must be rendered by the switchable view")
+    require("Suggested listening route" not in page,
+            "demo must not contain the removed listening-route card")
     require(not any(term in page for term in (
                 "tracing failure", "Tracing failure", "PESQ", "STOI",
                 "SI-SDR", "300-trial", "300 trials")),
             "demo page must not duplicate paper result statistics")
-    print("PASS demos: five systems, 12 stress conditions, and 28 dual-format players")
+    print("PASS demos: 5 systems x 14 conditions, switchable views, 142 audio files")
 
 
 def json_keys(value):

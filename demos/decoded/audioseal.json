@@ -1,43 +1,45 @@
 {
   "coalition_size": {
     "2": {
-      "coalition_payloads": [
-        24199,
-        31849
-      ],
       "decoded_payload": 23648
     },
     "3": {
-      "coalition_payloads": [
-        52255,
-        17777,
-        62914
-      ],
       "decoded_payload": 62803
     },
     "5": {
-      "coalition_payloads": [
-        40973,
-        50527,
-        54258,
-        54171,
-        40406
-      ],
       "decoded_payload": 61919
     },
     "8": {
-      "coalition_payloads": [
-        2322,
-        3134,
-        14407,
-        21174,
-        50027,
-        50834,
-        51485,
-        62890
-      ],
       "decoded_payload": 22578
     }
+  },
+  "coalitions": {
+    "2": [
+      24199,
+      31849
+    ],
+    "3": [
+      52255,
+      17777,
+      62914
+    ],
+    "5": [
+      40973,
+      50527,
+      54258,
+      54171,
+      40406
+    ],
+    "8": [
+      2322,
+      3134,
+      14407,
+      21174,
+      50027,
+      50834,
+      51485,
+      62890
+    ]
   },
   "codec": {
     "mp3_128k": {
@@ -59,6 +61,9 @@
   },
   "model": "audioseal",
   "offset": {
+    "-10": {
+      "decoded_payload": 54231
+    },
     "-20": {
       "decoded_payload": 53727
     },
@@ -67,6 +72,9 @@
     },
     "0": {
       "decoded_payload": 61919
+    },
+    "10": {
+      "decoded_payload": 54231
     },
     "20": {
       "decoded_payload": 53727

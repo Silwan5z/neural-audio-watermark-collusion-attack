@@ -1,13 +1,71 @@
-family,condition,system,k,coalition_payloads,decoded_payload,escaped,pesq,stoi,si_sdr_db,audio_path,evidence_path
-coalition_size,K=2,audioseal,2,"[24199, 31849]",23648,1,4.6129,0.9981,34.65,conditions/coalition_size/k2.wav,data/average/k2/audioseal.csv
-coalition_size,K=3,audioseal,3,"[52255, 17777, 62914]",62803,1,4.5913,0.9969,32.59,conditions/coalition_size/k3.wav,data/average/k3/audioseal.csv
-coalition_size,K=5,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",61919,1,4.5748,0.9947,31.82,conditions/coalition_size/k5.wav,data/average/k5/audioseal.csv
-coalition_size,K=8,audioseal,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",22578,1,4.6043,0.9973,,conditions/coalition_size/k8.wav,data/average/k8/audioseal/trial_150.json
-offset,-50 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",54239,1,2.0063,0.9572,12.02,conditions/offset/minus50.wav,data/supplementary/alignment/all_trials.csv
-offset,-20 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",53727,1,2.9977,0.9715,11.95,conditions/offset/minus20.wav,data/supplementary/alignment/all_trials.csv
-offset,Aligned,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",61919,1,4.5748,0.9947,31.82,conditions/offset/aligned.wav,data/supplementary/alignment/all_trials.csv
-offset,+20 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",53727,1,3.7883,0.9727,11.96,conditions/offset/plus20.wav,data/supplementary/alignment/all_trials.csv
-offset,+50 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",55255,1,2.7596,0.9620,12.02,conditions/offset/plus50.wav,data/supplementary/alignment/all_trials.csv
-codec,None,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",61919,1,4.5748,0.9947,31.82,conditions/codec/none.wav,data/supplementary/codec/all_trials.csv
-codec,MP3 128 kbps,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",62431,1,4.3759,0.9947,23.02,conditions/codec/mp3_128k.wav,data/supplementary/codec/all_trials.csv
-codec,Opus 64 kbps,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",62431,1,4.5260,0.9921,25.69,conditions/codec/opus_64k.wav,data/supplementary/codec/all_trials.csv
+family,condition,system,k,coalition_payloads,audio_path,evidence_path
+coalition_size,K=2,audioseal,2,"[24199, 31849]",conditions/coalition_size/audioseal/k2.wav,data/average/k2/audioseal.csv
+coalition_size,K=3,audioseal,3,"[52255, 17777, 62914]",conditions/coalition_size/audioseal/k3.wav,data/average/k3/audioseal.csv
+coalition_size,K=5,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/audioseal/k5.wav,data/average/k5/audioseal.csv
+coalition_size,K=8,audioseal,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/audioseal/k8.wav,data/average/k8/audioseal/trial_150.json
+offset,-10,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus10.wav,data/supplementary/alignment/all_trials.csv
+offset,-20,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus20.wav,data/supplementary/alignment/all_trials.csv
+offset,-50,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/minus50.wav,data/supplementary/alignment/all_trials.csv
+offset,0,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/aligned.wav,data/supplementary/alignment/all_trials.csv
+offset,10,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus10.wav,data/supplementary/alignment/all_trials.csv
+offset,20,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus20.wav,data/supplementary/alignment/all_trials.csv
+offset,50,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/audioseal/plus50.wav,data/supplementary/alignment/all_trials.csv
+codec,mp3_128k,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/mp3_128k.wav,data/supplementary/codec/all_trials.csv
+codec,none,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/none.wav,data/supplementary/codec/all_trials.csv
+codec,opus_64k,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/audioseal/opus_64k.wav,data/supplementary/codec/all_trials.csv
+coalition_size,K=2,wavmark,2,"[24199, 31849]",conditions/coalition_size/wavmark/k2.wav,data/average/k2/wavmark.csv
+coalition_size,K=3,wavmark,3,"[52255, 17777, 62914]",conditions/coalition_size/wavmark/k3.wav,data/average/k3/wavmark.csv
+coalition_size,K=5,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/wavmark/k5.wav,data/average/k5/wavmark.csv
+coalition_size,K=8,wavmark,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/wavmark/k8.wav,data/average/k8/wavmark/trial_150.json
+offset,-10,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus10.wav,data/supplementary/alignment/all_trials.csv
+offset,-20,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus20.wav,data/supplementary/alignment/all_trials.csv
+offset,-50,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/minus50.wav,data/supplementary/alignment/all_trials.csv
+offset,0,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/aligned.wav,data/supplementary/alignment/all_trials.csv
+offset,10,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus10.wav,data/supplementary/alignment/all_trials.csv
+offset,20,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus20.wav,data/supplementary/alignment/all_trials.csv
+offset,50,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wavmark/plus50.wav,data/supplementary/alignment/all_trials.csv
+codec,mp3_128k,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/mp3_128k.wav,data/supplementary/codec/all_trials.csv
+codec,none,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/none.wav,data/supplementary/codec/all_trials.csv
+codec,opus_64k,wavmark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wavmark/opus_64k.wav,data/supplementary/codec/all_trials.csv
+coalition_size,K=2,timbrewm,2,"[378, 497]",conditions/coalition_size/timbrewm/k2.wav,data/average/k2/timbrewm.csv
+coalition_size,K=3,timbrewm,3,"[816, 277, 983]",conditions/coalition_size/timbrewm/k3.wav,data/average/k3/timbrewm.csv
+coalition_size,K=5,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/coalition_size/timbrewm/k5.wav,data/average/k5/timbrewm.csv
+coalition_size,K=8,timbrewm,8,"[36, 48, 224, 329, 776, 789, 802, 978]",conditions/coalition_size/timbrewm/k8.wav,data/average/k8/timbrewm/trial_150.json
+offset,-10,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus10.wav,data/supplementary/alignment/all_trials.csv
+offset,-20,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus20.wav,data/supplementary/alignment/all_trials.csv
+offset,-50,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/minus50.wav,data/supplementary/alignment/all_trials.csv
+offset,0,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/aligned.wav,data/supplementary/alignment/all_trials.csv
+offset,10,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus10.wav,data/supplementary/alignment/all_trials.csv
+offset,20,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus20.wav,data/supplementary/alignment/all_trials.csv
+offset,50,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/offset/timbrewm/plus50.wav,data/supplementary/alignment/all_trials.csv
+codec,mp3_128k,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/mp3_128k.wav,data/supplementary/codec/all_trials.csv
+codec,none,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/none.wav,data/supplementary/codec/all_trials.csv
+codec,opus_64k,timbrewm,5,"[640, 789, 847, 846, 631]",conditions/codec/timbrewm/opus_64k.wav,data/supplementary/codec/all_trials.csv
+coalition_size,K=2,voicemark,2,"[24199, 31849]",conditions/coalition_size/voicemark/k2.wav,data/average/k2/voicemark.csv
+coalition_size,K=3,voicemark,3,"[52255, 17777, 62914]",conditions/coalition_size/voicemark/k3.wav,data/average/k3/voicemark.csv
+coalition_size,K=5,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/voicemark/k5.wav,data/average/k5/voicemark.csv
+coalition_size,K=8,voicemark,8,"[2322, 3134, 21174, 45243, 50027, 50086, 50834, 51485]",conditions/coalition_size/voicemark/k8.wav,data/average/k8/voicemark/trial_150.json
+offset,-10,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus10.wav,data/supplementary/alignment/all_trials.csv
+offset,-20,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus20.wav,data/supplementary/alignment/all_trials.csv
+offset,-50,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/minus50.wav,data/supplementary/alignment/all_trials.csv
+offset,0,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/aligned.wav,data/supplementary/alignment/all_trials.csv
+offset,10,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus10.wav,data/supplementary/alignment/all_trials.csv
+offset,20,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus20.wav,data/supplementary/alignment/all_trials.csv
+offset,50,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/voicemark/plus50.wav,data/supplementary/alignment/all_trials.csv
+codec,mp3_128k,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/mp3_128k.wav,data/supplementary/codec/all_trials.csv
+codec,none,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/none.wav,data/supplementary/codec/all_trials.csv
+codec,opus_64k,voicemark,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/voicemark/opus_64k.wav,data/supplementary/codec/all_trials.csv
+coalition_size,K=2,wmcodec,2,"[24199, 31849]",conditions/coalition_size/wmcodec/k2.wav,data/average/k2/wmcodec.csv
+coalition_size,K=3,wmcodec,3,"[52255, 17777, 62914]",conditions/coalition_size/wmcodec/k3.wav,data/average/k3/wmcodec.csv
+coalition_size,K=5,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/coalition_size/wmcodec/k5.wav,data/average/k5/wmcodec.csv
+coalition_size,K=8,wmcodec,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",conditions/coalition_size/wmcodec/k8.wav,data/average/k8/wmcodec/trial_150.json
+offset,-10,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus10.wav,data/supplementary/alignment/all_trials.csv
+offset,-20,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus20.wav,data/supplementary/alignment/all_trials.csv
+offset,-50,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/minus50.wav,data/supplementary/alignment/all_trials.csv
+offset,0,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/aligned.wav,data/supplementary/alignment/all_trials.csv
+offset,10,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus10.wav,data/supplementary/alignment/all_trials.csv
+offset,20,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus20.wav,data/supplementary/alignment/all_trials.csv
+offset,50,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/offset/wmcodec/plus50.wav,data/supplementary/alignment/all_trials.csv
+codec,mp3_128k,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/mp3_128k.wav,data/supplementary/codec/all_trials.csv
+codec,none,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/none.wav,data/supplementary/codec/all_trials.csv
+codec,opus_64k,wmcodec,5,"[40973, 50527, 54258, 54171, 40406]",conditions/codec/wmcodec/opus_64k.wav,data/supplementary/codec/all_trials.csv

@@ -1,4 +1,57 @@
 {
+  "coalition_size": {
+    "2": {
+      "decoded_payload": 32495
+    },
+    "3": {
+      "decoded_payload": 50515
+    },
+    "5": {
+      "decoded_payload": 54751
+    },
+    "8": {
+      "decoded_payload": 51518
+    }
+  },
+  "coalitions": {
+    "2": [
+      24199,
+      31849
+    ],
+    "3": [
+      52255,
+      17777,
+      62914
+    ],
+    "5": [
+      40973,
+      50527,
+      54258,
+      54171,
+      40406
+    ],
+    "8": [
+      2322,
+      3134,
+      14407,
+      21174,
+      50027,
+      50834,
+      51485,
+      62890
+    ]
+  },
+  "codec": {
+    "mp3_128k": {
+      "decoded_payload": 54751
+    },
+    "none": {
+      "decoded_payload": 54751
+    },
+    "opus_64k": {
+      "decoded_payload": 54751
+    }
+  },
   "cross_system": {
     "coalition_payloads": [
       24199,
@@ -7,5 +60,28 @@
     "decoded_payload": 32495
   },
   "model": "wavmark",
+  "offset": {
+    "-10": {
+      "decoded_payload": 55263
+    },
+    "-20": {
+      "decoded_payload": 55263
+    },
+    "-50": {
+      "decoded_payload": 55263
+    },
+    "0": {
+      "decoded_payload": 54751
+    },
+    "10": {
+      "decoded_payload": 55263
+    },
+    "20": {
+      "decoded_payload": 55263
+    },
+    "50": {
+      "decoded_payload": 54751
+    }
+  },
   "trial_id": 150
 }

@@ -1,58 +1,117 @@
 #!/usr/bin/env python3
-"""Export the five-system trial-150 listening demo from validated caches."""
+"""Export complete trial-150 listening comparisons for the web demo."""
 from __future__ import annotations
 
 import argparse
+import csv
+import json
+import os
 import shutil
 import subprocess
 import sys
+import uuid
 from pathlib import Path
 
 import numpy as np
 import soundfile as sf
 
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 
+from native_audio import NATIVE_SAMPLE_RATE, get_or_embed_native  # noqa: E402
+from run_alignment_stress_test import SHIFTS_MS, shift_fixed_length  # noqa: E402
+from run_codec_stress_test import CODECS, independently_code  # noqa: E402
 from watermarks import resample_to  # noqa: E402
-from run_alignment_stress_test import shift_fixed_length  # noqa: E402
-from run_codec_stress_test import independently_code  # noqa: E402
 
 
-EXAMPLES = {
-    "audioseal": (16000, 24199, 31849, "marked"),
-    "wavmark": (16000, 24199, 31849, "marked"),
-    "timbrewm": (22050, 378, 497, "marked_native"),
-    "voicemark": (16000, 24199, 31849, "marked"),
-    "wmcodec": (24000, 24199, 31849, "marked_native"),
-}
-
-AUDIOSEAL_COALITIONS = {
-    2: [24199, 31849],
-    3: [52255, 17777, 62914],
-    5: [40973, 50527, 54258, 54171, 40406],
-    8: [2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890],
-}
-OFFSETS_MS = (-50, -20, 0, 20, 50)
-CODECS = ("none", "mp3_128k", "opus_64k")
+MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
+K_VALUES = (2, 3, 5, 8)
+TRIAL_ID = 150
+SPEAKER = "english:103"
+CLIP_SLOT = 0
 
 
-def load_mono(path: Path, expected_rate: int) -> np.ndarray:
-    audio, rate = sf.read(path, dtype="float32", always_2d=False)
-    if audio.ndim != 1 or rate != expected_rate:
-        raise ValueError(
-            f"{path}: expected mono {expected_rate} Hz audio, got "
-            f"shape={audio.shape}, rate={rate}")
-    if len(audio) != expected_rate * 10:
-        raise ValueError(f"{path}: expected ten seconds, got {len(audio)} samples")
-    return audio
+def coalitions_for(model: str) -> dict[int, list[int]]:
+    with (ROOT / "data" / "supplementary" / "quality" /
+          "all_trials.csv").open(newline="", encoding="utf-8") as handle:
+        rows = list(csv.DictReader(handle))
+    coalitions: dict[int, list[int]] = {}
+    for k in (2, 3, 5):
+        row = next(
+            item for item in rows
+            if item["model"] == model and int(item["k"]) == k
+            and int(item["trial_id"]) == TRIAL_ID)
+        coalitions[k] = [int(value) for value in
+                         json.loads(row["coalition_payloads"])]
+    record = json.loads((
+        ROOT / "data" / "average" / "k8" / model /
+        f"trial_{TRIAL_ID}.json").read_text(encoding="utf-8"))
+    coalitions[8] = [int(value) for value in record["coalition_payloads"]]
+    return coalitions
 
 
-def write_demo(path: Path, audio: np.ndarray) -> None:
-    audio = np.asarray(audio[:160000], dtype=np.float32)
-    if len(audio) != 160000 or not np.isfinite(audio).all():
-        raise ValueError(f"invalid exported audio: {path}")
+def load_members(model: str, coalition: list[int]) -> list[np.ndarray]:
+    members = [
+        get_or_embed_native(model, SPEAKER, payload, CLIP_SLOT)[0]
+        for payload in coalition
+    ]
+    n = min(map(len, members))
+    return [np.asarray(member[:n], dtype=np.float32) for member in members]
+
+
+def mean_signal(members: list[np.ndarray]) -> np.ndarray:
+    return np.mean(np.stack(members), axis=0,
+                   dtype=np.float64).astype(np.float32)
+
+
+def native_conditions(model: str) -> tuple[dict[int, list[int]], dict]:
+    """Build every native-rate signal shown for one system."""
+    coalitions = coalitions_for(model)
+    sizes: dict[int, np.ndarray] = {}
+    members_by_k: dict[int, list[np.ndarray]] = {}
+    for k in K_VALUES:
+        members = load_members(model, coalitions[k])
+        members_by_k[k] = members
+        sizes[k] = mean_signal(members)
+
+    k5_members = members_by_k[5]
+    shifted_index = TRIAL_ID % 5
+    offsets: dict[int, np.ndarray] = {}
+    for shift_ms in SHIFTS_MS:
+        members = list(k5_members)
+        if shift_ms:
+            samples = int(round(
+                NATIVE_SAMPLE_RATE[model] * shift_ms / 1000.0))
+            members[shifted_index] = shift_fixed_length(
+                members[shifted_index], samples)
+        offsets[shift_ms] = mean_signal(members)
+
+    codecs: dict[str, np.ndarray] = {}
+    for codec in CODECS:
+        codecs[codec] = mean_signal(independently_code(
+            k5_members, NATIVE_SAMPLE_RATE[model], codec))
+    return coalitions, {
+        "coalition_size": sizes,
+        "offset": offsets,
+        "codec": codecs,
+    }
+
+
+def browser_audio(model: str, waveform: np.ndarray) -> np.ndarray:
+    rate = NATIVE_SAMPLE_RATE[model]
+    output = (waveform if rate == 16000 else
+              resample_to(waveform, rate, 16000))
+    output = np.asarray(output[:160000], dtype=np.float32)
+    if len(output) < 160000:
+        output = np.pad(output, (0, 160000 - len(output)))
+    if len(output) != 160000 or not np.isfinite(output).all():
+        raise ValueError(f"invalid browser audio for {model}")
+    return output
+
+
+def write_wav(path: Path, audio: np.ndarray) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     sf.write(path, audio, 16000, subtype="PCM_16")
 
@@ -66,74 +125,99 @@ def write_mp3(wav_path: Path) -> None:
 
 
 def write_pair(path: Path, audio: np.ndarray) -> None:
-    write_demo(path, audio)
+    write_wav(path, audio)
     write_mp3(path)
 
 
-def load_audioseal_members(cache_root: Path,
-                           payloads: list[int]) -> list[np.ndarray]:
-    directory = cache_root / "marked" / "audioseal" / \
-        "english:103" / "clip_01"
-    return [load_mono(directory / f"{payload}.wav", 16000)
-            for payload in payloads]
+def offset_slug(value: int) -> str:
+    if value < 0:
+        return f"minus{abs(value)}"
+    if value > 0:
+        return f"plus{value}"
+    return "aligned"
+
+
+def atomic_csv(path: Path, rows: list[dict]) -> None:
+    fields = (
+        "family", "condition", "system", "k", "coalition_payloads",
+        "audio_path", "evidence_path",
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
+    with temporary.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(temporary, path)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--cache-root", type=Path, default=ROOT / "cache")
+    parser.add_argument("--models", nargs="+", choices=MODELS,
+                        default=list(MODELS))
     parser.add_argument("--output", type=Path, default=ROOT / "demos")
     args = parser.parse_args()
 
+    args.output.mkdir(parents=True, exist_ok=True)
     source = ROOT / "dataset" / "collusion_300" / "english" / "103" / \
         "english_103_01.wav"
     shutil.copyfile(source, args.output / "source_reference.wav")
     write_mp3(args.output / "source_reference.wav")
 
-    for model, (rate, payload_a, payload_b, cache_name) in EXAMPLES.items():
-        cache_dir = args.cache_root / cache_name / model / "english:103" / "clip_01"
-        member_a = load_mono(cache_dir / f"{payload_a}.wav", rate)
-        member_b = load_mono(cache_dir / f"{payload_b}.wav", rate)
-        average = ((member_a.astype(np.float64) + member_b) / 2).astype(np.float32)
+    rows = []
+    metadata_path = args.output / "conditions" / "metadata.csv"
+    if metadata_path.exists():
+        with metadata_path.open(newline="", encoding="utf-8") as handle:
+            rows = [row for row in csv.DictReader(handle)
+                    if row["system"] not in set(args.models)]
 
-        if rate != 16000:
-            member_a = resample_to(member_a, rate, 16000)
-            member_b = resample_to(member_b, rate, 16000)
-            average = resample_to(average, rate, 16000)
+    for model in args.models:
+        coalitions, conditions = native_conditions(model)
+        for k, waveform in conditions["coalition_size"].items():
+            relative = Path("conditions") / "coalition_size" / model / f"k{k}.wav"
+            write_pair(args.output / relative, browser_audio(model, waveform))
+            rows.append({
+                "family": "coalition_size", "condition": f"K={k}",
+                "system": model, "k": k,
+                "coalition_payloads": json.dumps(coalitions[k]),
+                "audio_path": relative.as_posix(),
+                "evidence_path": (
+                    f"data/average/k{k}/{model}.csv" if k < 8 else
+                    f"data/average/k8/{model}/trial_{TRIAL_ID}.json"),
+            })
+        for shift_ms, waveform in conditions["offset"].items():
+            relative = Path("conditions") / "offset" / model / \
+                f"{offset_slug(shift_ms)}.wav"
+            write_pair(args.output / relative, browser_audio(model, waveform))
+            rows.append({
+                "family": "offset", "condition": str(shift_ms),
+                "system": model, "k": 5,
+                "coalition_payloads": json.dumps(coalitions[5]),
+                "audio_path": relative.as_posix(),
+                "evidence_path": "data/supplementary/alignment/all_trials.csv",
+            })
+        for codec, waveform in conditions["codec"].items():
+            relative = Path("conditions") / "codec" / model / f"{codec}.wav"
+            write_pair(args.output / relative, browser_audio(model, waveform))
+            rows.append({
+                "family": "codec", "condition": codec,
+                "system": model, "k": 5,
+                "coalition_payloads": json.dumps(coalitions[5]),
+                "audio_path": relative.as_posix(),
+                "evidence_path": "data/supplementary/codec/all_trials.csv",
+            })
+        print(f"exported {model}: 4 coalition sizes, 7 offsets, 3 codecs",
+              flush=True)
 
-        directory = args.output / model
-        write_pair(directory / f"member_{payload_a}.wav", member_a)
-        write_pair(directory / f"member_{payload_b}.wav", member_b)
-        write_pair(directory / "uniform_average.wav", average)
-        print(f"exported {model}: {payload_a} + {payload_b}")
-
-    condition_root = args.output / "conditions"
-    coalition_signals = {}
-    for k, payloads in AUDIOSEAL_COALITIONS.items():
-        members = load_audioseal_members(args.cache_root, payloads)
-        signal = np.mean(np.stack(members), axis=0,
-                         dtype=np.float64).astype(np.float32)
-        coalition_signals[k] = signal
-        write_pair(condition_root / "coalition_size" / f"k{k}.wav", signal)
-
-    k5_members = load_audioseal_members(
-        args.cache_root, AUDIOSEAL_COALITIONS[5])
-    for offset_ms in OFFSETS_MS:
-        members = list(k5_members)
-        if offset_ms:
-            members[0] = shift_fixed_length(
-                members[0], int(round(16000 * offset_ms / 1000)))
-        signal = np.mean(np.stack(members), axis=0,
-                         dtype=np.float64).astype(np.float32)
-        label = (f"minus{abs(offset_ms)}" if offset_ms < 0 else
-                 f"plus{offset_ms}" if offset_ms > 0 else "aligned")
-        write_pair(condition_root / "offset" / f"{label}.wav", signal)
-
-    for codec in CODECS:
-        transformed = independently_code(k5_members, 16000, codec)
-        signal = np.mean(np.stack(transformed), axis=0,
-                         dtype=np.float64).astype(np.float32)
-        write_pair(condition_root / "codec" / f"{codec}.wav", signal)
-    print("exported AudioSeal coalition-size, offset, and codec comparisons")
+    order = {model: index for index, model in enumerate(MODELS)}
+    family_order = {"coalition_size": 0, "offset": 1, "codec": 2}
+    rows.sort(key=lambda row: (
+        order[row["system"]], family_order[row["family"]], row["condition"]))
+    atomic_csv(metadata_path, rows)
+    print(json.dumps({"models": args.models, "conditions": len(rows),
+                      "metadata": str(metadata_path)}), flush=True)
 
 
 if __name__ == "__main__":

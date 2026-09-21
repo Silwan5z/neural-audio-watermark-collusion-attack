@@ -1,4 +1,57 @@
 {
+  "coalition_size": {
+    "2": {
+      "decoded_payload": 60600
+    },
+    "3": {
+      "decoded_payload": 64751
+    },
+    "5": {
+      "decoded_payload": 54106
+    },
+    "8": {
+      "decoded_payload": 51610
+    }
+  },
+  "coalitions": {
+    "2": [
+      24199,
+      31849
+    ],
+    "3": [
+      52255,
+      17777,
+      62914
+    ],
+    "5": [
+      40973,
+      50527,
+      54258,
+      54171,
+      40406
+    ],
+    "8": [
+      2322,
+      3134,
+      21174,
+      45243,
+      50027,
+      50086,
+      50834,
+      51485
+    ]
+  },
+  "codec": {
+    "mp3_128k": {
+      "decoded_payload": 37722
+    },
+    "none": {
+      "decoded_payload": 54106
+    },
+    "opus_64k": {
+      "decoded_payload": 37722
+    }
+  },
   "cross_system": {
     "coalition_payloads": [
       24199,
@@ -7,5 +60,28 @@
     "decoded_payload": 60600
   },
   "model": "voicemark",
+  "offset": {
+    "-10": {
+      "decoded_payload": 54106
+    },
+    "-20": {
+      "decoded_payload": 54107
+    },
+    "-50": {
+      "decoded_payload": 54074
+    },
+    "0": {
+      "decoded_payload": 54106
+    },
+    "10": {
+      "decoded_payload": 54106
+    },
+    "20": {
+      "decoded_payload": 54106
+    },
+    "50": {
+      "decoded_payload": 54106
+    }
+  },
   "trial_id": 150
 }
