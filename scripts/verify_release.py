@@ -841,14 +841,18 @@ def verify_demos() -> None:
     require('src="demo-data.js"' in page,
             "demo page does not load the complete data bundle")
     require(page.count(
-                '<audio controls preload="metadata" '
+                '<audio controls preload="none" src="source_reference.mp3" '
+                'data-fallback="source_reference.wav" '
                 'aria-label="Clean source reference">') == 1,
             "overview must contain one clean reference player")
     require('system[category[view]].map' in page,
             "comparison players must be rendered by the switchable view")
-    require('<source src="source_reference.wav" type="audio/wav"><source '
-            'src="source_reference.mp3" type="audio/mpeg">' in page,
-            "clean source must prefer WAV with MP3 fallback")
+    require('controls preload="none" src="${escape(item.audio)}.mp3" '
+            'data-fallback="${escape(item.audio)}.wav"' in page,
+            "dynamic players must load MP3 on demand with WAV fallback")
+    require('player.addEventListener("error"' in page
+            and 'player.src=player.dataset.fallback' in page,
+            "demo must automatically activate the WAV fallback")
     require('<span>PESQ</span>' in page and '<span>STOI</span>' in page
             and '<span>SI-SDR</span>' in page,
             "demo must label all three quality metrics")

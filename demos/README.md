@@ -11,7 +11,8 @@ uniform averages at K = 2/3/5/8, seven timing conditions, and three codec
 conditions for every evaluated system. Each condition is presented as one
 complete row with its audio, coalition IDs, decoded ID, and quality metrics.
 
-WAV is the primary browser source and MP3 is the fallback. The repository also
+Players load one MP3 only after it is selected. If that request fails, the page
+automatically switches the same player to its WAV counterpart. The repository
 keeps both formats for direct inspection.
 
 ## Files and decoded outcomes
