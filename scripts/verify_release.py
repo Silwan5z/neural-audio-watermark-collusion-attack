@@ -820,16 +820,24 @@ def verify_demos() -> None:
                     f"invalid MP3 browser fallback: {relative}")
         require(page.count(f'src="{relative}"') == 1,
                 f"demo page must reference audio exactly once: {relative}")
-    require("86.3–99.3%" in page,
-            "demo page omits the released K=2 tracing-failure range")
     require(page.count("<audio ") == 28,
             "demo page must expose 28 listening comparisons")
     require(page.count('class="system-card"') == 5,
             "demo page must contain exactly five visible system cards")
     require(all(f'id="{model}"' in page for model in expected_models),
             "demo page must expose all five system comparisons without tabs")
-    require("Coalition size, timing, and compression" in page,
-            "demo page must expose the three controlled stress comparisons")
+    require(page.count('class="site-nav"') == 1,
+            "demo page must contain one primary navigation bar")
+    require(all(f'href="#{section}"' in page for section in (
+                "overview", "systems", "coalition-size", "offsets", "codecs")),
+            "demo navigation must link every listening section")
+    require(all(f'id="{section}"' in page for section in (
+                "overview", "systems", "coalition-size", "offsets", "codecs")),
+            "demo page is missing a listening section")
+    require(not any(term in page for term in (
+                "tracing failure", "Tracing failure", "PESQ", "STOI",
+                "SI-SDR", "300-trial", "300 trials")),
+            "demo page must not duplicate paper result statistics")
     print("PASS demos: five systems, 12 stress conditions, and 28 dual-format players")
 
 
