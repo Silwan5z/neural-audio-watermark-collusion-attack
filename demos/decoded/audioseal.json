@@ -1,0 +1,79 @@
+{
+  "coalition_size": {
+    "2": {
+      "coalition_payloads": [
+        24199,
+        31849
+      ],
+      "decoded_payload": 23648
+    },
+    "3": {
+      "coalition_payloads": [
+        52255,
+        17777,
+        62914
+      ],
+      "decoded_payload": 62803
+    },
+    "5": {
+      "coalition_payloads": [
+        40973,
+        50527,
+        54258,
+        54171,
+        40406
+      ],
+      "decoded_payload": 61919
+    },
+    "8": {
+      "coalition_payloads": [
+        2322,
+        3134,
+        14407,
+        21174,
+        50027,
+        50834,
+        51485,
+        62890
+      ],
+      "decoded_payload": 22578
+    }
+  },
+  "codec": {
+    "mp3_128k": {
+      "decoded_payload": 62431
+    },
+    "none": {
+      "decoded_payload": 61919
+    },
+    "opus_64k": {
+      "decoded_payload": 62431
+    }
+  },
+  "cross_system": {
+    "coalition_payloads": [
+      24199,
+      31849
+    ],
+    "decoded_payload": 23648
+  },
+  "model": "audioseal",
+  "offset": {
+    "-20": {
+      "decoded_payload": 53727
+    },
+    "-50": {
+      "decoded_payload": 54239
+    },
+    "0": {
+      "decoded_payload": 61919
+    },
+    "20": {
+      "decoded_payload": 53727
+    },
+    "50": {
+      "decoded_payload": 55255
+    }
+  },
+  "trial_id": 150
+}

@@ -1,0 +1,13 @@
+family,condition,system,k,coalition_payloads,decoded_payload,escaped,pesq,stoi,si_sdr_db,audio_path,evidence_path
+coalition_size,K=2,audioseal,2,"[24199, 31849]",23648,1,4.6129,0.9981,34.65,conditions/coalition_size/k2.wav,data/average/k2/audioseal.csv
+coalition_size,K=3,audioseal,3,"[52255, 17777, 62914]",62803,1,4.5913,0.9969,32.59,conditions/coalition_size/k3.wav,data/average/k3/audioseal.csv
+coalition_size,K=5,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",61919,1,4.5748,0.9947,31.82,conditions/coalition_size/k5.wav,data/average/k5/audioseal.csv
+coalition_size,K=8,audioseal,8,"[2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890]",22578,1,4.6043,0.9973,,conditions/coalition_size/k8.wav,data/average/k8/audioseal/trial_150.json
+offset,-50 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",54239,1,2.0063,0.9572,12.02,conditions/offset/minus50.wav,data/supplementary/alignment/all_trials.csv
+offset,-20 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",53727,1,2.9977,0.9715,11.95,conditions/offset/minus20.wav,data/supplementary/alignment/all_trials.csv
+offset,Aligned,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",61919,1,4.5748,0.9947,31.82,conditions/offset/aligned.wav,data/supplementary/alignment/all_trials.csv
+offset,+20 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",53727,1,3.7883,0.9727,11.96,conditions/offset/plus20.wav,data/supplementary/alignment/all_trials.csv
+offset,+50 ms,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",55255,1,2.7596,0.9620,12.02,conditions/offset/plus50.wav,data/supplementary/alignment/all_trials.csv
+codec,None,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",61919,1,4.5748,0.9947,31.82,conditions/codec/none.wav,data/supplementary/codec/all_trials.csv
+codec,MP3 128 kbps,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",62431,1,4.3759,0.9947,23.02,conditions/codec/mp3_128k.wav,data/supplementary/codec/all_trials.csv
+codec,Opus 64 kbps,audioseal,5,"[40973, 50527, 54258, 54171, 40406]",62431,1,4.5260,0.9921,25.69,conditions/codec/opus_64k.wav,data/supplementary/codec/all_trials.csv

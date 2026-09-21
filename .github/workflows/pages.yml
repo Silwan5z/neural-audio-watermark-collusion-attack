@@ -36,6 +36,7 @@ jobs:
           cp demos/timbrewm/*.{wav,mp3} _site/timbrewm/
           cp demos/voicemark/*.{wav,mp3} _site/voicemark/
           cp demos/wmcodec/*.{wav,mp3} _site/wmcodec/
+          cp -r demos/conditions _site/conditions
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

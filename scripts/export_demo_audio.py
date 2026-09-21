@@ -16,6 +16,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
 from watermarks import resample_to  # noqa: E402
+from run_alignment_stress_test import shift_fixed_length  # noqa: E402
+from run_codec_stress_test import independently_code  # noqa: E402
 
 
 EXAMPLES = {
@@ -25,6 +27,15 @@ EXAMPLES = {
     "voicemark": (16000, 24199, 31849, "marked"),
     "wmcodec": (24000, 24199, 31849, "marked_native"),
 }
+
+AUDIOSEAL_COALITIONS = {
+    2: [24199, 31849],
+    3: [52255, 17777, 62914],
+    5: [40973, 50527, 54258, 54171, 40406],
+    8: [2322, 3134, 14407, 21174, 50027, 50834, 51485, 62890],
+}
+OFFSETS_MS = (-50, -20, 0, 20, 50)
+CODECS = ("none", "mp3_128k", "opus_64k")
 
 
 def load_mono(path: Path, expected_rate: int) -> np.ndarray:
@@ -54,6 +65,19 @@ def write_mp3(wav_path: Path) -> None:
     ], check=True)
 
 
+def write_pair(path: Path, audio: np.ndarray) -> None:
+    write_demo(path, audio)
+    write_mp3(path)
+
+
+def load_audioseal_members(cache_root: Path,
+                           payloads: list[int]) -> list[np.ndarray]:
+    directory = cache_root / "marked" / "audioseal" / \
+        "english:103" / "clip_01"
+    return [load_mono(directory / f"{payload}.wav", 16000)
+            for payload in payloads]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache-root", type=Path, default=ROOT / "cache")
@@ -77,13 +101,39 @@ def main() -> None:
             average = resample_to(average, rate, 16000)
 
         directory = args.output / model
-        write_demo(directory / f"member_{payload_a}.wav", member_a)
-        write_demo(directory / f"member_{payload_b}.wav", member_b)
-        write_demo(directory / "uniform_average.wav", average)
-        write_mp3(directory / f"member_{payload_a}.wav")
-        write_mp3(directory / f"member_{payload_b}.wav")
-        write_mp3(directory / "uniform_average.wav")
+        write_pair(directory / f"member_{payload_a}.wav", member_a)
+        write_pair(directory / f"member_{payload_b}.wav", member_b)
+        write_pair(directory / "uniform_average.wav", average)
         print(f"exported {model}: {payload_a} + {payload_b}")
+
+    condition_root = args.output / "conditions"
+    coalition_signals = {}
+    for k, payloads in AUDIOSEAL_COALITIONS.items():
+        members = load_audioseal_members(args.cache_root, payloads)
+        signal = np.mean(np.stack(members), axis=0,
+                         dtype=np.float64).astype(np.float32)
+        coalition_signals[k] = signal
+        write_pair(condition_root / "coalition_size" / f"k{k}.wav", signal)
+
+    k5_members = load_audioseal_members(
+        args.cache_root, AUDIOSEAL_COALITIONS[5])
+    for offset_ms in OFFSETS_MS:
+        members = list(k5_members)
+        if offset_ms:
+            members[0] = shift_fixed_length(
+                members[0], int(round(16000 * offset_ms / 1000)))
+        signal = np.mean(np.stack(members), axis=0,
+                         dtype=np.float64).astype(np.float32)
+        label = (f"minus{abs(offset_ms)}" if offset_ms < 0 else
+                 f"plus{offset_ms}" if offset_ms > 0 else "aligned")
+        write_pair(condition_root / "offset" / f"{label}.wav", signal)
+
+    for codec in CODECS:
+        transformed = independently_code(k5_members, 16000, codec)
+        signal = np.mean(np.stack(transformed), axis=0,
+                         dtype=np.float64).astype(np.float32)
+        write_pair(condition_root / "codec" / f"{codec}.wav", signal)
+    print("exported AudioSeal coalition-size, offset, and codec comparisons")
 
 
 if __name__ == "__main__":
