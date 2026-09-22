@@ -210,7 +210,7 @@ def band_energies(delta: np.ndarray) -> tuple[list[float], list[float], float]:
 def atomic_write_csv(path: Path, rows: list[dict]) -> None:
     tmp = path.with_suffix(path.suffix + f".{os.getpid()}.tmp")
     with tmp.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
+        writer = csv.DictWriter(f, fieldnames=FIELDNAMES, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
         f.flush()

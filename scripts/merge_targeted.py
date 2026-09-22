@@ -26,7 +26,7 @@ def merge_one(source: Path, output: Path, model: str, method: str, k: int,
     rows: list[dict[str, str]] = []
     fieldnames: list[str] | None = None
     for path in paths:
-        with path.open(newline="") as handle:
+        with path.open(newline="", encoding="utf-8") as handle:
             reader = csv.DictReader(handle)
             if fieldnames is None:
                 fieldnames = list(reader.fieldnames or [])
@@ -47,7 +47,7 @@ def merge_one(source: Path, output: Path, model: str, method: str, k: int,
             raise RuntimeError(f"{model} k={k} {method}: incomplete trial {trial}")
 
     output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open("w", newline="") as handle:
+    with output.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)

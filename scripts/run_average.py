@@ -40,7 +40,7 @@ def atomic_csv(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
     with tmp.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=FIELDS)
+        w = csv.DictWriter(f, fieldnames=FIELDS, lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
         f.flush()

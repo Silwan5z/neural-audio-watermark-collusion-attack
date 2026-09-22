@@ -5,10 +5,11 @@
 [Listen to examples](demos/README.md) ·
 [Reproduce the experiments](REPRODUCIBILITY.md)
 
-This is the single numerical-results page for the repository. The first section
-reproduces the four principal manuscript tables; the second contains the
-additional quality, temporal-offset, codec, and registry analyses. Values are
-derived from the released records rather than copied from runtime logs.
+This is the numerical-results page for the repository. The first section
+reports the released results corresponding to the principal manuscript tables;
+the second contains additional quality, temporal-offset, codec, and registry
+analyses. Values are derived from the released records rather than copied from
+runtime logs.
 
 **Main paper:** [Uniform averaging](#uniform-averaging) ·
 [Coalition-bit behavior](#coalition-bit-behavior-at-k8) ·
@@ -23,9 +24,10 @@ derived from the released records rather than copied from runtime logs.
 
 ## How to read the results
 
-All empirical cells use 300 distinct ten-second recordings from 100 speakers,
-unless explicitly identified as an analytic calculation. Every personalized
-input copy is decoded correctly before it is admitted to a coalition.
+The experiments use a fixed schedule of 300 ten-second recordings from 100
+speakers. Tables state when a cell contains multiple target attempts, bit
+positions, or an analytic calculation. Every personalized input copy is
+decoded correctly before it is admitted to a coalition.
 
 - **TF (tracing failure):** the decoded native payload matches no coalition
   member. It measures coalition escape, not necessarily assignment to a real
@@ -94,8 +96,8 @@ Complete trial-level records are under [`data/average/`](data/average/) and
 [`data/supplementary/quality/`](data/supplementary/quality/).
 
 **Takeaway.** At K=2, only two valid personalized copies produce 87.7–99.7%
-tracing failure. The additional metrics show that this is not obtained by
-simply destroying the speech signal.
+tracing failure while the aligned mixtures retain high objective PESQ, STOI,
+ViSQOL, SI-SDR, and SNR scores.
 
 ### Coalition-bit behavior at K=8
 
@@ -133,8 +135,8 @@ points are in [`one_bit_examples.csv`](data/summary/one_bit_examples.csv).
 
 **Takeaway.** The dominant AudioSeal response stays on the two endpoints,
 whereas VoiceMark frequently changes bits shared by both endpoints and produces
-another payload. The current released regeneration contains one AudioSeal
-outlier, so its aggregate should be cited as 299/300 rather than 300/300.
+another payload. The released records contain one AudioSeal outlier, so its
+aggregate should be cited as 299/300 rather than 300/300.
 
 ### Target-Bit Margin
 
@@ -256,10 +258,10 @@ inference experiment.
 
 | Occupancy | Coalition trace (%) | Registered nonmember (%) | Unassigned (%) | Escape (%) |
 |---:|---:|---:|---:|---:|
-| 1% | 5.00 | 0.91 | 94.09 | 95.00 |
-| 10% | 5.00 | 9.46 | 85.54 | 95.00 |
-| 50% | 5.00 | 47.48 | 47.52 | 95.00 |
-| 100% | 5.00 | 95.00 | 0.00 | 95.00 |
+| 1% | 4.67 | 0.91 | 94.42 | 95.33 |
+| 10% | 4.67 | 9.49 | 85.84 | 95.33 |
+| 50% | 4.67 | 47.65 | 47.69 | 95.33 |
+| 100% | 4.67 | 95.33 | 0.00 | 95.33 |
 
 Source: [`registry_occupancy_k2_average.csv`](data/supplementary/registry_occupancy/registry_occupancy_k2_average.csv).
 Sparse registries reduce attribution to a registered nonmember but mainly
@@ -272,9 +274,9 @@ traceability.
   directions; they do not model arbitrary asynchronous copies.
 - Registry occupancy is an analytic exact-lookup split of existing native
   outcomes, not a second watermark inference experiment.
-- Uniform-quality SI-SDR and SNR use reconstructed valid coalitions. Earlier
-  K=2/3/5 SI-SDR values are retained where available; see the reproduction
-  notes for the WMCodec reconstruction caveat.
+- Uniform-quality SI-SDR and SNR use reconstructed valid coalitions. The
+  reconstruction audit compares all available earlier SI-SDR values with the
+  regenerated values and reports a maximum absolute difference below 0.005 dB.
 - The confidence screen is non-adaptive, and the empirical corpus contains
   speech only.
 
@@ -286,7 +288,7 @@ traceability.
 | Coalition-bit behavior | [`bit_composition.csv`](data/summary/bit_composition.csv) | [`data/average/k8/`](data/average/k8/) |
 | One-bit mixture paths | [`paths.csv`](data/one_bit/paths.csv) | [`data/one_bit/pairs/`](data/one_bit/pairs/) and [`one_bit_examples.csv`](data/summary/one_bit_examples.csv) |
 | Target-Bit Margin | [`targeted_hits.csv`](data/summary/targeted_hits.csv) | [`data/targeted/`](data/targeted/) |
-| Confidence screening | [`confidence_screening.csv`](data/summary/confidence_screening.csv) | [`data/confidence/`](data/confidence/) plus regenerated full vectors |
+| Confidence screening | [`confidence_screening.csv`](data/summary/confidence_screening.csv) | [`records.csv`](data/supplementary/confidence_screening/records.csv) and [`fold_thresholds.csv`](data/supplementary/confidence_screening/fold_thresholds.csv) |
 | Complete quality audit | [`summary_by_system_k.csv`](data/supplementary/quality/summary_by_system_k.csv) | [`all_trials.csv`](data/supplementary/quality/all_trials.csv) |
 | Temporal offsets | [`summary_direction_averaged.csv`](data/supplementary/alignment/summary_direction_averaged.csv) | [`all_trials.csv`](data/supplementary/alignment/all_trials.csv) |
 | MP3 and Opus | [`summary_by_system_codec.csv`](data/supplementary/codec/summary_by_system_codec.csv) | [`all_trials.csv`](data/supplementary/codec/all_trials.csv) |

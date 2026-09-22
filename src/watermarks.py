@@ -231,7 +231,6 @@ def detect_voicemark(m, wm16k, codebook_bits):
         logits, chunk_logits = m["solver"].model.detect_watermark(t, return_logits=True)
         chunk_probs = torch.softmax(chunk_logits, dim=-1)[0].cpu().numpy()  # [4,16]
         presence = float(torch.sigmoid(logits).mean().cpu())
-    hard = np.concatenate([np.unravel_index(np.argmax(chunk_probs[k]), (16,)) for k in range(4)]) if False else None
     vals = np.argmax(chunk_probs, axis=1)  # [4] 0-15
     bits = []
     for v in vals:

@@ -462,6 +462,12 @@ def verify_confidence() -> None:
         "test_average_rejection_pct", "test_targeted_hits_before",
         "test_targeted_hits_after",
     ], "unexpected confidence-screening fold schema")
+    for row in records:
+        source_path = Path(row["source_path"])
+        require(not source_path.is_absolute()
+                and source_path.parts[:2] == ("dataset", "collusion_300")
+                and ".." not in source_path.parts,
+                f"nonportable confidence source path: {row['source_path']}")
     thresholds = {
         (row["model"], int(row["fold"])): (
             float(row["threshold_minimum"]),
@@ -704,7 +710,14 @@ def verify_supplementary() -> None:
     occupancy = read_csv(
         base / "registry_occupancy" /
         "registry_occupancy_by_system_k.csv")
+    average_escape = {
+        (row["model"], int(row["k"])): float(row["tracing_failure_pct"])
+        for row in read_csv(DATA / "summary" / "average_results.csv")
+    }
     for row in occupancy:
+        key = (row["model"], int(row["k"]))
+        require_close(float(row["native_escape_pct"]), average_escape[key],
+                      f"registry escape rate is stale for {key}")
         require(abs(float(row["registered_nonmember_pct"])
                     + float(row["unassigned_pct"])
                     - float(row["escape_pct"])) < 1e-8,
@@ -731,7 +744,7 @@ def verify_demos() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     public_url = (
         "https://silwan5z.github.io/"
-        "neural-audio-watermark-collusion-attack/index.html?v=2")
+        "neural-audio-watermark-collusion-attack/")
     require(readme.count(public_url) == 1
             and readme.count(
                 "silwan5z.github.io/neural-audio-watermark-collusion-attack")
@@ -928,14 +941,14 @@ def verify_demos() -> None:
     require('src="demo-data.js"' in page,
             "demo page does not load the complete data bundle")
     require(page.count(
-                '<audio controls preload="none" src="source_reference.mp3?v=2" '
-                'data-fallback="source_reference.wav?v=2" '
+                '<audio controls preload="none" src="source_reference.mp3" '
+                'data-fallback="source_reference.wav" '
                 'aria-label="Clean source reference">') == 1,
             "overview must contain one clean reference player")
     require('system[category[view]].map' in page,
             "comparison players must be rendered by the switchable view")
-    require('controls preload="none" src="${escape(item.audio)}.mp3?v=2" '
-            'data-fallback="${escape(item.audio)}.wav?v=2"' in page,
+    require('controls preload="none" src="${escape(item.audio)}.mp3" '
+            'data-fallback="${escape(item.audio)}.wav"' in page,
             "dynamic players must load MP3 on demand with WAV fallback")
     require('player.addEventListener("error"' in page
             and 'player.src=player.dataset.fallback' in page,
@@ -982,13 +995,21 @@ def verify_names() -> None:
             require(all(public_name.fullmatch(part) for part in relative.parts),
                     f"nonstandard path name: {path.relative_to(ROOT)}")
             if path.suffix == ".csv":
+                text = path.read_text(encoding="utf-8")
+                require(not any(marker in text for marker in (
+                            "/private/users/", "/home/", "C:\\Users\\")),
+                        f"private absolute path in {path.relative_to(ROOT)}")
                 fields = header(path)
                 require(all(field_name.fullmatch(name) for name in fields),
                         f"nonstandard CSV field in {path.relative_to(ROOT)}")
                 require(not set(fields) & obsolete_fields,
                         f"obsolete CSV field in {path.relative_to(ROOT)}")
             elif path.suffix == ".json":
-                keys = set(json_keys(read_json(path)))
+                text = path.read_text(encoding="utf-8")
+                require(not any(marker in text for marker in (
+                            "/private/users/", "/home/", "C:\\Users\\")),
+                        f"private absolute path in {path.relative_to(ROOT)}")
+                keys = set(json_keys(json.loads(text)))
                 require(all(field_name.fullmatch(name) for name in keys),
                         f"nonstandard JSON key in {path.relative_to(ROOT)}")
                 require(not keys & obsolete_fields,

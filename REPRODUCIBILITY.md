@@ -50,7 +50,10 @@ Then prepare the two external inputs:
    TimbreWM, VoiceMark, and WMCodec weights. AudioSeal and WavMark retrieve
    published weights through their Python packages.
 
-Model weights and source audio are intentionally not redistributed.
+The codec stress test additionally requires `ffmpeg` with MP3 (`libmp3lame`)
+and Opus (`libopus`) encoders. Model weights and the complete 300-recording
+evaluation corpus are not redistributed. The browser demo includes one
+ten-second source excerpt under the original dataset terms.
 
 ## 3. Fixed paper protocol
 
@@ -229,11 +232,9 @@ python scripts/summarize_uniform_quality.py
 ```
 
 For K=2, 3, and 5, released SI-SDR values are retained; K=8 SI-SDR and all SNR
-values are reconstructed. Four systems reproduce SI-SDR within 0.005 dB.
-WMCodec differs by 0.463 dB on average because earlier files did not retain the
-coalition payloads and valid reconstruction can select replacements. Its SNR
-therefore describes a fresh valid-coalition reconstruction rather than the
-exact earlier waveforms. Full diagnostics are released in
+values are reconstructed from the validated coalitions. Across all five
+systems, every available earlier SI-SDR value agrees with its reconstruction
+within 0.005 dB. Full diagnostics are released in
 [`reproduction_audit.json`](data/supplementary/quality/reproduction_audit.json).
 
 ### Temporal offsets

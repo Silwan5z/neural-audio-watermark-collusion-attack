@@ -45,8 +45,8 @@ FIELDS = (
 def atomic_csv(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    with temporary.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+    with temporary.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     os.replace(temporary, path)
@@ -63,7 +63,7 @@ def minimum_confidence(probability: np.ndarray, payload: int,
 def load_targeted_rows(root: Path, model: str) -> tuple[dict[int, dict], dict[int, dict]]:
     merged = root / "k8" / "target_bit_margin" / f"{model}.csv"
     if merged.exists():
-        with merged.open(newline="") as handle:
+        with merged.open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
     else:
         rows = []
@@ -71,7 +71,7 @@ def load_targeted_rows(root: Path, model: str) -> tuple[dict[int, dict], dict[in
         for path in sorted((root / "k8" / "target_bit_margin" / "shards").glob(pattern)):
             if path.name.endswith(".partial.csv"):
                 continue
-            with path.open(newline="") as handle:
+            with path.open(newline="", encoding="utf-8") as handle:
                 rows.extend(csv.DictReader(handle))
     if len(rows) != 3000:
         raise RuntimeError(
@@ -94,7 +94,7 @@ def load_targeted_rows(root: Path, model: str) -> tuple[dict[int, dict], dict[in
 def load_checkpoint(path: Path) -> tuple[list[dict], set[tuple[int, str]]]:
     if not path.exists():
         return [], set()
-    with path.open(newline="") as handle:
+    with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
     complete = {(int(row["trial_id"]), row["condition"]) for row in rows}
     return rows, complete

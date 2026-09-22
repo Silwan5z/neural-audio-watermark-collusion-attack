@@ -15,6 +15,7 @@ project and place them at these paths:
 - `timbrewm/results/ckpt/pth/compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar`
 - `timbrewm/hifigan/model/VCTK_V1/generator_v1`
 - `voicemark/voicemark.pth`
+- `voicemark/speechtokenizer/pretrained_model/SpeechTokenizer.pt`
 - `wmcodec/save_model/g_00150000`
 
 AudioSeal and WavMark load their published weights through their Python

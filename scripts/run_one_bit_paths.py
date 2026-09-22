@@ -79,7 +79,7 @@ def jdump(value) -> str:
 def atomic_write(path: Path, rows: list[dict]) -> None:
     tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
     with tmp.open("w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=POINT_FIELDS)
+        w = csv.DictWriter(f, fieldnames=POINT_FIELDS, lineterminator="\n")
         w.writeheader(); w.writerows(rows)
         f.flush(); os.fsync(f.fileno())
     os.replace(tmp, path)

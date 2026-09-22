@@ -22,7 +22,7 @@ CACHE_DIR = Path(__file__).resolve().parent.parent / "cache"
 CLIP_CACHE_DIR = Path(__file__).resolve().parent.parent / "cache" / "marked"
 NBITS = {"audioseal": 16, "timbrewm": 10, "wavmark": 16, "voicemark": 16, "wmcodec": 16}
 CAP = 0.5
-CACHE_SCHEMA = 2
+CACHE_SCHEMA = 3
 
 MANIFEST = DATASET_DIR / "collusion_300" / "manifest.csv"
 
@@ -39,7 +39,7 @@ def _sha256(path: str) -> str:
 
 
 @lru_cache(maxsize=None)
-def _backend_fingerprint(model: str) -> dict[str, str]:
+def _backend_fingerprint(model: str) -> dict[str, object]:
     packages = {"audioseal": "audioseal", "wavmark": "wavmark"}
     package = packages.get(model)
     version = "vendored"
@@ -49,22 +49,43 @@ def _backend_fingerprint(model: str) -> dict[str, str]:
         except importlib.metadata.PackageNotFoundError:
             version = "not-installed"
     root = Path(__file__).resolve().parent.parent
-    checkpoints = {
-        "timbrewm": root / "third_party" / "timbrewm" / "results" / "ckpt" /
-        "pth" / "compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar",
-        "voicemark": root / "third_party" / "voicemark" / "voicemark.pth",
-        "wmcodec": root / "third_party" / "wmcodec" / "save_model" /
-        "g_00150000",
+    artifacts = {
+        "timbrewm": [
+            root / "third_party" / "timbrewm" / "results" / "ckpt" / "pth" /
+            "compressed_none-conv2_ep_20_2023-01-17_23_01_01.pth.tar",
+            root / "third_party" / "timbrewm" / "hifigan" / "model" /
+            "VCTK_V1" / "generator_v1",
+            root / "third_party" / "timbrewm" / "config" / "model.yaml",
+            root / "third_party" / "timbrewm" / "config" / "process.yaml",
+        ],
+        "voicemark": [
+            root / "third_party" / "voicemark" / "voicemark.pth",
+            root / "third_party" / "voicemark" / "speechtokenizer" /
+            "pretrained_model" / "SpeechTokenizer.pt",
+            root / "third_party" / "voicemark" / "speechtokenizer" /
+            "pretrained_model" / "speechtokenizer_hubert_avg_config.json",
+        ],
+        "wmcodec": [
+            root / "third_party" / "wmcodec" / "save_model" / "g_00150000",
+            root / "third_party" / "wmcodec" / "save_model" / "config.json",
+        ],
     }
-    checkpoint = checkpoints.get(model)
-    checkpoint_sha256 = (
-        _sha256(str(checkpoint)) if checkpoint is not None and checkpoint.is_file()
-        else "package-managed")
+    vendored_root = root / "third_party" / model
+    if model in artifacts and vendored_root.is_dir():
+        artifacts[model].extend(sorted(
+            path for path in vendored_root.rglob("*")
+            if path.is_file() and path.suffix in {".py", ".yaml", ".json"}
+        ))
+    artifact_sha256 = {
+        path.relative_to(root).as_posix(): (
+            _sha256(str(path)) if path.is_file() else "missing")
+        for path in artifacts.get(model, [])
+    }
     implementation = root / "src" / "watermarks.py"
     native_implementation = root / "scripts" / "native_audio.py"
     return {
         "package_version": version,
-        "checkpoint_sha256": checkpoint_sha256,
+        "artifact_sha256": artifact_sha256 or "package-managed",
         "implementation_sha256": _sha256(str(implementation)),
         "native_implementation_sha256": _sha256(str(native_implementation)),
     }

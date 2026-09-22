@@ -67,8 +67,8 @@ FIELDS = [
 def atomic_csv(path: Path, rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    with temporary.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+    with temporary.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     os.replace(temporary, path)
@@ -85,7 +85,7 @@ def atomic_json(path: Path, value: dict) -> None:
 def load_checkpoint(path: Path, assigned: set[int]) -> tuple[list[dict], set[int]]:
     if not path.exists():
         return [], set()
-    with path.open(newline="") as handle:
+    with path.open(newline="", encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
     grouped: dict[int, list[dict]] = {}
     for row in rows:

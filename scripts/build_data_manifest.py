@@ -38,7 +38,7 @@ def main() -> None:
         "rows": row_count(path),
         "sha256": digest(path),
     } for path in files]
-    with output.open("w", newline="") as handle:
+    with output.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=("path", "bytes", "rows", "sha256"),
             lineterminator="\n")

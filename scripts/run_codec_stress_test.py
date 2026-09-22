@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Current-protocol independent-codec stress test for K=5 averaging."""
+"""Independent-codec stress test for K=5 uniform averaging."""
 from __future__ import annotations
 
 import argparse

@@ -4,9 +4,9 @@
 [Read the result tables](../RESULTS.md) ·
 [Reproduce the evaluation](../REPRODUCIBILITY.md)
 
-Only records used by the current paper and its documented additional analyses
-are tracked here. Start with a compact CSV if you want a table value; use the
-corresponding full-record link when you need trial-level evidence.
+The tracked tree contains the records used by the paper and its documented
+additional analyses. Start with a compact CSV for a table value; use the
+corresponding full-record link for trial-level evidence.
 
 ## Start with these files
 

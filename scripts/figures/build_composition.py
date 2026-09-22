@@ -89,7 +89,7 @@ def main() -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
     rows = [row for model in MODELS for row in summarize_model(args.input_dir, model)]
     summary_path = args.summary_output
-    with summary_path.open("w", newline="") as handle:
+    with summary_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=rows[0].keys(), lineterminator="\n")
         writer.writeheader()

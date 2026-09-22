@@ -5,11 +5,11 @@
 ### in Personalized Neural Audio Watermarking
 
 Two recipients can average their valid copies and make a watermark decoder
-return a different ID—while the recording still sounds almost unchanged.
+return a different ID while objective speech-quality scores remain high.
 
 <br>
 
-<a href="https://silwan5z.github.io/neural-audio-watermark-collusion-attack/index.html?v=2"><strong>▶ Open the interactive audio lab</strong></a>
+<a href="https://silwan5z.github.io/neural-audio-watermark-collusion-attack/"><strong>▶ Open the interactive audio lab</strong></a>
 
 <sub>Clean and watermarked copies · five systems · K = 2/3/5/8 · timing offsets · MP3 and Opus · quality metrics</sub>
 
@@ -40,8 +40,9 @@ causes **87.7–99.7% tracing failure** across the five evaluated systems.
 The audio lab is the best place to begin. First compare the clean recording,
 two valid personalized copies, and their average. Then switch among all five
 systems to hear every coalition size, synchronization condition, and codec
-setting shown in the demo. Each row pairs one audio clip with its coalition,
-decoded ID, PESQ, STOI, and SI-SDR values.
+setting shown in the demo. Mixture rows show the coalition, exact decoded ID,
+and PESQ, STOI, and SI-SDR values; the clean and personalized-copy rows provide
+the listening references.
 
 ## What should I look at?
 

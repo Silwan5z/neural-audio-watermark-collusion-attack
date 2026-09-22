@@ -6,8 +6,8 @@ LibriSpeech train-clean-100; the Mandarin half is derived from AISHELL-3. The
 manifest fixes the speaker, clip, and source-audio schedule used by every
 experiment.
 
-Audio is not redistributed. Place each prepared WAV at the relative `path`
-listed in the manifest:
+The complete 300-recording evaluation corpus is not redistributed. Place each
+prepared WAV at the relative `path` listed in the manifest:
 
 ```text
 dataset/collusion_300/<language>/<speaker>/<language>_<speaker>_<clip>.wav
@@ -20,3 +20,5 @@ experiment. The `sources` column records the upstream utterance or utterances
 used to construct each fixed-length clip.
 
 Users must obtain LibriSpeech and AISHELL-3 under their original dataset terms.
+The browser demo includes one ten-second source excerpt solely to make its
+watermarked and colluded examples directly comparable.

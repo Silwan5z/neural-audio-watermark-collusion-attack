@@ -121,8 +121,7 @@ def decoded_payload_and_margin(
     """Return the decoded payload and target margin in one registry."""
     registry_ids = np.asarray(registry_ids, dtype=np.int64)
     registry_scores = np.asarray(scores)[registry_ids]
-    decoded = int(registry_ids[np.argsort(
-        registry_scores, kind="stable")[::-1][0]])
+    decoded = int(registry_ids[np.argmax(registry_scores)])
     target_position = int(np.flatnonzero(registry_ids == target)[0])
     other_scores = np.delete(registry_scores, target_position)
     margin = float(registry_scores[target_position] - np.max(other_scores))

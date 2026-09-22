@@ -45,7 +45,7 @@ def atomic_csv(path: Path, fields: tuple[str, ...], rows: list[dict]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
     with temporary.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     os.replace(temporary, path)

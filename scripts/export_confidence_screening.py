@@ -31,6 +31,21 @@ def write_csv(path: Path, fields, rows) -> None:
         writer.writerows(rows)
 
 
+def public_source_path(value: str) -> str:
+    """Return a portable repository-relative path for a source recording."""
+    path = Path(value)
+    if path.is_absolute():
+        try:
+            path = path.relative_to(ROOT)
+        except ValueError as error:
+            raise RuntimeError(f"source path is outside the repository: {value}") from error
+    if path.parts[:1] == ("collusion_300",):
+        path = Path("dataset") / path
+    if path.parts[:2] != ("dataset", "collusion_300") or ".." in path.parts:
+        raise RuntimeError(f"unexpected source path: {value}")
+    return path.as_posix()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-dir", type=Path,
@@ -64,7 +79,8 @@ def main() -> None:
         for row in load_rows(args.input_dir, model):
             public_records.append({
                 field: (speaker_fold[row["speaker"]] if field == "fold"
-                        else row[field])
+                        else public_source_path(row[field])
+                        if field == "source_path" else row[field])
                 for field in RECORD_FIELDS
             })
         public_folds.extend(folds)

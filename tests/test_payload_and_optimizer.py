@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from registry import int_to_bits  # noqa: E402
-from target_bit_margin import optimize_softmin  # noqa: E402
+from target_bit_margin import decoded_payload_and_margin, optimize_softmin  # noqa: E402
 from run_targeted import (  # noqa: E402
     count_valid_source_decodings,
     hard_bits_to_payload,
@@ -32,6 +32,15 @@ class PayloadAndOptimizerTest(unittest.TestCase):
             (np.zeros(16), 1.0, np.asarray([1, 1, 0, 0])),
         ]
         self.assertEqual(count_valid_source_decodings(coalition, decoded), 2)
+
+    def test_decoder_ties_follow_registry_order(self) -> None:
+        decoded, margin = decoded_payload_and_margin(
+            np.asarray([0.1, 0.9, 0.9, 0.2]),
+            np.asarray([1, 2]),
+            target=1,
+        )
+        self.assertEqual(decoded, 1)
+        self.assertEqual(margin, 0.0)
 
     def test_optimizer_respects_weight_constraints(self) -> None:
         coalition = np.asarray([

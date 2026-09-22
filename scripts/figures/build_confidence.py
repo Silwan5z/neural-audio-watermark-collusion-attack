@@ -90,7 +90,7 @@ def main() -> None:
             })
 
     summary_path = args.summary_output
-    with summary_path.open("w", newline="") as handle:
+    with summary_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=summary_rows[0].keys(), lineterminator="\n")
         writer.writeheader()

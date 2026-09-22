@@ -9,7 +9,7 @@ from pathlib import Path
 
 def summarize(path: Path, model: str) -> list[dict[str, object]]:
     grouped: dict[int, dict[str, object]] = {}
-    with path.open(newline="") as handle:
+    with path.open(newline="", encoding="utf-8") as handle:
         for row in csv.DictReader(handle):
             trial = int(row["trial_id"])
             item = grouped.setdefault(trial, {
@@ -59,7 +59,7 @@ def main() -> None:
 
     rows = summarize(args.audioseal, "audioseal") + summarize(args.voicemark, "voicemark")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open("w", newline="") as handle:
+    with args.output.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
