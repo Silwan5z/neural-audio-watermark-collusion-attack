@@ -454,6 +454,14 @@ def verify_confidence() -> None:
             "confidence-screening release must contain 8767 records")
     require(len(folds) == 25,
             "confidence-screening release must contain 25 fold thresholds")
+    require(header(folds_path) == [
+        "model", "fold", "n_train_speakers", "n_train_single",
+        "n_test_speakers", "n_test_trials", "calibrated_z",
+        "threshold_minimum", "threshold_mean", "threshold_log_variance",
+        "train_single_acceptance_pct", "test_single_acceptance_pct",
+        "test_average_rejection_pct", "test_targeted_hits_before",
+        "test_targeted_hits_after",
+    ], "unexpected confidence-screening fold schema")
     thresholds = {
         (row["model"], int(row["fold"])): (
             float(row["threshold_minimum"]),
@@ -462,12 +470,8 @@ def verify_confidence() -> None:
         ) for row in folds
     }
     for row in folds:
-        for field in (
-                "train_minimum_acceptance_pct",
-                "train_mean_acceptance_pct",
-                "train_log_variance_acceptance_pct"):
-            require(float(row[field]) + 1e-9 >= 95.0,
-                    f"{row['model']} fold {row['fold']}: {field} below 95%")
+        require(float(row["train_single_acceptance_pct"]) + 1e-9 >= 95.0,
+                f"{row['model']} fold {row['fold']}: joint retention below 95%")
 
     summary = {
         row["model"]: row

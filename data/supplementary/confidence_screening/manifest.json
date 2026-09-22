@@ -14,12 +14,11 @@
       "retention": 0.95,
       "z_step": 0.001,
       "variance_transform": "log(population variance + 1e-12)",
-      "calibration_scope": "each threshold separately retains at least the requested fraction of training Single outputs for this system and fold",
+      "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
       "mean_rule": "training mean minus z times population standard deviation",
       "log_variance_rule": "training mean plus z times population standard deviation",
       "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",
       "acceptance_rule": "minimum and mean at or above thresholds; log variance at or below threshold",
-      "joint_retention_note": "the conjunction is not constrained to retain the requested fraction",
       "attack_data_used_for_thresholds": false,
       "targets_per_trial": 10,
       "fold_records": [
@@ -47,12 +46,10 @@
             "english:201",
             "chinese:SSB0057"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.605,
-          "calibrated_z_log_variance": 1.553,
-          "threshold_minimum": 0.6830320659951602,
-          "threshold_mean": 0.7573649361485261,
-          "threshold_log_variance": -6.506282692984891
+          "calibrated_z": 1.961,
+          "threshold_minimum": 0.6788800889949111,
+          "threshold_mean": 0.7545006164644048,
+          "threshold_log_variance": -6.360092393732738
         },
         {
           "fold": 2,
@@ -78,12 +75,10 @@
             "english:1594",
             "chinese:SSB0246"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.545,
-          "calibrated_z_log_variance": 1.444,
-          "threshold_minimum": 0.6879384669558402,
-          "threshold_mean": 0.758025617796264,
-          "threshold_log_variance": -6.5330612074855905
+          "calibrated_z": 1.98,
+          "threshold_minimum": 0.6778185554970344,
+          "threshold_mean": 0.7545515333542291,
+          "threshold_log_variance": -6.3419417540281176
         },
         {
           "fold": 3,
@@ -109,12 +104,10 @@
             "english:1363",
             "english:103"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.609,
-          "calibrated_z_log_variance": 1.542,
-          "threshold_minimum": 0.6812949590737588,
-          "threshold_mean": 0.7578170551545935,
-          "threshold_log_variance": -6.494988504615281
+          "calibrated_z": 1.938,
+          "threshold_minimum": 0.6764606427415925,
+          "threshold_mean": 0.7552693702003359,
+          "threshold_log_variance": -6.354525543312153
         },
         {
           "fold": 4,
@@ -140,12 +133,10 @@
             "english:1737",
             "chinese:SSB0342"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.5270000000000001,
-          "calibrated_z_log_variance": 1.438,
-          "threshold_minimum": 0.6814913693417226,
-          "threshold_mean": 0.7578161083868504,
-          "threshold_log_variance": -6.521817269401972
+          "calibrated_z": 1.838,
+          "threshold_minimum": 0.6791150059887758,
+          "threshold_mean": 0.7552696913497979,
+          "threshold_log_variance": -6.375296613798209
         },
         {
           "fold": 5,
@@ -171,12 +162,10 @@
             "chinese:SSB0395",
             "english:2196"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.607,
-          "calibrated_z_log_variance": 1.486,
-          "threshold_minimum": 0.6844243418634504,
-          "threshold_mean": 0.7580274584308409,
-          "threshold_log_variance": -6.520018929557196
+          "calibrated_z": 1.959,
+          "threshold_minimum": 0.6789806542586565,
+          "threshold_mean": 0.7552976853682912,
+          "threshold_log_variance": -6.347318407522398
         }
       ]
     },
@@ -190,12 +179,11 @@
       "retention": 0.95,
       "z_step": 0.001,
       "variance_transform": "log(population variance + 1e-12)",
-      "calibration_scope": "each threshold separately retains at least the requested fraction of training Single outputs for this system and fold",
+      "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
       "mean_rule": "training mean minus z times population standard deviation",
       "log_variance_rule": "training mean plus z times population standard deviation",
       "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",
       "acceptance_rule": "minimum and mean at or above thresholds; log variance at or below threshold",
-      "joint_retention_note": "the conjunction is not constrained to retain the requested fraction",
       "attack_data_used_for_thresholds": false,
       "targets_per_trial": 10,
       "fold_records": [
@@ -223,12 +211,10 @@
             "english:201",
             "chinese:SSB0057"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 2.0100000000000002,
-          "calibrated_z_log_variance": 0.914,
-          "threshold_minimum": 0.847826087,
+          "calibrated_z": 2.0100000000000002,
+          "threshold_minimum": 0.84,
           "threshold_mean": 0.9714641669653353,
-          "threshold_log_variance": -6.184319270973569
+          "threshold_log_variance": 3.8985750867317215
         },
         {
           "fold": 2,
@@ -254,12 +240,10 @@
             "english:1594",
             "chinese:SSB0246"
           ],
-          "calibrated_z_minimum": 1.604,
-          "calibrated_z_mean": 2.0460000000000003,
-          "calibrated_z_log_variance": 0.922,
-          "threshold_minimum": 0.8490566038,
-          "threshold_mean": 0.9714646234609454,
-          "threshold_log_variance": -6.171554452446493
+          "calibrated_z": 2.181,
+          "threshold_minimum": 0.8385695393440015,
+          "threshold_mean": 0.9701048997636837,
+          "threshold_log_variance": 5.380242432307096
         },
         {
           "fold": 3,
@@ -285,12 +269,10 @@
             "english:1363",
             "english:103"
           ],
-          "calibrated_z_minimum": 1.604,
-          "calibrated_z_mean": 2.035,
-          "calibrated_z_log_variance": 1.002,
-          "threshold_minimum": 0.8510638298,
-          "threshold_mean": 0.9732111676842721,
-          "threshold_log_variance": -6.172026150034998
+          "calibrated_z": 2.07,
+          "threshold_minimum": 0.8288640169653573,
+          "threshold_mean": 0.9728734907555239,
+          "threshold_log_variance": 3.9589107483773898
         },
         {
           "fold": 4,
@@ -316,12 +298,10 @@
             "english:1737",
             "chinese:SSB0342"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 2.011,
-          "calibrated_z_log_variance": 0.918,
-          "threshold_minimum": 0.8490513870543739,
-          "threshold_mean": 0.9720691442725273,
-          "threshold_log_variance": -6.174794228419337
+          "calibrated_z": 2.072,
+          "threshold_minimum": 0.8388075913086372,
+          "threshold_mean": 0.9714576574844201,
+          "threshold_log_variance": 4.309588562026951
         },
         {
           "fold": 5,
@@ -347,12 +327,10 @@
             "chinese:SSB0395",
             "english:2196"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 2.048,
-          "calibrated_z_log_variance": 0.9510000000000001,
-          "threshold_minimum": 0.8510638298,
-          "threshold_mean": 0.9714666893308092,
-          "threshold_log_variance": -6.188621479468187
+          "calibrated_z": 2.182,
+          "threshold_minimum": 0.8243256042591732,
+          "threshold_mean": 0.970102980957532,
+          "threshold_log_variance": 5.324457275192309
         }
       ]
     },
@@ -366,12 +344,11 @@
       "retention": 0.95,
       "z_step": 0.001,
       "variance_transform": "log(population variance + 1e-12)",
-      "calibration_scope": "each threshold separately retains at least the requested fraction of training Single outputs for this system and fold",
+      "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
       "mean_rule": "training mean minus z times population standard deviation",
       "log_variance_rule": "training mean plus z times population standard deviation",
       "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",
       "acceptance_rule": "minimum and mean at or above thresholds; log variance at or below threshold",
-      "joint_retention_note": "the conjunction is not constrained to retain the requested fraction",
       "attack_data_used_for_thresholds": false,
       "targets_per_trial": 10,
       "fold_records": [
@@ -399,12 +376,10 @@
             "english:201",
             "chinese:SSB0057"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.739,
-          "calibrated_z_log_variance": 1.26,
-          "threshold_minimum": 0.663822626248808,
-          "threshold_mean": 0.7060774227654686,
-          "threshold_log_variance": -7.225274813524784
+          "calibrated_z": 1.959,
+          "threshold_minimum": 0.6602501143464083,
+          "threshold_mean": 0.7042849663944574,
+          "threshold_log_variance": -6.933696499653199
         },
         {
           "fold": 2,
@@ -430,12 +405,10 @@
             "english:1594",
             "chinese:SSB0246"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.7730000000000001,
-          "calibrated_z_log_variance": 1.246,
-          "threshold_minimum": 0.663822626248808,
-          "threshold_mean": 0.7065781996618059,
-          "threshold_log_variance": -7.219036550046759
+          "calibrated_z": 1.941,
+          "threshold_minimum": 0.6605944329195826,
+          "threshold_mean": 0.7052458544793374,
+          "threshold_log_variance": -6.921548524916687
         },
         {
           "fold": 3,
@@ -461,12 +434,10 @@
             "english:1363",
             "english:103"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.7770000000000001,
-          "calibrated_z_log_variance": 1.332,
-          "threshold_minimum": 0.665225972612094,
-          "threshold_mean": 0.7063833768452911,
-          "threshold_log_variance": -7.2186725859647165
+          "calibrated_z": 2.005,
+          "threshold_minimum": 0.6597234925508205,
+          "threshold_mean": 0.7046383651079648,
+          "threshold_log_variance": -6.9427493886922775
         },
         {
           "fold": 4,
@@ -492,12 +463,10 @@
             "english:1737",
             "chinese:SSB0342"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.879,
-          "calibrated_z_log_variance": 1.219,
-          "threshold_minimum": 0.6633826735524186,
-          "threshold_mean": 0.7055566312842861,
-          "threshold_log_variance": -7.222546497784855
+          "calibrated_z": 1.959,
+          "threshold_minimum": 0.6593978082669936,
+          "threshold_mean": 0.7049209417936224,
+          "threshold_log_variance": -6.9035625834079966
         },
         {
           "fold": 5,
@@ -523,12 +492,10 @@
             "chinese:SSB0395",
             "english:2196"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.854,
-          "calibrated_z_log_variance": 1.29,
-          "threshold_minimum": 0.6667795857728941,
-          "threshold_mean": 0.7055546801612879,
-          "threshold_log_variance": -7.217951066018399
+          "calibrated_z": 1.964,
+          "threshold_minimum": 0.6622032892708248,
+          "threshold_mean": 0.7046876046391263,
+          "threshold_log_variance": -6.928500552145303
         }
       ]
     },
@@ -542,12 +509,11 @@
       "retention": 0.95,
       "z_step": 0.001,
       "variance_transform": "log(population variance + 1e-12)",
-      "calibration_scope": "each threshold separately retains at least the requested fraction of training Single outputs for this system and fold",
+      "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
       "mean_rule": "training mean minus z times population standard deviation",
       "log_variance_rule": "training mean plus z times population standard deviation",
       "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",
       "acceptance_rule": "minimum and mean at or above thresholds; log variance at or below threshold",
-      "joint_retention_note": "the conjunction is not constrained to retain the requested fraction",
       "attack_data_used_for_thresholds": false,
       "targets_per_trial": 10,
       "fold_records": [
@@ -575,11 +541,9 @@
             "english:201",
             "chinese:SSB0057"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.37,
-          "calibrated_z_log_variance": 1.708,
-          "threshold_minimum": 0.8851630570515765,
-          "threshold_mean": 0.9777832779226782,
+          "calibrated_z": 1.708,
+          "threshold_minimum": 0.8248179728847265,
+          "threshold_mean": 0.9733222065113413,
           "threshold_log_variance": -6.430887262417951
         },
         {
@@ -606,11 +570,9 @@
             "english:1594",
             "chinese:SSB0246"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.208,
-          "calibrated_z_log_variance": 1.645,
-          "threshold_minimum": 0.8852613490337584,
-          "threshold_mean": 0.9797687729080047,
+          "calibrated_z": 1.645,
+          "threshold_minimum": 0.8839459622366317,
+          "threshold_mean": 0.9739779682998387,
           "threshold_log_variance": -6.432137719238554
         },
         {
@@ -637,11 +599,9 @@
             "english:1363",
             "english:103"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.264,
-          "calibrated_z_log_variance": 1.788,
-          "threshold_minimum": 0.8586315473178181,
-          "threshold_mean": 0.9817793152986388,
+          "calibrated_z": 1.788,
+          "threshold_minimum": 0.7982893078606564,
+          "threshold_mean": 0.9757314041289078,
           "threshold_log_variance": -6.170143992439119
         },
         {
@@ -668,12 +628,10 @@
             "english:1737",
             "chinese:SSB0342"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.52,
-          "calibrated_z_log_variance": 1.725,
-          "threshold_minimum": 0.8852613490337584,
-          "threshold_mean": 0.9797714022420566,
-          "threshold_log_variance": -6.432138254521114
+          "calibrated_z": 1.772,
+          "threshold_minimum": 0.8074206357483271,
+          "threshold_mean": 0.9770197005204897,
+          "threshold_log_variance": -6.167988268863578
         },
         {
           "fold": 5,
@@ -699,11 +657,9 @@
             "chinese:SSB0395",
             "english:2196"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.082,
-          "calibrated_z_log_variance": 1.6540000000000001,
-          "threshold_minimum": 0.8954189726871753,
-          "threshold_mean": 0.9817806271860358,
+          "calibrated_z": 1.6540000000000001,
+          "threshold_minimum": 0.8927001806147676,
+          "threshold_mean": 0.9742172995975845,
           "threshold_log_variance": -6.906548052774376
         }
       ]
@@ -718,12 +674,11 @@
       "retention": 0.95,
       "z_step": 0.001,
       "variance_transform": "log(population variance + 1e-12)",
-      "calibration_scope": "each threshold separately retains at least the requested fraction of training Single outputs for this system and fold",
+      "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
       "mean_rule": "training mean minus z times population standard deviation",
       "log_variance_rule": "training mean plus z times population standard deviation",
       "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",
       "acceptance_rule": "minimum and mean at or above thresholds; log variance at or below threshold",
-      "joint_retention_note": "the conjunction is not constrained to retain the requested fraction",
       "attack_data_used_for_thresholds": false,
       "targets_per_trial": 10,
       "fold_records": [
@@ -751,12 +706,10 @@
             "english:201",
             "chinese:SSB0057"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 2.019,
-          "calibrated_z_log_variance": 1.727,
-          "threshold_minimum": 0.6536061934635744,
-          "threshold_mean": 0.9668492876282628,
-          "threshold_log_variance": -4.593234486458021
+          "calibrated_z": 2.3930000000000002,
+          "threshold_minimum": 0.552886389560241,
+          "threshold_mean": 0.9618756884830685,
+          "threshold_log_variance": -1.488033910614936
         },
         {
           "fold": 2,
@@ -782,12 +735,10 @@
             "english:1594",
             "chinese:SSB0246"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.981,
-          "calibrated_z_log_variance": 1.683,
-          "threshold_minimum": 0.6536061934635744,
-          "threshold_mean": 0.9674384594676574,
-          "threshold_log_variance": -4.727678921752288
+          "calibrated_z": 2.036,
+          "threshold_minimum": 0.5840404426816125,
+          "threshold_mean": 0.9667057743408172,
+          "threshold_log_variance": -3.0264032317118073
         },
         {
           "fold": 3,
@@ -813,12 +764,10 @@
             "english:1363",
             "english:103"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.971,
-          "calibrated_z_log_variance": 1.6600000000000001,
-          "threshold_minimum": 0.7015424449313697,
-          "threshold_mean": 0.9674343363050025,
-          "threshold_log_variance": -4.886180705443818
+          "calibrated_z": 2.015,
+          "threshold_minimum": 0.5796566689395809,
+          "threshold_mean": 0.966846025850499,
+          "threshold_log_variance": -3.163925340888479
         },
         {
           "fold": 4,
@@ -844,12 +793,10 @@
             "english:1737",
             "chinese:SSB0342"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.839,
-          "calibrated_z_log_variance": 1.716,
-          "threshold_minimum": 0.7015424449313697,
-          "threshold_mean": 0.9704576446703325,
-          "threshold_log_variance": -4.725018621862169
+          "calibrated_z": 2.12,
+          "threshold_minimum": 0.5760162386720106,
+          "threshold_mean": 0.9668457764949349,
+          "threshold_log_variance": -2.833812278426903
         },
         {
           "fold": 5,
@@ -875,12 +822,10 @@
             "chinese:SSB0395",
             "english:2196"
           ],
-          "calibrated_z_minimum": 1.643,
-          "calibrated_z_mean": 1.987,
-          "calibrated_z_log_variance": 1.684,
-          "threshold_minimum": 0.6825355866681443,
-          "threshold_mean": 0.9694695647379501,
-          "threshold_log_variance": -4.8853294176082755
+          "calibrated_z": 2.15,
+          "threshold_minimum": 0.5812893400600562,
+          "threshold_mean": 0.9674420186250253,
+          "threshold_log_variance": -2.7364550429331516
         }
       ]
     }

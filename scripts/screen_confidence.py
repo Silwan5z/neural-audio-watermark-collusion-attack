@@ -19,11 +19,8 @@ ROOT = Path(__file__).resolve().parents[1]
 MODELS = ("audioseal", "wavmark", "timbrewm", "voicemark", "wmcodec")
 FOLD_FIELDS = (
     "model", "fold", "n_train_speakers", "n_train_single",
-    "n_test_speakers", "n_test_trials", "calibrated_z_minimum",
-    "calibrated_z_mean", "calibrated_z_log_variance",
+    "n_test_speakers", "n_test_trials", "calibrated_z",
     "threshold_minimum", "threshold_mean", "threshold_log_variance",
-    "train_minimum_acceptance_pct", "train_mean_acceptance_pct",
-    "train_log_variance_acceptance_pct",
     "train_single_acceptance_pct", "test_single_acceptance_pct",
     "test_average_rejection_pct", "test_targeted_hits_before",
     "test_targeted_hits_after",
@@ -33,6 +30,7 @@ SUMMARY_FIELDS = (
     "single_acceptance_pct", "average_rejection_pct",
     "target_success_before_pct", "target_success_after_pct",
     "targeted_exact_hit_rejection_pct", "mean_train_single_acceptance_pct",
+    "mean_calibrated_z",
 )
 
 
@@ -98,51 +96,26 @@ def passes(row: dict, thresholds: tuple[float, float, float]) -> bool:
 
 
 def calibrate(train: list[dict], retention: float, z_step: float
-              ) -> tuple[tuple[float, float, float],
-                         tuple[float, float, float],
-                         tuple[float, float, float], float]:
-    """Calibrate each statistic separately to retain calibration Singles."""
+              ) -> tuple[float, tuple[float, float, float], float]:
+    """Calibrate one system/fold so the three-rule screen jointly retains data."""
     minimum = np.asarray([float(row["minimum_confidence"]) for row in train])
     mean = np.asarray([float(row["mean_confidence"]) for row in train])
     log_variance = np.asarray([
         float(row["log_confidence_variance"]) for row in train])
-
-    def find_threshold(values: np.ndarray, rule: str
-                       ) -> tuple[float, float, float]:
-        for z in np.arange(0.0, 6.0 + z_step / 2.0, z_step):
-            tail = float(norm.cdf(-z))
-            if rule == "minimum":
-                threshold = float(np.quantile(
-                    values, tail, method="linear"))
-                accepted = float(np.mean(values >= threshold))
-            elif rule == "mean":
-                threshold = float(
-                    values.mean() - z * values.std(ddof=0))
-                accepted = float(np.mean(values >= threshold))
-            elif rule == "log_variance":
-                threshold = float(
-                    values.mean() + z * values.std(ddof=0))
-                accepted = float(np.mean(values <= threshold))
-            else:  # pragma: no cover - internal contract
-                raise ValueError(rule)
-            if accepted + 1e-12 >= retention:
-                return float(z), threshold, accepted
-        raise RuntimeError(
-            f"no z in [0, 6] reaches the requested {rule} retention")
-
-    calibrated = (
-        find_threshold(minimum, "minimum"),
-        find_threshold(mean, "mean"),
-        find_threshold(log_variance, "log_variance"),
-    )
-    z_values = tuple(item[0] for item in calibrated)
-    thresholds = tuple(item[1] for item in calibrated)
-    marginal_acceptance = tuple(item[2] for item in calibrated)
-    joint_acceptance = float(np.mean(
-        (minimum >= thresholds[0])
-        & (mean >= thresholds[1])
-        & (log_variance <= thresholds[2])))
-    return z_values, thresholds, marginal_acceptance, joint_acceptance
+    for z in np.arange(0.0, 6.0 + z_step / 2.0, z_step):
+        tail = float(norm.cdf(-z))
+        thresholds = (
+            float(np.quantile(minimum, tail, method="linear")),
+            float(mean.mean() - z * mean.std(ddof=0)),
+            float(log_variance.mean() + z * log_variance.std(ddof=0)),
+        )
+        accepted = np.mean(
+            (minimum >= thresholds[0])
+            & (mean >= thresholds[1])
+            & (log_variance <= thresholds[2]))
+        if accepted + 1e-12 >= retention:
+            return float(z), thresholds, float(accepted)
+    raise RuntimeError("no z in [0, 6] reaches the requested Single retention")
 
 
 def parse_args() -> argparse.Namespace:
@@ -200,7 +173,7 @@ def main() -> None:
         test_single = [row for row in single if row["speaker"] in test_set]
         test_average = [row for row in average if row["speaker"] in test_set]
         test_targeted = [row for row in targeted if row["speaker"] in test_set]
-        z_values, thresholds, marginal_acceptance, train_acceptance = calibrate(
+        z, thresholds, train_acceptance = calibrate(
             train, args.retention, args.z_step)
         for row in test_single + test_average + test_targeted:
             key = (int(row["trial_id"]), row["condition"], row["target_rank"])
@@ -216,15 +189,10 @@ def main() -> None:
             "n_train_single": len(train),
             "n_test_speakers": len(test_set),
             "n_test_trials": len(test_single),
-            "calibrated_z_minimum": f"{z_values[0]:.3f}",
-            "calibrated_z_mean": f"{z_values[1]:.3f}",
-            "calibrated_z_log_variance": f"{z_values[2]:.3f}",
+            "calibrated_z": f"{z:.3f}",
             "threshold_minimum": f"{thresholds[0]:.16g}",
             "threshold_mean": f"{thresholds[1]:.16g}",
             "threshold_log_variance": f"{thresholds[2]:.16g}",
-            "train_minimum_acceptance_pct": 100.0 * marginal_acceptance[0],
-            "train_mean_acceptance_pct": 100.0 * marginal_acceptance[1],
-            "train_log_variance_acceptance_pct": 100.0 * marginal_acceptance[2],
             "train_single_acceptance_pct": 100.0 * train_acceptance,
             "test_single_acceptance_pct": 100.0 * single_acceptance,
             "test_average_rejection_pct": 100.0 * average_rejection,
@@ -234,9 +202,7 @@ def main() -> None:
         fold_manifest.append({
             "fold": fold_index,
             "test_speakers": test_speakers,
-            "calibrated_z_minimum": z_values[0],
-            "calibrated_z_mean": z_values[1],
-            "calibrated_z_log_variance": z_values[2],
+            "calibrated_z": z,
             "threshold_minimum": thresholds[0],
             "threshold_mean": thresholds[1],
             "threshold_log_variance": thresholds[2],
@@ -262,6 +228,8 @@ def main() -> None:
             math.nan if not targeted else 100.0 * (1.0 - targeted_after / len(targeted))),
         "mean_train_single_acceptance_pct": float(np.mean([
             float(row["train_single_acceptance_pct"]) for row in fold_rows])),
+        "mean_calibrated_z": float(np.mean([
+            float(row["calibrated_z"]) for row in fold_rows])),
     }]
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -277,12 +245,11 @@ def main() -> None:
         "retention": args.retention,
         "z_step": args.z_step,
         "variance_transform": "log(population variance + 1e-12)",
-        "calibration_scope": "each threshold separately retains at least the requested fraction of training Single outputs for this system and fold",
+        "calibration_scope": "the three-rule conjunction retains at least the requested fraction of training Single outputs for this system and fold",
         "mean_rule": "training mean minus z times population standard deviation",
         "log_variance_rule": "training mean plus z times population standard deviation",
         "minimum_rule": "linear empirical quantile at Gaussian lower-tail probability Phi(-z)",
         "acceptance_rule": "minimum and mean at or above thresholds; log variance at or below threshold",
-        "joint_retention_note": "the conjunction is not constrained to retain the requested fraction",
         "attack_data_used_for_thresholds": False,
         "targets_per_trial": args.targets_per_trial,
         "fold_records": fold_manifest,

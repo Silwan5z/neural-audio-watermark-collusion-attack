@@ -192,11 +192,11 @@ Confidence screening uses complete per-bit evidence for one Single output, one
 K=8 uniform Average, and every exact Target-Bit Margin hit. Five
 speaker-disjoint folds use 80 speakers for calibration and 20 for testing.
 Thresholds are fitted only on valid Single outputs, separately for each system
-and fold. The minimum-confidence threshold uses an empirical quantile; the mean-
-confidence and log-variance thresholds use Gaussian boundaries. Each threshold
-is independently selected as the strictest one that retains at least 95% of the
-calibration Single outputs. An output is accepted only when all three conditions
-pass, so their conjunction can retain less than 95%.
+and fold. A shared Gaussian tail parameter sets the empirical minimum-confidence
+quantile, the Gaussian lower boundary for mean confidence, and the Gaussian upper
+boundary for log variance. The strictest threshold set whose three-rule
+conjunction retains at least 95% of the calibration Single outputs is selected.
+An output is accepted only when all three conditions pass.
 
 ```bash
 for shard in 0 1 2 3 4 5 6; do
