@@ -16,7 +16,7 @@ corresponding full-record link when you need trial-level evidence.
 | Target-Bit Margin | [`summary/targeted_hits.csv`](summary/targeted_hits.csv) | [`targeted/`](targeted/) |
 | Majority/bit composition | [`summary/bit_composition.csv`](summary/bit_composition.csv) | [`average/k8/`](average/k8/) |
 | One-bit mixture paths | [`one_bit/paths.csv`](one_bit/paths.csv) | [`one_bit/pairs/`](one_bit/pairs/) and [`summary/one_bit_examples.csv`](summary/one_bit_examples.csv) |
-| Confidence screening | [`summary/confidence_screening.csv`](summary/confidence_screening.csv) | [`confidence/`](confidence/) plus regenerated full vectors |
+| Confidence screening | [`summary/confidence_screening.csv`](summary/confidence_screening.csv) | [`supplementary/confidence_screening/`](supplementary/confidence_screening/) |
 | PESQ/STOI/ViSQOL/SI-SDR/SNR | [`supplementary/quality/summary_by_system_k.csv`](supplementary/quality/summary_by_system_k.csv) | [`supplementary/quality/all_trials.csv`](supplementary/quality/all_trials.csv) |
 | Temporal offsets | [`supplementary/alignment/summary_direction_averaged.csv`](supplementary/alignment/summary_direction_averaged.csv) | [`supplementary/alignment/all_trials.csv`](supplementary/alignment/all_trials.csv) |
 | MP3 and Opus | [`supplementary/codec/summary_by_system_codec.csv`](supplementary/codec/summary_by_system_codec.csv) | [`supplementary/codec/all_trials.csv`](supplementary/codec/all_trials.csv) |
@@ -33,8 +33,8 @@ corresponding full-record link when you need trial-level evidence.
 | [`one_bit/`](one_bit/) | Valid endpoint pairs and per-trial path summaries | 300 pairs per evaluated system |
 | [`confidence/`](confidence/) | Compact K=8 minimum-confidence records | 5 system files |
 | [`summary/`](summary/) | Small inputs for manuscript tables and figures | 7 CSV files |
-| [`supplementary/`](supplementary/) | Quality, offset, codec, and registry evidence | 14 files |
-| [`manifest.csv`](manifest.csv) | Size, row count, and SHA-256 for every released result | 2,754 entries |
+| [`supplementary/`](supplementary/) | Quality, screening, offset, codec, and registry evidence | 17 files |
+| [`manifest.csv`](manifest.csv) | Size, row count, and SHA-256 for every released result | 2,757 entries |
 
 The four 16-bit systems use the same coalition in each K=5 and K=8 trial.
 TimbreWM uses separately validated 10-bit coalitions. Source paths are relative
@@ -82,9 +82,19 @@ copy, not with the unwatermarked source.
 
 [`confidence/`](confidence/) contains the compact minimum-confidence records
 used by the distribution figure. The five-row paper result is
-[`summary/confidence_screening.csv`](summary/confidence_screening.csv). Full
-per-bit vectors and fold-specific thresholds are regenerable runtime artifacts;
-the reproduction guide explains how to create them under `results/`.
+[`summary/confidence_screening.csv`](summary/confidence_screening.csv).
+[`supplementary/confidence_screening/`](supplementary/confidence_screening/)
+releases the three sufficient statistics for every evaluated output, the
+speaker-fold assignment, and all 25 fold-specific threshold sets, which are
+enough to reproduce every screening rate without releasing per-bit vectors.
+
+## Codec controls
+
+The codec records include `valid_post_codec_copy_count` and
+`all_post_codec_copies_valid`. These fields separate failures already present
+in an individually coded copy from failures that appear after the coded copies
+are averaged. The codec summary reports both the full 300-trial result and the
+subset in which all five post-codec copies still decode correctly.
 
 ## One-bit-data boundary
 

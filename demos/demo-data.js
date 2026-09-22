@@ -882,9 +882,9 @@ window.DEMO_DATA = {
           "decoded": 839,
           "audio": "conditions/codec/timbrewm/mp3_128k",
           "metrics": {
-            "pesq": 4.467293,
+            "pesq": 4.467308,
             "stoi": 0.993197,
-            "siSdr": 26.20139
+            "siSdr": 26.201309
           }
         },
         {
@@ -900,9 +900,9 @@ window.DEMO_DATA = {
           "decoded": 839,
           "audio": "conditions/codec/timbrewm/opus_64k",
           "metrics": {
-            "pesq": 4.418082,
+            "pesq": 4.418165,
             "stoi": 0.990078,
-            "siSdr": 22.591918
+            "siSdr": 22.592158
           }
         }
       ]
@@ -1265,9 +1265,9 @@ window.DEMO_DATA = {
           "decoded": 3209,
           "audio": "conditions/coalition_size/wmcodec/k2",
           "metrics": {
-            "pesq": 4.4311,
-            "stoi": 0.9861,
-            "siSdr": 12.49
+            "pesq": 4.3201,
+            "stoi": 0.9831,
+            "siSdr": 11.23
           }
         },
         {
@@ -1281,9 +1281,9 @@ window.DEMO_DATA = {
           "decoded": 34148,
           "audio": "conditions/coalition_size/wmcodec/k3",
           "metrics": {
-            "pesq": 4.3938,
-            "stoi": 0.9822,
-            "siSdr": 11.02
+            "pesq": 4.358,
+            "stoi": 0.9794,
+            "siSdr": 10.25
           }
         },
         {
@@ -1299,9 +1299,9 @@ window.DEMO_DATA = {
           "decoded": 1533,
           "audio": "conditions/coalition_size/wmcodec/k5",
           "metrics": {
-            "pesq": 4.3518,
-            "stoi": 0.9803,
-            "siSdr": 9.94
+            "pesq": 4.2078,
+            "stoi": 0.9796,
+            "siSdr": 9.48
           }
         },
         {

@@ -75,11 +75,11 @@ def metrics_of(model, waveform, coalition, registry_bits, payload_length,
     if hard is None:
         raise RuntimeError(
             f"{model}: decoder returned no payload for a uniform mixture")
-    rank = np.argsort(scores)[::-1]
-    coalition_set = set(coalition)
-
-    top1_ints = _rows_to_ints(rank[:1], registry_bits)
-    escaped = int(len(set(top1_ints) & coalition_set) == 0)
+    if not np.isfinite(scores).all() or not np.any(scores):
+        raise RuntimeError(
+            f"{model}: decoder returned no usable payload scores")
+    top_payload = int(np.argmax(scores))
+    escaped = int(top_payload not in set(coalition))
 
     coalition_bits = np.array([
         _int_to_bits_row(payload, payload_length) for payload in coalition
@@ -91,12 +91,6 @@ def metrics_of(model, waveform, coalition, registry_bits, payload_length,
 
 def _int_to_bits_row(v, d):
     return np.array([(v >> i) & 1 for i in range(d)], dtype=np.int8)
-
-
-def _rows_to_ints(row_idx, registry_bits):
-    d = registry_bits.shape[1]
-    weights = 2 ** np.arange(d)
-    return (registry_bits[row_idx] @ weights).tolist()
 
 
 def valid_coalition(model, speaker, clip_slot, k, rng, registry_bits,

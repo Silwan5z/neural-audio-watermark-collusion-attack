@@ -11,6 +11,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from screen_confidence import calibrate  # noqa: E402
+
 FIELDS = (
     "model", "k", "trial_id", "speaker", "condition", "identity",
     "target_rank", "bit_count", "minimum_confidence", "mean_confidence",
@@ -41,6 +45,17 @@ def record(trial: int, condition: str, minimum: float, mean: float,
 
 
 class ConfidenceScreeningTest(unittest.TestCase):
+    def test_calibration_does_not_force_joint_retention(self) -> None:
+        rows = [record(index, "single", 0.9, 0.95, -8.0)
+                for index in range(100)]
+        for index in range(5):
+            rows[index]["minimum_confidence"] = 0.1 + 0.1 * index
+            rows[index + 5]["mean_confidence"] = 0.2 + 0.1 * index
+            rows[index + 10]["log_confidence_variance"] = -1.0 + 0.1 * index
+        _, _, marginal, joint = calibrate(rows, 0.95, 0.001)
+        self.assertTrue(all(value >= 0.95 for value in marginal))
+        self.assertLess(joint, 0.95)
+
     def test_end_to_end(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -85,10 +100,13 @@ class ConfidenceScreeningTest(unittest.TestCase):
             self.assertLessEqual(
                 float(summary["target_success_after_pct"]), 10.0)
             for fold in folds:
-                self.assertGreaterEqual(
-                    float(fold["train_single_acceptance_pct"]), 95.0)
+                for field in (
+                        "train_minimum_acceptance_pct",
+                        "train_mean_acceptance_pct",
+                        "train_log_variance_acceptance_pct"):
+                    self.assertGreaterEqual(float(fold[field]), 95.0)
 
-    def test_three_rule_screen_is_calibrated_jointly(self) -> None:
+    def test_each_threshold_is_calibrated_independently(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             input_dir = root / "input"
@@ -97,8 +115,8 @@ class ConfidenceScreeningTest(unittest.TestCase):
             rows = []
             for trial in range(300):
                 # Put low values for the three statistics on different trials.
-                # Calibration must loosen the system-specific threshold set
-                # until their conjunction retains at least 95%.
+                # Each marginal threshold must retain at least 95%, even though
+                # the three-rule conjunction can retain less.
                 minimum = 0.90 if trial % 20 else 0.40
                 mean = 0.95 if trial % 20 != 1 else 0.50
                 log_variance = -8.0 if trial % 20 != 2 else -1.0
@@ -121,8 +139,11 @@ class ConfidenceScreeningTest(unittest.TestCase):
                     newline="", encoding="utf-8") as handle:
                 folds = list(csv.DictReader(handle))
             for fold in folds:
-                self.assertGreaterEqual(
-                    float(fold["train_single_acceptance_pct"]), 95.0)
+                for field in (
+                        "train_minimum_acceptance_pct",
+                        "train_mean_acceptance_pct",
+                        "train_log_variance_acceptance_pct"):
+                    self.assertGreaterEqual(float(fold[field]), 95.0)
 
 
 if __name__ == "__main__":

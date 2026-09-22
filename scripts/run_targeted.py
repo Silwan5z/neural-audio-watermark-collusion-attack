@@ -103,10 +103,18 @@ def load_checkpoint(path: Path, assigned: set[int]) -> tuple[list[dict], set[int
     return kept, complete
 
 
-def decoded_payload(hard: np.ndarray | None) -> int | None:
+def hard_bits_to_payload(hard: np.ndarray | None) -> int | None:
     if hard is None:
         return None
     return int(sum(int(value) << index for index, value in enumerate(hard)))
+
+
+def count_valid_source_decodings(coalition: list[int], decoded: list) -> int:
+    """Count shared-coalition copies that decode to their assigned payload."""
+    return sum(
+        hard_bits_to_payload(hard) == payload
+        for payload, (_, _, hard) in zip(coalition, decoded)
+    )
 
 
 def score_target_block_task(task):
@@ -351,10 +359,8 @@ def main() -> None:
             ]
             source_decoded = detect_many_native(
                 args.model, waveforms, sample_rate, registry_bits)
-            valid_copy_count = sum(
-                decoded_payload(hard) == payload
-                for payload, (_, _, hard) in zip(coalition, source_decoded)
-            )
+            valid_copy_count = count_valid_source_decodings(
+                coalition, source_decoded)
             if valid_copy_count != args.k:
                 raise RuntimeError(
                     f"shared coalition source validation failed model={args.model} "

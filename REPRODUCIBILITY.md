@@ -192,11 +192,11 @@ Confidence screening uses complete per-bit evidence for one Single output, one
 K=8 uniform Average, and every exact Target-Bit Margin hit. Five
 speaker-disjoint folds use 80 speakers for calibration and 20 for testing.
 Thresholds are fitted only on valid Single outputs, separately for each system
-and fold. A shared Gaussian tail parameter sets the empirical minimum-confidence
-quantile, the Gaussian lower boundary for mean confidence, and the Gaussian upper
-boundary for log variance. The strictest threshold set whose three-rule
-conjunction retains at least 95% of the calibration Single outputs is selected.
-An output is accepted only when all three conditions pass.
+and fold. The minimum-confidence threshold uses an empirical quantile; the mean-
+confidence and log-variance thresholds use Gaussian boundaries. Each threshold
+is independently selected as the strictest one that retains at least 95% of the
+calibration Single outputs. An output is accepted only when all three conditions
+pass, so their conjunction can retain less than 95%.
 
 ```bash
 for shard in 0 1 2 3 4 5 6; do
@@ -206,6 +206,7 @@ done
 python scripts/screen_confidence.py --model timbrewm \
   --seed 20260905 --folds 5 --retention 0.95 --z-step 0.001
 python scripts/merge_confidence_screening.py
+python scripts/export_confidence_screening.py
 ```
 
 The published screening result is non-adaptive. An attacker that jointly
@@ -257,7 +258,9 @@ misalignment. Quality already degrades at 10 ms.
 
 At K=5, every personalized copy is independently round-tripped through MP3 at
 128 kbps or Opus at 64 kbps before averaging. The paired `none` condition uses
-the same validated coalition and recording.
+the same validated coalition and recording. The runner also decodes every
+post-codec copy before mixing, allowing both the full-sample tracing-failure rate
+and the rate restricted to trials whose five coded copies remain valid.
 
 ```bash
 python scripts/run_codec_stress_test.py --model audioseal

@@ -439,7 +439,70 @@ def verify_confidence() -> None:
         require(all(0.0 <= float(row["minimum_confidence"]) <= 1.0
                     for row in rows),
                 f"{path}: confidence outside [0,1]")
-    print("PASS confidence: Single, Average, and Targeted counts match")
+
+    screening_root = DATA / "supplementary" / "confidence_screening"
+    records_path = screening_root / "records.csv"
+    folds_path = screening_root / "fold_thresholds.csv"
+    require(header(records_path) == [
+        "model", "k", "trial_id", "speaker", "fold", "condition",
+        "identity", "target_rank", "minimum_confidence", "mean_confidence",
+        "log_confidence_variance", "source_path", "confidence_source",
+    ], "unexpected confidence-screening record schema")
+    records = read_csv(records_path)
+    folds = read_csv(folds_path)
+    require(len(records) == 8767,
+            "confidence-screening release must contain 8767 records")
+    require(len(folds) == 25,
+            "confidence-screening release must contain 25 fold thresholds")
+    thresholds = {
+        (row["model"], int(row["fold"])): (
+            float(row["threshold_minimum"]),
+            float(row["threshold_mean"]),
+            float(row["threshold_log_variance"]),
+        ) for row in folds
+    }
+    for row in folds:
+        for field in (
+                "train_minimum_acceptance_pct",
+                "train_mean_acceptance_pct",
+                "train_log_variance_acceptance_pct"):
+            require(float(row[field]) + 1e-9 >= 95.0,
+                    f"{row['model']} fold {row['fold']}: {field} below 95%")
+
+    summary = {
+        row["model"]: row
+        for row in read_csv(DATA / "summary" / "confidence_screening.csv")
+    }
+    for model in MODELS:
+        model_rows = [row for row in records if row["model"] == model]
+        condition_rows = {
+            condition: [row for row in model_rows
+                        if row["condition"] == condition]
+            for condition in ("single", "average", "targeted")
+        }
+        accepted = {
+            condition: sum(
+                float(row["minimum_confidence"]) >= thresholds[
+                    (model, int(row["fold"]))][0]
+                and float(row["mean_confidence"]) >= thresholds[
+                    (model, int(row["fold"]))][1]
+                and float(row["log_confidence_variance"]) <= thresholds[
+                    (model, int(row["fold"]))][2]
+                for row in rows)
+            for condition, rows in condition_rows.items()
+        }
+        observed = (
+            round(100 * accepted["single"] / 300, 1),
+            round(100 * (1 - accepted["average"] / 300), 1),
+            round(100 * len(condition_rows["targeted"]) / 3000, 1),
+            round(100 * accepted["targeted"] / 3000, 1),
+        )
+        expected = tuple(float(summary[model][field]) for field in (
+            "single_acceptance_pct", "average_rejection_pct",
+            "target_success_before_pct", "target_success_after_pct"))
+        require(observed == expected,
+                f"{model}: screening records give {observed}, expected {expected}")
+    print("PASS confidence: compact figure data and reproducible screening records match")
 
 
 def verify_summaries() -> None:
@@ -537,13 +600,16 @@ def verify_supplementary() -> None:
             35,
         ),
         "codec/summary_by_system_codec.csv": (
-            ["model", "codec", "n", "tf_pct", "attribution_margin",
-             "pesq", "stoi", "si_sdr", "snr"],
+            ["model", "codec", "n", "valid_post_codec_copy_pct",
+             "all_post_codec_copies_valid_pct", "tf_pct",
+             "attribution_margin", "pesq", "stoi", "si_sdr", "snr",
+             "valid_subset_n", "valid_subset_tf_pct"],
             15,
         ),
         "codec/summary_cross_system.csv": (
-            ["codec", "system_count", "tf_pct", "attribution_margin",
-             "pesq", "stoi", "si_sdr", "snr",
+            ["codec", "system_count", "valid_post_codec_copy_pct",
+             "all_post_codec_copies_valid_pct", "tf_pct",
+             "attribution_margin", "pesq", "stoi", "si_sdr", "snr",
              "tf_pct_delta_vs_none", "pesq_delta_vs_none",
              "stoi_delta_vs_none", "si_sdr_delta_vs_none",
              "snr_delta_vs_none"],
@@ -598,6 +664,12 @@ def verify_supplementary() -> None:
             "supplementary alignment shift counts mismatch")
 
     codec = read_csv(base / "codec" / "all_trials.csv")
+    require(header(base / "codec" / "all_trials.csv") == [
+        "model", "k", "trial_id", "speaker", "clip_index", "source_path",
+        "sample_rate", "coalition_payloads", "codec", "codec_setting",
+        "valid_post_codec_copy_count", "all_post_codec_copies_valid",
+        "escaped", "attribution_margin", "pesq", "stoi", "si_sdr", "snr",
+    ], "unexpected supplementary codec schema")
     require(len(codec) == 4500,
             "supplementary codec data must contain 4500 rows")
     require(Counter(row["model"] for row in codec)
@@ -613,6 +685,17 @@ def verify_supplementary() -> None:
                 f"supplementary codec {model}: expected 300 recordings")
         require({int(row["k"]) for row in model_rows} == {5},
                 f"supplementary codec {model}: expected K=5")
+        require(all(0 <= int(row["valid_post_codec_copy_count"]) <= 5
+                    for row in model_rows),
+                f"supplementary codec {model}: invalid source-copy count")
+        require(all(int(row["all_post_codec_copies_valid"])
+                    == int(int(row["valid_post_codec_copy_count"]) == 5)
+                    for row in model_rows),
+                f"supplementary codec {model}: inconsistent validity flag")
+        none_rows = [row for row in model_rows if row["codec"] == "none"]
+        require(all(int(row["valid_post_codec_copy_count"]) == 5
+                    for row in none_rows),
+                f"supplementary codec {model}: invalid no-codec source copy")
 
     occupancy = read_csv(
         base / "registry_occupancy" /

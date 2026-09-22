@@ -13,11 +13,25 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from registry import int_to_bits  # noqa: E402
 from target_bit_margin import optimize_softmin  # noqa: E402
+from run_targeted import (  # noqa: E402
+    count_valid_source_decodings,
+    hard_bits_to_payload,
+)
 
 
 class PayloadAndOptimizerTest(unittest.TestCase):
     def test_payload_bits_are_lsb_first(self) -> None:
         self.assertEqual(int_to_bits(5, 4).tolist(), [1, 0, 1, 0])
+        self.assertEqual(hard_bits_to_payload(np.asarray([1, 0, 1, 0])), 5)
+        self.assertIsNone(hard_bits_to_payload(None))
+
+    def test_shared_coalition_source_validation(self) -> None:
+        coalition = [5, 3]
+        decoded = [
+            (np.zeros(16), 1.0, np.asarray([1, 0, 1, 0])),
+            (np.zeros(16), 1.0, np.asarray([1, 1, 0, 0])),
+        ]
+        self.assertEqual(count_valid_source_decodings(coalition, decoded), 2)
 
     def test_optimizer_respects_weight_constraints(self) -> None:
         coalition = np.asarray([

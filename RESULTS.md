@@ -67,17 +67,17 @@ does not hide the additional quality evidence behind an across-K average.
 | WavMark | 3 | 97.7 | 4.5563 | 0.9987 | 4.8644 | 43.0046 | 43.0986 |
 | WavMark | 5 | 98.0 | 4.5391 | 0.9983 | 4.8449 | 42.0950 | 42.1885 |
 | WavMark | 8 | 99.3 | 4.5179 | 0.9980 | 4.8350 | 41.3821 | 41.4756 |
-| TimbreWM | 2 | 86.3 | 4.5638 | 0.9981 | 4.7818 | 33.5323 | 33.6273 |
+| TimbreWM | 2 | 87.7 | 4.5638 | 0.9981 | 4.7818 | 33.5323 | 33.6273 |
 | TimbreWM | 3 | 84.7 | 4.5564 | 0.9975 | 4.7298 | 32.3179 | 32.4134 |
-| TimbreWM | 5 | 90.7 | 4.5468 | 0.9970 | 4.6853 | 31.4403 | 31.5365 |
+| TimbreWM | 5 | 88.0 | 4.5468 | 0.9970 | 4.6853 | 31.4403 | 31.5365 |
 | TimbreWM | 8 | 92.0 | 4.5335 | 0.9964 | 4.6389 | 30.7571 | 30.8540 |
 | VoiceMark | 2 | 93.7 | 4.2036 | 0.9827 | 3.6921 | 16.5841 | 16.6131 |
 | VoiceMark | 3 | 99.0 | 4.1675 | 0.9782 | 3.3889 | 15.4210 | 15.4912 |
 | VoiceMark | 5 | 99.3 | 4.1134 | 0.9741 | 3.2211 | 14.5981 | 14.6775 |
 | VoiceMark | 8 | 98.7 | 4.0490 | 0.9709 | 3.1170 | 14.5172 | 14.6159 |
-| WMCodec | 2 | 99.3 | 4.3673 | 0.9894 | 4.7240 | 16.2861 | 16.5056 |
-| WMCodec | 3 | 99.3 | 4.3201 | 0.9865 | 4.6465 | 14.9813 | 15.1739 |
-| WMCodec | 5 | 100.0 | 4.2609 | 0.9839 | 4.5787 | 14.1475 | 14.4608 |
+| WMCodec | 2 | 99.7 | 4.3716 | 0.9893 | 4.7240 | 16.2694 | 16.5056 |
+| WMCodec | 3 | 97.7 | 4.3047 | 0.9862 | 4.6465 | 14.8867 | 15.1739 |
+| WMCodec | 5 | 99.7 | 4.2563 | 0.9838 | 4.5787 | 14.1444 | 14.4608 |
 | WMCodec | 8 | 99.7 | 4.2351 | 0.9827 | 4.5401 | 13.7260 | 14.0618 |
 
 The ideal bit-choice tracing-failure references are:
@@ -93,7 +93,7 @@ and [`ideal_tracing_failure.csv`](data/summary/ideal_tracing_failure.csv).
 Complete trial-level records are under [`data/average/`](data/average/) and
 [`data/supplementary/quality/`](data/supplementary/quality/).
 
-**Takeaway.** At K=2, only two valid personalized copies produce 86.3–99.3%
+**Takeaway.** At K=2, only two valid personalized copies produce 87.7–99.7%
 tracing failure. The additional metrics show that this is not obtained by
 simply destroying the speech signal.
 
@@ -159,15 +159,18 @@ targeted attacks.
 
 | System | Single accepted (%) | Uniform average rejected (%) | Target success before -> after (%) |
 |---|---:|---:|---:|
-| AudioSeal | 94.7 | 100.0 | 43.6 -> 2.4 |
-| WavMark | 94.7 | 100.0 | 54.4 -> 4.4 |
-| TimbreWM | 95.0 | 100.0 | 92.3 -> 0.0 |
-| VoiceMark | 94.3 | 77.7 | 0.6 -> 0.3 |
-| WMCodec | 95.0 | 88.0 | 1.3 -> 0.7 |
+| AudioSeal | 88.0 | 100.0 | 43.6 -> 1.3 |
+| WavMark | 92.3 | 100.0 | 54.4 -> 3.6 |
+| TimbreWM | 85.0 | 100.0 | 92.3 -> 0.0 |
+| VoiceMark | 93.7 | 80.0 | 0.6 -> 0.3 |
+| WMCodec | 93.3 | 89.7 | 1.3 -> 0.7 |
 
 Source: [`confidence_screening.csv`](data/summary/confidence_screening.csv).
-Each system/fold receives its own threshold set, calibrated so the conjunction
-of all three conditions retains at least 95% of calibration Single outputs.
+The released [screening records and fold thresholds](data/supplementary/confidence_screening/)
+independently reproduce all four reported rates.
+Each system/fold receives its own threshold set. Each of the three thresholds
+separately retains at least 95% of calibration Single outputs; because an output
+must pass all three, their conjunction can retain less than 95%.
 This is a non-adaptive, preliminary screening result rather than a complete
 collusion-resistant defense.
 
@@ -222,9 +225,29 @@ coalitions as its paired no-codec control.
 Source: [`summary_by_system_codec.csv`](data/supplementary/codec/summary_by_system_codec.csv),
 with all 4,500 rows in [`all_trials.csv`](data/supplementary/codec/all_trials.csv).
 
+The runner also decodes every personalized copy after coding and before
+averaging. “Valid copies” counts correctly decoded individual copies; “all five
+valid” counts trials in which every coded coalition copy remains correct.
+
+| System | Codec | Valid copies (%) | All five valid (%) | TF on all trials (%) | TF when all five remain valid (%) |
+|---|---|---:|---:|---:|---:|
+| AudioSeal | MP3 128 kbps | 100.00 | 100.00 | 98.00 | 98.00 |
+| AudioSeal | Opus 64 kbps | 100.00 | 100.00 | 97.33 | 97.33 |
+| WavMark | MP3 128 kbps | 100.00 | 100.00 | 99.00 | 99.00 |
+| WavMark | Opus 64 kbps | 100.00 | 100.00 | 98.00 | 98.00 |
+| TimbreWM | MP3 128 kbps | 100.00 | 100.00 | 88.00 | 88.00 |
+| TimbreWM | Opus 64 kbps | 100.00 | 100.00 | 88.00 | 88.00 |
+| VoiceMark | MP3 128 kbps | 76.00 | 28.00 | 99.33 | 98.81 |
+| VoiceMark | Opus 64 kbps | 97.00 | 87.67 | 99.00 | 98.86 |
+| WMCodec | MP3 128 kbps | 100.00 | 100.00 | 100.00 | 100.00 |
+| WMCodec | Opus 64 kbps | 100.00 | 100.00 | 100.00 | 100.00 |
+
 **Takeaway.** Mean TF is 96.67% without coding, 96.87% after MP3, and 96.47%
-after Opus. Independent lossy coding therefore does not remove the observed
-attack effect under these settings.
+after Opus. Four systems retain every coded source copy. VoiceMark loses some
+source-copy validity, especially after MP3, but its failure rate remains 98.81%
+on the 84 MP3 trials in which all five coded copies remain valid and 98.86% on
+the 263 corresponding Opus trials. Independent lossy coding therefore does not
+remove the observed attack effect under these settings.
 
 ### Partial registry occupancy
 

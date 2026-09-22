@@ -29,9 +29,9 @@
   },
   "wmcodec": {
     "n_checked": 900,
-    "mean_abs_si_sdr_error_db": 0.4629530088888889,
-    "median_abs_si_sdr_error_db": 0.3403355,
-    "max_abs_si_sdr_error_db": 2.676914,
-    "fraction_within_0_05_db": 0.18777777777777777
+    "mean_abs_si_sdr_error_db": 0.002450137777777708,
+    "median_abs_si_sdr_error_db": 0.0024575000000002,
+    "max_abs_si_sdr_error_db": 0.0049850000000004,
+    "fraction_within_0_05_db": 1.0
   }
 }

@@ -25,6 +25,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from native_audio import (  # noqa: E402
     NATIVE_SAMPLE_RATE,
+    bits_to_int,
     detect_many_native,
     get_or_embed_native,
 )
@@ -41,6 +42,7 @@ CODEC_LABELS = {
 FIELDS = [
     "model", "k", "trial_id", "speaker", "clip_index", "source_path",
     "sample_rate", "coalition_payloads", "codec", "codec_setting",
+    "valid_post_codec_copy_count", "all_post_codec_copies_valid",
     "escaped", "attribution_margin", "pesq", "stoi", "si_sdr", "snr",
 ]
 
@@ -174,6 +176,10 @@ def main() -> None:
     if output.exists():
         with output.open(newline="", encoding="utf-8") as handle:
             rows = list(csv.DictReader(handle))
+        if rows and not set(FIELDS).issubset(rows[0]):
+            print(f"{model}: ignoring legacy checkpoint without codec controls",
+                  flush=True)
+            rows = []
         counts: dict[int, int] = {}
         for row in rows:
             trial_id = int(row["trial_id"])
@@ -198,23 +204,34 @@ def main() -> None:
         members = [np.asarray(member[:n], dtype=np.float32)
                    for member in members]
         reference = members[0]
+        transformed_by_codec: list[list[np.ndarray]] = []
         signals = []
         for codec in CODECS:
             transformed = independently_code(members, sample_rate, codec)
+            transformed_by_codec.append(transformed)
             signals.append(np.mean(
                 np.stack(transformed), axis=0,
                 dtype=np.float64).astype(np.float32))
 
+        member_decoded = [
+            detect_many_native(model, transformed, sample_rate, registry)
+            for transformed in transformed_by_codec
+        ]
         decoded = detect_many_native(model, signals, sample_rate, registry)
         source = source_record(speaker, clip_slot)
         reference_16 = (reference if sample_rate == 16000 else
                         resample_to(reference, sample_rate, 16000))
-        for codec, signal, (scores, _, _) in zip(CODECS, signals, decoded):
+        for codec, signal, decoded_members, (scores, _, _) in zip(
+                CODECS, signals, member_decoded, decoded):
             if not np.isfinite(scores).all() or not np.any(scores):
                 raise RuntimeError(
                     f"{model} trial={trial_id} codec={codec}: "
                     "decoder returned no usable payload scores")
             escaped, margin = attack_metrics(scores, coalition)
+            valid_post_codec = sum(
+                hard is not None and bits_to_int(hard) == payload
+                for payload, (_, _, hard) in zip(coalition, decoded_members)
+            )
             signal_16 = (signal if sample_rate == 16000 else
                          resample_to(signal, sample_rate, 16000))
             rows.append({
@@ -228,6 +245,8 @@ def main() -> None:
                 "coalition_payloads": json.dumps(coalition),
                 "codec": codec,
                 "codec_setting": CODEC_LABELS[codec],
+                "valid_post_codec_copy_count": valid_post_codec,
+                "all_post_codec_copies_valid": int(valid_post_codec == K),
                 "escaped": escaped,
                 "attribution_margin": f"{margin:.8f}",
                 "pesq": f"{pesq_wb(reference_16, signal_16):.6f}",

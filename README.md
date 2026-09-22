@@ -35,7 +35,7 @@ Bob's copy ───┘
 
 No clean audio is needed. The practical attack uses no model parameters,
 gradients, or decoder queries. At coalition size K=2, this simple operation
-causes **86.3–99.3% tracing failure** across the five evaluated systems.
+causes **87.7–99.7% tracing failure** across the five evaluated systems.
 
 The audio lab is the best place to begin. First compare the clean recording,
 two valid personalized copies, and their average. Then switch among all five
@@ -55,12 +55,14 @@ decoded ID, PESQ, STOI, and SI-SDR values.
 
 ## What the study finds
 
-- **Two copies are already enough.** K=2 tracing failure ranges from 86.3% to
-  99.3% across AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec.
+- **Two copies are already enough.** K=2 tracing failure ranges from 87.7% to
+  99.7% across AudioSeal, WavMark, TimbreWM, VoiceMark, and WMCodec.
 - **Small timing errors do not remove the effect.** Across the tested aligned
   and ±10/20/50 ms K=5 conditions, mean tracing failure remains 96.7–97.7%.
 - **Lossy coding does not remove it either.** The cross-system K=5 means are
-  96.67%, 96.87%, and 96.47% without coding, after MP3, and after Opus.
+  96.67%, 96.87%, and 96.47% without coding, after MP3, and after Opus. The
+  release also reports whether each copy still decodes correctly after coding,
+  before any averaging occurs.
 - **Some bit-based decoders can be steered.** The payload-aware Target-Bit
   Margin experiment reaches 92.3% target success on TimbreWM at K=8.
 - **Confidence screening helps, but is not a complete defense.** It is reported

@@ -33,6 +33,7 @@ ignored `results/`; only validated, fixed release records belong under `data/`.
 | Full confidence | `collect_confidence_full.py` | Complete per-bit vectors for screening |
 | Confidence screen | `screen_confidence.py` | Speaker-disjoint five-fold calibration and evaluation |
 | Confidence merge | `merge_confidence_screening.py` | Build the five-row paper screening table |
+| Confidence export | `export_confidence_screening.py` | Release sufficient statistics, folds, and thresholds for independent verification |
 
 ## Additional evaluations
 
@@ -41,7 +42,7 @@ ignored `results/`; only validated, fixed release records belong under `data/`.
 | SI-SDR and SNR | `compute_uniform_quality.py` | `summarize_uniform_quality.py` |
 | ViSQOL | `compute_uniform_visqol.py` | `summarize_uniform_quality.py` |
 | Temporal offsets | `run_alignment_stress_test.py` | `summarize_alignment_stress_test.py` |
-| MP3 and Opus | `run_codec_stress_test.py` | `summarize_codec_stress_test.py` |
+| MP3 and Opus | `run_codec_stress_test.py` | `summarize_codec_stress_test.py` (including post-codec single-copy controls) |
 | Registry occupancy | — | `analyze_registry_occupancy.py` |
 
 The core paper tables can be regenerated without model inference using
